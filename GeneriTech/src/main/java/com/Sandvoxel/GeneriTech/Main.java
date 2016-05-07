@@ -24,7 +24,9 @@ public class Main {
         public void PreInit(FMLPreInitializationEvent event){
 
         }
-//test plz masteer
+
+
+
 
         @Mod.EventHandler
         public void init(FMLInitializationEvent event){
