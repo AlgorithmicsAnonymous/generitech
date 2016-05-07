@@ -19,7 +19,7 @@ public class GTBlocks {
     public static Block pulverizer;
 
     public static void init(){
-        pulverizer = new Block(Material.iron);
+        pulverizer = new BaceBlockGT("pulverizer");
     }
 
     public static void register(){
