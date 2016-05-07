@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "normal": { "model": "generitech:drive" },
+    "facing=north": { "model": "generitech:drive" },
+    "facing=south": { "model": "generitech:drive", "y": 180 },
+    "facing=west":  { "model": "generitech:drive", "y": 270 },
+    "facing=east":  { "model": "generitech:drive", "y": 90 }
+  }
+}

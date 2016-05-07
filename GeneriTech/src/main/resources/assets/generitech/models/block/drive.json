@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "generitech:blocks/BlockGrinder",
+    "front": "generitech:blocks/BlockGrinderFront",
+    "side": "generitech:blocks/BlockGrinderSide"
+  }
+}
