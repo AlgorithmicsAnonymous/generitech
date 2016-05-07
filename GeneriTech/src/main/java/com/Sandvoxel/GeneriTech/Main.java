@@ -1,5 +1,6 @@
 package com.Sandvoxel.GeneriTech;
 
+import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,6 +20,8 @@ public class Main {
 
         @Mod.EventHandler
         public void PreInit(FMLPreInitializationEvent event){
+
+
 
         }
 
