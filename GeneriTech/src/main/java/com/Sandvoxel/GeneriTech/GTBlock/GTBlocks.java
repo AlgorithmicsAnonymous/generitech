@@ -26,14 +26,6 @@ public class GTBlocks {
         registerBlock(pulverizer, "pulverizer");
     }
 
-    public static void registerRenders(){
-        registerRender(pulverizer, "pulverizer");
-    }
-
-    public static void registerRender(Block blockIn, String resourceLocation){
-        Item item = Item.getItemFromBlock(blockIn);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + resourceLocation));
-    }
 
     /**
      * Registers a Block through Forge's GameRegistry. Makes an ItemBlock for you, too. Do note that

@@ -1,6 +1,9 @@
 package com.Sandvoxel.GeneriTech.proxy;
 
 import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
+import com.Sandvoxel.GeneriTech.RendersGT.Blocks;
+import com.jcraft.jorbis.Block;
+import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
@@ -14,7 +17,7 @@ public class ClientProxy extends CommonProxy{
 
     @Override
     public void registerRenders() {
-        GTBlocks.registerRenders();
-        GTBlocks.registerRenders();
+        Blocks.registerRenders();
+
     }
 }
