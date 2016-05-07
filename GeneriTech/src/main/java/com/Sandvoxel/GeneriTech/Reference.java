@@ -1,8 +1,6 @@
 package com.Sandvoxel.GeneriTech;
 
-/**
- * Created by koval on 5/2/2016.
- */
+
 public class Reference {
 
     public static final String MODID = "GeneriTech";

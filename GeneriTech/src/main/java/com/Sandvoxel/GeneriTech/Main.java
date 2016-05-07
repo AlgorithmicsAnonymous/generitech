@@ -6,9 +6,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-/**
- * Created by koval on 5/2/2016.
- */
 public class Main {
     @Mod.Instance
     public static Main.GeneriTech Instance = new Main.GeneriTech();
