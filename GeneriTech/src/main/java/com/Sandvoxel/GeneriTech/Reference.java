@@ -8,8 +8,4 @@ public class Reference {
     public static final String NAME = "GeneriTech";
     public static final String CLIENT_PROXY_CLASS = "com.Sandvoxel.GeneriTech.proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = "com.Sandvoxel.GeneriTech.proxy.CommonProxy";
-
-
-
-
 }

@@ -1,8 +1,3 @@
 {
-  "parent": "block/orientable",
-  "textures": {
-    "top": "generitech:blocks/BasicSide",
-    "front": "generitech:blocks/PulverizerAnimated",
-    "side": "generitech:blocks/BasicSide"
-  }
+  "parent": "generitech:block/pulverizer"
 }

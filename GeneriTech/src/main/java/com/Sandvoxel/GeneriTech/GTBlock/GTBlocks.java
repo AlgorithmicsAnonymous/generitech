@@ -1,12 +1,12 @@
 package com.Sandvoxel.GeneriTech.GTBlock;
 
+import com.Sandvoxel.GeneriTech.GeneriTech;
 import com.Sandvoxel.GeneriTech.Reference;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -18,7 +18,7 @@ public class GTBlocks {
     public static Block pulverizer;
 
     public static void init(){
-        pulverizer = new fasing("pulverizer");
+        pulverizer = new DirectionalMachine(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech);
     }
 
 
