@@ -21,9 +21,11 @@ public class Blocks {
     }
 
     public static void registerRender(Block blockIn, String resourceLocation){
-
+        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
         Item item = Item.getItemFromBlock(blockIn);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + resourceLocation));
+
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Reference.MOD_ID+ ":" + resourceLocation, "inventory"));
     }
 
 

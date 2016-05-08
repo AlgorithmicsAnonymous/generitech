@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.lang.reflect.Proxy;
+
 public class Main {
     @Mod.Instance
     public static Main.GeneriTech Instance = new Main.GeneriTech();
@@ -22,18 +24,19 @@ public class Main {
 
         @Mod.EventHandler
         public void PreInit(FMLPreInitializationEvent event){
-            GTBlocks.init();
-            GTBlocks.register();
+            proxy.preInit(event);
+
         }
 
         @Mod.EventHandler
         public void init(FMLInitializationEvent event){
-            proxy.registerRenders();
+            proxy.Init(event);
         }
+
 
         @Mod.EventHandler
         public void PostInit(FMLPostInitializationEvent event){
-
+            proxy.PostInit(event);
         }
 
     }

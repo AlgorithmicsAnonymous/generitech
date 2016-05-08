@@ -2,8 +2,11 @@ package com.Sandvoxel.GeneriTech.GTBlock;
 
 import com.Sandvoxel.GeneriTech.Reference;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -15,8 +18,13 @@ public class GTBlocks {
     public static Block pulverizer;
 
     public static void init(){
-        pulverizer = new BaceBlockGT("pulverizer");
+        pulverizer = new fasing("pulverizer");
     }
+
+
+
+
+
 
     public static void register(){
         registerBlock(pulverizer, "pulverizer");
