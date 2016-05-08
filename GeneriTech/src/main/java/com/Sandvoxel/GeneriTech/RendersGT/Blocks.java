@@ -7,9 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 
-/**
- * Created by koval on 5/7/2016.
- */
+
 public class Blocks {
 
 
