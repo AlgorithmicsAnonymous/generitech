@@ -18,7 +18,7 @@ public class GTBlocks {
     public static Block pulverizer;
 
     public static void init(){
-        pulverizer = new BaceBlockGT("pulverizer");
+        pulverizer = new fasing("pulverizer");
     }
 
 

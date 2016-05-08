@@ -1,18 +1,9 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-    },
-    "model": "generitech:pulverizer"
-  },
   "variants": {
-
-    "inventory": {"model": "generitech:pulverizer"},
-
-    "normal": { "model": "generitech:pulverizer" },
-    "facing=north": { "model": "generitech:block/pulverizer" },
-    "facing=south": { "model": "generitech:block/pulverizer", "y": 180 },
-    "facing=west":  { "model": "generitech:block/pulverizer", "y": 270 },
-    "facing=east":  { "model": "generitech:block/pulverizer", "y": 90 }
+    "normal": { "model": "generitech:pulverizer"},
+    "facing=north": { "model": "generitech:pulverizer" },
+    "facing=south": { "model": "generitech:pulverizer", "y": 180 },
+    "facing=west":  { "model": "generitech:pulverizer", "y": 270 },
+    "facing=east":  { "model": "generitech:pulverizer", "y": 90 }
   }
 }
