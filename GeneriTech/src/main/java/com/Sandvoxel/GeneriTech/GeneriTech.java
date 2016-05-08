@@ -17,7 +17,7 @@ public class GeneriTech {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
 
-    public static final GeneriTab TabGeneriTech = new GeneriTab("GeneriTech", Blocks.iron_block);
+    public static final GeneriTab TabGeneriTech = new GeneriTab("GeneriTech");
 
         @Mod.EventHandler
         public void PreInit(FMLPreInitializationEvent event){

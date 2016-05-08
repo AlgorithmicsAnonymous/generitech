@@ -21,11 +21,6 @@ public class GTBlocks {
         pulverizer = new DirectionalMachine(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech);
     }
 
-
-
-
-
-
     public static void register(){
         registerBlock(pulverizer, "pulverizer");
     }

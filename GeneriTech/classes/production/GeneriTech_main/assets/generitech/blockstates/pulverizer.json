@@ -1,13 +1,6 @@
 {
   "variants": {
-    "inventory": { "model": "generitech:block/pulverizer" },
-
-
-
-
-
-
-    "normal": { "model": "generitech:pulverizer" },
+    "normal": { "model": "generitech:pulverizer"},
     "facing=north": { "model": "generitech:pulverizer" },
     "facing=south": { "model": "generitech:pulverizer", "y": 180 },
     "facing=west":  { "model": "generitech:pulverizer", "y": 270 },
