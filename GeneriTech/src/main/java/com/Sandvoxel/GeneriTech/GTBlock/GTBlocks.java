@@ -15,7 +15,7 @@ public class GTBlocks {
     public static Block pulverizer;
 
     public static void init(){
-        pulverizer = new fasing("pulverizer");
+        pulverizer = new BaceBlockGT("pulverizer");
     }
 
     public static void register(){
@@ -45,8 +45,8 @@ public class GTBlocks {
      * @param blockIn
      * @param resourceLocation
      */
+
     public static void registerBlockNoItem(Block blockIn, String resourceLocation){
         GameRegistry.register(blockIn, new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation));
     }
-
 }

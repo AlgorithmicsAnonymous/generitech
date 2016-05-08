@@ -11,10 +11,8 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.obj.OBJModel;
 
-/**
- * Created by koval on 5/7/2016.
- */
 public class fasing extends BaceBlockGT {
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -23,6 +21,7 @@ public class fasing extends BaceBlockGT {
 
     public fasing(String pulverizer){
         super(pulverizer);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 
     }
 
@@ -66,11 +65,6 @@ public class fasing extends BaceBlockGT {
     }
 
 
-
-
-
-
-
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {FACING});
@@ -83,19 +77,6 @@ public class fasing extends BaceBlockGT {
     {
         return ((EnumFacing)state.getValue(FACING)).getIndex();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
