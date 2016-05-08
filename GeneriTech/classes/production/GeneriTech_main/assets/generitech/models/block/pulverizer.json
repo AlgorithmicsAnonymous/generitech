@@ -1,3 +1,12 @@
 {
-  "parent": "generitech:block/pulverizer"
+  "parent": "block/orientable",
+  "textures": {
+    "particle": "generitech:blocks/BasicSide",
+    "west": "generitech:blocks/BasicSide",
+    "north": "generitech:blocks/PulverizerAnimated",
+    "down": "generitech:blocks/BasicSide",
+    "south": "generitech:blocks/BasicSide",
+    "east": "generitech:blocks/BasicSide",
+    "up": "generitech:blocks/BasicSide"
+  }
 }

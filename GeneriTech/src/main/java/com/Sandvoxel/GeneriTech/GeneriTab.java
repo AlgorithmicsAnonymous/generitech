@@ -10,16 +10,13 @@ import net.minecraft.item.Item;
  */
 public class GeneriTab extends CreativeTabs {
 
-    private static Block iconBlock;
-
-    public GeneriTab(String label, Block tabIconBlock) {
+    public GeneriTab(String label) {
         super(label);
-        iconBlock = tabIconBlock;
     }
 
     @Override
     public Item getTabIconItem() {
-        return Item.getItemFromBlock(iconBlock);
+        return Item.getItemFromBlock(GTBlocks.pulverizer);
     }
 
 

@@ -18,14 +18,6 @@ public class Blocks {
     }
 
     public static void registerRender(Block blockIn, String resourceLocation){
-        //Item item = Item.getItemFromBlock(blockIn);
-        //Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + resourceLocation));
-
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(blockIn), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + resourceLocation, "inventory"));
     }
-
-
-
-
-
 }
