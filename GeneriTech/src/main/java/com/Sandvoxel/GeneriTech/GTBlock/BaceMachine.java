@@ -35,7 +35,7 @@ public class BaceMachine extends DirectionalMachine {
         this.isOn = isOn;
         this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, EnumMachine.OFF));
         System.out.println(isOn);
-        
+
     }
 
 
