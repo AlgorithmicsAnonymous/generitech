@@ -1,6 +1,7 @@
 package com.Sandvoxel.GeneriTech.GTBlock;
 
 import com.Sandvoxel.GeneriTech.EnumTypes.EnumMachine;
+import com.Sandvoxel.GeneriTech.GeneriTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneComparator;
 import net.minecraft.block.SoundType;
@@ -29,33 +30,23 @@ public class BaceMachine extends DirectionalMachine {
     private final boolean isOn;
 
 
-
-    public BaceMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab, boolean isOn){
-        super(blockMaterial, stepSound , tab);
+    public BaceMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab, boolean isOn) {
+        super(blockMaterial, stepSound, tab);
         this.isOn = isOn;
         this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, EnumMachine.OFF));
         System.out.println(isOn);
-
-
-
+        
     }
 
 
 
-
-
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
-    {
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
-        if (!worldIn.isRemote)
-        {
-            if (!this.isOn && !worldIn.isBlockPowered(pos))
-            {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF,EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
-            }
-            else if (!this.isOn && worldIn.isBlockPowered(pos))
-            {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF,EnumMachine.ON).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+        if (!worldIn.isRemote) {
+            if (!this.isOn && !worldIn.isBlockPowered(pos)) {
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+            } else if (!this.isOn && worldIn.isBlockPowered(pos)) {
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.ON).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
         }
     }
@@ -63,34 +54,25 @@ public class BaceMachine extends DirectionalMachine {
     /**
      * Called when a neighboring block changes.
      */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
-    {
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
-        if (!worldIn.isRemote)
-        {
-            if (!this.isOn && !worldIn.isBlockPowered(pos))
-            {
+        if (!worldIn.isRemote) {
+            if (!this.isOn && !worldIn.isBlockPowered(pos)) {
                 worldIn.scheduleUpdate(pos, this, 4);
-            }
-            else if (!this.isOn && worldIn.isBlockPowered(pos))
-            {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF,EnumMachine.ON).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+            } else if (!this.isOn && worldIn.isBlockPowered(pos)) {
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.ON).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
-    {
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
-        if (!worldIn.isRemote)
-        {
-            if (!this.isOn && !worldIn.isBlockPowered(pos))
-            {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF,EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+        if (!worldIn.isRemote) {
+            if (!this.isOn && !worldIn.isBlockPowered(pos)) {
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
         }
     }
-
 
 
 

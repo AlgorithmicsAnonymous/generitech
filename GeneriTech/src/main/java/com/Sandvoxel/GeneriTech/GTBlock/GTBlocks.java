@@ -5,6 +5,7 @@ import com.Sandvoxel.GeneriTech.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -18,9 +19,14 @@ public class GTBlocks {
     public static Block pulverizer;
     private static boolean isOn;
 
+
     public static void init(){
-        
+
+
         pulverizer = new BaceMachine(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech, isOn);
+
+
+
     }
 
     public static void register(){
