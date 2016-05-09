@@ -16,9 +16,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class GTBlocks {
 
     public static Block pulverizer;
+    private static boolean isOn;
 
     public static void init(){
-        pulverizer = new DirectionalMachine(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech);
+        
+        pulverizer = new BaceMachine(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech, isOn);
     }
 
     public static void register(){

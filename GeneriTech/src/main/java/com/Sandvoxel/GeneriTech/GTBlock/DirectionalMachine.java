@@ -32,9 +32,9 @@ public class DirectionalMachine extends BlockContainer {
         super(blockMaterial);
         this.setStepSound(stepSound);
         this.setCreativeTab(tab);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.isBlockContainer = true;
     }
+
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
@@ -114,44 +114,14 @@ public class DirectionalMachine extends BlockContainer {
         }
     }
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-    {
-        if (!keepInventory)
-        {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityFurnace)
-            {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityFurnace)tileentity);
-                worldIn.updateComparatorOutputLevel(pos, this);
-            }
-        }
-
-        super.breakBlock(worldIn, pos, state);
-    }
 
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
-    /**
-     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
-     */
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
 
-        if (stack.hasDisplayName())
-        {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-
-            if (tileentity instanceof TileEntityFurnace)
-            {
-                ((TileEntityFurnace)tileentity).setCustomInventoryName(stack.getDisplayName());
-            }
-        }
-    }
 
     /**
      * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
@@ -173,5 +143,10 @@ public class DirectionalMachine extends BlockContainer {
     {
         return (state.getValue(FACING)).getIndex();
     }
+
+
+
+
+
 
 }
