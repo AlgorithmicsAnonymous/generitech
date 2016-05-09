@@ -49,7 +49,7 @@ public class BaceMachine extends DirectionalMachine {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         if (!worldIn.isRemote)
         {
-            if (this.isOn && !worldIn.isBlockPowered(pos))
+            if (!this.isOn && !worldIn.isBlockPowered(pos))
             {
                 worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF,EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
@@ -68,7 +68,7 @@ public class BaceMachine extends DirectionalMachine {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         if (!worldIn.isRemote)
         {
-            if (this.isOn && !worldIn.isBlockPowered(pos))
+            if (!this.isOn && !worldIn.isBlockPowered(pos))
             {
                 worldIn.scheduleUpdate(pos, this, 4);
             }
@@ -84,7 +84,7 @@ public class BaceMachine extends DirectionalMachine {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         if (!worldIn.isRemote)
         {
-            if (this.isOn && !worldIn.isBlockPowered(pos))
+            if (!this.isOn && !worldIn.isBlockPowered(pos))
             {
                 worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF,EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
