@@ -1,5 +1,6 @@
 package com.Sandvoxel.GeneriTech.TileEntitys;
 
+import com.Sandvoxel.GeneriTech.Contaners.PulverizerContaner;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
@@ -109,12 +110,12 @@ public class TileEntityPulverizer extends TileEntityLockable {
 
     @Override
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-        return new ContainerFurnace(playerInventory, this);
+        return new PulverizerContaner(playerInventory, this);
     }
 
     @Override
     public String getGuiID() {
-        return "generitech:furnace";
+        return "generitech:gui/furnace";
     }
 
     @Override
