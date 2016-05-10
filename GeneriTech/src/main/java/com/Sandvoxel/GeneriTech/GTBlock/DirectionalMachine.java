@@ -41,21 +41,17 @@ public class DirectionalMachine extends BlockContainer {
      */
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new TileEntityFurnace();
+        return null;
     }
+
+
 
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         this.setDefaultFacing(worldIn, pos, state);
     }
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
-        return Item.getItemFromBlock(GTBlocks.pulverizer);
-    }
+
 
     private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
     {

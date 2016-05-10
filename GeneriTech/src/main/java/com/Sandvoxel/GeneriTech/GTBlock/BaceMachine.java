@@ -2,7 +2,9 @@ package com.Sandvoxel.GeneriTech.GTBlock;
 
 import com.Sandvoxel.GeneriTech.EnumTypes.EnumMachine;
 import com.Sandvoxel.GeneriTech.GeneriTab;
+import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityPulverizer;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneComparator;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,6 +14,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -38,6 +43,19 @@ public class BaceMachine extends DirectionalMachine {
 
     }
 
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta)
+    {
+        return new TileEntityPulverizer();
+    }
+
+    /**
+     * Get the Item that this Block should drop when harvested.
+     */
+    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    {
+        return Item.getItemFromBlock(GTBlocks.pulverizer);
+    }
 
 
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
