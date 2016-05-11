@@ -2,11 +2,13 @@ package com.Sandvoxel.GeneriTech.GTBlock;
 
 import com.Sandvoxel.GeneriTech.Blocks.BlockPulverizer;
 import com.Sandvoxel.GeneriTech.GeneriTech;
+import com.Sandvoxel.GeneriTech.Misc.GeneriTab;
 import com.Sandvoxel.GeneriTech.Misc.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -18,19 +20,21 @@ public class GTBlocks {
 
     public static Block pulverizer;
     private static boolean isOn;
+    public static Block testBlock;
 
 
     public static void init(){
 
 
         pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech, isOn);
-
+        testBlock = new BaceMachine(Material.rock, SoundType.ANVIL, GeneriTech.TabGeneriTech, isOn);
 
 
     }
 
     public static void register(){
         registerBlock(pulverizer, "pulverizer");
+        registerBlock(testBlock, "testBlock");
     }
 
 
@@ -44,8 +48,9 @@ public class GTBlocks {
         //Replace Reference.MOD_ID to either the reference for your mod ID or the ID itself
         ResourceLocation blockRsLoc = new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation);
         GameRegistry.register(blockIn, blockRsLoc);
-        GameRegistry.register(new ItemBlock(blockIn), blockRsLoc);
         blockIn.setUnlocalizedName(resourceLocation);
+        GameRegistry.register(new ItemBlock(blockIn), blockRsLoc);
+
     }
 
     /**
