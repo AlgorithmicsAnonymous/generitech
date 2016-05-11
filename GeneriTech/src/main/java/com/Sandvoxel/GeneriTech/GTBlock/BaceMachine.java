@@ -24,17 +24,12 @@ import java.util.Random;
 public class BaceMachine extends DirectionalMachine {
 
     public static final PropertyEnum ONOFF = PropertyEnum.<EnumMachine>create("onoff", EnumMachine.class);
-    private boolean isOn;
 
 
-    public BaceMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab, boolean isOn) {
+
+    public BaceMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
         super(blockMaterial, stepSound, tab);
-        this.isOn = isOn;
         this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, EnumMachine.OFF));
-        System.out.println(isOn);
-
-
-
     }
 
 

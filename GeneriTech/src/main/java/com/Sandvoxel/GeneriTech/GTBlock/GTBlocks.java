@@ -17,13 +17,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class GTBlocks {
 
     public static Block pulverizer;
-    private static boolean isOn;
+
 
 
     public static void init(){
 
 
-        pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech, isOn);
+        pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech);
 
 
 

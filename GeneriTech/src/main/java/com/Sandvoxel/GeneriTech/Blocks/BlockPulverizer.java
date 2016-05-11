@@ -24,8 +24,8 @@ public class BlockPulverizer extends BaceMachine {
 
 
 
-    public BlockPulverizer(Material blockMaterial, SoundType stepSound, CreativeTabs tab, boolean isOn) {
-        super(blockMaterial, stepSound, tab, isOn);
+    public BlockPulverizer(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
+        super(blockMaterial, stepSound, tab);
     }
 
     @Override
