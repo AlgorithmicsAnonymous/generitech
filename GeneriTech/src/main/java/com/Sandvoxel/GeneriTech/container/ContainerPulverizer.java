@@ -1,6 +1,7 @@
 package com.Sandvoxel.GeneriTech.container;
 
 import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityInventoryBase;
+import com.Sandvoxel.GeneriTech.container.slot.SlotDisabled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -37,13 +38,13 @@ public class ContainerPulverizer extends ContainerBase {
             ItemStack current = slot.getStack();
             previous = current.copy();
 
-            if (fromSlot < 1) {
+            if (fromSlot < 3) {
                 // From TE Inventory to Player Inventory
-                if (!this.mergeItemStack(current, 1, 36, true))
+                if (!this.mergeItemStack(current, 3, 37, true))
                     return null;
             } else {
                 // From Player Inventory to TE Inventory
-                if (!this.mergeItemStack(current, 0, 0, false))
+                if (!this.mergeItemStack(current, 0, 1, false))
                     return null;
             }
 

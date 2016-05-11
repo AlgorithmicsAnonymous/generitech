@@ -20,4 +20,9 @@ public class GuiPulverizer extends GuiContainer {
         this.mc.getTextureManager().bindTexture(new ResourceLocation("generitech", "textures/gui/container/pulverizer.png"));
         drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        fontRendererObj.drawString("Metal Shredder", 8, 6, 4210752);
+    }
 }
