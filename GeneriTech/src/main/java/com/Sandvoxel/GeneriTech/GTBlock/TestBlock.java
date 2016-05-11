@@ -11,7 +11,7 @@ public class TestBlock extends BaseMachine implements IEnergyProvider, IEnergySt
 
 
     public TestBlock(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
-        super(blockMaterial, stepSound, tab);
+        super(blockMaterial, stepSound, tab, null);
     }
 
     @Override

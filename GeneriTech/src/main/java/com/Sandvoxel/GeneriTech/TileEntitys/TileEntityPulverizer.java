@@ -1,16 +1,10 @@
 package com.Sandvoxel.GeneriTech.TileEntitys;
 
+public class TileEntityPulverizer extends TileEntityInventoryBase {
 
-import net.minecraft.entity.player.EntityPlayer;
-
-import net.minecraft.inventory.*;
-import net.minecraft.tileentity.TileEntity;
-
-import net.minecraft.util.EnumFacing;
-
-
-
-public class TileEntityPulverizer extends TileEntity {
-
+    public TileEntityPulverizer()
+    {
+        super(2,64);
+    }
 
 }
