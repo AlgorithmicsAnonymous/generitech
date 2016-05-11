@@ -10,8 +10,8 @@ import net.minecraft.util.EnumFacing;
 public class TestBlock extends BaceMachine implements IEnergyProvider, IEnergyStorage {
 
 
-    public TestBlock(Material blockMaterial, SoundType stepSound, CreativeTabs tab, boolean isOn) {
-        super(blockMaterial, stepSound, tab, isOn);
+    public TestBlock(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
+        super(blockMaterial, stepSound, tab);
         this.setRegistryName("testBLock");
         this.setUnlocalizedName("testBlock");
     }
