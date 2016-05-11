@@ -26,7 +26,7 @@ public class GTBlocks {
     public static void init(){
 
         pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech);
-        testBlock = new BaceMachine(Material.rock, SoundType.ANVIL, GeneriTech.TabGeneriTech);
+        testBlock = new TestBlock(Material.rock, SoundType.ANVIL, GeneriTech.TabGeneriTech);
 
 
 

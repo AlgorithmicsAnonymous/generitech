@@ -12,8 +12,6 @@ public class TestBlock extends BaceMachine implements IEnergyProvider, IEnergySt
 
     public TestBlock(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
         super(blockMaterial, stepSound, tab);
-        this.setRegistryName("testBLock");
-        this.setUnlocalizedName("testBlock");
     }
 
     @Override
