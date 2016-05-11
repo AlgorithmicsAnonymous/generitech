@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class GTBlocks {
 
-    public static final Block pulverizer;
-    public static final Block testBlock;
+    public static Block pulverizer;
+    public static Block testBlock;
 
 
 
