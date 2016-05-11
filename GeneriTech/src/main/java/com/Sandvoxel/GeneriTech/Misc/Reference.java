@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech;
+package com.Sandvoxel.GeneriTech.Misc;
 
 
 public class Reference {

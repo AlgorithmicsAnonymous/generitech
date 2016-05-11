@@ -4,6 +4,7 @@ import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 /**
  * Created by CrazyGrape on 5/7/2016.
@@ -20,6 +21,7 @@ public class CommonProxy {
 
 
     public void Init(FMLInitializationEvent e) {
+
     }
 
 

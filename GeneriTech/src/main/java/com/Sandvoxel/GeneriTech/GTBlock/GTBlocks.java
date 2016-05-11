@@ -2,11 +2,10 @@ package com.Sandvoxel.GeneriTech.GTBlock;
 
 import com.Sandvoxel.GeneriTech.Blocks.BlockPulverizer;
 import com.Sandvoxel.GeneriTech.GeneriTech;
-import com.Sandvoxel.GeneriTech.Reference;
+import com.Sandvoxel.GeneriTech.Misc.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;

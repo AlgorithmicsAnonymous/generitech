@@ -1,8 +1,8 @@
 package com.Sandvoxel.GeneriTech;
 
-import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
+import com.Sandvoxel.GeneriTech.Misc.GeneriTab;
+import com.Sandvoxel.GeneriTech.Misc.Reference;
 import com.Sandvoxel.GeneriTech.proxy.CommonProxy;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

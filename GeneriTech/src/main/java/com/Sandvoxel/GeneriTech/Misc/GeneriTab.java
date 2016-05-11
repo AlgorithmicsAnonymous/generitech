@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech;
+package com.Sandvoxel.GeneriTech.Misc;
 
 import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
 import net.minecraft.block.Block;

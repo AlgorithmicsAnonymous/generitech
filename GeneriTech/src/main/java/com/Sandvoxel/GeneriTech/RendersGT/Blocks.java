@@ -1,13 +1,11 @@
 package com.Sandvoxel.GeneriTech.RendersGT;
 
 import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
-import com.Sandvoxel.GeneriTech.Reference;
+import com.Sandvoxel.GeneriTech.Misc.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.model.ModelLoader;
 
 
 public class Blocks {
