@@ -17,4 +17,16 @@ public class GeneriTechTabs {
             return Reference.MOD_ID + ".general";
         }
     };
+
+    public static final CreativeTabs ORE = new CreativeTabs(Reference.MOD_ID) {
+        @Override
+        public Item getTabIconItem() {
+            return Item.getItemFromBlock(GTBlocks.blockOre);
+        }
+
+        @Override
+        public String getTabLabel() {
+            return Reference.MOD_ID + ".ore";
+        }
+    };
 }

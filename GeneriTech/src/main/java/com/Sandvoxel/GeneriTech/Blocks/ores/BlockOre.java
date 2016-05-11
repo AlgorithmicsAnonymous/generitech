@@ -1,6 +1,7 @@
 package com.Sandvoxel.GeneriTech.Blocks.ores;
 
 import com.Sandvoxel.GeneriTech.EnumTypes.EnumOres;
+import com.Sandvoxel.GeneriTech.GeneriTechTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -24,7 +25,7 @@ public class BlockOre extends Block{
         this.setHardness(hardness);
         this.setResistance(resistance);
         this.setUnlocalizedName("blockOre");
-        this.setCreativeTab(CreativeTabs.tabMisc);
+        this.setCreativeTab(GeneriTechTabs.ORE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
     }
 
