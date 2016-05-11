@@ -31,7 +31,8 @@ public class GTBlocks {
     public static void register(){
         registerBlock(pulverizer, "pulverizer");
         registerBlock(testBlock, "testBlock");
-        GameRegistry.registerBlock(blockOre, ItemMultiTextureHelper.class, "blockOre", new Object[]{subNames});
+        //GameRegistry.registerBlock(blockOre, ItemMultiTextureHelper.class, new Object[]{subNames});
+        registerBlock(blockOre, "blockOre");
     }
 
 
