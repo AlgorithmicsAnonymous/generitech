@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.EnumFacing;
 
-public class TestBlock extends BaceMachine implements IEnergyProvider, IEnergyStorage {
+public class TestBlock extends BaseMachine implements IEnergyProvider, IEnergyStorage {
 
 
     public TestBlock(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {

@@ -21,13 +21,13 @@ import net.minecraftforge.fml.common.FMLLog;
 import java.util.Random;
 
 
-public class BaceMachine extends DirectionalMachine {
+public class BaseMachine extends DirectionalMachine {
 
     public static final PropertyEnum ONOFF = PropertyEnum.<EnumMachine>create("onoff", EnumMachine.class);
 
 
 
-    public BaceMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
+    public BaseMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
         super(blockMaterial, stepSound, tab);
         this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, EnumMachine.OFF));
     }
