@@ -1,5 +1,6 @@
 package com.Sandvoxel.GeneriTech.GTBlock;
 
+import com.Sandvoxel.GeneriTech.Blocks.BlockPulverizer;
 import com.Sandvoxel.GeneriTech.GeneriTech;
 import com.Sandvoxel.GeneriTech.Reference;
 import net.minecraft.block.Block;
@@ -23,7 +24,7 @@ public class GTBlocks {
     public static void init(){
 
 
-        pulverizer = new BaceMachine(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech, isOn);
+        pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech, isOn);
 
 
 

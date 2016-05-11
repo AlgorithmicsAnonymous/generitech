@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * Created by koval on 5/9/2016.
  */
-public class TileEntityPulverizer extends TileEntityLockableLoot {
+public class TileEntityPulverizer extends TileEntityLockableLoot implements IInventory {
 
     private ItemStack[] PulverizerItemStacks = new ItemStack[3];
     private String PulverizerCustomName;
@@ -46,7 +46,7 @@ public class TileEntityPulverizer extends TileEntityLockableLoot {
 
         if (!this.checkLootAndRead(compound))
         {
-            NBTTagList nbttaglist = compound.getTagList("PulverizerItems", 10);
+            NBTTagList nbttaglist = compound.getTagList("PulverizerItems", 6);
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
@@ -203,4 +203,9 @@ public class TileEntityPulverizer extends TileEntityLockableLoot {
         return this.PulverizerCustomName != null && !this.PulverizerCustomName.isEmpty();
     }
 
+
+    public void setCustomName(String name)
+    {
+        this.PulverizerCustomName = name;
+    }
 }
