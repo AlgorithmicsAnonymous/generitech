@@ -20,9 +20,7 @@ import net.minecraftforge.fml.common.FMLLog;
 
 import java.util.Random;
 
-/**
- * Created by koval on 5/8/2016.
- */
+
 public class BaceMachine extends DirectionalMachine {
 
     public static final PropertyEnum ONOFF = PropertyEnum.<EnumMachine>create("onoff", EnumMachine.class);
@@ -89,7 +87,7 @@ public class BaceMachine extends DirectionalMachine {
             if (!worldIn.isBlockPowered(pos)) {
                 worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
-            
+
         }
     }
 
