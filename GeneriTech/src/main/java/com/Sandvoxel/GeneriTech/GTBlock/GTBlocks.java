@@ -2,6 +2,7 @@ package com.Sandvoxel.GeneriTech.GTBlock;
 
 import com.Sandvoxel.GeneriTech.Blocks.BlockPulverizer;
 import com.Sandvoxel.GeneriTech.GeneriTech;
+import com.Sandvoxel.GeneriTech.GeneriTechTabs;
 import com.Sandvoxel.GeneriTech.Misc.GeneriTab;
 import com.Sandvoxel.GeneriTech.Misc.Reference;
 import net.minecraft.block.Block;
@@ -12,10 +13,6 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-/**
- * Created by koval on 5/7/2016.
- * Made to actually work by CrazyGrape on the same date
- */
 public class GTBlocks {
 
     public static Block pulverizer;
@@ -25,10 +22,8 @@ public class GTBlocks {
 
     public static void init(){
 
-        pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTech.TabGeneriTech);
-        testBlock = new TestBlock(Material.rock, SoundType.ANVIL, GeneriTech.TabGeneriTech);
-
-
+        pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTechTabs.GENERAL);
+        testBlock = new TestBlock(Material.rock, SoundType.ANVIL, GeneriTechTabs.GENERAL);
 
     }
 

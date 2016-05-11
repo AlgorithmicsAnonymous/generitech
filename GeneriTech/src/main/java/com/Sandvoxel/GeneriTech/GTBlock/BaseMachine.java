@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class BaseMachine extends DirectionalMachine {
 
-    public static final PropertyEnum ONOFF = PropertyEnum.<EnumMachine>create("onoff", EnumMachine.class);
+    public static final PropertyEnum ONOFF = PropertyEnum.create("onoff", EnumMachine.class);
 
 
 
@@ -94,7 +94,7 @@ public class BaseMachine extends DirectionalMachine {
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {ONOFF,FACING});
+        return new BlockStateContainer(this, ONOFF,FACING);
     }
 
 
@@ -106,7 +106,7 @@ public class BaseMachine extends DirectionalMachine {
 
         int i = 0;
 
-        i = i | ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
+        i = i | state.getValue(FACING).getHorizontalIndex();
 
         if (state.getValue(ONOFF) == EnumMachine.ON){
             i |= 4;
