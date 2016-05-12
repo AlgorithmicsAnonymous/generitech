@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class BaseMachine extends DirectionalMachine implements ITileEntityProvider {
 
-   
+
     public static final PropertyBool ONOFF = PropertyBool.create("onoff");
 
     @Nonnull
