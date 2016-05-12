@@ -1,12 +1,12 @@
 {
   "variants": {
-    "facing=north,onoff=on": { "model": "generitech:pulverizer" },
-    "facing=south,onoff=on": { "model": "generitech:pulverizer", "y": 180 },
-    "facing=west,onoff=on":  { "model": "generitech:pulverizer", "y": 270 },
-    "facing=east,onoff=on":  { "model": "generitech:pulverizer", "y": 90 },
-    "facing=north,onoff=off": { "model": "generitech:pulverizerNotAni" },
-    "facing=south,onoff=off": { "model": "generitech:pulverizerNotAni", "y": 180 },
-    "facing=west,onoff=off":  { "model": "generitech:pulverizerNotAni", "y": 270 },
-    "facing=east,onoff=off":  { "model": "generitech:pulverizerNotAni", "y": 90 }
+    "facing=north,onoff=true": { "model": "generitech:pulverizer" },
+    "facing=south,onoff=true": { "model": "generitech:pulverizer", "y": 180 },
+    "facing=west,onoff=true":  { "model": "generitech:pulverizer", "y": 270 },
+    "facing=east,onoff=true":  { "model": "generitech:pulverizer", "y": 90 },
+    "facing=north,onoff=false": { "model": "generitech:pulverizerNotAni" },
+    "facing=south,onoff=false": { "model": "generitech:pulverizerNotAni", "y": 180 },
+    "facing=west,onoff=false":  { "model": "generitech:pulverizerNotAni", "y": 270 },
+    "facing=east,onoff=false":  { "model": "generitech:pulverizerNotAni", "y": 90 }
   }
 }

@@ -2,6 +2,7 @@ package com.sandvoxel.generitech.proxy;
 
 import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.GeneriTech;
+import com.sandvoxel.generitech.items.GTItems;
 import com.sandvoxel.generitech.tileentities.GTTileEntities;
 import com.sandvoxel.generitech.handler.GuiHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -15,6 +16,9 @@ public abstract class CommonProxy implements IProxy {
     public void preInit(FMLPreInitializationEvent e) {
         GTBlocks.init();
         GTBlocks.register();
+
+        GTItems.init();
+        GTItems.register();
 
         GTTileEntities.init();
     }
