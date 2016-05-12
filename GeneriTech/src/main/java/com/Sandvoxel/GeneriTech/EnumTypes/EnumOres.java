@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.EnumTypes;
+package com.sandvoxel.generitech.enumtypes;
 
 import net.minecraft.util.IStringSerializable;
 

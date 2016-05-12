@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.container.slot;
+package com.Sandvoxel.generitech.container.slot;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

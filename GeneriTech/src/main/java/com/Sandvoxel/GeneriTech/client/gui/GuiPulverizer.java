@@ -1,7 +1,7 @@
-package com.Sandvoxel.GeneriTech.client.gui;
+package com.sandvoxel.generitech.client.gui;
 
-import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityInventoryBase;
-import com.Sandvoxel.GeneriTech.container.ContainerPulverizer;
+import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
+import com.sandvoxel.generitech.container.ContainerPulverizer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;

@@ -1,7 +1,6 @@
-package com.Sandvoxel.GeneriTech.container;
+package com.sandvoxel.generitech.container;
 
-import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityInventoryBase;
-import com.Sandvoxel.GeneriTech.container.slot.SlotDisabled;
+import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -32,7 +31,7 @@ public class ContainerPulverizer extends ContainerBase {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int fromSlot) {
         ItemStack previous = null;
-        Slot slot = (Slot) this.inventorySlots.get(fromSlot);
+        Slot slot = this.inventorySlots.get(fromSlot);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack current = slot.getStack();
@@ -49,7 +48,7 @@ public class ContainerPulverizer extends ContainerBase {
             }
 
             if (current.stackSize == 0)
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             else
                 slot.onSlotChanged();
 

@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.GTBlock;
+package com.sandvoxel.generitech.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

@@ -1,7 +1,7 @@
-package com.Sandvoxel.GeneriTech.Blocks.ores;
+package com.sandvoxel.generitech.blocks.ores;
 
-import com.Sandvoxel.GeneriTech.EnumTypes.EnumOres;
-import com.Sandvoxel.GeneriTech.GeneriTechTabs;
+import com.sandvoxel.generitech.enumtypes.EnumOres;
+import com.sandvoxel.generitech.GeneriTechTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;

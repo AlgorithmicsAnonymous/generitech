@@ -1,6 +1,6 @@
-package com.Sandvoxel.GeneriTech.TileEntitys;
+package com.sandvoxel.generitech.tileentities;
 
-import com.Sandvoxel.GeneriTech.Misc.Reference;
+import com.sandvoxel.generitech.Reference;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class GTTileEntities {

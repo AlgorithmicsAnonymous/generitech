@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.GTBlock;
+package com.sandvoxel.generitech.blocks;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyStorage;

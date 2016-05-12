@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.util;
+package com.sandvoxel.generitech.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemMultiTexture;

@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.TileEntitys;
+package com.sandvoxel.generitech.tileentities;
 
 public class TileEntityPulverizer extends TileEntityInventoryBase {
 

@@ -1,10 +1,8 @@
-package com.Sandvoxel.GeneriTech.GTBlock;
+package com.sandvoxel.generitech.blocks;
 
-import com.Sandvoxel.GeneriTech.EnumTypes.EnumMachine;
-import com.Sandvoxel.GeneriTech.Misc.Reference;
-import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityBase;
-import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityInventoryBase;
-import com.Sandvoxel.GeneriTech.util.LogHelper;
+import com.sandvoxel.generitech.enumtypes.EnumMachine;
+import com.sandvoxel.generitech.tileentities.TileEntityBase;
+import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -15,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,8 +20,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import javax.annotation.Nonnull;
 import java.util.Random;

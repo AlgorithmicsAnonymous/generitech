@@ -1,6 +1,6 @@
-package com.Sandvoxel.GeneriTech.container;
+package com.sandvoxel.generitech.container;
 
-import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityInventoryBase;
+import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;

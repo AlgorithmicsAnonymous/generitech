@@ -1,10 +1,9 @@
-package com.Sandvoxel.GeneriTech.GTBlock;
+package com.sandvoxel.generitech.blocks;
 
-import com.Sandvoxel.GeneriTech.Blocks.BlockPulverizer;
-import com.Sandvoxel.GeneriTech.Blocks.ores.BlockOre;
-import com.Sandvoxel.GeneriTech.GeneriTechTabs;
-import com.Sandvoxel.GeneriTech.Misc.Reference;
-import com.Sandvoxel.GeneriTech.util.ItemMultiTextureHelper;
+import com.sandvoxel.generitech.blocks.machines.BlockPulverizer;
+import com.sandvoxel.generitech.blocks.ores.BlockOre;
+import com.sandvoxel.generitech.GeneriTechTabs;
+import com.sandvoxel.generitech.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

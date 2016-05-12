@@ -1,6 +1,6 @@
-package com.Sandvoxel.GeneriTech.util;
+package com.sandvoxel.generitech.util;
 
-import com.Sandvoxel.GeneriTech.Misc.Reference;
+import com.sandvoxel.generitech.Reference;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

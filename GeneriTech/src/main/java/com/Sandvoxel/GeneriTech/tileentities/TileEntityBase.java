@@ -1,4 +1,4 @@
-package com.Sandvoxel.GeneriTech.TileEntitys;
+package com.sandvoxel.generitech.tileentities;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

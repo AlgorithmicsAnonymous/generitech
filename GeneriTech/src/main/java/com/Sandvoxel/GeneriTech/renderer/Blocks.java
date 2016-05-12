@@ -1,7 +1,7 @@
-package com.Sandvoxel.GeneriTech.RendersGT;
+package com.sandvoxel.generitech.renderer;
 
-import com.Sandvoxel.GeneriTech.GTBlock.GTBlocks;
-import com.Sandvoxel.GeneriTech.Misc.Reference;
+import com.sandvoxel.generitech.blocks.GTBlocks;
+import com.sandvoxel.generitech.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
