@@ -39,10 +39,10 @@ public class GTItems {
 
     }
 
-    public static void registerItem(Item blockIn, String resourceLocation){
+    public static void registerItem(Item itemIn, String resourceLocation){
 
-        ResourceLocation blockRsLoc = new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation);
-        GameRegistry.register(blockIn, blockRsLoc);
+        ResourceLocation itemRsLoc = new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation);
+        GameRegistry.register(itemIn, itemRsLoc);
 
 
     }
