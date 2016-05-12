@@ -1,5 +1,6 @@
 package com.sandvoxel.generitech.proxy;
 
+import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.renderer.Blocks;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -10,16 +11,15 @@ public class ClientProxy extends CommonProxy{
     @Override
     public void preInit(FMLPreInitializationEvent e){
         super.preInit(e);
-
-
     }
 
     @Override
     public void init(FMLInitializationEvent e){
         super.init(e);
-        Blocks.preInit();
-        Blocks.registerRenders();
+        //Blocks.preInit();
+        //Blocks.registerRenders();
 
+        GTBlocks.registerRenderers();
     }
 
     @Override

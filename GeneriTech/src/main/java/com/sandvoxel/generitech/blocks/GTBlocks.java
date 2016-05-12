@@ -4,7 +4,8 @@ import com.sandvoxel.generitech.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.blocks.ores.BlockOre;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.blocks.ores.ItemOre;
+import com.sandvoxel.generitech.items.ore.ItemOre;
+import com.sandvoxel.generitech.util.IBlockRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -42,6 +43,12 @@ public class GTBlocks {
 
 
 
+    }
+
+    public static void registerRenderers()
+    {
+        ((IBlockRenderer) blockOre).registerBlockRenderer();
+        ((IBlockRenderer) blockOre).registerBlockItemRenderer();
     }
 
 

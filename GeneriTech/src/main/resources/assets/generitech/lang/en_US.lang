@@ -1,3 +1,7 @@
 itemGroup.generitech.general=GeneriTech General
 itemGroup.generitech.ore=GeneriTech Ores
 tile.pulverizer.name=Metal Shredder
+
+tile.generitech.blockOre.tin.name=Tin Ore
+tile.generitech.blockOre.copper.name=Copper Ore
+tile.generitech.blockOre.lead.name=Lead Ore
