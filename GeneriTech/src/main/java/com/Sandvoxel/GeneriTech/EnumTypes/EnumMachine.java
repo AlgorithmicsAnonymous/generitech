@@ -15,7 +15,7 @@ public enum EnumMachine implements IStringSerializable {
         private final String name;
         private final int ID;
 
-        private EnumMachine(int ID ,String name)
+        EnumMachine(int ID, String name)
         {
             this.name = name;
             this.ID = ID;

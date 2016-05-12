@@ -1,5 +1,6 @@
 package com.Sandvoxel.GeneriTech.GTBlock;
 
+import com.Sandvoxel.GeneriTech.TileEntitys.TileEntityBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -114,6 +115,10 @@ public class DirectionalMachine extends BlockContainer {
 
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
+
+        if(placer.isSneaking())
+            return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
@@ -129,7 +134,7 @@ public class DirectionalMachine extends BlockContainer {
 
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
+        return new BlockStateContainer(this, FACING);
     }
 
      /**

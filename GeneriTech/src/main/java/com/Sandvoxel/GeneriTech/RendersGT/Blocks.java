@@ -13,6 +13,8 @@ public class Blocks {
 
     public static void registerRenders(){
         registerRender(GTBlocks.pulverizer, "pulverizer");
+        registerRender(GTBlocks.blockOre, "blockOre");
+
     }
 
     public static void registerRender(Block blockIn, String resourceLocation){

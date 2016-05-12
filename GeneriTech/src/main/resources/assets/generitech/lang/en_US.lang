@@ -1,2 +1,3 @@
-itemGroup.GeneriTech=GeneriTech
+itemGroup.generitech.general=GeneriTech General
+itemGroup.generitech.ore=GeneriTech Ores
 tile.pulverizer.name=Metal Shredder
