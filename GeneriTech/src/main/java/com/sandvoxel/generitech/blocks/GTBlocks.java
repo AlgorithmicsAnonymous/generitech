@@ -4,6 +4,7 @@ import com.sandvoxel.generitech.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.blocks.ores.BlockOre;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.blocks.ores.ItemOre;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,24 +15,33 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class GTBlocks {
 
     public static Block pulverizer;
-    public static Block testBlock;
+    //public static Block testBlock;
     public static BlockOre blockOre;
+    public static ItemOre itemOre;
+
+
 
     public static final String[] subNames = new String[] {"copper", "tin", "lead"};
 
     public static void init(){
 
         pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTechTabs.GENERAL);
-        testBlock = new TestBlock(Material.rock, SoundType.ANVIL, GeneriTechTabs.GENERAL);
-        blockOre = new BlockOre(Material.iron, 1, 1, subNames);
+        //testBlock = new TestBlock(Material.rock, SoundType.ANVIL, GeneriTechTabs.GENERAL);
+        blockOre = new BlockOre("blockOre", Material.rock, 1, 2);
+        itemOre = new ItemOre("blockOre", blockOre);
+
+
 
     }
 
     public static void register(){
         registerBlock(pulverizer, "pulverizer");
-        registerBlock(testBlock, "testBlock");
-        //GameRegistry.registerBlock(blockOre, ItemMultiTextureHelper.class, new Object[]{subNames});
-        registerBlock(blockOre, "blockOre");
+        //registerBlock(testBlock, "testBlock");
+        GameRegistry.register(blockOre.setRegistryName("blockOre"));
+        GameRegistry.register(itemOre.setRegistryName(blockOre.getRegistryName()));
+
+
+
     }
 
 

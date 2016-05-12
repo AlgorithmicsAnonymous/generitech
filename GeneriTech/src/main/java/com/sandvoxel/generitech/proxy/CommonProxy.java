@@ -15,12 +15,14 @@ public abstract class CommonProxy implements IProxy {
     public void preInit(FMLPreInitializationEvent e) {
         GTBlocks.init();
         GTBlocks.register();
+
         GTTileEntities.init();
     }
 
     @Override
     public void init(FMLInitializationEvent e) {
         NetworkRegistry.INSTANCE.registerGuiHandler(GeneriTech.instance, new GuiHandler());
+
     }
 
     @Override

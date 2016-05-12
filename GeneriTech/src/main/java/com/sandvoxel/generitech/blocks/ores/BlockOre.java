@@ -13,39 +13,28 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class BlockOre extends Block{
+public class BlockOre extends Block implements IBlockMetaName{
 
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
-    public String[] SUBNAMES;
 
 
-    public BlockOre(Material material, float hardness, float resistance, String[] subnames) {
+
+    public BlockOre(String unlocalizedName, Material material, float hardness, float resistance) {
         super(material);
-        SUBNAMES = subnames;
         this.setHardness(hardness);
+        this.setUnlocalizedName(unlocalizedName);
         this.setResistance(resistance);
-        this.setUnlocalizedName("blockOre");
-        this.setCreativeTab(GeneriTechTabs.ORE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
+        this.setCreativeTab(GeneriTechTabs.ORE);
+
     }
 
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, ORE);
-    }
+
+
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        switch (meta){
-            case 0:
-                return getDefaultState().withProperty(ORE, EnumOres.COPPER);
-            case 1:
-                return getDefaultState().withProperty(ORE, EnumOres.TIN);
-            case 2:
-                return getDefaultState().withProperty(ORE, EnumOres.LEAD);
-            default:
-                return getDefaultState().withProperty(ORE, EnumOres.COPPER);
-        }
+        return getDefaultState().withProperty(ORE, EnumOres.values()[meta]);
     }
 
     @Override
@@ -55,16 +44,29 @@ public class BlockOre extends Block{
     }
 
     @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, ORE);
+    }
+
+    @Override
     public int damageDropped(IBlockState state) {
         return getMetaFromState(state);
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
-        list.add(new ItemStack(itemIn, 1, 0));
-        list.add(new ItemStack(itemIn, 1, 1));
-        list.add(new ItemStack(itemIn, 1, 2));
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+        for (EnumOres t : EnumOres.values())
+            list.add(new ItemStack(itemIn, 1, t.ordinal()));
+
     }
 
+    @Override
+    public String getUnlocalizedName() {
+        return super.getUnlocalizedName();
+    }
 
+    @Override
+    public String getSpecialName(ItemStack stack) {
+        return EnumOres.values() [stack.getItemDamage()].name().toLowerCase();
+    }
 }
