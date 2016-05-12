@@ -6,7 +6,7 @@
   },
   "variants": {
     "inventory": [{ "textures": { "all": "generitech:blocks/copper_ore" } }],
-    "type": {
+    "ore": {
       "copper": {
         "textures": {
           "all": "generitech:blocks/copper_ore"

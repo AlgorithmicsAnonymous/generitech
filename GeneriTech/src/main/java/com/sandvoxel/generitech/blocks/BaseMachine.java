@@ -1,13 +1,12 @@
 package com.sandvoxel.generitech.blocks;
 
-import com.sandvoxel.generitech.enumtypes.EnumMachine;
 import com.sandvoxel.generitech.tileentities.TileEntityBase;
 import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -27,14 +26,15 @@ import java.util.Random;
 
 public class BaseMachine extends DirectionalMachine implements ITileEntityProvider {
 
-    public static final PropertyEnum ONOFF = PropertyEnum.create("onoff", EnumMachine.class);
+   
+    public static final PropertyBool ONOFF = PropertyBool.create("onoff");
 
     @Nonnull
     private Class<? extends TileEntity> tileEntityClass;
 
     public BaseMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab, final Class<? extends TileEntity> clazz) {
         super(blockMaterial, stepSound, tab);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, EnumMachine.OFF));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, false));
         this.tileEntityClass = clazz;
     }
 
@@ -72,9 +72,9 @@ public class BaseMachine extends DirectionalMachine implements ITileEntityProvid
         IBlockState iblockstate = worldIn.getBlockState(pos);
         if (!worldIn.isRemote) {
             if (!worldIn.isBlockPowered(pos)) {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, false).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             } else if (worldIn.isBlockPowered(pos)) {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.ON).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, true).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
         }
     }
@@ -88,7 +88,7 @@ public class BaseMachine extends DirectionalMachine implements ITileEntityProvid
             if (!worldIn.isBlockPowered(pos)) {
                 worldIn.scheduleUpdate(pos, this, 4);
             } else if (worldIn.isBlockPowered(pos)) {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.ON).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, true).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
         }
     }
@@ -97,7 +97,7 @@ public class BaseMachine extends DirectionalMachine implements ITileEntityProvid
         IBlockState iblockstate = worldIn.getBlockState(pos);
         if (!worldIn.isRemote) {
             if (!worldIn.isBlockPowered(pos)) {
-                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, EnumMachine.OFF).withProperty(FACING, iblockstate.getValue(FACING)), 2);
+                worldIn.setBlockState(pos, GTBlocks.pulverizer.getDefaultState().withProperty(ONOFF, false).withProperty(FACING, iblockstate.getValue(FACING)), 2);
             }
 
         }
@@ -112,13 +112,12 @@ public class BaseMachine extends DirectionalMachine implements ITileEntityProvid
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        EnumMachine type = (EnumMachine) state.getValue(ONOFF);
 
         int i = 0;
 
         i = i | state.getValue(FACING).getHorizontalIndex();
 
-        if (state.getValue(ONOFF) == EnumMachine.ON){
+        if (state.getValue(ONOFF) == true){
             i |= 4;
         }
 
@@ -127,7 +126,7 @@ public class BaseMachine extends DirectionalMachine implements ITileEntityProvid
     }
     @Override
     public IBlockState getStateFromMeta(int meta ) {
-        return getDefaultState().withProperty(ONOFF,(meta & 4) > 0 ? EnumMachine.ON : EnumMachine.OFF ).withProperty(FACING, EnumFacing.getHorizontal(meta));
+        return getDefaultState().withProperty(ONOFF,(meta & 4) > 0 ? true : false ).withProperty(FACING, EnumFacing.getHorizontal(meta));
     }
 
     @Override
