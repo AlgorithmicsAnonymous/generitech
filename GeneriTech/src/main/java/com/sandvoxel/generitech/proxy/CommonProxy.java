@@ -31,6 +31,8 @@ public abstract class CommonProxy implements IProxy {
         PulverizerRegistry.register(new ItemStack(GTBlocks.BLOCK_ORE.getBlock(), 1, EnumOres.COPPER.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.getItem(), 1, EnumOres.COPPER.getID()), 0.8f);
         PulverizerRegistry.register(new ItemStack(GTBlocks.BLOCK_ORE.getBlock(), 1, EnumOres.LEAD.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.getItem(), 1, EnumOres.LEAD.getID()), 0.8f);
         PulverizerRegistry.register(new ItemStack(GTBlocks.BLOCK_ORE.getBlock(), 1, EnumOres.TIN.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.getItem(), 1, EnumOres.TIN.getID()), 0.8f);
+        PulverizerRegistry.register(new ItemStack(Blocks.gold_ore, 1), new ItemStack(GTItems.ITEM_ORE_DUST.getItem(), 1, EnumOres.IRON.getID()), 0.8f);
+        PulverizerRegistry.register(new ItemStack(Blocks.iron_ore, 1), new ItemStack(GTItems.ITEM_ORE_DUST.getItem(), 1, EnumOres.TIN.getID()), 0.8f);
 
 
     }
