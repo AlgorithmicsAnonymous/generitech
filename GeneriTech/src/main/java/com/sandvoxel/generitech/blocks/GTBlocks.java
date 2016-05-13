@@ -1,9 +1,9 @@
 package com.sandvoxel.generitech.blocks;
 
 
-import com.sandvoxel.generitech.items.machines.ItemPulverizer;
 import com.sandvoxel.generitech.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.blocks.ores.BlockOre;
+import com.sandvoxel.generitech.items.machines.ItemPulverizer;
 import com.sandvoxel.generitech.items.ore.ItemOre;
 import com.sandvoxel.generitech.util.RegistrationHelper;
 import net.minecraft.block.Block;
