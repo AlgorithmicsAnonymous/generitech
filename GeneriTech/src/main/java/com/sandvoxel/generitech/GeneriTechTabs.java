@@ -3,6 +3,7 @@ package com.sandvoxel.generitech;
 import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.items.GTItems;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class GeneriTechTabs {
@@ -33,7 +34,7 @@ public class GeneriTechTabs {
     public static final CreativeTabs DUST = new CreativeTabs(Reference.MOD_ID) {
         @Override
         public Item getTabIconItem() {
-            return GTItems.ITEM_DUST_COPPER;
+            return GTItems.ITEM_ORE_DUST.item;
         }
 
         @Override

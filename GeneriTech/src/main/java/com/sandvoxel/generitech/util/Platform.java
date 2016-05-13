@@ -1,6 +1,7 @@
 package com.sandvoxel.generitech.util;
 
 import net.minecraft.block.properties.IProperty;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.Map;
 
@@ -35,5 +36,9 @@ public class Platform {
         }
 
         return stringbuilder.toString();
+    }
+
+    public static boolean isClient() {
+        return FMLCommonHandler.instance().getEffectiveSide().isClient();
     }
 }

@@ -2,11 +2,15 @@ package com.sandvoxel.generitech.enumtypes;
 
 import net.minecraft.util.IStringSerializable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public enum EnumOres implements IStringSerializable{
 
-    COPPER(0, "copper"),
-    TIN(1, "tin"),
-    LEAD(2, "lead");
+    COPPER(0, "copper", EnumOreType.ORE, EnumOreType.DUST),
+    TIN(1, "tin", EnumOreType.ORE, EnumOreType.DUST),
+    LEAD(2, "lead", EnumOreType.ORE, EnumOreType.DUST);
 
     private static final EnumOres[] META_LOOKUP = new EnumOres[values().length];
 
@@ -18,10 +22,12 @@ public enum EnumOres implements IStringSerializable{
 
     private int ID;
     private String name;
+    private final EnumOreType[] enumOresTypeList;
 
-    private EnumOres(int ID, String name){
+    private EnumOres(int ID, String name, EnumOreType... enumOreTypes){
         this.ID = ID;
         this.name = name;
+        this.enumOresTypeList = enumOreTypes;
     }
 
     @Override
@@ -36,6 +42,22 @@ public enum EnumOres implements IStringSerializable{
     @Override
     public String toString() {
         return getName();
+    }
+
+    public static List<EnumOres> byType(EnumOreType type) {
+        List<EnumOres> result = new ArrayList<>();
+
+        for (EnumOres ore : values()) {
+            if (ore.isTypeSet(type)) {
+                result.add(ore);
+            }
+        }
+
+        return result;
+    }
+
+    public boolean isTypeSet(EnumOreType enumOreType) {
+        return Arrays.asList(enumOresTypeList).contains(enumOreType);
     }
 
     public static EnumOres byID(int id) {

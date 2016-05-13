@@ -1,45 +1,69 @@
 package com.sandvoxel.generitech.items;
 
+import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.items.dust.ItemDust;
+import com.sandvoxel.generitech.items.ore.ItemOreDust;
+import com.sandvoxel.generitech.renderer.Items;
+import com.sandvoxel.generitech.util.IItemRenderer;
+import com.sandvoxel.generitech.util.LogHelper;
+import com.sandvoxel.generitech.util.Platform;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-
-public class GTItems {
-
-    public static Item ITEM_DUST_COPPER;
-    public static Item ITEM_DUST_TIN;
-    public static Item ITEM_DUST_LEAD;
-    public static Item ITEM_DUST_GOLD;
-    public static Item ITEM_DUST_IRON;
+import static com.sandvoxel.generitech.GeneriTechTabs.ORE;
 
 
-    public static void init(){
+public enum GTItems {
 
-        ITEM_DUST_COPPER = new ItemDust("dustcopper");
-        ITEM_DUST_TIN = new ItemDust("dusttin");
-        ITEM_DUST_LEAD = new ItemDust("dustlead");
-        ITEM_DUST_GOLD = new ItemDust("dustgold");
-        ITEM_DUST_IRON = new ItemDust("dustiron");
+    ITEM_ORE_DUST("oredust", new ItemOreDust(), GeneriTechTabs.ORE);
+
+    public final Item item;
+    private final String name;
+
+    GTItems(String name, Item item) {
+        this(name, item, null);
     }
 
-
-    public static void register(){
-        registerItem(ITEM_DUST_COPPER, "dustcopper");
-        registerItem(ITEM_DUST_TIN, "dusttin");
-        registerItem(ITEM_DUST_LEAD, "dustlead");
-        registerItem(ITEM_DUST_GOLD, "dustgold");
-        registerItem(ITEM_DUST_IRON, "dustiron");
-
+    GTItems(String name, Item item, CreativeTabs creativeTabs) {
+        this.item = item;
+        this.name = name;
+        item.setUnlocalizedName(name);
+        item.setCreativeTab(creativeTabs);
     }
 
-    public static void registerItem(Item itemIn, String resourceLocation){
+    public ItemStack getStack() {
+        return new ItemStack(item);
+    }
 
-        ResourceLocation itemRsLoc = new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation);
-        GameRegistry.register(itemIn, itemRsLoc);
+    public ItemStack getStack(int size) {
+        return new ItemStack(item, size);
+    }
 
+    public ItemStack getStack(int size, int damage) {
+        return new ItemStack(item, size, damage);
+    }
 
+    public Item getItem() {
+        return this.item;
+    }
+
+    public static void registerItems() {
+        for (GTItems i : GTItems.values()) {
+            i.register();
+        }
+    }
+
+    public void register() {
+        if (!name.equals(name.toLowerCase())) {
+            throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", name));
+        }
+
+        GameRegistry.register(item.setRegistryName(name));
+
+        if (item instanceof IItemRenderer && Platform.isClient()) {
+            ((IItemRenderer) item).registerItemRenderer();
+        }
     }
 }

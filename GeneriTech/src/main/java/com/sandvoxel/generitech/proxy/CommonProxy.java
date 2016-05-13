@@ -17,10 +17,7 @@ public abstract class CommonProxy implements IProxy {
         GTBlocks.init();
         GTBlocks.register();
 
-        GTItems.init();
-        GTItems.register();
-
-        GTTileEntities.init();
+        GTItems.registerItems();
     }
 
     @Override

@@ -90,6 +90,8 @@ public class BlockOre extends Block implements IBlockMetaName, IBlockRenderer{
     public void registerBlockRenderer() {
         final String resourcePath = String.format("%s:%s", Reference.MOD_ID, "blockOre");
 
+        LogHelper.info(">>>>> " + resourcePath);
+
         ModelLoader.setCustomStateMapper(this, new DefaultStateMapper() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
@@ -102,6 +104,8 @@ public class BlockOre extends Block implements IBlockMetaName, IBlockRenderer{
     @SideOnly(Side.CLIENT)
     public void registerBlockItemRenderer() {
         final String resourcePath = String.format("%s:%s", Reference.MOD_ID, "blockOre");
+
+        LogHelper.info(">>>>> " + resourcePath);
 
         List<ItemStack> subBlocks = new ArrayList<ItemStack>();
         getSubBlocks(Item.getItemFromBlock(this), null, subBlocks);

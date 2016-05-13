@@ -12,11 +12,11 @@ public class Items {
 
 
     public static void registerItemRenderer() {
-        reg(GTItems.ITEM_DUST_COPPER);
+/*        reg(GTItems.ITEM_DUST_COPPER);
         reg(GTItems.ITEM_DUST_TIN);
         reg(GTItems.ITEM_DUST_LEAD);
         reg(GTItems.ITEM_DUST_IRON);
-        reg(GTItems.ITEM_DUST_GOLD);
+        reg(GTItems.ITEM_DUST_GOLD);*/
 
     }
 

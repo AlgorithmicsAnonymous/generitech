@@ -1,6 +1,7 @@
 package com.sandvoxel.generitech.proxy;
 
 import com.sandvoxel.generitech.blocks.GTBlocks;
+import com.sandvoxel.generitech.items.GTItems;
 import com.sandvoxel.generitech.renderer.Blocks;
 import com.sandvoxel.generitech.renderer.Items;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -20,7 +21,8 @@ public class ClientProxy extends CommonProxy{
         Blocks.preInit();
         Blocks.registerRenders();
 
-        Items.registerItemRenderer();
+        //Items.registerItemRenderer();
+
 
         GTBlocks.registerRenderers();
     }
