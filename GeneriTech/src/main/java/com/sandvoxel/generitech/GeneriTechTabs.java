@@ -21,7 +21,7 @@ public class GeneriTechTabs {
     public static final CreativeTabs ORE = new CreativeTabs(Reference.MOD_ID) {
         @Override
         public Item getTabIconItem() {
-            return GTItems.ITEM_ORE_DUST.item;
+            return Item.getItemFromBlock(GTBlocks.BLOCK_ORE.getBlock());
         }
 
         @Override
