@@ -1,2 +1,15 @@
-itemGroup.GeneriTech=GeneriTech
-tile.pulverizer.name=Metal Shredder
+itemGroup.generitech.general=GeneriTech General
+itemGroup.generitech.ore=GeneriTech Ores
+
+tile.generitech.pulverizer.name=Pulverizer
+
+tile.generitech.ore.tin.name=Tin Ore
+tile.generitech.ore.copper.name=Copper Ore
+tile.generitech.ore.lead.name=Lead Ore
+
+item.generitech.oredust.tin.name=Tin Dust
+item.generitech.oredust.copper.name=Copper Dust
+item.generitech.oredust.lead.name=Lead Dust
+
+//Tool Tips
+tile.generitech.ore.copper.tooltip=It's Copper. What else is there to know?

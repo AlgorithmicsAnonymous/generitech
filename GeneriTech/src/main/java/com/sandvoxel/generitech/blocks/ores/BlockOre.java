@@ -2,6 +2,8 @@ package com.sandvoxel.generitech.blocks.ores;
 
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.blocks.BlockBase;
+import com.sandvoxel.generitech.blocks.GTBlocks;
+import com.sandvoxel.generitech.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.util.IBlockMetaName;
@@ -9,7 +11,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -56,5 +60,12 @@ public class BlockOre extends BlockBase implements IBlockMetaName {
     @Override
     public String getSpecialName(ItemStack stack) {
         return EnumOres.values() [stack.getItemDamage()].name().toLowerCase();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        String name = super.getUnlocalizedName();
+        String oreName = EnumOres.byID(stack.getItemDamage()).getName();
+        tooltip.add(I18n.format(name + "." + oreName + ".tooltip"));
     }
 }
