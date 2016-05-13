@@ -4,7 +4,6 @@ import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
-import com.sandvoxel.generitech.items.GTItems;
 import com.sandvoxel.generitech.items.ItemBase;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

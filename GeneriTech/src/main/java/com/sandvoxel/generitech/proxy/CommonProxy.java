@@ -1,13 +1,11 @@
 package com.sandvoxel.generitech.proxy;
 
+import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.blocks.GTBlocks;
-import com.sandvoxel.generitech.GeneriTech;
-import com.sandvoxel.generitech.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
-import com.sandvoxel.generitech.items.GTItems;
-import com.sandvoxel.generitech.tileentities.GTTileEntities;
 import com.sandvoxel.generitech.handler.GuiHandler;
+import com.sandvoxel.generitech.items.GTItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

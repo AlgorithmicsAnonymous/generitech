@@ -1,8 +1,8 @@
 package com.sandvoxel.generitech.handler;
 
-import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import com.sandvoxel.generitech.client.gui.GuiPulverizer;
 import com.sandvoxel.generitech.container.ContainerPulverizer;
+import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

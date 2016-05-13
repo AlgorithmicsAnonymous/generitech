@@ -1,18 +1,13 @@
 package com.sandvoxel.generitech.items;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.items.ore.ItemOreDust;
-import com.sandvoxel.generitech.renderer.Items;
 import com.sandvoxel.generitech.util.IItemRenderer;
-import com.sandvoxel.generitech.util.LogHelper;
 import com.sandvoxel.generitech.util.Platform;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import static com.sandvoxel.generitech.GeneriTechTabs.ORE;
 
 
 public enum GTItems {
