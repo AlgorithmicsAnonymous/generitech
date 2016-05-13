@@ -1,22 +1,18 @@
 package com.sandvoxel.generitech.blocks.ores;
 
+import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.blocks.BlockBase;
 import com.sandvoxel.generitech.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
-import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.util.IBlockMetaName;
-import com.sandvoxel.generitech.util.IBlockRenderer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.model.ModelLoader;
 
 import java.util.List;
 
