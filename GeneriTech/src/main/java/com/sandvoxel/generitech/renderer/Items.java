@@ -2,7 +2,6 @@ package com.sandvoxel.generitech.renderer;
 
 
 import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.items.GTItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;

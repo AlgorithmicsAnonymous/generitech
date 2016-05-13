@@ -1,8 +1,8 @@
 package com.sandvoxel.generitech.blocks.ores;
 
+import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
-import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.util.IBlockRenderer;
 import com.sandvoxel.generitech.util.LogHelper;
 import com.sandvoxel.generitech.util.Platform;

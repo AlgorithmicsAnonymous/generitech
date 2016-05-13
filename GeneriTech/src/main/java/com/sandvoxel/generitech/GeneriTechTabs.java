@@ -3,7 +3,6 @@ package com.sandvoxel.generitech;
 import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.items.GTItems;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class GeneriTechTabs {

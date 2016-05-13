@@ -1,8 +1,8 @@
 package com.sandvoxel.generitech;
 
+import com.google.common.base.Stopwatch;
 import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.util.LogHelper;
-import com.google.common.base.Stopwatch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

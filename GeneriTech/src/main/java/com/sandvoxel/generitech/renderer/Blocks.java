@@ -1,7 +1,7 @@
 package com.sandvoxel.generitech.renderer;
 
-import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.blocks.GTBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;

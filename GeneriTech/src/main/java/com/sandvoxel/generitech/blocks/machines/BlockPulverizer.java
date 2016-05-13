@@ -1,10 +1,10 @@
 package com.sandvoxel.generitech.blocks.machines;
 
+import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.blocks.BaseMachine;
 import com.sandvoxel.generitech.blocks.GTBlocks;
-import com.sandvoxel.generitech.GeneriTech;
-import com.sandvoxel.generitech.tileentities.TileEntityPulverizer;
 import com.sandvoxel.generitech.handler.GuiHandler;
+import com.sandvoxel.generitech.tileentities.TileEntityPulverizer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
