@@ -30,16 +30,5 @@ public class GeneriTechTabs {
             return Reference.MOD_ID + ".ore";
         }
     };
-
-    public static final CreativeTabs DUST = new CreativeTabs(Reference.MOD_ID) {
-        @Override
-        public Item getTabIconItem() {
-            return GTItems.ITEM_ORE_DUST.item;
-        }
-
-        @Override
-        public String getTabLabel() {
-            return Reference.MOD_ID + ".dust";
-        }
-    };
+    
 }
