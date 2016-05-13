@@ -20,7 +20,7 @@ public class BlockOre extends BlockBase implements IBlockMetaName {
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
 
     public BlockOre() {
-        super(Material.rock, "ore");
+        super(Material.rock, "ore/ore");
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
     }

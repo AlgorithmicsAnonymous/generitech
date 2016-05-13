@@ -1,0 +1,49 @@
+{
+  "forge_marker":1,
+  "defaults":{
+    "textures": {
+      "up": "generitech:blocks/BasicSide",
+      "down": "generitech:blocks/BasicSide",
+      "north": "generitech:blocks/PulverizerFront",
+      "east": "generitech:blocks/BasicSide",
+      "west": "generitech:blocks/BasicSide",
+      "south": "generitech:blocks/BasicSide",
+      "particle": "generitech:blocks/PulverizerFront"
+    },
+    "model":"minecraft:cube_all",
+    "transform":"forge:default-block"
+  },
+  "variants":{
+    "inventory":[
+      {
+
+      }
+    ],
+    "facing":{
+      "north":{
+
+      },
+      "east":{
+        "y": 90
+      },
+      "south":{
+        "y": 180
+      },
+      "west":{
+        "y": 270
+      }
+    },
+    "active":
+    {
+      "true": {
+        "textures": {
+          "north": "generitech:blocks/PulverizerFront",
+          "particle": "generitech:blocks/PulverizerFront"
+        }
+      },
+      "false": {
+
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class BlockPulverizer extends BlockMachineBase {
 
     public BlockPulverizer() {
-        super(Material.rock, "machines");
+        super(Material.rock, "machines/pulverizer");
         this.setTileEntity(TileEntityPulverizer.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
     }
