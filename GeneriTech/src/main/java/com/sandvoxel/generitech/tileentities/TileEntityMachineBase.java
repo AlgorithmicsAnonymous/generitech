@@ -5,4 +5,11 @@ public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
     {
         super(invSize, 64);
     }
+
+    @Override
+    public boolean canBeRotated() {
+        return true;
+    }
+
+
 }

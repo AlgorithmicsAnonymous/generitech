@@ -1,5 +1,6 @@
 package com.sandvoxel.generitech.items;
 
+import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.util.IItemRenderer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -14,6 +15,7 @@ public abstract class ItemBase extends Item implements IItemRenderer {
 
     public ItemBase(String resourcePath) {
         this.resourcePath = resourcePath;
+        this.setCreativeTab(GeneriTechTabs.GENERAL);
     }
 
     @Override

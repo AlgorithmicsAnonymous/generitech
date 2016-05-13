@@ -89,10 +89,9 @@ public abstract class BlockBase extends Block implements IBlockRenderer{
 
         ModelLoader.setCustomStateMapper(this, new DefaultStateMapper() {
             @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                return new ModelResourceLocation(resourcePath, getPropertyString(state.getProperties()));
-            }
-        });
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {return new ModelResourceLocation(resourcePath, getPropertyString(state.getProperties()));
+            }}
+        );
     }
 
     @SideOnly(Side.CLIENT)

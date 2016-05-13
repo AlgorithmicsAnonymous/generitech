@@ -6,7 +6,6 @@ import net.minecraft.item.ItemBlock;
 public class ItemPulverizer extends ItemBlock {
     public ItemPulverizer(Block block) {
         super(block);
-        this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
 

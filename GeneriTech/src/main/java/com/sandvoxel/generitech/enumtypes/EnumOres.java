@@ -8,9 +8,15 @@ import java.util.List;
 
 public enum EnumOres implements IStringSerializable{
 
-    COPPER(0, "copper", EnumOreType.ORE, EnumOreType.DUST),
-    TIN(1, "tin", EnumOreType.ORE, EnumOreType.DUST),
-    LEAD(2, "lead", EnumOreType.ORE, EnumOreType.DUST);
+    // Vanilla stuff
+    IRON(0, "iron", EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA),
+    GOLD(1, "gold", EnumOreType.DUST, EnumOreType.VANILLA),
+    //DIAMOND(2, "diamond", EnumOreType.NUGGET, EnumOreType.VANILLA),
+
+    // Our stuff
+    COPPER(2, "copper", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT),
+    TIN(3, "tin", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT),
+    LEAD(4, "lead", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT);
 
     private static final EnumOres[] META_LOOKUP = new EnumOres[values().length];
 

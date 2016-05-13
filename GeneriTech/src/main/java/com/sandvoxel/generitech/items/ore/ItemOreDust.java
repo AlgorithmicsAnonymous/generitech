@@ -42,7 +42,7 @@ public class ItemOreDust extends ItemBase {
     public void registerItemRenderer() {
         for (int i = 0; i < EnumOres.values().length; i++) {
             if (EnumOres.byID(i).isTypeSet(EnumOreType.DUST)) {
-                ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(Reference.MOD_ID + ":ore/dust" + EnumOres.byID(i).getName(), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(Reference.MOD_ID + ":" + resourcePath + "/dust-" + EnumOres.byID(i).getName(), "inventory"));
             }
         }
     }

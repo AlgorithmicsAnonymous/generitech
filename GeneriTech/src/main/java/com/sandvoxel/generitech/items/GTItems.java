@@ -2,6 +2,8 @@ package com.sandvoxel.generitech.items;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.items.ore.ItemOreDust;
+import com.sandvoxel.generitech.items.ore.ItemOreIngot;
+import com.sandvoxel.generitech.items.ore.ItemOreNugget;
 import com.sandvoxel.generitech.util.RegistrationHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -10,7 +12,9 @@ import net.minecraft.item.ItemStack;
 
 public enum GTItems {
 
-    ITEM_ORE_DUST("oredust", new ItemOreDust(), GeneriTechTabs.ORE);
+    ITEM_ORE_INGOT("oreingot", new ItemOreIngot(), GeneriTechTabs.ORE),
+    ITEM_ORE_DUST("oredust", new ItemOreDust(), GeneriTechTabs.ORE),
+    ITEM_ORE_NUGGET("orenugget", new ItemOreNugget(), GeneriTechTabs.ORE);
 
     private Item item;
     private final String name;
