@@ -1,5 +1,6 @@
 package com.sandvoxel.generitech.blocks;
 
+import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.tileentities.TileEntityBase;
 import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.block.Block;
@@ -19,6 +20,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -32,10 +35,24 @@ public class BaseMachine extends DirectionalMachine implements ITileEntityProvid
     @Nonnull
     private Class<? extends TileEntity> tileEntityClass;
 
-    public BaseMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab, final Class<? extends TileEntity> clazz) {
+    public BaseMachine(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
         super(blockMaterial, stepSound, tab);
         this.setDefaultState(this.blockState.getBaseState().withProperty(ONOFF, false));
+    }
+
+    protected void setTileEntity(final Class<? extends TileEntity> clazz) {
         this.tileEntityClass = clazz;
+        this.setTileProvider(true);
+
+        String tileName = "tileentity." + Reference.MOD_ID + "." + clazz.getSimpleName();
+        GameRegistry.registerTileEntity(this.tileEntityClass, tileName);
+    }
+
+    public Class<? extends TileEntity> getTileEntityClass() {
+        return this.tileEntityClass;
+    }
+    private void setTileProvider(final boolean b) {
+        ReflectionHelper.setPrivateValue(Block.class, this, b, "isTileProvider");
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.sandvoxel.generitech.container;
 
+import com.sandvoxel.generitech.container.slot.SlotOutput;
+import com.sandvoxel.generitech.container.slot.SlotPulverizerInput;
 import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -12,9 +14,9 @@ public class ContainerPulverizer extends ContainerBase {
     {
         super(playerIn, tileEntity);
 
-        this.addSlotToContainer(new Slot(tileEntity, 0, 48, 35));
-        this.addSlotToContainer(new Slot(tileEntity, 1, 124, 35));
-        this.addSlotToContainer(new Slot(tileEntity, 2, 143, 35));
+        this.addSlotToContainer(new SlotPulverizerInput(tileEntity, 0, 48, 35));
+        this.addSlotToContainer(new SlotOutput(tileEntity, 1, 124, 35));
+        this.addSlotToContainer(new SlotOutput(tileEntity, 2, 143, 35));
 
         // Player Inventory, Slot 9-35, Slot IDs 9-35
         for (int y = 0; y < 3; ++y) {

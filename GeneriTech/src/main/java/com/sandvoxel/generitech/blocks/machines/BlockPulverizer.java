@@ -25,7 +25,8 @@ import java.util.Random;
 public class BlockPulverizer extends BaseMachine {
 
     public BlockPulverizer(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
-        super(blockMaterial, stepSound, tab, TileEntityPulverizer.class);
+        super(blockMaterial, stepSound, tab);
+        this.setTileEntity(TileEntityPulverizer.class);
     }
 
     @Override
