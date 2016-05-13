@@ -14,6 +14,7 @@ public class ContainerPulverizer extends ContainerBase {
 
         this.addSlotToContainer(new Slot(tileEntity, 0, 48, 35));
         this.addSlotToContainer(new Slot(tileEntity, 1, 124, 35));
+        this.addSlotToContainer(new Slot(tileEntity, 2, 143, 35));
 
         // Player Inventory, Slot 9-35, Slot IDs 9-35
         for (int y = 0; y < 3; ++y) {
