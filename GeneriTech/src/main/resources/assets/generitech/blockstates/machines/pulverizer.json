@@ -37,8 +37,8 @@
     {
       "true": {
         "textures": {
-          "north": "generitech:blocks/PulverizerFront",
-          "particle": "generitech:blocks/PulverizerFront"
+          "north": "generitech:blocks/BasicSide",
+          "particle": "generitech:blocks/BasicSide"
         }
       },
       "false": {

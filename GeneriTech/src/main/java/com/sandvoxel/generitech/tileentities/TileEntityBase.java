@@ -5,6 +5,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -31,9 +34,7 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     public void markForUpdate() {
-        if (this.renderedFragment > 0) {
-            this.renderedFragment |= 0x1;
-        } else if (this.worldObj != null) {
+        if (this.worldObj != null) {
             Block block = worldObj.getBlockState(this.pos).getBlock();
 
             this.worldObj.notifyBlockUpdate(this.pos, worldObj.getBlockState(this.pos), worldObj.getBlockState(this.pos), 3);
@@ -51,6 +52,20 @@ public abstract class TileEntityBase extends TileEntity {
         }
     }
 
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound data = new NBTTagCompound();
+        writeToNBT(data);
+        return new SPacketUpdateTileEntity(this.pos, 1, data);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager networkManager, SPacketUpdateTileEntity s35PacketUpdateTileEntity) {
+        readFromNBT(s35PacketUpdateTileEntity.getNbtCompound());
+        worldObj.markBlockRangeForRenderUpdate(this.pos, this.pos);
+        markForUpdate();
+    }
+
     public TileEntity getTile() {
         return this;
     }
@@ -61,13 +76,6 @@ public abstract class TileEntityBase extends TileEntity {
         }
 
         this.worldObj.checkLightFor(EnumSkyBlock.BLOCK, this.pos);
-    }
-
-    public void onChunkLoad() {
-        if (this.isInvalid())
-            this.validate();
-
-        markForUpdate();
     }
 
     @Override

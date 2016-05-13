@@ -11,5 +11,4 @@ public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
         return true;
     }
 
-
 }

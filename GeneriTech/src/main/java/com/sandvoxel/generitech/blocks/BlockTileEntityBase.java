@@ -4,6 +4,7 @@ import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.tileentities.TileEntityBase;
 import com.sandvoxel.generitech.tileentities.TileEntityInventoryBase;
 import com.sandvoxel.generitech.util.IBlockRenderer;
+import com.sandvoxel.generitech.util.TileHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -72,7 +73,7 @@ public abstract class BlockTileEntityBase extends BlockBase implements IBlockRen
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntityBase tileEntity = (TileEntityBase) worldIn.getTileEntity(pos);
+        TileEntityBase tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityBase.class);
         if (tileEntity != null && tileEntity.canBeRotated()) {
             return state.withProperty(FACING, tileEntity.getForward());
         }

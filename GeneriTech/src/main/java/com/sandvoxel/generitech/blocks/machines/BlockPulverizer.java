@@ -5,6 +5,8 @@ import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.handler.GuiHandler;
 import com.sandvoxel.generitech.tileentities.TileEntityPulverizer;
+import com.sandvoxel.generitech.util.LogHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -41,4 +43,18 @@ public class BlockPulverizer extends BlockMachineBase {
         return getMetaFromState(state);
     }
 
+    @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+
+        if (worldIn.isBlockPowered(pos))
+        {
+            worldIn.setBlockState(pos, state.withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, true));
+        }
+        else
+        {
+            worldIn.setBlockState(pos, state.withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, false));
+        }
+
+    }
 }
