@@ -1,13 +1,13 @@
 package com.sandvoxel.generitech.blocks.machines;
 
+import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.handler.GuiHandler;
-import net.minecraft.block.SoundType;
+import com.sandvoxel.generitech.tileentities.TileEntityPulverizer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;

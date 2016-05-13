@@ -1,7 +1,6 @@
 package com.sandvoxel.generitech.proxy;
 
 import com.sandvoxel.generitech.blocks.GTBlocks;
-import com.sandvoxel.generitech.renderer.Blocks;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
