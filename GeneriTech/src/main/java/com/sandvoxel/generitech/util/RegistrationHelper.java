@@ -42,7 +42,7 @@ public class RegistrationHelper {
             LogHelper.info(String.format("Registered block (%s)", blockClass.getCanonicalName()));
         } catch (Exception ex) {
             LogHelper.fatal(String.format("Fatal Error while registering block (%s)", blockClass.getCanonicalName()));
-            ex.printStackTrace();
+            LogHelper.fatal(ex.toString());
         }
 
         return block;
@@ -73,7 +73,7 @@ public class RegistrationHelper {
             LogHelper.info(String.format("Registered item (%s)", itemClass.getCanonicalName()));
         } catch (Exception ex) {
             LogHelper.fatal(String.format("Fatal Error while registering item (%s)", itemClass.getCanonicalName()));
-            ex.printStackTrace();
+            LogHelper.fatal(ex.toString());
         }
 
         return item;

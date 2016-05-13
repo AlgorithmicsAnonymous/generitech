@@ -4,6 +4,7 @@ import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.items.ore.ItemOreDust;
 import com.sandvoxel.generitech.util.IItemRenderer;
 import com.sandvoxel.generitech.util.Platform;
+import com.sandvoxel.generitech.util.RegistrationHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,7 @@ public enum GTItems {
 
     ITEM_ORE_DUST("oredust", new ItemOreDust(), GeneriTechTabs.ORE);
 
-    public final Item item;
+    private Item item;
     private final String name;
 
     GTItems(String name, Item item) {
@@ -50,15 +51,7 @@ public enum GTItems {
         }
     }
 
-    public void register() {
-        if (!name.equals(name.toLowerCase())) {
-            throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", name));
-        }
-
-        GameRegistry.register(item.setRegistryName(name));
-
-        if (item instanceof IItemRenderer && Platform.isClient()) {
-            ((IItemRenderer) item).registerItemRenderer();
-        }
+    private void register() {
+        item = RegistrationHelper.registerItem(name, item.getClass());
     }
 }

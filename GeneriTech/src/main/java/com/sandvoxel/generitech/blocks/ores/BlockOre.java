@@ -26,18 +26,6 @@ public class BlockOre extends BlockBase implements IBlockMetaName {
     }
 
     @Override
-    public String getUnlocalizedName() {
-        String blockName = getUnwrappedUnlocalizedName(super.getUnlocalizedName());
-
-        return String.format("tile.%s.%s", Reference.MOD_ID, blockName);
-    }
-
-    private String getUnwrappedUnlocalizedName(String unlocalizedName) {
-        return unlocalizedName.substring(unlocalizedName.indexOf(".") + 1);
-    }
-
-
-    @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(ORE, EnumOres.values()[meta]);
     }
