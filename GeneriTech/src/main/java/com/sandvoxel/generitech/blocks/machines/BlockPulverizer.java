@@ -1,12 +1,15 @@
 package com.sandvoxel.generitech.blocks.machines;
 
+import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.blocks.BaseMachine;
+import com.sandvoxel.generitech.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.tileentities.TileEntityPulverizer;
 import com.sandvoxel.generitech.handler.GuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,20 +22,12 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-/**
- * Created by koval on 5/10/2016.
- */
-public class BlockPulverizer extends BaseMachine {
+public class BlockPulverizer extends BlockMachineBase {
 
     public BlockPulverizer(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
-        super(blockMaterial, stepSound, tab);
+        super(blockMaterial, "machines");
         this.setTileEntity(TileEntityPulverizer.class);
-    }
-
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
-        return Item.getItemFromBlock(GTBlocks.pulverizer);
+        this.setCreativeTab(GeneriTechTabs.GENERAL);
     }
 
     @Override
@@ -41,6 +36,16 @@ public class BlockPulverizer extends BaseMachine {
             player.openGui(GeneriTech.instance, GuiHandler.PULVERIZER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, ACTIVE);
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
     }
 
 }
