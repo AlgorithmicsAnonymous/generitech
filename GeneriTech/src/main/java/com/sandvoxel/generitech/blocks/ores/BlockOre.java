@@ -1,9 +1,6 @@
 package com.sandvoxel.generitech.blocks.ores;
 
-import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.blocks.BlockBase;
-import com.sandvoxel.generitech.blocks.GTBlocks;
-import com.sandvoxel.generitech.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.util.IBlockMetaName;

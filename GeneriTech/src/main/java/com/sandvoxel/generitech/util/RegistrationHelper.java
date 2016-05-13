@@ -1,7 +1,6 @@
 package com.sandvoxel.generitech.util;
 
 import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.blocks.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
