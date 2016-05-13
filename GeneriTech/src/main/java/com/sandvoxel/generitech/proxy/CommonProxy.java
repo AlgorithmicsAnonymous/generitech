@@ -20,9 +20,7 @@ public abstract class CommonProxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
-        GTBlocks.init();
-        GTBlocks.register();
-
+        GTBlocks.registerBlocks();
         GTItems.registerItems();
     }
 
@@ -32,9 +30,9 @@ public abstract class CommonProxy implements IProxy {
 
         //todo: Move elsewhere
         PulverizerRegistry.register(new ItemStack(Blocks.redstone_ore), new ItemStack(Items.redstone), 0.8f);
-        PulverizerRegistry.register(new ItemStack(GTBlocks.blockOre, 1, EnumOres.COPPER.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.item, 1, EnumOres.COPPER.getID()), 0.8f);
-        PulverizerRegistry.register(new ItemStack(GTBlocks.blockOre, 1, EnumOres.LEAD.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.item, 1, EnumOres.LEAD.getID()), 0.8f);
-        PulverizerRegistry.register(new ItemStack(GTBlocks.blockOre, 1, EnumOres.TIN.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.item, 1, EnumOres.TIN.getID()), 0.8f);
+        PulverizerRegistry.register(new ItemStack(GTBlocks.BLOCK_ORE.getBlock(), 1, EnumOres.COPPER.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.item, 1, EnumOres.COPPER.getID()), 0.8f);
+        PulverizerRegistry.register(new ItemStack(GTBlocks.BLOCK_ORE.getBlock(), 1, EnumOres.LEAD.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.item, 1, EnumOres.LEAD.getID()), 0.8f);
+        PulverizerRegistry.register(new ItemStack(GTBlocks.BLOCK_ORE.getBlock(), 1, EnumOres.TIN.getID()), new ItemStack(GTItems.ITEM_ORE_DUST.item, 1, EnumOres.TIN.getID()), 0.8f);
 
 
     }

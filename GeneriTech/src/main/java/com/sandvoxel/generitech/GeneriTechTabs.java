@@ -10,7 +10,7 @@ public class GeneriTechTabs {
     public static final CreativeTabs GENERAL = new CreativeTabs(Reference.MOD_ID) {
         @Override
         public Item getTabIconItem() {
-            return Item.getItemFromBlock(GTBlocks.pulverizer);
+            return Item.getItemFromBlock(GTBlocks.BLOCK_PULVERIZER.getBlock());
         }
 
         @Override

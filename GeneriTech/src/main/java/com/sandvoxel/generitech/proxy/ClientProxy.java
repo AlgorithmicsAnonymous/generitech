@@ -18,13 +18,13 @@ public class ClientProxy extends CommonProxy{
     @Override
     public void init(FMLInitializationEvent e){
         super.init(e);
-        Blocks.preInit();
-        Blocks.registerRenders();
+        //Blocks.preInit();
+        //Blocks.registerRenders();
 
         //Items.registerItemRenderer();
 
 
-        GTBlocks.registerRenderers();
+        //GTBlocks.registerRenderers();
     }
 
     @Override

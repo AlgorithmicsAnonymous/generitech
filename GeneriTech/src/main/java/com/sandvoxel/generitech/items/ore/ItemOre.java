@@ -6,11 +6,10 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemOre extends ItemBlock {
-    public ItemOre(String unlocalizedName, Block block) {
+    public ItemOre(Block block) {
         super(block);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setUnlocalizedName(unlocalizedName);
     }
 
     @Override

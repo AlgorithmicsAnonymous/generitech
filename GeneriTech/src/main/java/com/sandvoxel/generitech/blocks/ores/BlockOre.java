@@ -1,42 +1,28 @@
 package com.sandvoxel.generitech.blocks.ores;
 
 import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.blocks.BlockBase;
 import com.sandvoxel.generitech.enumtypes.EnumOres;
 import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.util.IBlockRenderer;
-import com.sandvoxel.generitech.util.LogHelper;
-import com.sandvoxel.generitech.util.Platform;
-import net.minecraft.block.Block;
+import com.sandvoxel.generitech.util.IBlockMetaName;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BlockOre extends Block implements IBlockMetaName, IBlockRenderer{
+public class BlockOre extends BlockBase implements IBlockMetaName {
 
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
 
-
-
-    public BlockOre(String unlocalizedName, Material material, float hardness, float resistance) {
-        super(material);
-        this.setHardness(hardness);
-        this.setUnlocalizedName(unlocalizedName);
-        this.setResistance(resistance);
+    public BlockOre() {
+        super(Material.rock, "ore");
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
-
     }
 
     @Override
@@ -82,38 +68,5 @@ public class BlockOre extends Block implements IBlockMetaName, IBlockRenderer{
     @Override
     public String getSpecialName(ItemStack stack) {
         return EnumOres.values() [stack.getItemDamage()].name().toLowerCase();
-    }
-
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockRenderer() {
-        final String resourcePath = String.format("%s:%s", Reference.MOD_ID, "blockOre");
-
-        LogHelper.info(">>>>> " + resourcePath);
-
-        ModelLoader.setCustomStateMapper(this, new DefaultStateMapper() {
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                return new ModelResourceLocation(resourcePath, getPropertyString(state.getProperties()));
-            }
-        });
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockItemRenderer() {
-        final String resourcePath = String.format("%s:%s", Reference.MOD_ID, "blockOre");
-
-        LogHelper.info(">>>>> " + resourcePath);
-
-        List<ItemStack> subBlocks = new ArrayList<ItemStack>();
-        getSubBlocks(Item.getItemFromBlock(this), null, subBlocks);
-
-        for (ItemStack itemStack : subBlocks) {
-            IBlockState blockState = this.getStateFromMeta(itemStack.getItemDamage());
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), itemStack.getItemDamage(), new ModelResourceLocation(resourcePath, Platform.getPropertyString(blockState.getProperties())));
-
-        }
     }
 }

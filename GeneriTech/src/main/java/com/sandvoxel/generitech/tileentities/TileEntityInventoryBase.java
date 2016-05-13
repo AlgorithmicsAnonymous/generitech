@@ -9,7 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
-public class TileEntityInventoryBase extends TileEntityBase implements IInventory {
+public abstract class TileEntityInventoryBase extends TileEntityBase implements IInventory {
 
     private ItemStack[] inventory;
     private int inventorySize;

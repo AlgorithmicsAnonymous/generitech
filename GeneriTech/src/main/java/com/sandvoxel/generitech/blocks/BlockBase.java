@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockBase extends Block implements IBlockRenderer{
+public abstract class BlockBase extends Block implements IBlockRenderer{
 
     private String resourcePath;
 

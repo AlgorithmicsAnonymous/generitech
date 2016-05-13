@@ -1,9 +1,7 @@
 package com.sandvoxel.generitech.blocks.machines;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.blocks.BaseMachine;
 import com.sandvoxel.generitech.blocks.BlockMachineBase;
-import com.sandvoxel.generitech.blocks.GTBlocks;
 import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.tileentities.TileEntityPulverizer;
 import com.sandvoxel.generitech.handler.GuiHandler;
@@ -13,19 +11,16 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class BlockPulverizer extends BlockMachineBase {
 
-    public BlockPulverizer(Material blockMaterial, SoundType stepSound, CreativeTabs tab) {
-        super(blockMaterial, "machines");
+    public BlockPulverizer() {
+        super(Material.rock, "machines");
         this.setTileEntity(TileEntityPulverizer.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
     }

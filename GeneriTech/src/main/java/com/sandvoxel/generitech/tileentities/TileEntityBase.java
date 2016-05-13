@@ -11,7 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 
-public class TileEntityBase extends TileEntity {
+public abstract class TileEntityBase extends TileEntity {
     private String customName;
     private EnumFacing front = EnumFacing.NORTH;
     private int renderedFragment = 0;

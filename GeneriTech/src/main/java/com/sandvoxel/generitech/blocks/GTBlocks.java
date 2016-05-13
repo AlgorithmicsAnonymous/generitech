@@ -1,82 +1,58 @@
 package com.sandvoxel.generitech.blocks;
 
+
 import com.sandvoxel.generitech.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.blocks.ores.BlockOre;
-import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.items.machines.ItemPulverizer;
 import com.sandvoxel.generitech.items.ore.ItemOre;
-import com.sandvoxel.generitech.util.IBlockRenderer;
+import com.sandvoxel.generitech.util.RegistrationHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.item.ItemStack;
 
-public class GTBlocks {
+public enum GTBlocks {
+    BLOCK_ORE("ore", BlockOre.class, ItemOre.class),
 
-    public static Block pulverizer;
-    //public static Block testBlock;
-    public static BlockOre blockOre;
-    public static ItemOre itemOre;
+    BLOCK_PULVERIZER("pulverizer", BlockPulverizer.class, ItemPulverizer.class);
 
+    private final Class<? extends BlockBase> blockClass;
+    private final Class<? extends ItemBlock> itemBlockClass;
+    private final String name;
+    private Block block;
 
-
-    public static final String[] subNames = new String[] {"copper", "tin", "lead"};
-
-    public static void init(){
-
-        pulverizer = new BlockPulverizer(Material.iron, SoundType.METAL, GeneriTechTabs.GENERAL);
-        //testBlock = new TestBlock(Material.rock, SoundType.ANVIL, GeneriTechTabs.GENERAL);
-        blockOre = new BlockOre("blockOre", Material.rock, 1, 2);
-        itemOre = new ItemOre("blockOre", blockOre);
-
-
-
+    GTBlocks(String name, Class<? extends BlockBase> blockClass) {
+        this(name, blockClass, ItemBlock.class);
     }
 
-    public static void register(){
-        registerBlock(pulverizer, "pulverizer");
-        //registerBlock(testBlock, "testBlock");
-        GameRegistry.register(blockOre.setRegistryName("blockOre"));
-        GameRegistry.register(itemOre.setRegistryName(blockOre.getRegistryName()));
-
-
-
+    GTBlocks(String name, Class<? extends BlockBase> blockClass, Class<? extends ItemBlock> itemBlockClass) {
+        this.blockClass = blockClass;
+        this.itemBlockClass = itemBlockClass;
+        this.name = name;
     }
 
-    public static void registerRenderers()
-    {
-        ((IBlockRenderer) blockOre).registerBlockRenderer();
-        ((IBlockRenderer) blockOre).registerBlockItemRenderer();
+    public static void registerBlocks() {
+        for (GTBlocks block : GTBlocks.values()) {
+            block.registerBlock();
+        }
     }
 
-
-    /**
-     * Registers a Block through Forge's GameRegistry. Makes an ItemBlock for you, too. Do note that
-     * the ItemBlock's UnlocalizedName is the same as the resourceLocation.
-     * @param blockIn The Block to register
-     * @param resourceLocation The name of the block's blockstate .json file in the blockstates folder of your mod
-     */
-    public static void registerBlock(Block blockIn, String resourceLocation){
-        //Replace Reference.MOD_ID to either the reference for your mod ID or the ID itself
-        ResourceLocation blockRsLoc = new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation);
-        GameRegistry.register(blockIn, blockRsLoc);
-        blockIn.setUnlocalizedName(resourceLocation);
-        GameRegistry.register(new ItemBlock(blockIn), blockRsLoc);
-
+    public ItemStack getStack() {
+        return new ItemStack(block);
     }
 
-    /**
-     * Same as RegisterBlock, except it doesn't register an ItemBlock of the item.
-     * Useful if you're a control freak who hates granting people the ability to place
-     * certain blocks from their inventory.
-     * Refer to RegisterBlock if you are somehow confused about the parameters.
-     * @param blockIn
-     * @param resourceLocation
-     */
+    public ItemStack getStack(int size) {
+        return new ItemStack(block, size);
+    }
 
-    public static void registerBlockNoItem(Block blockIn, String resourceLocation){
-        GameRegistry.register(blockIn, new ResourceLocation(Reference.MOD_ID + ":" + resourceLocation));
+    public ItemStack getStack(int size, int meta) {
+        return new ItemStack(block, size, meta);
+    }
+
+    public Block getBlock() {
+        return this.block;
+    }
+
+    private void registerBlock() {
+        block = RegistrationHelper.registerBlock(name, blockClass, itemBlockClass);
     }
 }

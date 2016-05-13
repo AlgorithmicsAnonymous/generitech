@@ -2,11 +2,11 @@ package com.sandvoxel.generitech.tileentities;
 
 import net.minecraft.item.ItemStack;
 
-public class TileEntityPulverizer extends TileEntityInventoryBase {
+public class TileEntityPulverizer extends TileEntityMachineBase {
 
     public TileEntityPulverizer()
     {
-        super(3,64);
+        super(3);
     }
 
 

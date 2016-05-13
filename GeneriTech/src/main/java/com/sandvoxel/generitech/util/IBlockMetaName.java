@@ -1,4 +1,4 @@
-package com.sandvoxel.generitech.blocks.ores;
+package com.sandvoxel.generitech.util;
 
 import net.minecraft.item.ItemStack;
 
