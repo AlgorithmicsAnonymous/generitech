@@ -35,18 +35,14 @@ public class SlotBase extends Slot{
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        if (!isEnabled)
-            return false;
+        return isEnabled && super.isItemValid(stack);
 
-        return super.isItemValid(stack);
     }
 
     @Override
     public boolean canTakeStack(EntityPlayer playerIn) {
-        if (!isEnabled)
-            return false;
+        return isEnabled && super.canTakeStack(playerIn);
 
-        return super.canTakeStack(playerIn);
     }
 
     public void clearStack() {
