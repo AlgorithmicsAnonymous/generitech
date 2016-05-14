@@ -1,8 +1,10 @@
 package com.sandvoxel.generitech.blocks;
 
 
+import com.sandvoxel.generitech.blocks.machines.BlockFurnace;
 import com.sandvoxel.generitech.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.blocks.ores.BlockOre;
+import com.sandvoxel.generitech.items.machines.ItemFurnace;
 import com.sandvoxel.generitech.items.machines.ItemPulverizer;
 import com.sandvoxel.generitech.items.ore.ItemOre;
 import com.sandvoxel.generitech.util.RegistrationHelper;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemStack;
 public enum GTBlocks {
     BLOCK_ORE("ore", BlockOre.class, ItemOre.class),
 
+    BLOCK_FURNACE("furnace", BlockFurnace.class, ItemFurnace.class),
     BLOCK_PULVERIZER("pulverizer", BlockPulverizer.class, ItemPulverizer.class);
 
     private final Class<? extends BlockBase> blockClass;

@@ -1,6 +1,7 @@
-package com.sandvoxel.generitech.tileentities;
+package com.sandvoxel.generitech.tileentities.machines;
 
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
+import com.sandvoxel.generitech.tileentities.TileEntityMachineBase;
 import net.minecraft.item.ItemStack;
 
 public class TileEntityPulverizer extends TileEntityMachineBase {
