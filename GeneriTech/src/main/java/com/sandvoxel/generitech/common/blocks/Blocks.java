@@ -12,29 +12,27 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public enum GTBlocks {
-    BLOCK_ORE("ore", BlockOre.class, ItemOre.class),
+public enum Blocks {
+    BLOCK_ORE(BlockOre.class, ItemOre.class),
 
-    BLOCK_FURNACE("furnace", BlockFurnace.class, ItemFurnace.class),
-    BLOCK_PULVERIZER("pulverizer", BlockPulverizer.class, ItemPulverizer.class);
+    BLOCK_FURNACE(BlockFurnace.class, ItemFurnace.class),
+    BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class);
 
     private final Class<? extends BlockBase> blockClass;
     private final Class<? extends ItemBlock> itemBlockClass;
-    private final String name;
     private Block block;
 
-    GTBlocks(String name, Class<? extends BlockBase> blockClass) {
-        this(name, blockClass, ItemBlock.class);
+    Blocks(Class<? extends BlockBase> blockClass) {
+        this(blockClass, ItemBlock.class);
     }
 
-    GTBlocks(String name, Class<? extends BlockBase> blockClass, Class<? extends ItemBlock> itemBlockClass) {
+    Blocks(Class<? extends BlockBase> blockClass, Class<? extends ItemBlock> itemBlockClass) {
         this.blockClass = blockClass;
         this.itemBlockClass = itemBlockClass;
-        this.name = name;
     }
 
     public static void registerBlocks() {
-        for (GTBlocks block : GTBlocks.values()) {
+        for (Blocks block : Blocks.values()) {
             block.registerBlock();
         }
     }
@@ -56,6 +54,6 @@ public enum GTBlocks {
     }
 
     private void registerBlock() {
-        block = RegistrationHelper.registerBlock(name, blockClass, itemBlockClass);
+        block = RegistrationHelper.registerBlock(blockClass, itemBlockClass);
     }
 }

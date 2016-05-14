@@ -10,7 +10,6 @@ public class LogHelper {
 
     public static void log(Level logLevel, String message) {
         logger.log(logLevel, "[" + Reference.MOD_NAME + "] " + message);
-        //FMLLog.log(Reference.MOD_NAME, logLevel, String.valueOf(object));
     }
 
     public static void all(String message) {
@@ -43,5 +42,10 @@ public class LogHelper {
 
     public static void off(String message) {
         log(Level.OFF, message);
+    }
+
+    public static void internal(String message) {
+        if (Platform.isDevEnv())
+            log(Level.INFO, message);
     }
 }

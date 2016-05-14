@@ -1,6 +1,8 @@
 package com.sandvoxel.generitech.common.util;
 
 import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.common.blocks.BlockBase;
+import com.sandvoxel.generitech.common.items.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -9,25 +11,29 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import java.util.Locale;
 
 public class RegistrationHelper {
-    public static Block registerBlock(String name, Class<? extends Block> blockClass) {
-        return registerBlock(name, blockClass, ItemBlock.class);
+    public static Block registerBlock(Class<? extends Block> blockClass) {
+        return registerBlock(blockClass, ItemBlock.class);
     }
 
-    public static Block registerBlock(String name, Class<? extends Block> blockClass, Class<? extends ItemBlock> itemBlockClass) {
+    public static Block registerBlock(Class<? extends Block> blockClass, Class<? extends ItemBlock> itemBlockClass) {
         Block block = null;
         ItemBlock itemBlock;
+        String internalName;
+
         try {
             block = blockClass.getConstructor().newInstance();
             itemBlock = itemBlockClass.getConstructor(Block.class).newInstance(block);
 
-            if (!name.equals(name.toLowerCase(Locale.US)))
-                throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", name));
+            internalName = ((BlockBase) block).getInternalName();
 
-            if (name.isEmpty())
+            if (!internalName.equals(internalName.toLowerCase(Locale.US)))
+                throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", internalName));
+
+            if (internalName.isEmpty())
                 throw new IllegalArgumentException(String.format("Unlocalized name cannot be blank! Item: %s", blockClass.getCanonicalName()));
 
-            block.setRegistryName(Reference.MOD_ID, name);
-            block.setUnlocalizedName(name);
+            block.setRegistryName(Reference.MOD_ID, internalName);
+            block.setUnlocalizedName(internalName);
             itemBlock.setRegistryName(block.getRegistryName());
 
             GameRegistry.register(block);
@@ -41,27 +47,29 @@ public class RegistrationHelper {
             LogHelper.info(String.format("Registered block (%s)", blockClass.getCanonicalName()));
         } catch (Exception ex) {
             LogHelper.fatal(String.format("Fatal Error while registering block (%s)", blockClass.getCanonicalName()));
-            LogHelper.fatal(ex.toString());
+            ex.printStackTrace();
         }
 
         return block;
     }
 
-    public static Item registerItem(String name, Class<? extends Item> itemClass) {
+    public static Item registerItem(Class<? extends Item> itemClass) {
         Item item = null;
+        String internalName;
 
         try {
             item = itemClass.getConstructor().newInstance();
 
+            internalName = ((ItemBase) item).getInternalName();
 
-            if (!name.equals(name.toLowerCase(Locale.US)))
-                throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", name));
+            if (!internalName.equals(internalName.toLowerCase(Locale.US)))
+                throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", internalName));
 
-            if (name.isEmpty())
+            if (internalName.isEmpty())
                 throw new IllegalArgumentException(String.format("Unlocalized name cannot be blank! Item: %s", itemClass.getCanonicalName()));
 
-            item.setRegistryName(Reference.MOD_ID, name);
-            item.setUnlocalizedName(name);
+            item.setRegistryName(Reference.MOD_ID, internalName);
+            item.setUnlocalizedName(internalName);
 
             GameRegistry.register(item);
 
@@ -72,7 +80,7 @@ public class RegistrationHelper {
             LogHelper.info(String.format("Registered item (%s)", itemClass.getCanonicalName()));
         } catch (Exception ex) {
             LogHelper.fatal(String.format("Fatal Error while registering item (%s)", itemClass.getCanonicalName()));
-            LogHelper.fatal(ex.toString());
+            ex.printStackTrace();
         }
 
         return item;

@@ -24,5 +24,4 @@ public class ItemOre extends ItemBlock {
 
         return name + "." + oreName;
     }
-
 }

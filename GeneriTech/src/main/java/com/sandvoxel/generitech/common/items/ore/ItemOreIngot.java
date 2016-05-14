@@ -20,6 +20,7 @@ public class ItemOreIngot extends ItemBase {
         super("ore/ingot");
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
+        this.setInternalName("oreingot");
     }
 
     @Override

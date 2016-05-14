@@ -2,6 +2,7 @@ itemGroup.generitech.general=GeneriTech General
 itemGroup.generitech.ore=GeneriTech Ores
 
 tile.generitech.pulverizer.name=Pulverizer
+tile.generitech.furnace.name=Furnace
 
 tile.generitech.ore.tin.name=Tin Ore
 tile.generitech.ore.copper.name=Copper Ore
@@ -14,7 +15,7 @@ item.generitech.oreingot.lead.name=Lead Ingot
 item.generitech.orenugget.tin.name=Tin Nugget
 item.generitech.orenugget.copper.name=Copper Nugget
 item.generitech.orenugget.lead.name=Lead Nugget
-item.generitech.orenugget.lead.name=Iron Nugget
+item.generitech.orenugget.iron.name=Iron Nugget
 
 item.generitech.oredust.tin.name=Tin Dust
 item.generitech.oredust.copper.name=Copper Dust

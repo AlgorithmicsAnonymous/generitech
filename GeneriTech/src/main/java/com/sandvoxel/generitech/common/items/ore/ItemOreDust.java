@@ -20,6 +20,7 @@ public class ItemOreDust extends ItemBase {
         super("ore/dust");
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
+        this.setInternalName("oredust");
     }
 
     @Override

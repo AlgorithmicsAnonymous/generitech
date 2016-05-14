@@ -20,6 +20,7 @@ public class ItemOreNugget extends ItemBase {
         super("ore/nugget");
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
+        this.setInternalName("orenugget");
     }
 
     @Override

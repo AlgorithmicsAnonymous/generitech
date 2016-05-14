@@ -5,7 +5,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
 
 
-public abstract class BlockMachineBase extends BlockTileEntityBase {
+public abstract class BlockMachineBase extends BlockTileBase {
     protected static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockMachineBase(Material material, String resourcePath) {

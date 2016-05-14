@@ -35,7 +35,7 @@ if (hasProperty("teamcity")) {
 minecraft {
     version = minecraft_version + "-" + forge_version
 
-    replaceIn "ModInfo.java"
+    replaceIn "Reference.java"
     replaceIn "ApiInfo.java"
 
     replace "@VERSION@", project.version

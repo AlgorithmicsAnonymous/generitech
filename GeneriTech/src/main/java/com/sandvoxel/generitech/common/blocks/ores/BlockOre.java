@@ -24,6 +24,7 @@ public class BlockOre extends BlockBase {
         super(Material.rock, "ore/ore");
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
+        this.setInternalName("ore");
     }
 
     @Override
