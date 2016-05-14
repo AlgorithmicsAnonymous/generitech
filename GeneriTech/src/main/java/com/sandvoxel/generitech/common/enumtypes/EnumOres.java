@@ -9,45 +9,39 @@ import java.util.List;
 public enum EnumOres implements IStringSerializable{
 
     // Vanilla stuff
-    IRON(0, "iron", EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA),
-    GOLD(1, "gold", EnumOreType.DUST, EnumOreType.VANILLA),
+    IRON(0, "Iron", EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA),
+    GOLD(1, "Gold", EnumOreType.DUST, EnumOreType.VANILLA),
     //DIAMOND(2, "diamond", EnumOreType.NUGGET, EnumOreType.VANILLA),
 
     // Our stuff
-    COPPER(2, "copper", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT),
-    TIN(3, "tin", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT),
-    LEAD(4, "lead", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT);
+    COPPER(2, "Copper", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK),
+    TIN(3, "Tin", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK),
+    LEAD(4, "Lead", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK);
 
     private static final EnumOres[] META_LOOKUP = new EnumOres[values().length];
 
     static {
         for (EnumOres ore : values()) {
-            META_LOOKUP[ore.getID()] = ore;
+            META_LOOKUP[ore.getMeta()] = ore;
         }
     }
 
-    private int ID;
+    private int meta;
     private String name;
     private final EnumOreType[] enumOresTypeList;
 
-    private EnumOres(int ID, String name, EnumOreType... enumOreTypes){
-        this.ID = ID;
+    private EnumOres(int meta, String name, EnumOreType... enumOreTypes){
+        this.meta = meta;
         this.name = name;
         this.enumOresTypeList = enumOreTypes;
     }
 
-    @Override
-    public String getName() {
-        return name().toLowerCase();
-    }
+    public static EnumOres byMeta(int id) {
+        if (id < 0 || id >= META_LOOKUP.length) {
+            id = 0;
+        }
 
-    public int getID() {
-        return ID;
-    }
-
-    @Override
-    public String toString() {
-        return getName();
+        return META_LOOKUP[id];
     }
 
     public static List<EnumOres> byType(EnumOreType type) {
@@ -62,15 +56,27 @@ public enum EnumOres implements IStringSerializable{
         return result;
     }
 
-    public boolean isTypeSet(EnumOreType enumOreType) {
-        return Arrays.asList(enumOresTypeList).contains(enumOreType);
+    public int getMeta() {
+        return this.meta;
     }
 
-    public static EnumOres byID(int id) {
-        if (id < 0 || id >= META_LOOKUP.length) {
-            id = 0;
-        }
+    public String getUnlocalizedName() {
+        return this.name.toLowerCase();
+    }
 
-        return META_LOOKUP[id];
+    public String getName() {
+        return this.name.toLowerCase();
+    }
+
+    public String getOreName() {
+        return this.name;
+    }
+
+    public String toString() {
+        return getName();
+    }
+
+    public boolean isTypeSet(EnumOreType enumOreType) {
+        return Arrays.asList(enumOresTypeList).contains(enumOreType);
     }
 }

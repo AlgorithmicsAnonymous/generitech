@@ -5,8 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemOre extends ItemBlock {
-    public ItemOre(Block block) {
+public class ItemOreBlock extends ItemBlock {
+    public ItemOreBlock(Block block) {
         super(block);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);

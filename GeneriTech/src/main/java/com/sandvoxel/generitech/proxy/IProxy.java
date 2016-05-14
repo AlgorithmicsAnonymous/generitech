@@ -42,6 +42,8 @@ public interface IProxy {
      */
     void registerRenderers();
 
+    void registerOreDict();
+
     /**
      * Register Configuration
      * @param configFile Configuration File

@@ -39,6 +39,9 @@ public class GeneriTech {
         proxy.registerGUIs();
 
         proxy.registerFurnaceRecipes();
+
+        proxy.registerOreDict();
+
         proxy.registerEvents();
 
         proxy.registerRenderers();

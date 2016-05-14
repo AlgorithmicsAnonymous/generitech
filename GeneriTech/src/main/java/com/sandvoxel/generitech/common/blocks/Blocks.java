@@ -4,6 +4,7 @@ package com.sandvoxel.generitech.common.blocks;
 import com.sandvoxel.generitech.common.blocks.machines.BlockFurnace;
 import com.sandvoxel.generitech.common.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.common.blocks.ores.BlockOre;
+import com.sandvoxel.generitech.common.blocks.ores.BlockOreBlock;
 import com.sandvoxel.generitech.common.items.machines.ItemFurnace;
 import com.sandvoxel.generitech.common.items.machines.ItemPulverizer;
 import com.sandvoxel.generitech.common.items.ore.ItemOre;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemStack;
 
 public enum Blocks {
     BLOCK_ORE(BlockOre.class, ItemOre.class),
+    BLOCK_ORE_BLOCK(BlockOreBlock.class, ItemOre.class),
 
     BLOCK_FURNACE(BlockFurnace.class, ItemFurnace.class),
     BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class);

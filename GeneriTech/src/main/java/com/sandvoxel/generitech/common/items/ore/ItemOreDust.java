@@ -26,7 +26,7 @@ public class ItemOreDust extends ItemBase {
     @Override
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
         for (int i = 0; i < EnumOres.values().length; i++) {
-            if (EnumOres.byID(i).isTypeSet(EnumOreType.DUST)) {
+            if (EnumOres.byMeta(i).isTypeSet(EnumOreType.DUST)) {
                 subItems.add(new ItemStack(this, 1, i));
             }
         }
@@ -35,15 +35,15 @@ public class ItemOreDust extends ItemBase {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         String name = super.getUnlocalizedName();
-        String oreName = EnumOres.byID(stack.getItemDamage()).getName();
+        String oreName = EnumOres.byMeta(stack.getItemDamage()).getName();
         return name + "." + oreName;
     }
 
     @Override
     public void registerItemRenderer() {
         for (int i = 0; i < EnumOres.values().length; i++) {
-            if (EnumOres.byID(i).isTypeSet(EnumOreType.DUST)) {
-                ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(Reference.MOD_ID + ":" + resourcePath + "/dust-" + EnumOres.byID(i).getName(), "inventory"));
+            if (EnumOres.byMeta(i).isTypeSet(EnumOreType.DUST)) {
+                ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(Reference.MOD_ID + ":" + resourcePath + "/dust-" + EnumOres.byMeta(i).getName(), "inventory"));
             }
         }
     }
