@@ -2,6 +2,7 @@ package com.sandvoxel.generitech;
 
 import com.sandvoxel.generitech.common.blocks.Blocks;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class GeneriTechTabs {
@@ -28,5 +29,16 @@ public class GeneriTechTabs {
             return Reference.MOD_ID + ".ore";
         }
     };
-    
+
+    public static final CreativeTabs TOOL = new CreativeTabs(Reference.MOD_ID) {
+        @Override
+        public Item getTabIconItem() {
+            return Items.apple;
+        }
+
+        @Override
+        public String getTabLabel() {
+            return Reference.MOD_ID + ".tools";
+        }
+    };
 }

@@ -1,0 +1,29 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model":"minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "inventory": [
+      {}
+    ],
+    "ore": {
+      "copper": {
+        "textures": {
+          "all": "generitech:blocks/copper_ore"
+        }
+      },
+      "tin": {
+        "textures": {
+          "all": "generitech:blocks/tin_ore"
+        }
+      },
+      "lead": {
+        "textures": {
+          "all": "generitech:blocks/lead_ore"
+        }
+      }
+    }
+  }
+}
