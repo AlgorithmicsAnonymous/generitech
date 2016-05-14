@@ -36,7 +36,7 @@ minecraft {
     version = minecraft_version + "-" + forge_version
 
     replaceIn "Reference.java"
-    replaceIn "ApiInfo.java"
+    //replaceIn "ApiInfo.java"
 
     replace "@VERSION@", project.version
     replace "@MCVERSION@", minecraft_version
