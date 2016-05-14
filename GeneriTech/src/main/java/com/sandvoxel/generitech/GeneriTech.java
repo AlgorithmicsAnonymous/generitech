@@ -58,6 +58,7 @@ public class GeneriTech {
         LogHelper.info( "Initialization ( started )" );
 
         proxy.registerRecipes();
+        proxy.registerPulverizerRecipes();
 
         IntegrationsManager.instance().init();
 

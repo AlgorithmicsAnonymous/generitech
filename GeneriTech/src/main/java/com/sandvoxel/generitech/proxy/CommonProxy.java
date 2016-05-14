@@ -1,6 +1,7 @@
 package com.sandvoxel.generitech.proxy;
 
 import com.sandvoxel.generitech.GeneriTech;
+import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.common.config.Config;
@@ -10,6 +11,7 @@ import com.sandvoxel.generitech.common.items.Items;
 import com.sandvoxel.generitech.common.util.IProvideEvent;
 import com.sandvoxel.generitech.common.util.IProvideRecipe;
 import com.sandvoxel.generitech.common.util.IProvideSmelting;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -25,6 +27,11 @@ public abstract class CommonProxy implements IProxy {
     @Override
     public void registerItems() {
         Items.registerItems();
+    }
+
+    @Override
+    public void registerPulverizerRecipes() {
+        PulverizerRegistry.register(new ItemStack(net.minecraft.init.Blocks.redstone_ore, 1), new ItemStack(net.minecraft.init.Items.redstone, 4), 0.8f);
     }
 
     @Override
