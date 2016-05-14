@@ -1,6 +1,6 @@
 package com.sandvoxel.generitech;
 
-import com.sandvoxel.generitech.blocks.GTBlocks;
+import com.sandvoxel.generitech.common.blocks.GTBlocks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
