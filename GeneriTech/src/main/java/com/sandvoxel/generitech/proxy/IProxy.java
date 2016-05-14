@@ -42,6 +42,9 @@ public interface IProxy {
      */
     void registerRenderers();
 
+    /**
+     * Register Ore Dictionary
+     */
     void registerOreDict();
 
     /**
@@ -49,4 +52,9 @@ public interface IProxy {
      * @param configFile Configuration File
      */
     void registerConfiguration(File configFile);
+
+    /**
+     * Register Pulverizer Recipes
+     */
+    void registerPulverizerRecipes();
 }
