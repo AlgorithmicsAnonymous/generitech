@@ -35,7 +35,7 @@
     },
     "active": {
       "true": {
-
+        "north": "generitech:blocks/machines/FurnaceFrontActive"
       },
       "false": {
       }

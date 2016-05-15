@@ -6,6 +6,8 @@ import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
+import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
+import com.sandvoxel.generitech.common.util.TileHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -16,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockFurnace extends BlockMachineBase {
@@ -35,6 +38,15 @@ public class BlockFurnace extends BlockMachineBase {
             player.openGui(GeneriTech.instance, GuiHandler.FURNACE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        TileEntityFurnace tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityFurnace.class);
+        if (tileEntity != null && tileEntity.canBeRotated()) {
+            return state.withProperty(FACING, tileEntity.getForward()).withProperty(ACTIVE, tileEntity.isMachineActive());
+        }
+        return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
     }
 
     @Override

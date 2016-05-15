@@ -36,7 +36,7 @@
     "active": {
       "true": {
         "textures": {
-          "north": "generitech:blocks/machines/PulverizerAnimated"
+          "north": "generitech:blocks/machines/FurnaceFrontActive"
         }
       },
       "false": {
