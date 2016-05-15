@@ -37,8 +37,7 @@
     {
       "true": {
         "textures": {
-          "north": "generitech:blocks/BasicSide",
-          "particle": "generitech:blocks/BasicSide"
+          "north": "generitech:models/furnaceActive"
         }
       },
       "false": {

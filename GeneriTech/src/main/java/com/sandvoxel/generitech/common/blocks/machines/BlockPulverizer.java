@@ -6,6 +6,7 @@ import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.util.LogHelper;
+import com.sandvoxel.generitech.common.util.TileHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPulverizer extends BlockMachineBase {
@@ -35,6 +37,15 @@ public class BlockPulverizer extends BlockMachineBase {
         return true;
     }
 
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPulverizer.class);
+        if (tileEntity != null && tileEntity.canBeRotated()) {
+            return state.withProperty(FACING, tileEntity.getForward()).withProperty(ACTIVE, (tileEntity.isMachineActive() && !tileEntity.isPulverizerPaused()));
+        }
+        return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
+    }
+    
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING, ACTIVE);

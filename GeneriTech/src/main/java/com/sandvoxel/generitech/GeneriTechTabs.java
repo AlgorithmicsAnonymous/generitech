@@ -1,8 +1,7 @@
 package com.sandvoxel.generitech;
-
+import com.sandvoxel.generitech.common.items.Items;
 import com.sandvoxel.generitech.common.blocks.Blocks;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class GeneriTechTabs {
@@ -21,7 +20,7 @@ public class GeneriTechTabs {
     public static final CreativeTabs ORE = new CreativeTabs(Reference.MOD_ID) {
         @Override
         public Item getTabIconItem() {
-            return Item.getItemFromBlock(Blocks.BLOCK_ORE.getBlock());
+            return Items.ITEM_ORE_DUST.getItem();
         }
 
         @Override
@@ -33,7 +32,7 @@ public class GeneriTechTabs {
     public static final CreativeTabs TOOL = new CreativeTabs(Reference.MOD_ID) {
         @Override
         public Item getTabIconItem() {
-            return Items.apple;
+            return Items.ITEM_TOOL_WRENCH.getItem();
         }
 
         @Override

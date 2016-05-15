@@ -62,21 +62,19 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe, IPro
     @Override
     public void RegisterRecipes() {
         GameRegistry.addRecipe(new ShapedOreRecipe(Items.ITEM_TOOL_WRENCH.getStack(),
-                " yz",
+                " y ",
                 " xy",
                 "x  ",
-                'x', "stickWood",
-                'y', "ingotIron",
-                'z', "nuggetIron"
+                'x', "ingotIron",
+                'y', "nuggetIron"
         ));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(Items.ITEM_TOOL_WRENCH.getStack(),
-                "zy ",
+                " y ",
                 "yx ",
                 "  x",
-                'x', "stickWood",
-                'y', "ingotIron",
-                'z', "nuggetIron"
+                'x', "ingotIron",
+                'y', "nuggetIron"
         ));
     }
 }

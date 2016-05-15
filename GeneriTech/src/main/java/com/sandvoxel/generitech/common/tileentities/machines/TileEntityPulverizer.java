@@ -36,6 +36,10 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         return pulverizerPaused;
     }
 
+    public boolean isMachineActive() {
+        return machineActive;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
@@ -151,6 +155,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                     this.pulverizerPaused = true;
                     return;
                 }
+
+                if(pulverizerPaused)
+                    pulverizerPaused = !pulverizerPaused;
 
                 InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
                 this.crushRNG = -1;
