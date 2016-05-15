@@ -1,3 +1,4 @@
+/classes
 # eclipse
 bin
 *.launch
@@ -5,6 +6,7 @@ bin
 .metadata
 .classpath
 .project
+.hprof
 
 # idea
 out
@@ -12,7 +14,6 @@ out
 *.iws
 *.iml
 .idea
-.hprof
 
 # gradle
 build
