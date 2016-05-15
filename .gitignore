@@ -1,23 +1,17 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
-
-# idea
-out
-*.ipr
-*.iws
-*.iml
-.idea
-.hprof
-
-# gradle
-build
-.gradle
-
-# other
-eclipse
-run
+/*
+!/.gitignore
+!/.gitmodules
+!/README.md
+!/License.txt
+!/LICENSE
+!/GeneriTech/src
+!/GeneriTech/gradle
+!/GeneriTech/gradlew
+!/GeneriTech/gradlew.bat
+!/GeneriTech/build.gradle
+!/GeneriTech/build.properties
+!/GeneriTech/build.bat
+!/GeneriTech/build.sh
+!/GeneriTech/gradle.properties
+!/GeneriTech/webresources
+.DS_Store
