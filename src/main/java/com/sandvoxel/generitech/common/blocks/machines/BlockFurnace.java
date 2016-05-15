@@ -2,6 +2,7 @@ package com.sandvoxel.generitech.common.blocks.machines;
 
 import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.GeneriTechTabs;
+import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
@@ -17,8 +18,8 @@ import net.minecraft.world.World;
 
 public class BlockFurnace extends BlockMachineBase {
     public BlockFurnace() {
-        super(Material.rock, "machines/furnace");
-        this.setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
+        super(Material.rock, "machines/furnace", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1).withProperty(FACING, EnumFacing.NORTH));
         this.setTileEntity(TileEntityFurnace.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("furnace");
@@ -34,7 +35,7 @@ public class BlockFurnace extends BlockMachineBase {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING, ACTIVE);
+        return new BlockStateContainer(this, MACHINETIER, FACING);
     }
 
     @Override

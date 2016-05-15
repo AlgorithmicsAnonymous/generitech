@@ -2,6 +2,7 @@ package com.sandvoxel.generitech.common.blocks.machines;
 
 import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.GeneriTechTabs;
+import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
@@ -21,8 +22,8 @@ import net.minecraft.world.World;
 public class BlockPulverizer extends BlockMachineBase {
 
     public BlockPulverizer() {
-        super(Material.rock, "machines/pulverizer");
-        this.setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
+        super(Material.rock, "machines/pulverizer", MachineTier.TIER_0, MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0).withProperty(FACING, EnumFacing.NORTH));
         this.setTileEntity(TileEntityPulverizer.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("pulverizer");
@@ -36,23 +37,26 @@ public class BlockPulverizer extends BlockMachineBase {
 
         return true;
     }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPulverizer.class);
-        if (tileEntity != null && tileEntity.canBeRotated()) {
-            return state.withProperty(FACING, tileEntity.getForward()).withProperty(ACTIVE, (tileEntity.isMachineActive() && !tileEntity.isPulverizerPaused()));
-        }
-        return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
-    }
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING, ACTIVE);
+        return new BlockStateContainer(this, MACHINETIER, FACING);
     }
 
     @Override
     public int damageDropped(IBlockState state) {
         return getMetaFromState(state);
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityPulverizer.class);
+        if (tileEntity != null && !tileEntity.isPulverizerPaused()) {
+            super.breakBlock(world, blockPos, blockState);
+            return;
+        }
+
+        TileHelper.DropItems(tileEntity, 0, 0);
+        TileHelper.DropItems(tileEntity, 2, 3);
     }
 }
