@@ -31,7 +31,20 @@ public abstract class CommonProxy implements IProxy {
 
     @Override
     public void registerPulverizerRecipes() {
-        PulverizerRegistry.register(new ItemStack(net.minecraft.init.Blocks.redstone_ore, 1), new ItemStack(net.minecraft.init.Items.redstone, 4), 0.8f);
+
+        for (EnumOres ores : EnumOres.values()) {
+            String oreName = ores.getOreName();
+
+            if (ores.isTypeSet(EnumOreType.DUST) && (ores.isTypeSet(EnumOreType.ORE) || ores.isTypeSet(EnumOreType.VANILLA))) {
+                PulverizerRegistry.registerOreDictOre(oreName);
+            }
+
+            if (ores.isTypeSet(EnumOreType.INGOT) && (ores.isTypeSet(EnumOreType.ORE) || ores.isTypeSet(EnumOreType.VANILLA))) {
+                PulverizerRegistry.registerOreDictIngot(oreName);
+            }
+        }
+
+        PulverizerRegistry.register(new ItemStack(net.minecraft.init.Blocks.redstone_ore, 1), new ItemStack(net.minecraft.init.Items.redstone, 3), 1.0f);
     }
 
     @Override

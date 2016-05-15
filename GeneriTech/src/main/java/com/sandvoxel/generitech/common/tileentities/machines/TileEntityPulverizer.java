@@ -9,6 +9,7 @@ import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
 import com.sandvoxel.generitech.common.util.LogHelper;
+import com.sandvoxel.generitech.common.util.MathHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.inventory.IInventory;
@@ -140,9 +141,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 ItemStack outItem = crushable.output.copy();
                 float itemChance = crushable.chance;
 
-                if (crushRNG == -1) crushRNG = Math.round(rnd.nextFloat());
+                if (crushRNG == -1) crushRNG = rnd.nextFloat();
 
-                if(crushRNG < itemChance)
+                if(crushRNG <= itemChance)
                     outItem.stackSize += outItem.stackSize;
 
                 // Simulate placing into output slot...
