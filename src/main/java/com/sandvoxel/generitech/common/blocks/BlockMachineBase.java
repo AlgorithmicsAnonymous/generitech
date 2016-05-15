@@ -23,7 +23,7 @@ import java.util.Map;
 
 
 public abstract class BlockMachineBase extends BlockTileBase {
-    protected static final PropertyEnum<MachineTier> MACHINETIER = PropertyEnum.create("machineTier", MachineTier.class);
+    protected static final PropertyEnum<MachineTier> MACHINETIER = PropertyEnum.create("machinetier", MachineTier.class);
     private MachineTier[] machineTiers;
 
     public BlockMachineBase(Material material, String resourcePath, MachineTier... machineTiers) {
@@ -76,6 +76,17 @@ public abstract class BlockMachineBase extends BlockTileBase {
         for (MachineTier machineTier : machineTiers) {
             list.add(new ItemStack(this, 1, machineTier.getMeta()));
         }
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(MACHINETIER, MachineTier.byMeta(meta));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        MachineTier tier = (MachineTier) state.getValue(MACHINETIER);
+        return tier.getMeta();
     }
 
 }

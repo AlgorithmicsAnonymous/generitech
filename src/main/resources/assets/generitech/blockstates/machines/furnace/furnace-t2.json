@@ -33,16 +33,11 @@
         "y": 270
       }
     },
-    "active":
-    {
+    "active": {
       "true": {
-        "textures": {
-          "north": "generitech:blocks/BasicSide",
-          "particle": "generitech:blocks/BasicSide"
-        }
+
       },
       "false": {
-
       }
     }
   }

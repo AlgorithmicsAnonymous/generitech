@@ -1,0 +1,44 @@
+{
+  "forge_marker":1,
+  "defaults":{
+    "textures": {
+      "up": "generitech:blocks/machines/BasicSide",
+      "down": "generitech:blocks/machines/BasicSide",
+      "north": "generitech:blocks/machines/FurnaceFront",
+      "east": "generitech:blocks/machines/BasicSide",
+      "west": "generitech:blocks/machines/BasicSide",
+      "south": "generitech:blocks/machines/BasicSide",
+      "particle": "generitech:blocks/machines/FurnaceFront"
+    },
+    "model":"minecraft:cube_all",
+    "transform":"forge:default-block"
+  },
+  "variants":{
+    "inventory":[
+      {
+
+      }
+    ],
+    "facing":{
+      "north":{
+
+      },
+      "east":{
+        "y": 90
+      },
+      "south":{
+        "y": 180
+      },
+      "west":{
+        "y": 270
+      }
+    },
+    "active": {
+      "true": {
+
+      },
+      "false": {
+      }
+    }
+  }
+}

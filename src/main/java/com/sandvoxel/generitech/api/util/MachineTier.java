@@ -4,10 +4,10 @@ import com.sandvoxel.generitech.Reference;
 import net.minecraft.util.IStringSerializable;
 
 public enum MachineTier implements IStringSerializable {
-    TIER_0("T1"),
-    TIER_1("T2"),
-    TIER_2("T3"),
-    TIER_3("T4");
+    TIER_0("t0"),
+    TIER_1("t1"),
+    TIER_2("t2"),
+    TIER_3("t3");
       // N/A
 
     private static final MachineTier[] META_LOOKUP = new MachineTier[values().length];
@@ -45,6 +45,6 @@ public enum MachineTier implements IStringSerializable {
     }
 
     public String getUnlocalizedName() {
-        return String.format("%s.%s.%s.%s", "label", Reference.MOD_ID, "techTier", this.name);
+        return String.format("%s.%s.%s.%s", "label", Reference.MOD_ID, "machineTier", this.name);
     }
 }

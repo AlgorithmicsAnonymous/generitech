@@ -9,20 +9,26 @@ import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverize
 import com.sandvoxel.generitech.common.util.LogHelper;
 import com.sandvoxel.generitech.common.util.TileHelper;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class BlockPulverizer extends BlockMachineBase {
+    private static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockPulverizer() {
-        super(Material.rock, "machines/pulverizer", MachineTier.TIER_0, MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        super(Material.rock, "machines/pulverizer/pulverizer", MachineTier.TIER_0, MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0).withProperty(FACING, EnumFacing.NORTH));
         this.setTileEntity(TileEntityPulverizer.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
@@ -37,10 +43,19 @@ public class BlockPulverizer extends BlockMachineBase {
 
         return true;
     }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPulverizer.class);
+        if (tileEntity != null && tileEntity.canBeRotated()) {
+            return state.withProperty(FACING, tileEntity.getForward()).withProperty(ACTIVE, tileEntity.isMachineActive());
+        }
+        return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
+    }
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, MACHINETIER, FACING);
+        return new BlockStateContainer(this, MACHINETIER, FACING, ACTIVE);
     }
 
     @Override
@@ -58,5 +73,50 @@ public class BlockPulverizer extends BlockMachineBase {
 
         TileHelper.DropItems(tileEntity, 0, 0);
         TileHelper.DropItems(tileEntity, 2, 3);
+    }
+
+    @Override
+    public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand) {
+        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPulverizer.class);
+        if (tileEntity == null)
+            return;
+
+        if (!tileEntity.isMachineActive() || tileEntity.isPulverizerPaused())
+            return;
+
+        EnumFacing enumfacing = tileEntity.getForward();
+        double d0 = (double) pos.getX() + 0.5D;
+        double d1 = (double) pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
+        double d2 = (double) pos.getZ() + 0.5D;
+        double d3 = 0.52D;
+        double d4 = rand.nextDouble() * 0.6D - 0.3D;
+
+        EnumParticleTypes particleTypes = null;
+        switch (tileEntity.getBlockMetadata()) {
+            case 0: // Stone
+                particleTypes = EnumParticleTypes.SMOKE_NORMAL;
+                break;
+            default:
+                break;
+        }
+
+        if (particleTypes != null) {
+            switch (enumfacing) {
+                case WEST:
+                    worldIn.spawnParticle(particleTypes, d0 - d3, d1 + 0.7f, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                case EAST:
+                    worldIn.spawnParticle(particleTypes, d0 + d3, d1 + 0.7f, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                case NORTH:
+                    worldIn.spawnParticle(particleTypes, d0 + d4, d1 + 0.7f, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                case SOUTH:
+                    worldIn.spawnParticle(particleTypes, d0 + d4, d1 + 0.7f, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
