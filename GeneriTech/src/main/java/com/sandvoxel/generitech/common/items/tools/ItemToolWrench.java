@@ -27,11 +27,11 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe, IPro
 
     public static Set blocksEffectiveAgainst = Sets.newHashSet(new Block[]{});
     public static boolean canHarvest = false;
-    public static ToolMaterial toolMaterial = EnumHelper.addToolMaterial("GENERITECH_WRENCH", 3, 100, 15.0F, 4.0F, 30);
+    public static ToolMaterial toolMaterial = EnumHelper.addToolMaterial("GENERITECH_WRENCH", 3, 160, 8.0F, 3.0F, 18);
     private static IBlockState blockHarvest = null;
 
     public ItemToolWrench() {
-        super(3.0F, 1.0F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench");
+        super(3.0F, -2F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench");
         this.setUnlocalizedName("tool_wrench");
         this.setCreativeTab(GeneriTechTabs.TOOL);
         this.setInternalName("tool_wrench");
@@ -65,14 +65,6 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe, IPro
                 " y ",
                 " xy",
                 "x  ",
-                'x', "ingotIron",
-                'y', "nuggetIron"
-        ));
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(Items.ITEM_TOOL_WRENCH.getStack(),
-                " y ",
-                "yx ",
-                "  x",
                 'x', "ingotIron",
                 'y', "nuggetIron"
         ));

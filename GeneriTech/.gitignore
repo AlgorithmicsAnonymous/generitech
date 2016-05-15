@@ -6,6 +6,7 @@ bin
 .metadata
 .classpath
 .project
+.hprof
 
 # idea
 out
