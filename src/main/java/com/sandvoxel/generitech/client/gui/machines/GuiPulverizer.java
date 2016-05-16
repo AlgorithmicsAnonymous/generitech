@@ -51,12 +51,18 @@ public class GuiPulverizer extends GuiBase {
 
     @Override
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        bindTexture("gui/machines/pulverizer.png");
+        bindTexture("gui/machines/pulverizer1.png");
         drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
 
         drawTexturedModalRect(paramInt1 + 25, paramInt2 + 63, 47, 34, 18, 18);
 
-        if(machineTier == MachineTier.TIER_1)
+        if(machineTier == MachineTier.TIER_0)
+        {
+            drawTexturedModalRect(paramInt1 + 28, paramInt2 + 38, 176, 31, 14, 14);
+            int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
+            drawTexturedModalRect(paramInt1 + 28, paramInt2 + 38 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
+        }
+        else if(machineTier == MachineTier.TIER_1)
         {
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
         }
@@ -71,6 +77,7 @@ public class GuiPulverizer extends GuiBase {
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 115, paramInt2 + 63, 47, 34, 18, 18);
         }
+
 
 
     }

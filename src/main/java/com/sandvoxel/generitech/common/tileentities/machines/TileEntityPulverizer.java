@@ -2,6 +2,7 @@ package com.sandvoxel.generitech.common.tileentities.machines;
 
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.api.util.Crushable;
+import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
 import com.sandvoxel.generitech.common.inventory.InventoryOperation;
@@ -15,6 +16,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -27,8 +29,8 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
-    private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50 , 50);
-    private InternalInventory inventory = new InternalInventory(this, 4);
+    private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50, 50);
+    private InternalInventory inventory = new InternalInventory(this, 6);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;
@@ -36,6 +38,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private boolean pulverizerPaused = false;
     private Random rnd = new Random();
     private long powerUsage = 50;
+    private MachineTier machineTier;
+    private int fuelRemaining = 0;
+    private int fuelTotal = 0;
+    private Item lastFuelType;
+    private int lastFuelValue;
 
 
     public boolean isPulverizerPaused() {
@@ -45,6 +52,15 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public boolean isMachineActive() {
         return machineActive;
     }
+
+    @Override
+    public void markForUpdate() {
+        super.markForUpdate();
+
+        if (machineTier == MachineTier.TIER_0)
+            this.markForLightUpdate();
+    }
+
 
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
@@ -97,12 +113,33 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
+        LogHelper.info(">>>>> " + fuelRemaining);
+        if (machineTier == null)
+            machineTier = MachineTier.byMeta(getBlockMetadata());
 
-        if(this.container.takePower(powerUsage, true) == powerUsage) {
-            //LogHelper.info(">>>>> Have Power!!!");
+        if (fuelRemaining == 0 && inventory.getStackInSlot(4) != null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0 && machineTier == MachineTier.TIER_0) {
+            if (inventory.getStackInSlot(4).getItem() == lastFuelType) {
+                fuelRemaining = lastFuelValue;
+            } else {
+                fuelRemaining = net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4));
+                lastFuelType = inventory.getStackInSlot(4).getItem();
+                lastFuelValue = fuelRemaining;
+            }
+            fuelTotal = fuelRemaining;
+            inventory.decrStackSize(4, 1);
+            this.markDirty();
+            this.markForUpdate();
+        }
+
+        if ((this.container.takePower(powerUsage, true) == powerUsage && machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
             if (machineActive && !pulverizerPaused) {
                 ticksRemaining--;
-                this.container.takePower(powerUsage, false);
+
+                if (machineTier != MachineTier.TIER_0)
+                    this.container.takePower(powerUsage, false);
+
+                if (fuelRemaining > 0)
+                    fuelRemaining--;
             }
 
             if (inventory.getStackInSlot(0) != null && inventory.getStackInSlot(1) == null) {
@@ -217,7 +254,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T getCapability (Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 
         // This method is where other things will try to access your TileEntity's Tesla
         // capability. In the case of the analyzer, is a consumer, producer and holder so we
@@ -232,7 +269,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     }
 
     @Override
-    public boolean hasCapability (Capability<?> capability, EnumFacing facing) {
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 
         // This method replaces the instanceof checks that would be used in an interface based
         // system. It can be used by other things to see if the TileEntity uses a capability or
@@ -244,6 +281,14 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return true;
 
         return super.hasCapability(capability, facing);
+    }
+
+    public int getFuelOffset() {
+        if (fuelTotal == 0)
+            return +12;
+
+        return Math.round((((float) fuelTotal - (float) fuelRemaining) / (float) fuelTotal) * 11);
+
     }
 }
 

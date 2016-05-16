@@ -52,6 +52,12 @@ public class BlockPulverizer extends BlockMachineBase {
         }
         return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
     }
+
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        IBlockState blockState = getActualState(getDefaultState(), world, pos);
+        return (blockState.getValue(ACTIVE) && blockState.getValue(MACHINETIER) == MachineTier.TIER_0) ? 15 : 0;
+    }
     
     @Override
     protected BlockStateContainer createBlockState() {
