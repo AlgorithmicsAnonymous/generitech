@@ -3,6 +3,8 @@ package com.sandvoxel.generitech;
 import com.google.common.base.Stopwatch;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
+import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
+import com.sandvoxel.generitech.proxy.CommonProxy;
 import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.common.util.LogHelper;
 import net.minecraftforge.common.config.Configuration;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.concurrent.TimeUnit;
 
@@ -59,6 +62,7 @@ public class GeneriTech {
 
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
+        GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
 
         IntegrationsManager.instance().init();
 
