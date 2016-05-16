@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "up": "generitech:blocks/temp/TopTexture",
+      "down": "generitech:blocks/temp/BottomTexture",
+      "north": "generitech:blocks/temp/FrontTexture",
+      "east": "generitech:blocks/temp/SideTexture",
+      "west": "generitech:blocks/temp/SideTexture",
+      "south": "generitech:blocks/temp/SideTexture",
+      "particle": "generitech:blocks/temp/FrontTexture"
+    },
+    "model": "minecraft:cube",
+    "transform": "forge:default-block"
+  },
+  "variants":{
+    "inventory":[
+      {
+
+      }
+    ]
+    }
+  }
+}

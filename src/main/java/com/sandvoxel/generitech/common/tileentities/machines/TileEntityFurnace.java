@@ -10,6 +10,11 @@ import net.minecraft.util.EnumFacing;
 public class TileEntityFurnace extends TileEntityMachineBase {
 
     private InternalInventory internalInventory = new InternalInventory(this, 3);
+    private boolean isMachineActive = false;
+
+    public boolean isMachineActive() {
+        return isMachineActive;
+    }
 
     @Override
     public IInventory getInternalInventory() {

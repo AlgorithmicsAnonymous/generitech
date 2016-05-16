@@ -17,9 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Set;
 
-/**
- * Created by Sean on 14/05/2016.
- */
 public class ItemBaseTool extends ItemBase {
     protected float efficiencyOnProperMaterial;
     /**

@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
-    private InternalInventory inventory = new InternalInventory(this, 4);
+    private InternalInventory inventory = new InternalInventory(this, 5);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;

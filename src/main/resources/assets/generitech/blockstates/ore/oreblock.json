@@ -11,17 +11,17 @@
     "ore": {
       "copper": {
         "textures": {
-          "all": "generitech:blocks/copper_ore"
+          "all": "generitech:blocks/ore/copper_ore"
         }
       },
       "tin": {
         "textures": {
-          "all": "generitech:blocks/tin_ore"
+          "all": "generitech:blocks/ore/tin_ore"
         }
       },
       "lead": {
         "textures": {
-          "all": "generitech:blocks/lead_ore"
+          "all": "generitech:blocks/ore/lead_ore"
         }
       }
     }
