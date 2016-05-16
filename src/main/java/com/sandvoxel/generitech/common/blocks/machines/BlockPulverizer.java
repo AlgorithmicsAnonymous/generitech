@@ -40,7 +40,7 @@ public class BlockPulverizer extends BlockMachineBase {
         if (!world.isRemote) {
             player.openGui(GeneriTech.instance, GuiHandler.PULVERIZER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
-
+        LogHelper.info(">>>>> " + getUnlocalizedName());
         return true;
     }
 

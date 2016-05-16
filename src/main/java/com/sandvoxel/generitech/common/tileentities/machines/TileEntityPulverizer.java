@@ -95,8 +95,12 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     }
 
-/*    @Override
+    @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
+        if(slot == 1 || slot == 2 || slot == 3)
+                return false;
+
+
         if(slot == 1 || slot == 2 || slot == 3)
             return false;
 
@@ -105,15 +109,15 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
 
         return true;
-    }*/
+    }
 
-    @Override
+/*    @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
         if(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0))
             return false;
 
         return super.isItemValidForSlot(slot, itemStack);
-    }
+    }*/
 
     @Override
     public int[] getAccessibleSlotsBySide(EnumFacing side) {
