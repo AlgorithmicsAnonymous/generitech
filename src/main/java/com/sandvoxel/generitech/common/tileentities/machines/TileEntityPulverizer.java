@@ -12,11 +12,14 @@ import com.sandvoxel.generitech.common.util.LogHelper;
 import com.sandvoxel.generitech.common.util.MathHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import net.darkhax.tesla.api.BaseTeslaContainer;
+import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import java.util.List;
@@ -24,13 +27,16 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
-    private InternalInventory inventory = new InternalInventory(this, 5);
+    private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50 , 50);
+    private InternalInventory inventory = new InternalInventory(this, 4);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;
     private float crushRNG = 0;
     private boolean pulverizerPaused = false;
     private Random rnd = new Random();
+    private long powerUsage = 50;
+
 
     public boolean isPulverizerPaused() {
         return pulverizerPaused;
@@ -49,6 +55,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         crushIndex = nbtTagCompound.getInteger("crushIndex");
         pulverizerPaused = nbtTagCompound.getBoolean("pulverizerPaused");
         crushRNG = nbtTagCompound.getFloat("crushRNG");
+        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
     }
 
     @Override
@@ -60,6 +67,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         nbtTagCompound.setInteger("crushIndex", crushIndex);
         nbtTagCompound.setBoolean("pulverizerPaused", pulverizerPaused);
         nbtTagCompound.setFloat("crushRNG", crushRNG);
+        nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
     }
 
     @Override
@@ -89,87 +97,93 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
-        if(machineActive)
-            ticksRemaining--;
 
-        if (inventory.getStackInSlot(0) != null && inventory.getStackInSlot(1) == null) {
-            ItemStack itemIn = inventory.getStackInSlot(0);
-            ItemStack itemOut;
-
-            if (!PulverizerRegistry.containsInput(itemIn))
-                return;
-
-            if (itemIn.stackSize - 1 <= 0) {
-                itemOut = itemIn.copy();
-                itemIn = null;
-            } else {
-                itemOut = itemIn.copy();
-
-                itemOut.stackSize = 1;
-                itemIn.stackSize = itemIn.stackSize - 1;
+        if(this.container.takePower(powerUsage, true) == powerUsage) {
+            //LogHelper.info(">>>>> Have Power!!!");
+            if (machineActive && !pulverizerPaused) {
+                ticksRemaining--;
+                this.container.takePower(powerUsage, false);
             }
 
-            if (itemIn != null && itemIn.stackSize == 0) itemIn = null;
-            if (itemOut.stackSize == 0) itemOut = null;
+            if (inventory.getStackInSlot(0) != null && inventory.getStackInSlot(1) == null) {
+                ItemStack itemIn = inventory.getStackInSlot(0);
+                ItemStack itemOut;
 
-            inventory.setInventorySlotContents(0, itemIn);
-            inventory.setInventorySlotContents(1, itemOut);
+                if (!PulverizerRegistry.containsInput(itemIn))
+                    return;
 
-            ticksRemaining = 200;
-            machineActive = true;
+                if (itemIn.stackSize - 1 <= 0) {
+                    itemOut = itemIn.copy();
+                    itemIn = null;
+                } else {
+                    itemOut = itemIn.copy();
 
-            this.markForUpdate();
-            this.markDirty();
-        }
+                    itemOut.stackSize = 1;
+                    itemIn.stackSize = itemIn.stackSize - 1;
+                }
 
-        if (ticksRemaining <= 0 && machineActive) {
-            ticksRemaining = 0;
+                if (itemIn != null && itemIn.stackSize == 0) itemIn = null;
+                if (itemOut.stackSize == 0) itemOut = null;
 
-            if (worldObj.isRemote)
-                return;
+                inventory.setInventorySlotContents(0, itemIn);
+                inventory.setInventorySlotContents(1, itemOut);
 
-            ItemStack processItem = inventory.getStackInSlot(1);
-            if (processItem == null) {
-                return;
+                ticksRemaining = 200;
+                machineActive = true;
+
+                this.markForUpdate();
+                this.markDirty();
             }
 
-            List<Crushable> outputs = PulverizerRegistry.getOutputs(processItem);
+            if (ticksRemaining <= 0 && machineActive) {
+                ticksRemaining = 0;
 
-            if (outputs.isEmpty())
-                return;
+                if (worldObj.isRemote)
+                    return;
 
-            for (int i = this.crushIndex; i < outputs.size(); i++) {
-                this.crushIndex = i;
-                Crushable crushable = outputs.get(this.crushIndex);
-
-                ItemStack outItem = crushable.output.copy();
-                float itemChance = crushable.chance;
-
-                if (crushRNG == -1) crushRNG = rnd.nextFloat();
-
-                if(crushRNG <= itemChance)
-                    outItem.stackSize += outItem.stackSize;
-
-                // Simulate placing into output slot...
-                if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
-                    this.pulverizerPaused = true;
+                ItemStack processItem = inventory.getStackInSlot(1);
+                if (processItem == null) {
                     return;
                 }
 
-                if(pulverizerPaused)
-                    pulverizerPaused = !pulverizerPaused;
+                List<Crushable> outputs = PulverizerRegistry.getOutputs(processItem);
 
-                InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
-                this.crushRNG = -1;
+                if (outputs.isEmpty())
+                    return;
+
+                for (int i = this.crushIndex; i < outputs.size(); i++) {
+                    this.crushIndex = i;
+                    Crushable crushable = outputs.get(this.crushIndex);
+
+                    ItemStack outItem = crushable.output.copy();
+                    float itemChance = crushable.chance;
+
+                    if (crushRNG == -1) crushRNG = rnd.nextFloat();
+
+                    if (crushRNG <= itemChance)
+                        outItem.stackSize += outItem.stackSize;
+
+                    // Simulate placing into output slot...
+                    if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
+                        this.pulverizerPaused = true;
+                        return;
+                    }
+
+                    if (pulverizerPaused)
+                        pulverizerPaused = !pulverizerPaused;
+
+                    InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
+                    this.crushRNG = -1;
+                }
+
+                this.crushIndex = 0;
+                inventory.setInventorySlotContents(1, null);
+
+                machineActive = false;
+
+                this.markForUpdate();
+                this.markDirty();
             }
-
-            this.crushIndex = 0;
-            inventory.setInventorySlotContents(1, null);
-
-            machineActive = false;
-
-            this.markForUpdate();
-            this.markDirty();
         }
     }
 
@@ -199,6 +213,37 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         ));
 
         return currentTip;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability (Capability<T> capability, EnumFacing facing) {
+
+        // This method is where other things will try to access your TileEntity's Tesla
+        // capability. In the case of the analyzer, is a consumer, producer and holder so we
+        // can allow requests that are looking for any of those things. This example also does
+        // not care about which side is being accessed, however if you wanted to restrict which
+        // side can be used, for example only allow power input through the back, that could be
+        // done here.
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+            return (T) this.container;
+
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability (Capability<?> capability, EnumFacing facing) {
+
+        // This method replaces the instanceof checks that would be used in an interface based
+        // system. It can be used by other things to see if the TileEntity uses a capability or
+        // not. This example is a Consumer, Producer and Holder, so we return true for all
+        // three. This can also be used to restrict access on certain sides, for example if you
+        // only accept power input from the bottom of the block, you would only return true for
+        // Consumer if the facing parameter was down.
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+            return true;
+
+        return super.hasCapability(capability, facing);
     }
 }
 
