@@ -35,7 +35,9 @@
     },
     "active": {
       "true": {
-
+        "textures": {
+          "north": "generitech:blocks/machines/PulverizerAnimated"
+        }
       },
       "false": {
       }

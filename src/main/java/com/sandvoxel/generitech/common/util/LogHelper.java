@@ -9,7 +9,7 @@ public class LogHelper {
     private static Logger logger = LogManager.getLogger(Reference.MOD_NAME);
 
     public static void log(Level logLevel, String message) {
-        logger.log(logLevel, "[" + Reference.MOD_NAME + "] " + message);
+        logger.log(logLevel, message);
     }
 
     public static void all(String message) {
