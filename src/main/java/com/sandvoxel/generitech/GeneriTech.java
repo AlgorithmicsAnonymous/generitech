@@ -9,6 +9,7 @@ import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.common.util.LogHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -49,6 +50,8 @@ public class GeneriTech {
         proxy.registerEvents();
 
         proxy.registerRenderers();
+
+        proxy.registerFluids();
 
         IntegrationsManager.instance().index();
         IntegrationsManager.instance().preInit();
@@ -91,6 +94,10 @@ public class GeneriTech {
         if (event.getModID().equals(Reference.MOD_ID)) {
             Config.loadConfiguration();
         }
+    }
+
+    static {
+        FluidRegistry.enableUniversalBucket();
     }
 
 }

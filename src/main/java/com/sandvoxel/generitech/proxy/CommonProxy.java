@@ -4,16 +4,20 @@ import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.Blocks;
+import com.sandvoxel.generitech.common.blocks.fluids.BlockFluidBlock;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.common.enumtypes.EnumOres;
 import com.sandvoxel.generitech.common.items.Items;
+import com.sandvoxel.generitech.common.util.FluidHelper;
 import com.sandvoxel.generitech.common.util.IProvideEvent;
 import com.sandvoxel.generitech.common.util.IProvideRecipe;
 import com.sandvoxel.generitech.common.util.IProvideSmelting;
 import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -30,6 +34,21 @@ public abstract class CommonProxy implements IProxy {
     @Override
     public void registerItems() {
         Items.registerItems();
+    }
+
+    @Override
+    public void registerFluids() {
+        for (EnumOres ores : EnumOres.values()) {
+            int meta = ores.getMeta();
+            String oreName = ores.getName();
+
+            if (ores.isTypeSet(EnumOreType.FLUID)) {
+                Fluid fluid = FluidHelper.createFluid(oreName, "generitech:fluids." + oreName, false);
+                FluidRegistry.addBucketForFluid(fluid);
+
+                FluidHelper.registerFluidBlock(new BlockFluidBlock(fluid));
+            }
+        }
     }
 
     @Override

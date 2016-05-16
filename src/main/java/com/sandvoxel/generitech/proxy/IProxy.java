@@ -57,4 +57,6 @@ public interface IProxy {
      * Register Pulverizer Recipes
      */
     void registerPulverizerRecipes();
+
+    void registerFluids();
 }
