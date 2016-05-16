@@ -9,14 +9,14 @@ import java.util.List;
 public enum EnumOres implements IStringSerializable{
 
     // Vanilla stuff
-    IRON(0, "Iron", EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA),
-    GOLD(1, "Gold", EnumOreType.DUST, EnumOreType.VANILLA),
+    IRON("Iron", 0,EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA),
+    GOLD("Gold", 1, EnumOreType.DUST, EnumOreType.VANILLA),
     //DIAMOND(2, "diamond", EnumOreType.NUGGET, EnumOreType.VANILLA),
 
     // Our stuff
-    COPPER(2, "Copper", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK),
-    TIN(3, "Tin", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK),
-    LEAD(4, "Lead", EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK);
+    COPPER("Copper", 2, EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK),
+    TIN("Tin", 3, EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK),
+    LEAD("Lead", 4, EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK);
 
     private static final EnumOres[] META_LOOKUP = new EnumOres[values().length];
 
@@ -26,22 +26,22 @@ public enum EnumOres implements IStringSerializable{
         }
     }
 
-    private int meta;
-    private String name;
+    private final String name;
+    private final int meta;
     private final EnumOreType[] enumOresTypeList;
 
-    private EnumOres(int meta, String name, EnumOreType... enumOreTypes){
-        this.meta = meta;
+    EnumOres(String name, int meta, EnumOreType... oreTypes) {
         this.name = name;
-        this.enumOresTypeList = enumOreTypes;
+        this.meta = meta;
+        this.enumOresTypeList = oreTypes;
     }
 
-    public static EnumOres byMeta(int id) {
-        if (id < 0 || id >= META_LOOKUP.length) {
-            id = 0;
+    public static EnumOres byMeta(int meta) {
+        if (meta < 0 || meta >= META_LOOKUP.length) {
+            meta = 0;
         }
 
-        return META_LOOKUP[id];
+        return META_LOOKUP[meta];
     }
 
     public static List<EnumOres> byType(EnumOreType type) {

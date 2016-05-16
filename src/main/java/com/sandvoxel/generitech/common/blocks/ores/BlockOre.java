@@ -27,7 +27,7 @@ public class BlockOre extends BlockBase {
 
     public BlockOre() {
         super(Material.rock, "ore/ore");
-        this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.IRON));
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("ore");
     }
@@ -57,7 +57,7 @@ public class BlockOre extends BlockBase {
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
         for (int i = 0; i < EnumOres.values().length; i++) {
             if (EnumOres.byMeta(i).isTypeSet(EnumOreType.ORE)) {
-                list.add(new ItemStack(itemIn, 1, i));
+                list.add(new ItemStack(this, 1, i));
             }
         }
     }

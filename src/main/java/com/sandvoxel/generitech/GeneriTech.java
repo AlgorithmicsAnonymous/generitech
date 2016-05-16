@@ -7,6 +7,7 @@ import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
 import com.sandvoxel.generitech.proxy.CommonProxy;
 import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.common.util.LogHelper;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -62,7 +63,12 @@ public class GeneriTech {
 
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
-        GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
+
+        ModWorldGen worldGen = new ModWorldGen();
+        GameRegistry.registerWorldGenerator(worldGen, 0);
+        MinecraftForge.EVENT_BUS.register(worldGen);
+
+        MinecraftForge.EVENT_BUS.register(this);
 
         IntegrationsManager.instance().init();
 

@@ -28,7 +28,7 @@ public class BlockPulverizer extends BlockMachineBase {
     private static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockPulverizer() {
-        super(Material.rock, "machines/pulverizer/pulverizer", MachineTier.TIER_0, MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        super(Material.rock, "machines/pulverizer/pulverizer", MachineTier.all());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0).withProperty(FACING, EnumFacing.NORTH));
         this.setTileEntity(TileEntityPulverizer.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
@@ -40,7 +40,6 @@ public class BlockPulverizer extends BlockMachineBase {
         if (!world.isRemote) {
             player.openGui(GeneriTech.instance, GuiHandler.PULVERIZER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
-        LogHelper.info(">>>>> " + getUnlocalizedName());
         return true;
     }
 
