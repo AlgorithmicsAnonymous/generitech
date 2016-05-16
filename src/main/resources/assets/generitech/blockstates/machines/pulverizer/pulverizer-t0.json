@@ -2,13 +2,13 @@
   "forge_marker":1,
   "defaults":{
     "textures": {
-      "up": "generitech:blocks/BasicSide",
-      "down": "generitech:blocks/BasicSide",
-      "north": "generitech:blocks/PulverizerFront",
-      "east": "generitech:blocks/BasicSide",
-      "west": "generitech:blocks/BasicSide",
-      "south": "generitech:blocks/BasicSide",
-      "particle": "generitech:blocks/PulverizerFront"
+      "up": "blocks/furnace_top",
+      "down": "blocks/furnace_top",
+      "north": "generitech:blocks/machines/PulverizerT0",
+      "east": "blocks/furnace_side",
+      "west": "blocks/furnace_side",
+      "south": "blocks/furnace_side",
+      "particle": "generitech:blocks/machines/PulverizerT0"
     },
     "model":"minecraft:cube_all",
     "transform":"forge:default-block"
@@ -33,15 +33,13 @@
         "y": 270
       }
     },
-    "active":
-    {
+    "active": {
       "true": {
         "textures": {
-          "north": "generitech:models/furnaceActive"
+          "north": "generitech:blocks/machines/PulverizerT0Animated"
         }
       },
       "false": {
-
       }
     }
   }

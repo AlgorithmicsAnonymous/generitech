@@ -40,4 +40,21 @@ public class GeneriTechTabs {
             return Reference.MOD_ID + ".tools";
         }
     };
+
+    public static final CreativeTabs FLUID = new CreativeTabs(Reference.MOD_ID) {
+        @Override
+        public Item getTabIconItem() {
+            return net.minecraft.init.Items.bucket;
+        }
+
+        @Override
+        public String getTabLabel() {
+            return Reference.MOD_ID + ".fluids";
+        }
+    };
+
+    private GeneriTechTabs()
+    {
+
+    }
 }

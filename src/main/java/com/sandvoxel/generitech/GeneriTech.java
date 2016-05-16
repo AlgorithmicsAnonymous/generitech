@@ -3,9 +3,13 @@ package com.sandvoxel.generitech;
 import com.google.common.base.Stopwatch;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
+import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
+import com.sandvoxel.generitech.proxy.CommonProxy;
 import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.common.util.LogHelper;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -13,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,6 +51,8 @@ public class GeneriTech {
 
         proxy.registerRenderers();
 
+        proxy.registerFluids();
+
         IntegrationsManager.instance().index();
         IntegrationsManager.instance().preInit();
 
@@ -59,6 +66,12 @@ public class GeneriTech {
 
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
+
+        ModWorldGen worldGen = new ModWorldGen();
+        GameRegistry.registerWorldGenerator(worldGen, 0);
+        MinecraftForge.EVENT_BUS.register(worldGen);
+
+        MinecraftForge.EVENT_BUS.register(this);
 
         IntegrationsManager.instance().init();
 
@@ -81,6 +94,10 @@ public class GeneriTech {
         if (event.getModID().equals(Reference.MOD_ID)) {
             Config.loadConfiguration();
         }
+    }
+
+    static {
+        FluidRegistry.enableUniversalBucket();
     }
 
 }
