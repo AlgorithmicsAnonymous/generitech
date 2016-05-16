@@ -30,7 +30,7 @@ import java.util.Random;
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
     private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50, 50);
-    private InternalInventory inventory = new InternalInventory(this, 6);
+    private InternalInventory inventory = new InternalInventory(this, 5);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;
@@ -60,7 +60,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (machineTier == MachineTier.TIER_0)
             this.markForLightUpdate();
     }
-
 
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
@@ -96,9 +95,53 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     }
 
+/*    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
+        if(slot == 1 || slot == 2 || slot == 3)
+            return false;
+
+        if(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0))
+            return false;
+
+
+        return true;
+    }*/
+
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
+        if(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0))
+            return false;
+
+        return super.isItemValidForSlot(slot, itemStack);
+    }
+
     @Override
     public int[] getAccessibleSlotsBySide(EnumFacing side) {
-        return new int[0];
+        int[] slots = new int[0];
+        float oreAngle = (this.getForward().getHorizontalAngle() + 90) >= 360 ? 0 : (this.getForward().getHorizontalAngle() + 90);
+
+        if(side.getHorizontalAngle() == oreAngle) {
+            slots = new int[1];
+            slots[0] = 4;
+        }
+        if(side == EnumFacing.UP && machineTier == MachineTier.TIER_0) {
+            slots = new int[1];
+        }
+        if(side == EnumFacing.DOWN) {
+            slots = new int[2];
+            slots[0] = 2;
+            slots[1] = 3;
+        }
+
+        return slots;
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+        if(direction == EnumFacing.DOWN && (index == 2 || index == 3))
+            return true;
+
+        return false;
     }
 
     @Override
@@ -113,7 +156,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
-        LogHelper.info(">>>>> " + fuelRemaining);
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
