@@ -27,7 +27,7 @@ public class Reference {
     public static final String MOD_NAME = "GeneriTech";
     public static final String VERSION_BUILD = "@VERSION@";
     public static final String MINECRAFT_VERSION = "@MCVERSION@";
-    public static final String DEPENDENCIES = "";
+    public static final String DEPENDENCIES = "required-after:Tesla@[1.0,)";
     public static final String CLIENT_PROXY_CLASS = PACKAGE_NAME + MOD_ID + ".proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = PACKAGE_NAME + MOD_ID + ".proxy.ServerProxy";
     public static final String FINGERPRINT = "@FINGERPRINT@";
