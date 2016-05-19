@@ -73,7 +73,7 @@ public class BlockPulverizer extends BlockMachineBase {
 
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState blockState = getActualState(getDefaultState(), world, pos);
+        IBlockState blockState = getActualState(state, world, pos);
         return (blockState.getValue(ACTIVE) && blockState.getValue(MACHINETIER) == MachineTier.TIER_0) ? 15 : 0;
     }
     

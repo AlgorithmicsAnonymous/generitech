@@ -50,6 +50,10 @@ public class GeneriTech {
 
     public static Configuration configuration;
 
+    static {
+        FluidRegistry.enableUniversalBucket();
+    }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
         final Stopwatch watch = Stopwatch.createStarted();
@@ -114,9 +118,4 @@ public class GeneriTech {
             Config.loadConfiguration();
         }
     }
-
-    static {
-        FluidRegistry.enableUniversalBucket();
-    }
-
 }
