@@ -20,8 +20,10 @@
 package com.sandvoxel.generitech.common.blocks;
 
 import com.google.common.collect.Maps;
+import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.api.util.MachineTier;
+import com.sandvoxel.generitech.client.gui.GuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -30,8 +32,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -48,6 +53,15 @@ public abstract class BlockMachineBase extends BlockTileBase {
     public BlockMachineBase(Material material, String resourcePath, MachineTier... machineTiers) {
         super(material, resourcePath);
         this.machineTiers = machineTiers;
+    }
+
+    public boolean openUpgradeGUI(World world, EntityPlayer player, BlockPos pos)
+    {
+        if(!world.isRemote)
+        {
+            player.openGui(GeneriTech.instance, GuiHandler.UPGRADE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+        }
+        return true;
     }
 
     @SideOnly(Side.CLIENT)

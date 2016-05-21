@@ -22,8 +22,11 @@ package com.sandvoxel.generitech.client.gui;
 
 import com.sandvoxel.generitech.client.gui.machines.GuiFurnace;
 import com.sandvoxel.generitech.client.gui.machines.GuiPulverizer;
+import com.sandvoxel.generitech.client.gui.misc.GuiUpgrades;
 import com.sandvoxel.generitech.common.container.machines.ContainerFurnace;
 import com.sandvoxel.generitech.common.container.machines.ContainerPulverizer;
+import com.sandvoxel.generitech.common.container.misc.ContainerUpgrades;
+import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +39,7 @@ public class GuiHandler implements IGuiHandler {
 
     public static final int PULVERIZER_GUI = 0;
     public static final int FURNACE_GUI = 1;
+    public static final int UPGRADE_GUI = 2;
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -49,6 +53,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerPulverizer(player.inventory, tileEntity);
             case FURNACE_GUI:
                 return new ContainerFurnace(player.inventory, tileEntity);
+            case UPGRADE_GUI:
+                return new ContainerUpgrades(player.inventory, (TileEntityMachineBase)tileEntity);
 
             default:
                 return null;
@@ -67,6 +73,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiPulverizer(player.inventory, (TileEntityPulverizer) tileEntity);
             case FURNACE_GUI:
                 return new GuiFurnace(player.inventory, (TileEntityFurnace) tileEntity);
+            case UPGRADE_GUI:
+                return new GuiUpgrades(player.inventory, (TileEntityMachineBase)tileEntity);
 
             default:
                 return null;

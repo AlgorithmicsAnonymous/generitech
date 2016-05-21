@@ -21,6 +21,7 @@ package com.sandvoxel.generitech.common.items.tools;
 
 import com.google.common.collect.Sets;
 import com.sandvoxel.generitech.GeneriTechTabs;
+import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.items.ItemBaseTool;
 import com.sandvoxel.generitech.common.items.Items;
 import com.sandvoxel.generitech.common.util.IProvideEvent;
@@ -73,6 +74,15 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe, IPro
                 player.swingArm(hand);
                 return !world.isRemote ? EnumActionResult.FAIL : EnumActionResult.PASS;
             }
+        }
+        else if(block instanceof BlockMachineBase && player.isSneaking())
+        {
+            if (Platform.isClient())
+                return !world.isRemote ? EnumActionResult.FAIL : EnumActionResult.PASS;
+
+            player.swingArm(hand);
+            ((BlockMachineBase) block).openUpgradeGUI(world, player, pos);
+            return !world.isRemote ? EnumActionResult.FAIL : EnumActionResult.PASS;
         }
 
         return EnumActionResult.FAIL;

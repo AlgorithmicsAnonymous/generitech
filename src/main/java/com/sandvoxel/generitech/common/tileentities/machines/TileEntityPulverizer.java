@@ -25,16 +25,14 @@ import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
 import com.sandvoxel.generitech.common.inventory.InventoryOperation;
+import com.sandvoxel.generitech.common.items.Items;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
-import com.sandvoxel.generitech.common.util.LogHelper;
-import com.sandvoxel.generitech.common.util.MathHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
-import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -92,11 +90,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
         if (machineTier == MachineTier.TIER_0)
             this.markForLightUpdate();
-    }
-
-    protected void checkUpgradeSlots()
-    {
-
     }
 
     @Override
