@@ -29,8 +29,8 @@ import java.util.List;
 public class PulverizerRegistry {
     private static List<Crushable> registry = new ArrayList<>();
 
-    public static void register(ItemStack input, ItemStack output, float chance) {
-        registry.add(new Crushable(input, output, chance));
+    public static void register(ItemStack input, ItemStack output, float chance, boolean allowPulverizerFortune) {
+        registry.add(new Crushable(input, output, chance, allowPulverizerFortune ? 1.0f : 0.0f));
     }
 
     public static List<Crushable> getOutputs(ItemStack itemStack) {
@@ -60,7 +60,7 @@ public class PulverizerRegistry {
 
         for (ItemStack input : itemOres) {
             ItemStack output = itemDusts.get(0);
-            register(input, output, 1.0f);
+            register(input, output, 0.8f, true);
         }
     }
 
@@ -73,7 +73,7 @@ public class PulverizerRegistry {
 
         for (ItemStack input : itemOres) {
             ItemStack output = itemDusts.get(0);
-            register(input, output, 0f);
+            register(input, output, 1.0f, false);
         }
     }
 }

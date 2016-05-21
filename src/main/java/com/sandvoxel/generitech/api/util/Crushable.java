@@ -22,13 +22,15 @@ package com.sandvoxel.generitech.api.util;
 import net.minecraft.item.ItemStack;
 
 public class Crushable {
-    public ItemStack input;
-    public ItemStack output;
-    public float chance;
+    public final ItemStack input;
+    public final ItemStack output;
+    public final float chance;
+    public final float luckMultiplier;
 
-    public Crushable(ItemStack input, ItemStack output, float chance) {
+    public Crushable(ItemStack input, ItemStack output, float chance, float luckMultiplier) {
         this.input = input;
         this.output = output;
         this.chance = chance;
+        this.luckMultiplier = luckMultiplier;
     }
 }

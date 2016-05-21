@@ -34,6 +34,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,10 +47,20 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import java.util.List;
 import java.util.Random;
 
+/*
+* Slots
+*
+* 0 Input
+* 1 Processing
+* 2-3 Output
+* 4 Fuel
+* 5-7 Upgrades
+*/
+
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
     private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50, 50);
-    private InternalInventory inventory = new InternalInventory(this, 5);
+    private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;
@@ -62,6 +73,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private int fuelTotal = 0;
     private Item lastFuelType;
     private int lastFuelValue;
+    private float speedMultiplier = 0.0f;
+    private float fortuneMultiplier = 0.5f;
+    private int currentTotalProcessTime = 0;
 
 
     public boolean isPulverizerPaused() {
@@ -78,6 +92,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
         if (machineTier == MachineTier.TIER_0)
             this.markForLightUpdate();
+    }
+
+    protected void checkUpgradeSlots()
+    {
+
     }
 
     @Override
@@ -111,7 +130,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void onChangeInventory(IInventory inv, int slot, InventoryOperation operation, ItemStack removed, ItemStack added) {
-
+        if (slot >= 2 && this.pulverizerPaused) pulverizerPaused = false;
     }
 
     @Override
@@ -129,14 +148,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
         return true;
     }
-
-/*    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
-        if(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0))
-            return false;
-
-        return super.isItemValidForSlot(slot, itemStack);
-    }*/
 
     @Override
     public int[] getAccessibleSlotsBySide(EnumFacing side) {
@@ -196,12 +207,12 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             this.markForUpdate();
         }
 
-        if ((this.container.takePower(powerUsage, true) == powerUsage && machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
+        if ((/*this.container.takePower(powerUsage, true) == powerUsage &&*/ machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
             if (machineActive && !pulverizerPaused) {
                 ticksRemaining--;
 
-                if (machineTier != MachineTier.TIER_0)
-                    this.container.takePower(powerUsage, false);
+                /*if (machineTier != MachineTier.TIER_0)
+                    this.container.takePower(powerUsage, false);*/
 
                 if (fuelRemaining > 0)
                     fuelRemaining--;
@@ -259,11 +270,15 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
                     ItemStack outItem = crushable.output.copy();
                     float itemChance = crushable.chance;
+                    boolean itemFortune = crushable.luckMultiplier == 1.0f;
 
                     if (crushRNG == -1) crushRNG = rnd.nextFloat();
 
-                    if (crushRNG <= itemChance)
-                        outItem.stackSize += outItem.stackSize;
+                    if (itemFortune)
+                        itemChance = itemChance + fortuneMultiplier;
+
+                    outItem.stackSize = (int) Math.round(Math.floor(itemChance) + crushRNG * itemChance % 1);
+
 
                     // Simulate placing into output slot...
                     if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
@@ -353,7 +368,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return +12;
 
         return Math.round((((float) fuelTotal - (float) fuelRemaining) / (float) fuelTotal) * 11);
-
     }
 }
 

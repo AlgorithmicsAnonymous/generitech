@@ -85,7 +85,9 @@ public abstract class CommonProxy implements IProxy {
             }
         }
 
-        PulverizerRegistry.register(new ItemStack(net.minecraft.init.Blocks.redstone_ore, 1), new ItemStack(net.minecraft.init.Items.redstone, 3), 1.0f);
+        PulverizerRegistry.register(new ItemStack(net.minecraft.init.Blocks.coal_ore), new ItemStack(net.minecraft.init.Items.coal, 2), 1.5f, true);
+
+        PulverizerRegistry.register(new ItemStack(net.minecraft.init.Blocks.redstone_ore), new ItemStack(net.minecraft.init.Items.redstone, 4), 4.0f, true);
     }
 
     @Override
