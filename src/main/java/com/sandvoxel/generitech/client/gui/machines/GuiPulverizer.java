@@ -70,16 +70,20 @@ public class GuiPulverizer extends GuiBase {
 
     @Override
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        bindTexture("gui/machines/pulverizer1.png");
-        drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
+        if(machineTier == MachineTier.TIER_0){
+            bindTexture("gui/machines/pulverizerT0.png");
+            drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
+        } else {
+            bindTexture("gui/machines/pulverizer.png");
+            drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
+            drawTexturedModalRect(paramInt1 + 25, paramInt2 + 63, 47, 34, 18, 18);
+        }
 
-        drawTexturedModalRect(paramInt1 + 25, paramInt2 + 63, 47, 34, 18, 18);
 
         if(machineTier == MachineTier.TIER_0)
         {
-            drawTexturedModalRect(paramInt1 + 28, paramInt2 + 38, 176, 31, 14, 14);
             int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
-            drawTexturedModalRect(paramInt1 + 28, paramInt2 + 38 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
+            drawTexturedModalRect(paramInt1 + 48, paramInt2 + 41 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
         }
         else if(machineTier == MachineTier.TIER_1)
         {
@@ -103,7 +107,6 @@ public class GuiPulverizer extends GuiBase {
 
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        this.fontRendererObj.drawString(tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName()), 16, 12, 0xFFFFFF);
 
         int timeTotal = tileEntity.getTotalProcessTime();
         int timeCurrent = tileEntity.getTicksRemaining();
@@ -123,11 +126,19 @@ public class GuiPulverizer extends GuiBase {
             guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
         }
 
-
-        guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-        String progressLabel = String.format("%d%%", Math.round(timePercent));
-        guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
-
+        if(machineTier == MachineTier.TIER_0) {
+            String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+            this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+            guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+            String progressLabel = String.format("%d%%", Math.round(timePercent));
+            guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
+        } else{
+            String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+            this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
+            guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+            String progressLabel = String.format("%d%%", Math.round(timePercent));
+            guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
+        }
     }
 
     @Override
