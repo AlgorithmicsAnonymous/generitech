@@ -25,6 +25,8 @@ repositories {
         name "FireBall API Depot"
         url "http://dl.tsr.me/artifactory/libs-release/"
     }
+
+    maven { url "http://maven.amadornes.com/" }
 }
 
 configurations {
