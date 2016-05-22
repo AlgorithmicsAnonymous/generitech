@@ -1,0 +1,8 @@
+before_script:  
+  - chmod +x gradlew
+dev:  
+  script:
+  - ./gradlew clean build
+  artifacts:
+   paths:
+   - build/libs/
