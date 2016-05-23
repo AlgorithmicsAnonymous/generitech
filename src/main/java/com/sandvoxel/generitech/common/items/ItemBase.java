@@ -19,7 +19,6 @@
 
 package com.sandvoxel.generitech.common.items;
 
-import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.common.util.IItemRenderer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

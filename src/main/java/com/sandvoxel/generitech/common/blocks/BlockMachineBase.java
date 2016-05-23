@@ -24,7 +24,6 @@ import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.api.util.MachineTier;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

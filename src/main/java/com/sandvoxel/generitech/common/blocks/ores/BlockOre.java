@@ -21,12 +21,8 @@ package com.sandvoxel.generitech.common.blocks.ores;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.common.blocks.BlockBase;
-import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.common.enumtypes.EnumOreType;
 import com.sandvoxel.generitech.common.enumtypes.EnumOres;
-import com.sandvoxel.generitech.common.items.Items;
-import com.sandvoxel.generitech.common.util.IProvideRecipe;
-import com.sandvoxel.generitech.common.util.IProvideSmelting;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -36,7 +32,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
 
