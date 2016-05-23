@@ -19,20 +19,54 @@
 
 package com.sandvoxel.generitech.common.tileentities.machines;
 
+import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
+import com.sandvoxel.generitech.api.util.MachineTier;
+import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
 import com.sandvoxel.generitech.common.inventory.InventoryOperation;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
+import com.sandvoxel.generitech.common.util.InventoryHelper;
+import com.sandvoxel.generitech.common.util.LanguageHelper;
+import com.sandvoxel.generitech.common.util.LogHelper;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
-public class TileEntityFurnace extends TileEntityMachineBase {
+import java.util.List;
 
-    private InternalInventory internalInventory = new InternalInventory(this, 3);
-    private boolean isMachineActive = false;
+public class TileEntityFurnace extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
+
+    private InternalInventory internalInventory = new InternalInventory(this, 4);
+    private boolean machineActive = false;
+    private int smeltProgress = 0;
+    private int maxInternalTemp = 750;
+    private float internalTemp = 0f;
+    private boolean canIdle = false;
+    private boolean isSmeltPaused = false;
+    private float tempRate = 0.5f;
+
+    @Override
+    public void markForUpdate() {
+        super.markForUpdate();
+
+        this.markForLightUpdate();
+    }
+
+    public boolean isSmeltPaused() {
+        return isSmeltPaused;
+    }
+
+    public int getSmeltProgress() {
+        return smeltProgress;
+    }
 
     public boolean isMachineActive() {
-        return isMachineActive;
+        return machineActive;
     }
 
     @Override
@@ -58,5 +92,142 @@ public class TileEntityFurnace extends TileEntityMachineBase {
     @Override
     public boolean canBeRotated() {
         return true;
+    }
+
+    private boolean canSmelt(ItemStack stack) {
+        ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(stack);
+        return itemstack != null;
+    }
+
+    public int getTemperature() {
+        return (int) internalTemp;
+    }
+
+    public int getIdleTemp()
+    {
+        return getMaxTemperature() / 2;
+    }
+
+    public int getMultiplier() {
+        int speed = (int) Math.floor((internalTemp - 100) / 100);
+        if (speed < 0) speed = 0;
+        return speed;
+    }
+
+    public int getMaxTemperature() {
+        switch (MachineTier.byMeta(getBlockMetadata()))
+        {
+            case TIER_1:
+            default:
+                return 750;
+            case TIER_2:
+                return 1000;
+            case TIER_3:
+                return 1250;
+        }
+    }
+
+    @Override
+    public void update() {
+        if(machineActive & !isSmeltPaused)
+        {
+            if (internalTemp < this.getMaxTemperature()) {
+                internalTemp += tempRate;
+            }
+        }
+        else
+        {
+            if(canIdle && internalTemp <= getIdleTemp())
+            {
+                internalTemp = getIdleTemp();
+            }
+            else
+            {
+                if(internalTemp <= 0)
+                {
+                    internalTemp = 0;
+                }
+                else
+                {
+                    internalTemp -= tempRate;
+                }
+            }
+        }
+
+        if (internalInventory.getStackInSlot(0) != null && internalInventory.getStackInSlot(1) == null) {
+            ItemStack itemIn = internalInventory.getStackInSlot(0);
+            ItemStack itemOut;
+
+            if (!canSmelt(itemIn))
+                return;
+
+            if (itemIn.stackSize - 1 <= 0) {
+                itemOut = itemIn.copy();
+                itemIn = null;
+            } else {
+                itemOut = itemIn.copy();
+
+                itemOut.stackSize = 1;
+                itemIn.stackSize = itemIn.stackSize - 1;
+            }
+
+            if (itemIn != null && itemIn.stackSize == 0) itemIn = null;
+            if (itemOut.stackSize == 0) itemOut = null;
+
+            internalInventory.setInventorySlotContents(0, itemIn);
+            internalInventory.setInventorySlotContents(1, itemOut);
+
+            machineActive = true;
+
+            this.markForUpdate();
+            this.markDirty();
+        }
+
+        ItemStack processItem = internalInventory.getStackInSlot(1);
+        if (processItem != null && getMultiplier() > 0) {
+            smeltProgress += getMultiplier();
+
+            if (smeltProgress > 1000) {
+                smeltProgress = 1000;
+                ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
+                if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
+                    isSmeltPaused = true;
+                    return;
+                }
+
+                if (isSmeltPaused)
+                    isSmeltPaused = !isSmeltPaused;
+
+                InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
+
+                machineActive = false;
+                smeltProgress = 0;
+                internalInventory.setInventorySlotContents(1, null);
+
+                this.markForUpdate();
+                this.markDirty();
+            }
+        } else {
+            if (smeltProgress > 0)
+                smeltProgress--;
+        }
+
+
+    }
+
+    @Override
+    public List<String> getWailaBodyToolTip(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        currentTip.add(String.format("%s: %s",
+                LanguageHelper.LABEL.translateMessage("max_temperature"),
+                getMaxTemperature()
+        ));
+
+        currentTip.add(String.format("%s: %s",
+                LanguageHelper.LABEL.translateMessage("current_temperature"),
+                getTemperature()
+        ));
+
+        return currentTip;
     }
 }

@@ -25,6 +25,7 @@ import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
+import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.util.TileHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -55,6 +56,24 @@ public class BlockFurnace extends BlockMachineBase {
             player.openGui(GeneriTech.instance, GuiHandler.FURNACE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        IBlockState blockState = getActualState(state, world, pos);
+        return blockState.getValue(ACTIVE) ? 15 : 0;
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+        TileEntityFurnace tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityFurnace.class);
+        if (tileEntity != null && !tileEntity.isSmeltPaused()) {
+            super.breakBlock(world, blockPos, blockState);
+            return;
+        }
+
+        TileHelper.DropItems(tileEntity, 0, 0);
+        TileHelper.DropItems(tileEntity, 2, 2);
     }
 
     @Override

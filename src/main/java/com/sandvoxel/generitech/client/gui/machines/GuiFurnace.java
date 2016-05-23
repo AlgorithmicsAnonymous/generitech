@@ -23,6 +23,8 @@ import com.sandvoxel.generitech.client.gui.GuiBase;
 import com.sandvoxel.generitech.common.container.machines.ContainerFurnace;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
 import com.sandvoxel.generitech.common.util.GuiHelper;
+import com.sandvoxel.generitech.common.util.LanguageHelper;
+import com.sandvoxel.generitech.common.util.LogHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFurnace extends GuiBase {
@@ -33,6 +35,7 @@ public class GuiFurnace extends GuiBase {
         super(new ContainerFurnace(inventoryPlayer, tileEntity));
         this.xSize = 176;
         this.ySize = 166;
+        this.tileEntity = tileEntity;
     }
 
     @Override
@@ -43,7 +46,13 @@ public class GuiFurnace extends GuiBase {
 
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-//        this.fontRendererObj.drawString(tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName()), 8, 6, 4210752);
-//        this.fontRendererObj.drawString(LanguageHelper.NONE.translateMessage("container.inventory"), 8, 58, 4210752);
+        String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
+
+        float progress = ((((float) tileEntity.getSmeltProgress()) / (float) 1000)) * 100;
+
+        guiHelper.drawHorizontalProgressBar(78, 39, 39, 8, Math.round(progress), colorBackground, colorBorder, colorProgressBackground);
+        String progressLabel = String.format("%d%%", Math.round(progress));
+        guiHelper.drawCenteredStringWithShadow(47, 39, 100, progressLabel, colorFont);
     }
 }
