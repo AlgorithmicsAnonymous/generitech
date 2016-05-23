@@ -128,6 +128,10 @@ public abstract class CommonProxy implements IProxy {
             // Register Nuggets
             if (ores.isTypeSet(EnumOreType.NUGGET))
                 OreDictionary.registerOre("nugget" + oreName, Items.ITEM_ORE_NUGGET.getStack(1, meta));
+
+            // Register Gears
+            if (ores.isTypeSet(EnumOreType.GEAR))
+                OreDictionary.registerOre("gear" + oreName, Items.ITEM_MATERIAL_GEAR.getStack(1, meta));
         }
     }
 

@@ -19,6 +19,7 @@
 
 package com.sandvoxel.generitech.common.items;
 
+import com.sandvoxel.generitech.common.items.materials.ItemMaterialGear;
 import com.sandvoxel.generitech.common.items.ore.ItemOreDust;
 import com.sandvoxel.generitech.common.items.ore.ItemOreIngot;
 import com.sandvoxel.generitech.common.items.ore.ItemOreNugget;
@@ -33,6 +34,8 @@ public enum Items {
     ITEM_ORE_INGOT(ItemOreIngot.class),
     ITEM_ORE_DUST(ItemOreDust.class),
     ITEM_ORE_NUGGET(ItemOreNugget.class),
+
+    ITEM_MATERIAL_GEAR(ItemMaterialGear.class),
 
     ITEM_TOOL_WRENCH(ItemToolWrench.class);
 

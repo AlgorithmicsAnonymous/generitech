@@ -174,7 +174,7 @@ public abstract class BlockBase extends Block implements IBlockRenderer {
     public void registerBlockItemRenderer() {
         final String resourcePath = String.format("%s:%s", Reference.MOD_ID, this.resourcePath);
 
-        List<ItemStack> subBlocks = new ArrayList<ItemStack>();
+        List<ItemStack> subBlocks = new ArrayList<>();
         getSubBlocks(Item.getItemFromBlock(this), null, subBlocks);
 
         for (ItemStack itemStack : subBlocks) {
