@@ -32,13 +32,11 @@ import com.sandvoxel.generitech.common.util.FluidHelper;
 import com.sandvoxel.generitech.common.util.IProvideEvent;
 import com.sandvoxel.generitech.common.util.IProvideRecipe;
 import com.sandvoxel.generitech.common.util.IProvideSmelting;
-import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;

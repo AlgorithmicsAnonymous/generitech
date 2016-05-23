@@ -21,11 +21,8 @@ package com.sandvoxel.generitech.client.gui.machines;
 
 import com.sandvoxel.generitech.client.gui.GuiBase;
 import com.sandvoxel.generitech.common.container.machines.ContainerFurnace;
-import com.sandvoxel.generitech.common.container.machines.ContainerPulverizer;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
-import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.util.GuiHelper;
-import com.sandvoxel.generitech.common.util.LanguageHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFurnace extends GuiBase {

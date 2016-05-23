@@ -28,8 +28,6 @@ import com.sandvoxel.generitech.common.inventory.InventoryOperation;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
-import com.sandvoxel.generitech.common.util.LogHelper;
-import com.sandvoxel.generitech.common.util.MathHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;

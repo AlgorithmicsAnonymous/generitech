@@ -25,21 +25,15 @@ import com.sandvoxel.generitech.common.container.machines.ContainerPulverizer;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.util.GuiHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
-import com.sandvoxel.generitech.common.util.LogHelper;
-import net.darkhax.tesla.api.BaseTeslaContainer;
-import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
-import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
