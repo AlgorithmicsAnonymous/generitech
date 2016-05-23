@@ -43,13 +43,16 @@ public class ContainerPulverizer extends ContainerBase {
 
         bindPlayerInventory(inventoryPlayer, 0, 84);
 
-        this.addSlotToContainer(new SlotNormal(inventory, 0, 48, 35));
-        this.addSlotToContainer(new SlotOutput(inventory, 2, 124, 35));
-        this.addSlotToContainer(new SlotOutput(inventory, 3, 143, 35));
-
         if(machineTier == MachineTier.TIER_0)
         {
-            this.addSlotToContainer(new SlotFuelInput(inventory, 4, 26, 64, null));
+            this.addSlotToContainer(new SlotNormal(inventory, 0, 48, 21));
+            this.addSlotToContainer(new SlotOutput(inventory, 2, 123, 39));
+            this.addSlotToContainer(new SlotOutput(inventory, 3, 144, 39));
+            this.addSlotToContainer(new SlotFuelInput(inventory, 4, 48, 57, null));
+        } else {
+            this.addSlotToContainer(new SlotNormal(inventory, 0, 48, 35));
+            this.addSlotToContainer(new SlotOutput(inventory, 2, 123, 35));
+            this.addSlotToContainer(new SlotOutput(inventory, 3, 144, 35));
         }
     }
 }
