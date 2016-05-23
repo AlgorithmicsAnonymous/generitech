@@ -2,8 +2,13 @@ itemGroup.generitech.general=GeneriTech General
 itemGroup.generitech.ore=GeneriTech Ores
 itemGroup.generitech.tools=GeneriTech Gadgets
 
-tile.generitech.pulverizer.name=Pulverizer
-tile.generitech.furnace.name=Furnace
+tile.generitech.pulverizer.t0.name=Pulverizer (T0)
+tile.generitech.pulverizer.t1.name=Pulverizer (T1)
+tile.generitech.pulverizer.t2.name=Pulverizer (T2)
+tile.generitech.pulverizer.t3.name=Pulverizer (T3)
+tile.generitech.furnace.t1.name=Powered Furnace (T1)
+tile.generitech.furnace.t2.name=Powered Furnace (T2)
+tile.generitech.furnace.t3.name=Powered Furnace (T3)
 
 tile.generitech.ore.tin.name=Tin Ore
 tile.generitech.ore.copper.name=Copper Ore
