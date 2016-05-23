@@ -29,6 +29,9 @@ public class BlockFluidBlock extends BlockFluidClassic {
     public BlockFluidBlock(Fluid fluid) {
         super(fluid, Material.lava);
         setCreativeTab(GeneriTechTabs.FLUID);
+        setQuantaPerBlock(4);
+        setTickRate(20);
+        setHardness(2000F);
     }
 
     @Override
