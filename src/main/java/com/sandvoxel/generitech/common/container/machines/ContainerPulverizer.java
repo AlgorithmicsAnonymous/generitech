@@ -24,11 +24,8 @@ import com.sandvoxel.generitech.common.container.slot.SlotFuelInput;
 import com.sandvoxel.generitech.common.container.slot.SlotOutput;
 import com.sandvoxel.generitech.common.container.slot.SlotNormal;
 import com.sandvoxel.generitech.common.container.ContainerBase;
-import com.sandvoxel.generitech.common.tileentities.TileEntityInventoryBase;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.tileentity.TileEntity;
 
 public class ContainerPulverizer extends ContainerBase {

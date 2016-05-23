@@ -23,7 +23,6 @@ import com.google.common.base.Stopwatch;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
 import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
-import com.sandvoxel.generitech.proxy.CommonProxy;
 import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.common.util.LogHelper;
 import net.minecraftforge.common.MinecraftForge;

@@ -23,13 +23,11 @@ package com.sandvoxel.generitech.client.gui;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.common.util.GuiHelper;
 import com.sandvoxel.generitech.common.util.OpenGLHelper;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
