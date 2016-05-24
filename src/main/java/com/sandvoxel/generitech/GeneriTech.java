@@ -52,7 +52,7 @@ public class GeneriTech {
     static {
         FluidRegistry.enableUniversalBucket();
     }
-// test push
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
         final Stopwatch watch = Stopwatch.createStarted();

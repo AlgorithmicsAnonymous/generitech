@@ -25,6 +25,7 @@ import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
 import com.sandvoxel.generitech.common.util.GuiHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
 import com.sandvoxel.generitech.common.util.LogHelper;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFurnace extends GuiBase {
@@ -42,6 +43,13 @@ public class GuiFurnace extends GuiBase {
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         bindTexture("gui/machines/furnace.png");
         drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
+
+        if(tileEntity.getTemperature() > 0)
+        {
+            //float temp = (((float)tileEntity.getTemperature() / (float)tileEntity.getMaxTemperature()) * 100) / 7;
+            //LogHelper.info(">>>>> " + (int)temp);
+            drawTexturedModalRect(paramInt1 + 57, paramInt2 + 54, 176, 16, 14, 14);
+        }
     }
 
     @Override

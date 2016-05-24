@@ -44,11 +44,9 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
     private InternalInventory internalInventory = new InternalInventory(this, 4);
     private boolean machineActive = false;
     private int smeltProgress = 0;
-    private int maxInternalTemp = 750;
     private float internalTemp = 0f;
     private boolean canIdle = false;
     private boolean isSmeltPaused = false;
-    private float tempRate = 0.5f;
 
     @Override
     public void markForUpdate() {
@@ -127,12 +125,25 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
         }
     }
 
+    public float getTempRate() {
+        switch (MachineTier.byMeta(getBlockMetadata()))
+        {
+            case TIER_1:
+            default:
+                return 0.5f;
+            case TIER_2:
+                return 0.7f;
+            case TIER_3:
+                return 0.9f;
+        }
+    }
+
     @Override
     public void update() {
         if(machineActive & !isSmeltPaused)
         {
             if (internalTemp < this.getMaxTemperature()) {
-                internalTemp += tempRate;
+                internalTemp += getTempRate();
             }
         }
         else
@@ -149,7 +160,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
                 }
                 else
                 {
-                    internalTemp -= tempRate;
+                    internalTemp -= getTempRate() / 2;
                 }
             }
         }
@@ -207,9 +218,30 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
                 this.markForUpdate();
                 this.markDirty();
             }
-        } else {
-            if (smeltProgress > 0)
-                smeltProgress--;
+        }
+        else
+        {
+            if(processItem != null && isSmeltPaused())
+            {
+                if(smeltProgress > 1000)
+                {
+                    smeltProgress = 1000;
+                    ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
+                    if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
+                        isSmeltPaused = true;
+                        return;
+                    }
+
+                    InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
+
+                    machineActive = false;
+                    smeltProgress = 0;
+                    internalInventory.setInventorySlotContents(1, null);
+
+                    this.markForUpdate();
+                    this.markDirty();
+                }
+            }
         }
 
 
