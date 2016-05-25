@@ -22,9 +22,9 @@ package com.sandvoxel.generitech;
 import com.google.common.base.Stopwatch;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
-import com.sandvoxel.generitech.common.worldgen.ModWorldGen;
-import com.sandvoxel.generitech.proxy.IProxy;
 import com.sandvoxel.generitech.common.util.LogHelper;
+import com.sandvoxel.generitech.common.world.WorldGen;
+import com.sandvoxel.generitech.proxy.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -73,6 +73,8 @@ public class GeneriTech {
 
         proxy.registerRenderers();
 
+        proxy.registerWorldGen();
+
         proxy.registerFluids();
 
         IntegrationsManager.instance().index();
@@ -89,7 +91,7 @@ public class GeneriTech {
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
 
-        ModWorldGen worldGen = new ModWorldGen();
+        WorldGen worldGen = new WorldGen();
         GameRegistry.registerWorldGenerator(worldGen, 0);
         MinecraftForge.EVENT_BUS.register(worldGen);
 
@@ -115,6 +117,7 @@ public class GeneriTech {
     public void onConfigurationChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equals(Reference.MOD_ID)) {
             Config.loadConfiguration();
+            WorldGen.markChunksForRegen();
         }
     }
 }
