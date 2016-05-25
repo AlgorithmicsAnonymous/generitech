@@ -20,13 +20,10 @@
 package com.sandvoxel.generitech.common.container.machines;
 
 import com.sandvoxel.generitech.common.container.ContainerBase;
-import com.sandvoxel.generitech.common.container.slot.SlotFuelInput;
 import com.sandvoxel.generitech.common.container.slot.SlotNormal;
 import com.sandvoxel.generitech.common.container.slot.SlotOutput;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class ContainerFurnace extends ContainerBase {
