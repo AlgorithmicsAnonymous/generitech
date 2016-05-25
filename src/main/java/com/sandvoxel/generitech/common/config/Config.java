@@ -33,11 +33,16 @@ import java.util.Arrays;
 public class Config extends GuiConfig {
     public static Configuration configuration;
 
+    public class Category
+    {
+        public static final String WORLDGEN = "worldgen";
+    }
+
     public Config(GuiScreen parentScreen) {
         super(
                 parentScreen,
                 Arrays.asList(new IConfigElement[]{
-                        new ConfigElement(GeneriTech.configuration.getCategory("SampleData"))
+                        new ConfigElement(GeneriTech.configuration.getCategory(Category.WORLDGEN))
                 }),
                 Reference.MOD_ID, false, false, "GeneriTech Configuration");
         titleLine2 = GeneriTech.configuration.getConfigFile().getAbsolutePath();
@@ -52,7 +57,7 @@ public class Config extends GuiConfig {
     }
 
     public static void loadConfiguration() {
-        ConfigSample.init(configuration);
+        ConfigWorldGen.init(configuration);
 
         configuration.save();
     }

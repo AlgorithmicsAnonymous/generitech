@@ -32,6 +32,7 @@ import com.sandvoxel.generitech.common.util.FluidHelper;
 import com.sandvoxel.generitech.common.util.IProvideEvent;
 import com.sandvoxel.generitech.common.util.IProvideRecipe;
 import com.sandvoxel.generitech.common.util.IProvideSmelting;
+import com.sandvoxel.generitech.common.world.WorldGen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
@@ -51,6 +52,11 @@ public abstract class CommonProxy implements IProxy {
     @Override
     public void registerItems() {
         Items.registerItems();
+    }
+
+    @Override
+    public void registerWorldGen() {
+        WorldGen.init();
     }
 
     @Override
