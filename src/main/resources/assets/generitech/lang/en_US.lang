@@ -35,4 +35,8 @@ item.generitech.oredust.iron.name=Iron Dust
 tile.generitech.ore.copper.tooltip=It's Copper. What else is there to know?
 tile.generitech.ore.tin.tooltip=Another staple of your average tech mod.
 tile.generitech.ore.lead.tooltip=Life Pro Tip: Do not ingest this stuff.
+
+// Label
 label.generitech.time_left=Time Remaining
+label.generitech.max_temperature=Maximum Temp
+label.generitech.current_temperature=Current Temp
