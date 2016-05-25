@@ -35,7 +35,6 @@
 package com.sandvoxel.generitech.common.tileentities;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.Constants;
 
 public abstract class TileEntityMultiBlockBase extends TileEntityInventoryBase {
     private boolean hasMaster, isMaster;

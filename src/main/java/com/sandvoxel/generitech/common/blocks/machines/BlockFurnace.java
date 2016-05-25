@@ -25,7 +25,6 @@ import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
-import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.util.TileHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;

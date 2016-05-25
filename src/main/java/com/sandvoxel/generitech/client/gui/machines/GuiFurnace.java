@@ -24,8 +24,6 @@ import com.sandvoxel.generitech.common.container.machines.ContainerFurnace;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityFurnace;
 import com.sandvoxel.generitech.common.util.GuiHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
-import com.sandvoxel.generitech.common.util.LogHelper;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFurnace extends GuiBase {
