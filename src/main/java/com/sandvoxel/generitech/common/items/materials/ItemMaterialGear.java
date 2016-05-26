@@ -36,8 +36,8 @@ package com.sandvoxel.generitech.common.items.materials;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.common.enumtypes.EnumOreType;
-import com.sandvoxel.generitech.common.enumtypes.EnumOres;
+import com.sandvoxel.generitech.api.util.EnumOreType;
+import com.sandvoxel.generitech.common.util.EnumOres;
 import com.sandvoxel.generitech.common.items.ItemBase;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

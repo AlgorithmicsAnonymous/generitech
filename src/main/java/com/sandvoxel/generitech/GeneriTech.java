@@ -20,6 +20,7 @@
 package com.sandvoxel.generitech;
 
 import com.google.common.base.Stopwatch;
+import com.sandvoxel.generitech.api.exceptions.OutdatedJavaException;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
 import com.sandvoxel.generitech.common.util.LogHelper;
@@ -36,6 +37,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang3.SystemUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -57,6 +60,10 @@ public class GeneriTech {
     public void preInit(FMLPreInitializationEvent event){
         final Stopwatch watch = Stopwatch.createStarted();
         LogHelper.info( "Pre Initialization ( started )" );
+
+        if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7)) {
+            throw new OutdatedJavaException(String.format("%s requires Java 7 or newer, Please update your java", Reference.MOD_NAME));
+        }
 
         proxy.registerConfiguration(event.getSuggestedConfigurationFile());
 
