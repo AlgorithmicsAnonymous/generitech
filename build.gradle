@@ -45,7 +45,7 @@ archivesBaseName = cibasename
 
 // If TeamCity is running this build, lets set the version info
 if (hasProperty("teamcity")) {
-    version = minecraft_version + "-" + teamcity["build.number"] + "-universal"
+    version = minecraft_version + "-b" + teamcity["build.number"] + "-universal"
 
     // Fix for main branch being built
     version = version.replaceAll("/", "-")
