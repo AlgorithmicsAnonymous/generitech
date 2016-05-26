@@ -17,54 +17,87 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-package com.sandvoxel.generitech.common.util.version;
+package com.sandvoxel.generitech.common.util;
 
-import com.sandvoxel.generitech.Reference;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import com.sandvoxel.generitech.api.util.EnumOreType;
+import net.minecraft.util.IStringSerializable;
 
-/**
- * Created by Sean on 15/05/2016.
- */
-public class VersionChecker {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private static final int FLAVOUR_MESSAGES = 65;
+public enum EnumOres implements IStringSerializable{
 
-    public static boolean doneChecking = false;
-    public static String onlineVersion = "";
-    public static boolean triedToWarnPlayer = false;
+    // Vanilla stuff
+    IRON("Iron", 0, EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA, EnumOreType.FLUID, EnumOreType.GEAR),
+    GOLD("Gold", 1, EnumOreType.DUST, EnumOreType.VANILLA, EnumOreType.FLUID, EnumOreType.GEAR),
+    DIAMOND("Diamond", 2, EnumOreType.VANILLA, EnumOreType.GEAR),
+    COBBLE("Stone", 3, EnumOreType.GEAR, EnumOreType.VANILLA),
 
-    public void init() {
-        new ThreadVersionChecker();
-        MinecraftForge.EVENT_BUS.register(this);
-    }
+    // Our stuff
+    COPPER("Copper", 4, EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK, EnumOreType.FLUID, EnumOreType.GEAR),
+    TIN("Tin", 5, EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK, EnumOreType.FLUID, EnumOreType.GEAR),
+    LEAD("Lead", 6, EnumOreType.ORE, EnumOreType.DUST, EnumOreType.NUGGET, EnumOreType.INGOT, EnumOreType.BLOCK, EnumOreType.FLUID);
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if(doneChecking && event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null && !triedToWarnPlayer) {
-            if(!onlineVersion.isEmpty()) {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                int onlineBuild = Integer.parseInt(onlineVersion.split("-")[1]);
-                int clientBuild = Reference.VERSION_BUILD.contains("@VERSION@") ? 0 : Integer.parseInt(Reference.VERSION_BUILD.split("-")[1]);
-                if(onlineBuild > clientBuild) {
-                    player.addChatComponentMessage(new TextComponentTranslation("generitech.version.flavour" + player.worldObj.rand.nextInt(FLAVOUR_MESSAGES)).setChatStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)));
-                    player.addChatComponentMessage(new TextComponentTranslation("generitech.version.outdated", clientBuild, onlineBuild));
+    private static final EnumOres[] META_LOOKUP = new EnumOres[values().length];
 
-                    ITextComponent component = ITextComponent.Serializer.jsonToComponent(I18n.translateToLocal("generitech.version.updateMesage").replaceAll("%version%", onlineVersion));
-                    player.addChatComponentMessage(component);
-                }
-            }
-
-            triedToWarnPlayer = true;
+    static {
+        for (EnumOres ore : values()) {
+            META_LOOKUP[ore.getMeta()] = ore;
         }
     }
 
+    private final String name;
+    private final int meta;
+    private final EnumOreType[] enumOresTypeList;
+
+    EnumOres(String name, int meta, EnumOreType... oreTypes) {
+        this.name = name;
+        this.meta = meta;
+        this.enumOresTypeList = oreTypes;
+    }
+
+    public static EnumOres byMeta(int meta) {
+        if (meta < 0 || meta >= META_LOOKUP.length) {
+            meta = 0;
+        }
+
+        return META_LOOKUP[meta];
+    }
+
+    public static List<EnumOres> byType(EnumOreType type) {
+        List<EnumOres> result = new ArrayList<>();
+
+        for (EnumOres ore : values()) {
+            if (ore.isTypeSet(type)) {
+                result.add(ore);
+            }
+        }
+
+        return result;
+    }
+
+    public int getMeta() {
+        return this.meta;
+    }
+
+    public String getUnlocalizedName() {
+        return this.name.toLowerCase();
+    }
+
+    public String getName() {
+        return this.name.toLowerCase();
+    }
+
+    public String getOreName() {
+        return this.name;
+    }
+
+    public String toString() {
+        return getName();
+    }
+
+    public boolean isTypeSet(EnumOreType enumOreType) {
+        return Arrays.asList(enumOresTypeList).contains(enumOreType);
+    }
 }
