@@ -113,12 +113,13 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
         switch (MachineTier.byMeta(getBlockMetadata()))
         {
             case TIER_1:
-            default:
                 return 750;
             case TIER_2:
                 return 1000;
             case TIER_3:
                 return 1250;
+            default:
+                return 750;
         }
     }
 
@@ -126,18 +127,19 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
         switch (MachineTier.byMeta(getBlockMetadata()))
         {
             case TIER_1:
-            default:
                 return 0.5f;
             case TIER_2:
                 return 0.7f;
             case TIER_3:
                 return 0.9f;
+            default:
+                return 0.5f;
         }
     }
 
     @Override
     public void update() {
-        if(machineActive & !isSmeltPaused)
+        if(machineActive && !isSmeltPaused)
         {
             if (internalTemp < this.getMaxTemperature()) {
                 internalTemp += getTempRate();

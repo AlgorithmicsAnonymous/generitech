@@ -1,9 +1,3 @@
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply from: 'gradle/scripts/dependencies.gradle'
-apply from: 'gradle/scripts/integration.gradle'
-apply from: 'gradle/scripts/artifacts.gradle'
-apply from: 'gradle/scripts/optional.gradle'
-
 /*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
@@ -23,10 +17,12 @@ apply from: 'gradle/scripts/optional.gradle'
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-// For those who want the bleeding edge
+
+
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -34,8 +30,92 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+
     }
 }
+
+plugins {
+    id "com.selesse.git.changelog" version "0.2.0"
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply from: 'gradle/scripts/dependencies.gradle'
+apply from: 'gradle/scripts/integration.gradle'
+apply from: 'gradle/scripts/artifacts.gradle'
+apply from: 'gradle/scripts/optional.gradle'
+
+
+//Changelog config
+changelog {
+    // The title appears at the top of the changelog.
+    // Default value: the name of the project.
+    title = "${project.name} - Changelog"
+
+    // The output directory where the report is generated.
+    // Default value: main resource directory, or the "build" directory
+    outputDirectory = file("$projectDir")
+
+    // The name of the report to generate.
+    // Default value: CHANGELOG.md
+    fileName = "CHANGELOG.md"
+
+    // The range of commits the changelog should be composed of.
+    // Default value: 'beginning' (i.e. full changelog)
+    // Possible values: 'beginning', 'last_tag', 'xxx'
+    //
+    // 'last_tag' will use all the commits since the last tag,
+    // 'beginning' will use all commits since the initial commit (default)
+    // 'xxx' will use all the tags since the 'xxx' Git reference (i.e. `since = 1.2.0` will display the changelog
+    //       since the 1.2.0 tag, excluding 1.2.0)
+    //since = 'last_tag'
+
+    // The output formats that should be generated.
+    // Default value: ['markdown']
+    // Possible values: 'html', 'markdown'.
+    formats = ['html', 'markdown']
+
+
+    // The Git "pretty" changelog commit format.
+    // Default value: %ad%x09%s (%an), which produces:
+    // Thu May 7 20:10:33 2015 -0400    Initial commit (Alex Selesse)
+    commitFormat = '%s (%an)'
+
+    // Specifies a commit format for Markdown.
+    // Default value: '* %s (%an)', which produces:
+    // * Initial commit (Alex Selesse)
+    markdown {
+        commitFormat = '* %s (%an)'
+    }
+
+    // Specifies a commit format for the HTML template.
+    // Default value: see commitFormat
+    html {
+        commitFormat = '%s (%an)'
+
+        // The Groovy HTML template used to generate the HTML changelog.
+        // See http://docs.groovy-lang.org/latest/html/documentation/template-engines.html
+        //template = file("$projectDir/htmlTemplate").text
+    }
+
+    // A closure that returns 'true' if the line should be included in the changelog.
+    // Default value: accept everything, { true }
+    includeLines = {
+        !it.contains("Merge")
+    }
+
+    // A closure that transforms a changelog String.
+    // Default value: the identity closure, { it }
+    //
+    // For example, to remove '[ci skip]' from the changelog messages:
+    processLines = {
+        String input = it as String
+        if (input.contains('[ci skip] ')) {
+            input = input.minus('[ci skip] ')
+        }
+        input
+    }
+}
+
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -45,7 +125,7 @@ archivesBaseName = cibasename
 
 // If TeamCity is running this build, lets set the version info
 if (hasProperty("teamcity")) {
-    version = minecraft_version + "-b" + teamcity["build.number"] + "-universal"
+    version = minecraft_version + "-" + teamcity["build.number"] + "-universal"
 
     // Fix for main branch being built
     version = version.replaceAll("/", "-")
@@ -67,24 +147,24 @@ minecraft {
 }
 
 processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version':project.version, 'mcversion':project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
 
 jar {
     manifest {
