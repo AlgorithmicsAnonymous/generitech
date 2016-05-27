@@ -205,7 +205,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         }
 
         if ((/*this.container.takePower(powerUsage, true) == powerUsage &&*/ machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
-            if (machineActive && !pulverizerPaused) {
+            if (machineActive & !pulverizerPaused) {
                 ticksRemaining--;
 
                 /*if (machineTier != MachineTier.TIER_0)
