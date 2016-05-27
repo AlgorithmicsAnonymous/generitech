@@ -19,7 +19,7 @@
 
 package com.sandvoxel.generitech.common.items.ore;
 
-import com.sandvoxel.generitech.common.enumtypes.EnumOres;
+import com.sandvoxel.generitech.common.util.EnumOres;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
