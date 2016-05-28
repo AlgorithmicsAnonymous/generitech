@@ -31,13 +31,20 @@ import com.sandvoxel.generitech.common.util.LanguageHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
+import net.darkhax.tesla.api.ITeslaHandler;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.darkhax.tesla.capability.TeslaStorage;
+import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
@@ -56,7 +63,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
-    private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50, 50);
+    private MachineTeslaContainer container = new MachineTeslaContainer();
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
@@ -73,7 +80,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private float speedMultiplier = 0.0f;
     private float fortuneMultiplier = 0.5f;
     private int currentTotalProcessTime = 0;
-
+    private boolean init = false;
 
     public boolean isPulverizerPaused() {
         return pulverizerPaused;
@@ -91,11 +98,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             this.markForLightUpdate();
     }
 
-    protected void checkUpgradeSlots()
-    {
-
-    }
-
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
@@ -105,7 +107,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         crushIndex = nbtTagCompound.getInteger("crushIndex");
         pulverizerPaused = nbtTagCompound.getBoolean("pulverizerPaused");
         crushRNG = nbtTagCompound.getFloat("crushRNG");
-        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
+        this.container = new MachineTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
     }
 
     @Override
@@ -187,9 +189,12 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
-        if (machineTier == null)
+        if(!init)
+        {
             machineTier = MachineTier.byMeta(getBlockMetadata());
-
+            this.container.setCapacity(getMaxTeslaCapacity());
+            init = true;
+        }
         if (fuelRemaining == 0 && inventory.getStackInSlot(4) != null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0 && machineTier == MachineTier.TIER_0) {
             if (inventory.getStackInSlot(4).getItem() == lastFuelType) {
                 fuelRemaining = lastFuelValue;
@@ -204,12 +209,17 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             this.markForUpdate();
         }
 
-        if ((/*this.container.takePower(powerUsage, true) == powerUsage &&*/ machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
+        if(container.getStoredPower() < container.getCapacity() && machineTier != MachineTier.TIER_0)
+        {
+            container.givePower(consumePowerEqually(this.worldObj, this.getPos(), container.givePower(powerUsage * 2, true), false), false);
+        }
+
+        if ((this.container.consumePower(powerUsage, true) == powerUsage && machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
             if (machineActive & !pulverizerPaused) {
                 ticksRemaining--;
 
-                /*if (machineTier != MachineTier.TIER_0)
-                    this.container.takePower(powerUsage, false);*/
+                if (machineTier != MachineTier.TIER_0)
+                    this.container.consumePower(powerUsage, false);
 
                 if (fuelRemaining > 0)
                     fuelRemaining--;
@@ -326,45 +336,56 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 Math.round(timePercent)
         ));
 
+        currentTip.add(String.format("%s: %s",
+                LanguageHelper.LABEL.translateMessage("stored_power"),
+                TeslaUtils.getDisplayableTeslaCount(this.container.getStoredPower())
+        ));
+
         return currentTip;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-
-        // This method is where other things will try to access your TileEntity's Tesla
-        // capability. In the case of the analyzer, is a consumer, producer and holder so we
-        // can allow requests that are looking for any of those things. This example also does
-        // not care about which side is being accessed, however if you wanted to restrict which
-        // side can be used, for example only allow power input through the back, that could be
-        // done here.
-        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return (T) this.container;
-
-        return super.getCapability(capability, facing);
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-
-        // This method replaces the instanceof checks that would be used in an interface based
-        // system. It can be used by other things to see if the TileEntity uses a capability or
-        // not. This example is a Consumer, Producer and Holder, so we return true for all
-        // three. This can also be used to restrict access on certain sides, for example if you
-        // only accept power input from the bottom of the block, you would only return true for
-        // Consumer if the facing parameter was down.
-        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
-
-        return super.hasCapability(capability, facing);
-    }
 
     public int getFuelOffset() {
         if (fuelTotal == 0)
             return +12;
 
         return Math.round((((float) fuelTotal - (float) fuelRemaining) / (float) fuelTotal) * 11);
+    }
+
+    @Override
+    public boolean hasCapability (Capability<?> capability, EnumFacing facing){
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+            return true;
+
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability (Capability<T> capability, EnumFacing facing) {
+        if(capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER){
+            return (T) this.container;
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    public static long consumePowerEqually (World world, BlockPos pos, long amount, boolean simulated) {
+
+        long consumedPower = 0L;
+
+        for (final EnumFacing facing : EnumFacing.values()) {
+
+            final TileEntity tile = world.getTileEntity(pos.offset(facing));
+
+            if (tile != null && !tile.isInvalid() && tile.hasCapability(TeslaCapabilities.CAPABILITY_PRODUCER, facing)) {
+
+                final ITeslaProducer teslaHandler = tile.getCapability(TeslaCapabilities.CAPABILITY_PRODUCER, facing);
+
+                consumedPower += teslaHandler.takePower(amount, simulated);
+            }
+        }
+
+        return consumedPower;
     }
 }
 

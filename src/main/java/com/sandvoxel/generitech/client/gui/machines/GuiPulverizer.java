@@ -57,7 +57,7 @@ public class GuiPulverizer extends GuiBase {
         }
         else
         {
-            this.container = tileEntity.getCapability(TeslaCapabilities.CAPABILITY_HOLDER, EnumFacing.DOWN);
+            this.container = tileEntity.getCapability(TeslaCapabilities.CAPABILITY_HOLDER, tileEntity.getForward());
             powerBar = new Rectangle(9, 25, 14, 55);
         }
     }

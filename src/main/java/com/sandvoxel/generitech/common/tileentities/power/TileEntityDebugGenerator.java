@@ -36,15 +36,17 @@ package com.sandvoxel.generitech.common.tileentities.power;
 
 import com.sandvoxel.generitech.common.tileentities.TileEntityBase;
 import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 
-public class TileEntityTestPower extends TileEntityBase {
-    private final TestContainer container;
+public class TileEntityDebugGenerator extends TileEntityBase {
+    private final DebugTeslaContainer container;
 
-    public TileEntityTestPower() {
+    public TileEntityDebugGenerator() {
 
-        this.container = new TestContainer();
+        this.container = new DebugTeslaContainer();
     }
 
     @Override

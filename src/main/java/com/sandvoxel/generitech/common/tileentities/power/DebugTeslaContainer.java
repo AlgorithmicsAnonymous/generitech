@@ -36,7 +36,7 @@ package com.sandvoxel.generitech.common.tileentities.power;
 
 import net.darkhax.tesla.api.ITeslaProducer;
 
-public class TestContainer implements ITeslaProducer {
+public class DebugTeslaContainer implements ITeslaProducer {
     @Override
     public long takePower(long power, boolean simulated) {
         return power;

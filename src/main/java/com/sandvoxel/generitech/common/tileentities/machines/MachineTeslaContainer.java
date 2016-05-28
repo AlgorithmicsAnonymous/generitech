@@ -32,42 +32,94 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-package com.sandvoxel.generitech.common.blocks.power;
+package com.sandvoxel.generitech.common.tileentities.machines;
 
-import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.common.blocks.BlockTileBase;
-import com.sandvoxel.generitech.common.tileentities.power.TileEntityTestPower;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public class BlockTeslaGeneratorCreative extends BlockTileBase {
-    public BlockTeslaGeneratorCreative() {
-        super(Material.rock, "power/test");
-        this.setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        this.setTileEntity(TileEntityTestPower.class);
-        this.setCreativeTab(GeneriTechTabs.GENERAL);
-        this.setInternalName("creativepower");
+public class MachineTeslaContainer implements ITeslaHolder, ITeslaConsumer, INBTSerializable<NBTTagCompound> {
+    private long storedPower = 0;
+    private long capacity = 0;
+
+    public MachineTeslaContainer(){};
+
+    public MachineTeslaContainer(NBTTagCompound tagCompound)
+    {
+        this.deserializeNBT(tagCompound);
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
+    public long givePower(long power, boolean simulated) {
+        long addedPower;
+
+        if((this.storedPower+power) > this.capacity)
+        {
+            long diff = (this.storedPower+power) - this.capacity;
+
+            addedPower = power-diff;
+
+            if(!simulated)
+                this.storedPower += addedPower;
+
+            return addedPower;
+        }
+        else
+        {
+            if(!simulated)
+                this.storedPower += power;
+
+            return power;
+        }
+    }
+
+    public long consumePower (long consumedPower, boolean simulated) {
+
+        if(consumedPower > storedPower)
+            return 0;
+
+        if (!simulated)
+            this.storedPower -= consumedPower;
+
+        return consumedPower;
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
-        return getMetaFromState(state);
+    public long getStoredPower() {
+        return storedPower;
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState();
+    public long getCapacity() {
+        return this.capacity;
+    }
+
+    protected void setCapacity(long capacity)
+    {
+        this.capacity = capacity;
+
+        if (this.storedPower > capacity)
+            this.storedPower = capacity;
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return 0;
+    public NBTTagCompound serializeNBT() {
+        final NBTTagCompound tagCompound = new NBTTagCompound();
+        tagCompound.setLong("TeslaPower", this.storedPower);
+        tagCompound.setLong("TeslaCapacity", this.capacity);
+
+        return tagCompound;
+    }
+
+    @Override
+    public void deserializeNBT(NBTTagCompound tagCompound) {
+        this.storedPower = tagCompound.getLong("TeslaPower");
+
+        if (tagCompound.hasKey("TeslaCapacity"))
+            this.capacity = tagCompound.getLong("TeslaCapacity");
+
+        if (this.storedPower > this.capacity)
+            this.storedPower = this.capacity;
     }
 }

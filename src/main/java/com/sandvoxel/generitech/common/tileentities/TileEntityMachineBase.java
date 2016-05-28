@@ -20,6 +20,22 @@
 package com.sandvoxel.generitech.common.tileentities;
 
 
+import com.sandvoxel.generitech.api.util.MachineTier;
+
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
+
+    public int getMaxTeslaCapacity() {
+        switch (MachineTier.byMeta(getBlockMetadata()))
+        {
+            case TIER_1:
+                return 50000;
+            case TIER_2:
+                return 150000;
+            case TIER_3:
+                return 350000;
+            default:
+                return 0;
+        }
+    }
 
 }
