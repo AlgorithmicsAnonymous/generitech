@@ -42,7 +42,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class BlockFluidBlock extends BlockFluidClassic {
     public BlockFluidBlock(Fluid fluid) {
-        super(fluid, Material.lava);
+        super(fluid, Material.LAVA);
         setCreativeTab(GeneriTechTabs.FLUID);
         setQuantaPerBlock(4);
         setTickRate(20);

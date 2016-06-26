@@ -57,7 +57,7 @@ public class BlockOreBlock extends BlockBase implements IProvideRecipe {
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
 
     public BlockOreBlock() {
-        super(Material.rock, "ore/oreblock");
+        super(Material.ROCK, "ore/oreblock");
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("oreblock");

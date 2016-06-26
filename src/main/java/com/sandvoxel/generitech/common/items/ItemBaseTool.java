@@ -77,7 +77,7 @@ public class ItemBaseTool extends ItemBase {
         this.efficiencyOnProperMaterial = toolMaterial.getEfficiencyOnProperMaterial();
         this.damageVsEntity = damageVsEntity + toolMaterial.getDamageVsEntity();
         this.attackSpeed = attackSpeed;
-        this.setCreativeTab(CreativeTabs.tabTools);
+        this.setCreativeTab(CreativeTabs.TOOLS);
 
     }
 

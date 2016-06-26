@@ -60,7 +60,7 @@ public class BlockPulverizer extends BlockMachineBase {
     private static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockPulverizer() {
-        super(Material.rock, "machines/pulverizer/pulverizer", MachineTier.all());
+        super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0).withProperty(FACING, EnumFacing.NORTH));
         this.setTileEntity(TileEntityPulverizer.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
