@@ -152,5 +152,5 @@ task makeChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
 }
 
 afterEvaluate {
-    tasks.curseforge.dependsOn.add(makeChangelog)
+    tasks.curseforge245036.dependsOn.add(makeChangelog)
 }
