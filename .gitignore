@@ -15,4 +15,5 @@
 !/gradle.properties
 !/webresources
 !/.gitlab-ci.yml
+!/.travis.yml
 .DS_Store
