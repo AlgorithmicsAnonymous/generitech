@@ -36,7 +36,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-        classpath "se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.37-SNAPSHOT"
+        classpath "se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.36"
     }
 }
 
