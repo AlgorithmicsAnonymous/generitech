@@ -64,7 +64,7 @@ group = "com.sandvoxel.generitech"
 // If TeamCity is running this build, lets set the version info
 if (hasProperty("teamcity")) {
     cibuild = teamcity["build.number"]
-    curseProjedtId = teamcity["curseProjedtId"]
+    curseProjedtId = teamcity["curseProjectId"]
     curseApiKey = teamcity["curseApiKey"]
     curseReleaseType = teamcity["curseReleaseType"]
 
