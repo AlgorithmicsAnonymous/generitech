@@ -18,7 +18,6 @@
  */
 
 apply plugin: 'maven'
-apply plugin: "se.bjurr.gitchangelog.git-changelog-gradle-plugin"
 
 task createPom << {
     pom {
@@ -28,23 +27,6 @@ task createPom << {
             version majorVersion + '.' + minorVersion + '.' + patchVersion + '.' + cibuild
         }
     }.writeTo("build/pom/" + cibasename + "-" + minecraft_version + "-" + majorVersion + '.' + minorVersion + '.' + patchVersion + '.' + cibuild + ".pom")
-}
-
-task makeChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    filePath = "changelog.html"
-    untaggedName = "Current release ${project.version}"
-    fromCommit = "bf3813febabba9436bf5f4340376e13160f1376e"
-    toRef =  "HEAD"
-    templateContent = """
-{{#tags}}
-  <h3>{{name}}</h3>
-  <ul>
-    {{#commits}}
-    <li>{{{message}}}</li>
-    {{/commits}}
-  </ul>
-{{/tags}}
-"""
 }
 
 task apiJar(type: Jar) {
@@ -73,4 +55,3 @@ artifacts {
 }
 
 tasks.build.dependsOn createPom
-tasks.curseforge.dependsOn makeChangelog
