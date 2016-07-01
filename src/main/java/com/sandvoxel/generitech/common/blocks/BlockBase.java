@@ -67,7 +67,7 @@ public abstract class BlockBase extends Block implements IBlockRenderer {
     protected BlockBase(Material material, String resourcePath) {
         super(material);
 
-        setStepSound(SoundType.STONE);
+        setSoundType(SoundType.STONE);
         setHardness(2.2F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);

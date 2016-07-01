@@ -48,7 +48,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -82,7 +82,7 @@ public class WorldGen implements IWorldGenerator {
     }
 
     public static OreGen addOreGen(String name, IBlockState block, OreConfig oreConfig) {
-        OreGen oreGen = new OreGen(name, block, net.minecraft.init.Blocks.stone, oreConfig);
+        OreGen oreGen = new OreGen(name, block, net.minecraft.init.Blocks.STONE, oreConfig);
         oreSpawnList.add(oreGen);
         return oreGen;
     }
@@ -93,13 +93,13 @@ public class WorldGen implements IWorldGenerator {
         }
     }
 
-    public void regenOres(Random rand, ChunkCoordIntPair chunkCoordIntPair, World world) {
+    public void regenOres(Random rand, ChunkPos chunkPos, World world) {
         for (OreGen oreGen : oreSpawnList) {
-            if (loadedChunks.get(chunkCoordIntPair.toString()).getBoolean(oreGen.name)) {
-                oreGen.generate(world, rand, chunkCoordIntPair.chunkXPos * 16, chunkCoordIntPair.chunkZPos * 16);
+            if (loadedChunks.get(chunkPos.toString()).getBoolean(oreGen.name)) {
+                oreGen.generate(world, rand, chunkPos.chunkXPos * 16, chunkPos.chunkZPos * 16);
             }
         }
-        saveOreGenInfo(loadedChunks.get(chunkCoordIntPair.toString()));
+        saveOreGenInfo(loadedChunks.get(chunkPos.toString()));
     }
 
     private static boolean isRetrogenEnabled() {
@@ -144,18 +144,18 @@ public class WorldGen implements IWorldGenerator {
     @SubscribeEvent
     public void chunkSave(ChunkDataEvent.Save event)
     {
-        ChunkCoordIntPair coordIntPair = event.getChunk().getChunkCoordIntPair();
+        ChunkPos chunkPos = event.getChunk().getChunkCoordIntPair();
         NBTTagCompound tagCompound = new NBTTagCompound();
         event.getData().setTag(Reference.MOD_ID, tagCompound);
 
-        if (loadedChunks.containsKey(coordIntPair.toString())) {
+        if (loadedChunks.containsKey(chunkPos.toString())) {
             for (OreGen oreGen : oreSpawnList) {
-                tagCompound.setBoolean(oreGen.name, loadedChunks.get(coordIntPair.toString()).getBoolean(oreGen.name));
+                tagCompound.setBoolean(oreGen.name, loadedChunks.get(chunkPos.toString()).getBoolean(oreGen.name));
             }
         }
         else
         {
-            LogHelper.debug("Chunk" + coordIntPair.toString() + "not loaded?");
+            LogHelper.debug("Chunk" + chunkPos.toString() + "not loaded?");
         }
     }
 
@@ -164,7 +164,7 @@ public class WorldGen implements IWorldGenerator {
     {
         int dimID = event.getWorld().provider.getDimension();
         NBTTagCompound tag = event.getData().getCompoundTag(Reference.MOD_ID);
-        ChunkCoordIntPair coordIntPair = event.getChunk().getChunkCoordIntPair();
+        ChunkPos coordIntPair = event.getChunk().getChunkCoordIntPair();
         loadedChunks.put(coordIntPair.toString(),tag);
         tag.setInteger("DimID",dimID);
 
@@ -193,7 +193,7 @@ public class WorldGen implements IWorldGenerator {
         int dimID = event.world.provider.getDimension();
         int counter = 0;
 
-        List<ChunkCoordIntPair> chunks = retrogenChunks.get(dimID);
+        List<ChunkPos> chunks = retrogenChunks.get(dimID);
 
         if(chunks != null && !chunks.isEmpty())
         {
@@ -214,7 +214,7 @@ public class WorldGen implements IWorldGenerator {
 
                 counter++;
 
-                ChunkCoordIntPair coordIntPair = chunks.get(index);
+                ChunkPos coordIntPair = chunks.get(index);
 
                 long worldSeed = event.world.getSeed();
                 Random fmlRand = new Random(worldSeed);

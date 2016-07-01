@@ -46,7 +46,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -54,6 +53,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumSkyBlock;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class TileEntityBase extends TileEntity implements IWailaHeadMessage, IOrientable, IRotatable {
@@ -63,11 +63,15 @@ public abstract class TileEntityBase extends TileEntity implements IWailaHeadMes
     private EnumFacing forward = EnumFacing.NORTH;
 
     @Override
-    public Packet getDescriptionPacket() {
-        NBTTagCompound data = new NBTTagCompound();
-        writeToNBT(data);
-        initMachineData();
-        return new SPacketUpdateTileEntity(this.pos, 1, data);
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        initMachineData(); //todo: look for somewhere else for this...
+        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
     }
 
     @Override
@@ -151,7 +155,7 @@ public abstract class TileEntityBase extends TileEntity implements IWailaHeadMes
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
         if (this.customName != null)
@@ -163,6 +167,8 @@ public abstract class TileEntityBase extends TileEntity implements IWailaHeadMes
         if (canBeRotated()) {
             nbtTagCompound.setInteger("forward", this.forward.ordinal());
         }
+
+        return nbtTagCompound;
     }
 
     @Override

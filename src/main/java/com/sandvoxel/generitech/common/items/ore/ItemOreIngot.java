@@ -109,7 +109,7 @@ public class ItemOreIngot extends ItemBase implements IProvideRecipe, IProvideSm
 
             // 9x Iron Nuggets -> Iron Ingot
             if (EnumOres.byMeta(i) == EnumOres.IRON) {
-                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.iron_ingot, 1),
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(net.minecraft.init.Items.IRON_INGOT, 1),
                         "xxx",
                         "xxx",
                         "xxx",

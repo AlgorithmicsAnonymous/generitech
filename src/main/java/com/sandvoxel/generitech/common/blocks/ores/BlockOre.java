@@ -55,7 +55,7 @@ public class BlockOre extends BlockBase {
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
 
     public BlockOre() {
-        super(Material.rock, "ore/ore");
+        super(Material.ROCK, "ore/ore");
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("ore");

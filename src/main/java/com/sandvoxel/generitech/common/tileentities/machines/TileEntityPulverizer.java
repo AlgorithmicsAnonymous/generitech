@@ -124,7 +124,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
         nbtTagCompound.setInteger("ticksRemaining", ticksRemaining);
@@ -133,6 +133,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         nbtTagCompound.setBoolean("pulverizerPaused", pulverizerPaused);
         nbtTagCompound.setFloat("crushRNG", crushRNG);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
+
+        return nbtTagCompound;
     }
 
     @Override

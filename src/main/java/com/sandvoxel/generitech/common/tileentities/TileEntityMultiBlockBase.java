@@ -41,7 +41,7 @@ public abstract class TileEntityMultiBlockBase extends TileEntityInventoryBase {
     private int masterX, masterY, masterZ;
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
         NBTTagCompound multiBlockData = new NBTTagCompound();
@@ -53,6 +53,8 @@ public abstract class TileEntityMultiBlockBase extends TileEntityInventoryBase {
         multiBlockData.setBoolean("isMaster", isMaster);
 
         //nbtTagCompound.setTag("");
+
+        return nbtTagCompound;
     }
 
     @Override

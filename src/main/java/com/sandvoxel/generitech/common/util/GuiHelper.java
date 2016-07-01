@@ -200,7 +200,7 @@ public class GuiHelper extends GuiScreen {
         GlStateManager.disableLighting();
         GlStateManager.disableDepth();
         GlStateManager.colorMask(true, true, true, false);
-        renderItem.renderItemAndEffectIntoGUI(new ItemStack(Blocks.barrier), x, y);
+        renderItem.renderItemAndEffectIntoGUI(new ItemStack(Blocks.BARRIER), x, y);
         this.drawGradientRect(x, y, x + 16, y + 16, colorOverlay, colorOverlay);
         GlStateManager.colorMask(true, true, true, true);
         GlStateManager.enableLighting();
