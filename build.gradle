@@ -26,19 +26,17 @@ apply from: 'gradle/scripts/optional.gradle'
 // For those who want the bleeding edge
 buildscript {
     repositories {
+        mavenLocal()
+        mavenCentral()
         jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-
-        maven {
-          url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-        classpath "gradle.plugin.se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.36"
+        classpath "se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.37-SNAPSHOT"
     }
 }
 
