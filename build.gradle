@@ -127,8 +127,8 @@ curseforge {
     project {
         releaseType = curseReleaseType
         id = curseProjedtId
-        changelog = file('changelog.html')
-        changelogType = 'html'
+        //changelog = file('changelog.html')
+        //changelogType = 'html'
         addGameVersion minecraft_version
         addArtifact apiJar
     }
@@ -152,5 +152,5 @@ task makeChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
 }
 
 afterEvaluate {
-    tasks.curseforge245036.dependsOn.add(makeChangelog)
+    //tasks.curseforge245036.dependsOn.add(makeChangelog)
 }
