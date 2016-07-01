@@ -57,7 +57,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import java.util.concurrent.TimeUnit;
 
-@Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD,name = Reference.MOD_NAME, certificateFingerprint = Reference.FINGERPRINT, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUI_FACTORY)
+@Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME, certificateFingerprint = Reference.FINGERPRINT, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUI_FACTORY)
 public class GeneriTech {
     @Mod.Instance(Reference.MOD_ID)
     public static GeneriTech instance;
