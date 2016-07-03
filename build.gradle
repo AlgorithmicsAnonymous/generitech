@@ -131,6 +131,9 @@ curseforge {
         //changelogType = 'html'
         addGameVersion minecraft_version
         addArtifact apiJar
+        relations {
+            requiredLibrary 'Tesla'
+        }
     }
 }
 
