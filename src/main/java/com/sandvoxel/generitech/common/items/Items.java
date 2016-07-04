@@ -34,6 +34,7 @@
 
 package com.sandvoxel.generitech.common.items;
 
+import com.sandvoxel.generitech.common.items.debug.ItemWorldGenWand;
 import com.sandvoxel.generitech.common.items.materials.ItemMaterialGear;
 import com.sandvoxel.generitech.common.items.ore.ItemOreDust;
 import com.sandvoxel.generitech.common.items.ore.ItemOreIngot;
@@ -52,7 +53,10 @@ public enum Items {
 
     ITEM_MATERIAL_GEAR(ItemMaterialGear.class),
 
-    ITEM_TOOL_WRENCH(ItemToolWrench.class);
+    ITEM_TOOL_WRENCH(ItemToolWrench.class),
+
+    ITEM_DEBUG_WGW(ItemWorldGenWand.class)
+    ;
 
     private final Class<? extends Item> itemClass;
     private Item item;
