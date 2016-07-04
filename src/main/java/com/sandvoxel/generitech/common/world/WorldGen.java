@@ -253,7 +253,7 @@ public class WorldGen implements IWorldGenerator {
 
         public void generate(World world, Random random, int x, int z)
         {
-            if(oreConfig.Enabled && oreConfig.isEnabledForDim(world.provider.getDimension()))
+            if(oreConfig.Enabled && oreConfig.isEnabledForDim(world.provider.getDimension()) && oreConfig.isEnabledForBiome(world.getBiome(new BlockPos(x, 0, z))))
             {
                 for(int i = 0; i < oreConfig.ChunkOccurrence; i++)
                 {

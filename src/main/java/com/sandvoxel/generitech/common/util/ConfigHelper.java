@@ -57,4 +57,9 @@ public class ConfigHelper {
         Property property = configuration.get(category, key, defaultValue, description);
         return property.getString();
     }
+
+    public static String[] getStringList(Configuration configuration, String key, String category, String[] defaultValue, String description) {
+        Property property = configuration.get(category, key, defaultValue, description);
+        return property.getStringList();
+    }
 }

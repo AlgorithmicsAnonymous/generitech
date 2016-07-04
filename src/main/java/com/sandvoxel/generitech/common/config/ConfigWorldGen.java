@@ -39,6 +39,7 @@ import com.sandvoxel.generitech.common.util.EnumOres;
 import com.sandvoxel.generitech.common.util.ConfigHelper;
 import com.sandvoxel.generitech.common.util.LogHelper;
 import com.sandvoxel.generitech.common.world.WorldGen;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.HashMap;
@@ -64,8 +65,10 @@ public class ConfigWorldGen {
         final String DESC_MAX_VEIN_SIZE = "Max. number of %s ore in a vein";
         final String DESC_WEIGHT = "Percent chance that %s will generate for each chunk occurrence";
         final String DESC_CHUNK_OCCURRENCE = "Number of times that %s will attempt to generate in each chunk";
-        final String DESC_DIM_RESTRICTION_TYPE = "Either 'blacklist' or 'whitelist'";
+        final String DESC_DIM_RESTRICTION_TYPE = "Dimension Restriction Type (Either 'blacklist' or 'whitelist')";
         final String DESC_DIM_RESTRICTION_LIST = "Dimension IDs to restrict ore spawning in";
+        final String DESC_BIOME_RESTRICTION_TYPE = "Biome Restriction Type (Either 'blacklist' or 'whitelist')";
+        final String DESC_BIOME_RESTRICTION_LIST = "Biome IDs to restrict ore spawning in";
 
         boolean retrogenEnabled = ConfigHelper.getBoolean(config, "Enable RetroGen", WORLDGEN_ORE, true, DESC_RETROGEN_ENABLED);
         WorldGen.setRetrogenEnabled(retrogenEnabled);
@@ -121,6 +124,12 @@ public class ConfigWorldGen {
 
             oreConf.Dimensions = ConfigHelper.getIntegerList(config, "DimensionList", oreCategory, defaultConf.Dimensions, DESC_DIM_RESTRICTION_LIST);
 
+            String defaultBiomeRestriction = defaultConf.BiomeRestriction.name().toLowerCase();
+            String biomeRestriction = ConfigHelper.getString(config, "BiomeRestrictionType", oreCategory, defaultBiomeRestriction, DESC_BIOME_RESTRICTION_TYPE);
+            oreConf.BiomeRestriction = RestrictionType.fromString(biomeRestriction, defaultConf.BiomeRestriction);
+
+            oreConf.Biomes = ConfigHelper.getStringList(config, "BiomeList", oreCategory, defaultConf.Biomes, DESC_BIOME_RESTRICTION_LIST);
+
             OreGenConfig.put(ore, oreConf);
         }
     }
@@ -132,6 +141,8 @@ public class ConfigWorldGen {
             defaultConf.Enabled = true;
             defaultConf.DimensionRestriction = RestrictionType.Blacklist;
             defaultConf.Dimensions = DEFAULT_DIMENSION_BLACKLIST;
+            defaultConf.BiomeRestriction = RestrictionType.Blacklist;
+            defaultConf.Biomes = new String[]{};
 
             defaultConf.ChunkOccurrence = 20;
 
@@ -200,6 +211,8 @@ public class ConfigWorldGen {
         public int ChunkOccurrence;
         public RestrictionType DimensionRestriction;
         public int[] Dimensions;
+        public RestrictionType BiomeRestriction;
+        public String[] Biomes;
 
         public boolean isEnabledForDim(int dim) {
             boolean inList = false;
@@ -207,6 +220,18 @@ public class ConfigWorldGen {
                 inList = inList || listDim == dim;
             return (inList && DimensionRestriction == RestrictionType.Whitelist) ||
                     (!inList && DimensionRestriction == RestrictionType.Blacklist);
+        }
+
+        public boolean isEnabledForBiome(Biome biome) {
+
+            if(Biomes.length < 1)
+                return true;
+
+            boolean inList = false;
+            for (String listBiome : Biomes)
+                inList = inList || listBiome == biome.getBiomeName();
+            return (inList && BiomeRestriction == RestrictionType.Whitelist) ||
+                    (!inList && BiomeRestriction == RestrictionType.Blacklist);
         }
     }
 }
