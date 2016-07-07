@@ -127,8 +127,8 @@ curseforge {
     project {
         releaseType = curseReleaseType
         id = curseProjedtId
-        //changelog = file('changelog.html')
-        //changelogType = 'html'
+        changelog = file('changelog.html')
+        changelogType = 'html'
         addGameVersion minecraft_version
         addArtifact apiJar
         relations {
@@ -137,23 +137,70 @@ curseforge {
     }
 }
 
-task makeChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    filePath = "changelog.html"
-    untaggedName = "Current release ${project.version}"
+task makeChangelogHTML(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    filePath = "CHANGELOG.html"
+
     fromCommit = "bf3813febabba9436bf5f4340376e13160f1376e"
-    toRef =  "HEAD"
+    toRef = "HEAD"
+
+    untaggedName = "Current release ${project.version}"
+
+    ignoreCommitsIfMessageMatches = "^\\[ci fix\\].*|^Merge.*"
+
+    noIssueName = "Non-issue Commits";
+
     templateContent = """
+<h1>GeneriTech Changelog</h1>
+<div>
 {{#tags}}
-  <h3>{{name}}</h3>
+  <h2>{{name}}</h3>
+  {{#issues}}
+    {{#hasLink}}
+    <a href="{{link}}"><h3>{{name}}</h3></a>
+    {{/hasLink}}
+    {{^hasLink}}
+    <h3>{{name}}</h3>
+    {{/hasLink}}
+    <ul>
+    {{#commits}}
+    <li>{{{message}}} ({{authorName}})</li>
+    {{/commits}}
+    </ul>
+  {{/issues}}
+
   <ul>
     {{#commits}}
-    <li>{{{message}}}</li>
+    <li>{{{message}}} ({{authorName}})</li>
     {{/commits}}
   </ul>
+{{/tags}}
+</div>
+"""
+}
+
+task makeChangelogMD(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    filePath = "CHANGELOG.md"
+
+    fromCommit = "bf3813febabba9436bf5f4340376e13160f1376e"
+    toRef = "HEAD"
+
+    ignoreCommitsIfMessageMatches = "^Merge.*"
+
+    untaggedName = "Current release ${project.version}"
+
+    templateContent = """
+# GeneriTech Changelog
+
+{{#tags}}
+## {{name}}
+{{#commits}}
+- {{{message}}} ({{authorName}})
+{{/commits}}
 {{/tags}}
 """
 }
 
 afterEvaluate {
-    //tasks.curseforge245036.dependsOn.add(makeChangelog)
+    //tasks.curseforge.dependsOn.add(makeChangelogMD)
+    //tasks.curseforge.dependsOn.add(makeChangelogHTML)
 }
