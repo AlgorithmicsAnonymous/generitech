@@ -1,25 +1,17 @@
 package com.sandvoxel.generitech.common.items.debug;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.api.util.EnumOreType;
 import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.common.items.ItemBase;
-import com.sandvoxel.generitech.common.util.EnumOres;
-import com.sandvoxel.generitech.common.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 
 
 public class ItemWorldGenWand extends ItemBase {
@@ -49,10 +41,6 @@ public class ItemWorldGenWand extends ItemBase {
         }
 
         return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
-    }
-
-    public static void clearTerrain(EntityPlayer playerIn, World worldIn) {
-
     }
 
 }
