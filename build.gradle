@@ -72,6 +72,10 @@ if (hasProperty("teamcity")) {
 
     // Fix for main branch being built
     version = version.replaceAll("/", "-")
+
+    afterEvaluate {
+        tasks.curseforge245036.dependsOn.add(makeChangelogMD)
+    }
 }
 
 minecraft {
@@ -154,8 +158,4 @@ task makeChangelogMD(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask)
     timeZone = "UTC"
 
     templateContent = new File('gradle/scripts/changelog.mustache').getText('UTF-8');
-}
-
-afterEvaluate {
-    tasks.curseforge245036.dependsOn.add(makeChangelogMD)
 }
