@@ -146,6 +146,8 @@ task makeChangelogMD(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask)
 
     fromCommit = "09fa6c5fafc6cff79f15c5e4e8ebb502acd85451"
 
+    fromRef = "refs/heads/develop"
+
     ignoreCommitsIfMessageMatches = "^\\[ci fix\\].*|^Merge.*|^\\[test\\].*"
 
     untaggedName = "Current release ${project.version}"
