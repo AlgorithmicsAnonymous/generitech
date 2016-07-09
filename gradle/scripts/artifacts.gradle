@@ -47,6 +47,10 @@ jar {
             exclude 'META-INF', 'META-INF/**'
         }
     }
+
+    manifest {
+        attributes 'FMLAT': 'generitech_at.cfg'
+    }
 }
 
 artifacts {
