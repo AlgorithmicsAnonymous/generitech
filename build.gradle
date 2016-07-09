@@ -127,8 +127,8 @@ curseforge {
     project {
         releaseType = curseReleaseType
         id = curseProjedtId
-        changelog = file('changelog.html')
-        changelogType = 'html'
+        changelog = file('build/changelog/CHANGELOG.md')
+        changelogType = 'markdown'
         addGameVersion minecraft_version
         addArtifact apiJar
         relations {
@@ -137,70 +137,26 @@ curseforge {
     }
 }
 
-task makeChangelogHTML(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    filePath = "CHANGELOG.html"
-
-    fromCommit = "bf3813febabba9436bf5f4340376e13160f1376e"
-    toRef = "HEAD"
-
-    untaggedName = "Current release ${project.version}"
-
-    ignoreCommitsIfMessageMatches = "^\\[ci fix\\].*|^Merge.*"
-
-    noIssueName = "Non-issue Commits";
-
-    templateContent = """
-<h1>GeneriTech Changelog</h1>
-<div>
-{{#tags}}
-  <h2>{{name}}</h3>
-  {{#issues}}
-    {{#hasLink}}
-    <a href="{{link}}"><h3>{{name}}</h3></a>
-    {{/hasLink}}
-    {{^hasLink}}
-    <h3>{{name}}</h3>
-    {{/hasLink}}
-    <ul>
-    {{#commits}}
-    <li>{{{message}}} ({{authorName}})</li>
-    {{/commits}}
-    </ul>
-  {{/issues}}
-
-  <ul>
-    {{#commits}}
-    <li>{{{message}}} ({{authorName}})</li>
-    {{/commits}}
-  </ul>
-{{/tags}}
-</div>
-"""
-}
-
 task makeChangelogMD(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    filePath = "CHANGELOG.md"
+    filePath = "build/changelog/CHANGELOG.md"
 
-    fromCommit = "bf3813febabba9436bf5f4340376e13160f1376e"
+    fromCommit = "09fa6c5fafc6cff79f15c5e4e8ebb502acd85451"
     toRef = "HEAD"
 
-    ignoreCommitsIfMessageMatches = "^Merge.*"
+    ignoreCommitsIfMessageMatches = "^\\[ci fix\\].*|^Merge.*|^\\[test\\].*"
 
     untaggedName = "Current release ${project.version}"
+    noIssueName =  "Non-issue changes"
 
-    templateContent = """
-# GeneriTech Changelog
+    readableTagName = "/([^/]+?)\$"
 
-{{#tags}}
-## {{name}}
-{{#commits}}
-- {{{message}}} ({{authorName}})
-{{/commits}}
-{{/tags}}
-"""
+    removeIssueFromMessage = true
+
+    timeZone = "UTC"
+
+    templateContent = new File('gradle/scripts/changelog.mustache').getText('UTF-8');
 }
 
 afterEvaluate {
-    //tasks.curseforge.dependsOn.add(makeChangelogMD)
-    //tasks.curseforge.dependsOn.add(makeChangelogHTML)
+    tasks.curseforge.dependsOn.add(makeChangelogMD)
 }
