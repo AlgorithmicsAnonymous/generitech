@@ -16,4 +16,5 @@
 !/webresources
 !/.gitlab-ci.yml
 !/.travis.yml
+!/changelog.gradle
 .DS_Store
