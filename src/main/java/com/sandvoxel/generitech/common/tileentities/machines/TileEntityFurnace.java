@@ -223,7 +223,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
                 InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                machineActive = false;
+                if(!canSmelt(getStackInSlot(0))) machineActive = false;
                 smeltProgress = 0;
                 internalInventory.setInventorySlotContents(1, null);
 

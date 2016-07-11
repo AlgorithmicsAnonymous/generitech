@@ -75,7 +75,7 @@ public class BlockFurnace extends BlockMachineBase {
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         IBlockState blockState = getActualState(state, world, pos);
-        return blockState.getValue(ACTIVE) ? 15 : 0;
+        return blockState.getValue(ACTIVE) ? 8 : 0;
     }
 
     @Override
