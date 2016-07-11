@@ -43,6 +43,7 @@ import com.sandvoxel.generitech.common.inventory.InventoryOperation;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
+import com.sandvoxel.generitech.common.util.LogHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
@@ -288,6 +289,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                         itemChance = itemChance + fortuneMultiplier;
 
                     outItem.stackSize = (int) Math.round(Math.floor(itemChance) + crushRNG * itemChance % 1);
+                    if(outItem.stackSize == 0) outItem.stackSize = 1;
 
 
                     // Simulate placing into output slot...

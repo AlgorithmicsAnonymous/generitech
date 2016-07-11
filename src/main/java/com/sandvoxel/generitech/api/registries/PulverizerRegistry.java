@@ -88,7 +88,7 @@ public class PulverizerRegistry {
 
         for (ItemStack input : itemOres) {
             ItemStack output = itemDusts.get(0);
-            register(input, output, 1.0f, false);
+            register(input, output, 0f, false);
         }
     }
 }
