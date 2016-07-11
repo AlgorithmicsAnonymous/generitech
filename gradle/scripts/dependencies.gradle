@@ -26,6 +26,11 @@ repositories {
         url "http://dl.tsr.me/artifactory/libs-release/"
     }
 
+    maven {
+        name "SilentSean API Depot"
+        url "http://ci.seanlatimer.co.uk/libs-release/"
+    }
+
     maven { url "http://maven.amadornes.com/" }
 }
 
@@ -36,14 +41,14 @@ configurations {
 }
 
 dependencies {
-    //mods "net.darkhax.wawla:Wawla:1.9-2.2.0.186"
+    //mods "net.darkhax.wawla:Wawla:1.10-2.3.0.193"
     mods "com.fireball1725.devworld:devworld:1.10-b14-client"
-    runtime "mezz.jei:jei_1.10:3.7.1.219"
+    runtime "mezz.jei:jei_1.10.2:3.7.4.224"
 
     compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
     compile "org.jgrapht:jgrapht-core:0.9.1"
     compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.0.12-25"
 
-    runtime "mezz.jei:jei_1.10:3.7.0.218"
-    deobfCompile "mezz.jei:jei_1.10:3.7.1.219:api"
+    deobfCompile "mezz.jei:jei_1.10.2:3.7.4.224:api"
 }
