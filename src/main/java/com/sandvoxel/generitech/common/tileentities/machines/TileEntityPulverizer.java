@@ -156,11 +156,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if(slot == 1 || slot == 2 || slot == 3)
             return false;
 
-        if(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0))
-            return false;
+        return !(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0));
 
 
-        return true;
     }
 
     @Override
@@ -186,10 +184,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        if(direction == EnumFacing.DOWN && (index == 2 || index == 3))
-            return true;
+        return direction == EnumFacing.DOWN && (index == 2 || index == 3);
 
-        return false;
     }
 
     @Override

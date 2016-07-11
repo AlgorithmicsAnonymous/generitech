@@ -81,7 +81,7 @@ public abstract class BlockMachineBase extends BlockTileBase {
                 if (blockStates.containsKey(MACHINETIER))
                     blockStates.remove(MACHINETIER);
 
-                return new ModelResourceLocation(resourcePath + ((MachineTier) state.getValue(MACHINETIER)).getName(), getPropertyString(blockStates));
+                return new ModelResourceLocation(resourcePath + state.getValue(MACHINETIER).getName(), getPropertyString(blockStates));
             }
         });
     }
@@ -118,7 +118,7 @@ public abstract class BlockMachineBase extends BlockTileBase {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        MachineTier tier = (MachineTier) state.getValue(MACHINETIER);
+        MachineTier tier = state.getValue(MACHINETIER);
         return tier.getMeta();
     }
 
