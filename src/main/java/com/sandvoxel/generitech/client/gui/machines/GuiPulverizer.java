@@ -136,13 +136,15 @@ public class GuiPulverizer extends GuiBase {
         }
 
         if(machineTier == MachineTier.TIER_0) {
-            String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+            //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+            String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
             guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
             String progressLabel = String.format("%d%%", Math.round(timePercent));
             guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
         } else{
-            String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+            //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
+            String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
             guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
             String progressLabel = String.format("%d%%", Math.round(timePercent));
