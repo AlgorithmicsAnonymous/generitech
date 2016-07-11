@@ -228,8 +228,11 @@ public class ConfigWorldGen {
                 return true;
 
             boolean inList = false;
-            for (String listBiome : Biomes)
-                inList = inList || listBiome == biome.getBiomeName();
+            for (String listBiome : Biomes) {
+                if(inList) break;
+
+                inList = listBiome == biome.getRegistryName().toString();
+            }
             return (inList && BiomeRestriction == RestrictionType.Whitelist) ||
                     (!inList && BiomeRestriction == RestrictionType.Blacklist);
         }

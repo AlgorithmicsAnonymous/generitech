@@ -31,12 +31,16 @@ item.generitech.oredust.lead.name=Lead Dust
 item.generitech.oredust.gold.name=Gold Dust
 item.generitech.oredust.iron.name=Iron Dust
 
-//Tool Tips
+# Tool Tips
 tile.generitech.ore.copper.tooltip=It's Copper. What else is there to know?
 tile.generitech.ore.tin.tooltip=Another staple of your average tech mod.
 tile.generitech.ore.lead.tooltip=Life Pro Tip: Do not ingest this stuff.
 
-// Label
+# Label
 label.generitech.time_left=Time Remaining
 label.generitech.max_temperature=Maximum Temp
 label.generitech.current_temperature=Current Temp
+
+# Commands
+command.generitech.usage=/gtech
+command.generitech.getbiomeid.success=Biome ID is:

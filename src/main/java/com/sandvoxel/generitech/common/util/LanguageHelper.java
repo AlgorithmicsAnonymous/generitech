@@ -44,6 +44,7 @@ public enum LanguageHelper {
     ITEM("item"),
     DESCRIPTION("description"),
     JEI("jei"),
+    COMMAND("command"),
     NONE("");
 
     private String name;

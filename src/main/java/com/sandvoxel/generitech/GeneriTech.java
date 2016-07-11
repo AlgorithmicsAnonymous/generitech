@@ -36,6 +36,7 @@ package com.sandvoxel.generitech;
 
 import com.google.common.base.Stopwatch;
 import com.sandvoxel.generitech.api.exceptions.OutdatedJavaException;
+import com.sandvoxel.generitech.common.command.CommandGeneritech;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
 import com.sandvoxel.generitech.common.util.LogHelper;
@@ -50,6 +51,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.lang3.JavaVersion;
@@ -133,6 +135,11 @@ public class GeneriTech {
         IntegrationsManager.instance().postInit();
 
         LogHelper.info( "Post Initialization ( ended after " + watch.elapsed( TimeUnit.MILLISECONDS ) + "ms )" );
+    }
+
+    @Mod.EventHandler
+    public void onServerStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandGeneritech());
     }
 
     @SubscribeEvent
