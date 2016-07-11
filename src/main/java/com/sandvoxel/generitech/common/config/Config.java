@@ -34,33 +34,16 @@
 
 package com.sandvoxel.generitech.common.config;
 
-import com.sandvoxel.generitech.GeneriTech;
-import com.sandvoxel.generitech.Reference;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.config.GuiConfig;
-import net.minecraftforge.fml.client.config.IConfigElement;
 
 import java.io.File;
-import java.util.Arrays;
 
-public class Config extends GuiConfig {
+public class Config {
     public static Configuration configuration;
 
     public class Category
     {
         public static final String WORLDGEN = "worldgen";
-    }
-
-    public Config(GuiScreen parentScreen) {
-        super(
-                parentScreen,
-                Arrays.asList(new IConfigElement[]{
-                        new ConfigElement(GeneriTech.configuration.getCategory(Category.WORLDGEN))
-                }),
-                Reference.MOD_ID, false, false, "GeneriTech Configuration");
-        titleLine2 = GeneriTech.configuration.getConfigFile().getAbsolutePath();
     }
 
     public static Configuration initConfig(File configFile) {
