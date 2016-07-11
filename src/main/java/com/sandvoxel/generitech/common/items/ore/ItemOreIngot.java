@@ -121,14 +121,18 @@ public class ItemOreIngot extends ItemBase implements IProvideRecipe, IProvideSm
 
     @Override
     public void RegisterSmelting() {
-        for (int i = 0; i < EnumOres.values().length; i++) {
+        for(EnumOres ore : EnumOres.values()) {
             // Register Ore -> Ingot
-            if (EnumOres.byMeta(i).isTypeSet(EnumOreType.ORE) && EnumOres.byMeta(i).isTypeSet(EnumOreType.INGOT))
-                GameRegistry.addSmelting(Blocks.BLOCK_ORE.getStack(1, i), Items.ITEM_ORE_INGOT.getStack(1, i), 0);
+            if(ore.isTypeSet(EnumOreType.ORE) && ore.isTypeSet(EnumOreType.INGOT)) {
+                GameRegistry.addSmelting(Blocks.BLOCK_ORE.getStack(1, ore.getMeta()), Items.ITEM_ORE_INGOT.getStack(1, ore.getMeta()), 10);
+            }
 
             // Register Dust -> Ingot
-            if (EnumOres.byMeta(i).isTypeSet(EnumOreType.DUST) && EnumOres.byMeta(i).isTypeSet(EnumOreType.INGOT))
-                GameRegistry.addSmelting(Items.ITEM_ORE_DUST.getStack(1, i), Items.ITEM_ORE_INGOT.getStack(1, i), 0);
+            if(ore.isTypeSet(EnumOreType.DUST) && ore.isTypeSet(EnumOreType.INGOT)) {
+                GameRegistry.addSmelting(Items.ITEM_ORE_DUST.getStack(1, ore.getMeta()), Items.ITEM_ORE_INGOT.getStack(1, ore.getMeta()), 10);
+            }
         }
+
+        GameRegistry.addSmelting(Items.ITEM_ORE_DUST.getStack(1, EnumOres.GOLD.getMeta()), new ItemStack(net.minecraft.init.Items.GOLD_INGOT), 10);
     }
 }

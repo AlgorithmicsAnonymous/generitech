@@ -37,6 +37,7 @@ package com.sandvoxel.generitech.common.items.materials;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.api.util.EnumOreType;
+import com.sandvoxel.generitech.common.util.EnumGears;
 import com.sandvoxel.generitech.common.util.EnumOres;
 import com.sandvoxel.generitech.common.items.ItemBase;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -57,10 +58,8 @@ public class ItemMaterialGear extends ItemBase {
 
     @Override
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-        for (int i = 0; i < EnumOres.values().length; i++) {
-            if (EnumOres.byMeta(i).isTypeSet(EnumOreType.GEAR)) {
-                subItems.add(new ItemStack(this, 1, i));
-            }
+        for (EnumGears gear : EnumGears.values()) {
+            subItems.add(new ItemStack(itemIn, 1, gear.getMeta()));
         }
     }
 
@@ -72,16 +71,14 @@ public class ItemMaterialGear extends ItemBase {
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
         String name = super.getUnlocalizedName();
-        String oreName = EnumOres.byMeta(itemStack.getItemDamage()).getName();
-        return name + "." + oreName;
+        String matName = EnumGears.values()[itemStack.getItemDamage()].getName();
+        return name + "." + matName;
     }
 
     @Override
     public void registerItemRenderer() {
-        for (int i = 0; i < EnumOres.values().length; i++) {
-            if (EnumOres.byMeta(i).isTypeSet(EnumOreType.GEAR)) {
-                ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(Reference.MOD_ID + ":" + resourcePath + "/gear-" + EnumOres.byMeta(i).getName(), "inventory"));
-            }
+        for(EnumGears gear : EnumGears.values()) {
+            ModelLoader.setCustomModelResourceLocation(this, gear.getMeta(), new ModelResourceLocation(Reference.MOD_ID + ":" + resourcePath + "/gear-" + gear.getName(), "inventory"));
         }
     }
 }
