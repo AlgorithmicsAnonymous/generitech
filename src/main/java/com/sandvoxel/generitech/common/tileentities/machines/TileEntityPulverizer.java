@@ -252,7 +252,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 inventory.setInventorySlotContents(0, itemIn);
                 inventory.setInventorySlotContents(1, itemOut);
 
-                ticksRemaining = 200;
+                ticksRemaining = 228;
                 machineActive = true;
 
                 this.markForUpdate();

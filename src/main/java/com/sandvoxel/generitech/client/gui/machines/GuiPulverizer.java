@@ -93,6 +93,12 @@ public class GuiPulverizer extends GuiBase {
         {
             int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
             drawTexturedModalRect(paramInt1 + 48, paramInt2 + 41 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
+
+
+            int progress = Math.abs(tileEntity.getTicksRemaining()/6);
+            drawTexturedModalRect(paramInt1 + 75, paramInt2 + 38 , 176, 0 , 38-progress , 16 );
+
+
         }
         else if(machineTier == MachineTier.TIER_1)
         {
@@ -139,9 +145,11 @@ public class GuiPulverizer extends GuiBase {
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-            guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-            String progressLabel = String.format("%d%%", Math.round(timePercent));
-            guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
+
+            //guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+            //String progressLabel = String.format("%d%%", Math.round(timePercent));
+            //guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
+
         } else{
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
