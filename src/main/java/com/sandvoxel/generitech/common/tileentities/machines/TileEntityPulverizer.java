@@ -89,6 +89,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private float speedMultiplier = 0.0f;
     private float fortuneMultiplier = 0.5f;
     private int currentTotalProcessTime = 0;
+    private boolean test = true;
+
 
 
     public boolean isPulverizerPaused() {
@@ -201,32 +203,42 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
+
+
+
+
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
-        if (fuelRemaining == 0 && inventory.getStackInSlot(4) != null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0 && machineTier == MachineTier.TIER_0) {
-            if (inventory.getStackInSlot(4).getItem() == lastFuelType) {
-                fuelRemaining = lastFuelValue;
-            } else {
-                fuelRemaining = net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4));
-                lastFuelType = inventory.getStackInSlot(4).getItem();
-                lastFuelValue = fuelRemaining;
+        if (fuelRemaining == 0 && inventory.getStackInSlot(4) != null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0 && machineTier == MachineTier.TIER_0 )
+        {
+            if (inventory.getStackInSlot(0) != null || inventory.getStackInSlot(1) != null) {
+                if (inventory.getStackInSlot(4).getItem() == lastFuelType) {
+                    fuelRemaining = lastFuelValue;
+
+
+                } else {
+                    fuelRemaining = net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4));
+                    lastFuelType = inventory.getStackInSlot(4).getItem();
+                    lastFuelValue = fuelRemaining;
+
+                }
+                fuelTotal = fuelRemaining;
+                inventory.decrStackSize(4, 1);
+                this.markDirty();
+                this.markForUpdate();
             }
-            fuelTotal = fuelRemaining;
-            inventory.decrStackSize(4, 1);
-            this.markDirty();
-            this.markForUpdate();
         }
 
-        if ((/*this.container.takePower(powerUsage, true) == powerUsage &&*/ machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
+        if ((this.container.takePower(powerUsage, true) == powerUsage && machineTier != MachineTier.TIER_0) || fuelRemaining > 0) {
             if (machineActive && !pulverizerPaused) {
                 ticksRemaining--;
 
-                /*if (machineTier != MachineTier.TIER_0)
-                    this.container.takePower(powerUsage, false);*/
-
+                if (machineTier != MachineTier.TIER_0)
+                    this.container.takePower(powerUsage, false);
                 if (fuelRemaining > 0)
                     fuelRemaining--;
+
             }
 
             if (inventory.getStackInSlot(0) != null && inventory.getStackInSlot(1) == null) {
@@ -252,58 +264,76 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 inventory.setInventorySlotContents(0, itemIn);
                 inventory.setInventorySlotContents(1, itemOut);
 
-                ticksRemaining = 228;
+                ticksRemaining = 200;
                 machineActive = true;
 
                 this.markForUpdate();
                 this.markDirty();
             }
 
-            if (ticksRemaining <= 0 && machineActive) {
+
+
+            if (fuelRemaining == 0 && machineActive && machineTier == machineTier.TIER_0){
                 ticksRemaining = 0;
+                test = false;
 
-                if (worldObj.isRemote)
-                    return;
-
-                ItemStack processItem = inventory.getStackInSlot(1);
-                if (processItem == null) {
-                    return;
-                }
-
-                List<Crushable> outputs = PulverizerRegistry.getOutputs(processItem);
-
-                if (outputs.isEmpty())
-                    return;
-
-                for (int i = this.crushIndex; i < outputs.size(); i++) {
-                    this.crushIndex = i;
-                    Crushable crushable = outputs.get(this.crushIndex);
-
-                    ItemStack outItem = crushable.output.copy();
-                    float itemChance = crushable.chance;
-                    boolean itemFortune = crushable.luckMultiplier == 1.0f;
-
-                    if (crushRNG == -1) crushRNG = rnd.nextFloat();
-
-                    if (itemFortune)
-                        itemChance = itemChance + fortuneMultiplier;
-
-                    outItem.stackSize = (int) Math.round(Math.floor(itemChance) + crushRNG * itemChance % 1);
-                    if(outItem.stackSize == 0) outItem.stackSize = 1;
+            }else {
+                test = false;
+            }
 
 
-                    // Simulate placing into output slot...
-                    if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
-                        this.pulverizerPaused = true;
+
+            if (ticksRemaining <= 0 && machineActive) {
+
+                if (test==false){
+                    System.out.println(test);
+                        ticksRemaining = 0;
+
+                    if (worldObj.isRemote)
+                        return;
+
+                    ItemStack processItem = inventory.getStackInSlot(1);
+                    if (processItem == null) {
                         return;
                     }
 
-                    if (pulverizerPaused)
-                        pulverizerPaused = !pulverizerPaused;
+                    List<Crushable> outputs = PulverizerRegistry.getOutputs(processItem);
 
-                    InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
-                    this.crushRNG = -1;
+                    if (outputs.isEmpty())
+                        return;
+
+                    for (int i = this.crushIndex; i < outputs.size(); i++) {
+                        this.crushIndex = i;
+                        Crushable crushable = outputs.get(this.crushIndex);
+
+                        ItemStack outItem = crushable.output.copy();
+                        float itemChance = crushable.chance;
+                        boolean itemFortune = crushable.luckMultiplier == 1.0f;
+
+                        if (crushRNG == -1) crushRNG = rnd.nextFloat();
+
+                        if (itemFortune)
+                            itemChance = itemChance + fortuneMultiplier;
+
+                        outItem.stackSize = (int) Math.round(Math.floor(itemChance) + crushRNG * itemChance % 1);
+                        if(outItem.stackSize == 0) outItem.stackSize = 1;
+
+
+                        // Simulate placing into output slot...
+                        if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
+                            this.pulverizerPaused = true;
+                            return;
+                        }
+
+                        if (pulverizerPaused)
+                            pulverizerPaused = !pulverizerPaused;
+
+                        InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
+                        this.crushRNG = -1;
+                    }
+
                 }
+
 
                 this.crushIndex = 0;
                 inventory.setInventorySlotContents(1, null);
@@ -319,6 +349,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public int getTicksRemaining() {
         return ticksRemaining;
     }
+
 
     public int getTotalProcessTime() {
         if (ticksRemaining == 0)

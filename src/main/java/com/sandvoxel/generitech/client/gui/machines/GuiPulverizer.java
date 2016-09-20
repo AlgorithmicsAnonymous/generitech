@@ -85,7 +85,15 @@ public class GuiPulverizer extends GuiBase {
         } else {
             bindTexture("gui/machines/pulverizer.png");
             drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-            drawTexturedModalRect(paramInt1 + 25, paramInt2 + 63, 47, 34, 18, 18);
+            drawTexturedModalRect(paramInt1 + 30, paramInt2 + 63, 47, 34, 18, 18);
+
+            long powerCapacity = container.getCapacity();
+            long powerCurrent = container.getStoredPower();
+
+            int powerLevel =   powerCurrent > 0 ? (int)(powerCurrent /1000) : 0;
+
+            drawTexturedModalRect(paramInt1 + 9, paramInt2 + 14 , 177 , 17 , 38 , powerLevel );
+
         }
 
 
@@ -95,22 +103,34 @@ public class GuiPulverizer extends GuiBase {
             drawTexturedModalRect(paramInt1 + 48, paramInt2 + 41 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
 
 
-            int progress = Math.abs(tileEntity.getTicksRemaining()/6);
-            drawTexturedModalRect(paramInt1 + 75, paramInt2 + 38 , 176, 0 , 38-progress , 16 );
-
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38 , 176, 0 , 40-progress , 16 );
 
         }
         else if(machineTier == MachineTier.TIER_1)
         {
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
         }
         else if(machineTier == MachineTier.TIER_2)
         {
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
         }
         else if(machineTier == MachineTier.TIER_3)
         {
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 115, paramInt2 + 63, 47, 34, 18, 18);
@@ -136,9 +156,11 @@ public class GuiPulverizer extends GuiBase {
             long powerCapacity = container.getCapacity();
             long powerCurrent = container.getStoredPower();
 
-            int powerPercent = powerCurrent > 0 ? (int)(powerCurrent * 100d / powerCapacity) : 0;
+            int powerLevel = powerCurrent > 0 ? (int)(powerCurrent * 100d / powerCapacity) : 0;
 
-            guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
+            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38 , 176, 0 , 40-powerLevel , 16 );
+
+            //guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
         }
 
         if(machineTier == MachineTier.TIER_0) {
@@ -151,12 +173,13 @@ public class GuiPulverizer extends GuiBase {
             //guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
 
         } else{
+
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
-            guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-            String progressLabel = String.format("%d%%", Math.round(timePercent));
-            guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
+           // guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+           // String progressLabel = String.format("%d%%", Math.round(timePercent));
+           // guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
         }
     }
 
