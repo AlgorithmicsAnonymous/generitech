@@ -52,7 +52,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumSkyBlock;
-import net.minecraft.world.IWorldNameable;
 
 import javax.annotation.Nullable;
 import java.util.List;

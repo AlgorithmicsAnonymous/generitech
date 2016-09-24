@@ -19,7 +19,6 @@ package com.sandvoxel.generitech.common.items.misc.crafting;/*
 
 
 import com.sandvoxel.generitech.api.util.MachineTier;
-import com.sandvoxel.generitech.common.util.EnumOres;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
