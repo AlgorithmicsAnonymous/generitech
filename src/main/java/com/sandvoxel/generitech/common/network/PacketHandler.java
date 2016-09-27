@@ -35,13 +35,15 @@
 package com.sandvoxel.generitech.common.network;
 
 import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.common.network.messages.power.PacketPower;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toLowerCase());
+    //public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toLowerCase());
 
     public static void init() {
-
+        //INSTANCE.registerMessage(PacketPower.Handler.class,PacketPower.class,0, Side.SERVER);
     }
 }
