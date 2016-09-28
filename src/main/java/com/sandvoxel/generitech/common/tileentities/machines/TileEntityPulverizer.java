@@ -34,23 +34,28 @@
 
 package com.sandvoxel.generitech.common.tileentities.machines;
 
+import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.api.util.Crushable;
 import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
 import com.sandvoxel.generitech.common.inventory.InventoryOperation;
+import com.sandvoxel.generitech.common.network.messages.power.PacketPower;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
+import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
@@ -69,9 +74,9 @@ import java.util.Random;
 * 5-7 Upgrades
 */
 
-public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
+public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer {
 
-    private BaseTeslaContainer container = new BaseTeslaContainer(50000, 50000, 50, 50);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 500, 500);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
@@ -99,6 +104,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public boolean isMachineActive() {
         return machineActive;
     }
+
+
 
     @Override
     public void markForUpdate() {
@@ -200,11 +207,12 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         return true;
     }
 
+
+
     @Override
     public void update() {
 
-
-
+        //container.givePower(1000,false);
 
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
@@ -410,6 +418,13 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return +12;
 
         return Math.round((((float) fuelTotal - (float) fuelRemaining) / (float) fuelTotal) * 11);
+    }
+
+    @Override
+    public long givePower(long power, boolean simulated) {
+        //System.out.println(power+" "+simulated);
+        container.givePower(power,simulated);
+        return power;
     }
 }
 

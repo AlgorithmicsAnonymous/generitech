@@ -53,7 +53,7 @@ public class BlockMachineMatrics extends BlockTierBase {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 
 
-        GeneriTech.network.sendToServer(new PacketPower(10000));
+
 
         return true;
     }
