@@ -29,6 +29,8 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
     private BaseTeslaContainer container = new BaseTeslaContainer(100,10000,1000,1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
     private boolean [] flag ={false,false,false,false,false,false};
+    private boolean temp ;
+
 
     @Override
     public long takePower(long power, boolean simulated) {
@@ -40,10 +42,13 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
         BlockPos pos = getPos();
         World worldIn = getWorld();
 
-        getPos();
+
 
         container.givePower(1000, false);
         //System.out.println(worldObj.getTileEntity(pos.up()));
+
+        TileEntity tileEntity;
+
 
         if (flag[0]&& container.getStoredPower()>container.getOutputRate())
         {
@@ -52,7 +57,7 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
         }
 
-
+        
 
 
 

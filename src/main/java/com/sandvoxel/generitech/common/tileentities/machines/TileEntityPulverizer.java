@@ -58,6 +58,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
@@ -76,7 +77,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer {
 
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 500, 500);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 50, 50);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
@@ -94,6 +95,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private float fortuneMultiplier = 0.5f;
     private int currentTotalProcessTime = 0;
     private boolean test = true;
+    public long Powerin;
 
 
 
@@ -207,12 +209,18 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         return true;
     }
 
-
+    public long getPower(){
+        return container.getStoredPower();
+    }
 
     @Override
     public void update() {
 
         //container.givePower(1000,false);
+
+        Powerin = getPower();
+
+
 
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
@@ -422,8 +430,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public long givePower(long power, boolean simulated) {
-        //System.out.println(power+" "+simulated);
         container.givePower(power,simulated);
+        this.markDirty();
+        this.markForUpdate();
         return power;
     }
 }

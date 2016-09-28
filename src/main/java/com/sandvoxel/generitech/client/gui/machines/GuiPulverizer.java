@@ -87,11 +87,11 @@ public class GuiPulverizer extends GuiBase {
             drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
             drawTexturedModalRect(paramInt1 + 30, paramInt2 + 63, 47, 34, 18, 18);
 
-            long powerCapacity = container.getCapacity();
-            long powerCurrent = container.getStoredPower();
 
-            int powerLevel =   powerCurrent > 0 ? (int)(powerCurrent /1000) : 0;
+            int powerLevel =(int)(tileEntity.getPower() /1000);
 
+            //System.out.println(powerLevel);
+            //System.out.println(tileEntity.getPower());
             drawTexturedModalRect(paramInt1 + 9, paramInt2 + 14 , 177 , 17 , 38 , powerLevel );
 
         }
@@ -154,7 +154,7 @@ public class GuiPulverizer extends GuiBase {
         else
         {
             long powerCapacity = container.getCapacity();
-            long powerCurrent = container.getStoredPower();
+            long powerCurrent = tileEntity.getPower();
 
             int powerLevel = powerCurrent > 0 ? (int)(powerCurrent * 100d / powerCapacity) : 0;
 
@@ -206,7 +206,7 @@ public class GuiPulverizer extends GuiBase {
             if(powerBar.contains(currentMouse))
             {
                 ArrayList<String> powerMessage = new ArrayList<String>();
-                powerMessage.add(TeslaUtils.getDisplayableTeslaCount(container.getStoredPower()));
+                powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.getPower()));
                 renderToolTip(powerMessage, mouse_x, mouse_y);
             }
         }
