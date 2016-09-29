@@ -25,6 +25,7 @@ public class PacketPower implements IMessage {
     private int z;
     private int y;
 
+
     public PacketPower(){}
 
     public PacketPower(long test,int x,int z, int y){
@@ -32,6 +33,7 @@ public class PacketPower implements IMessage {
         this.x = x;
         this.z = z;
         this.y = y;
+
     }
 
     @Override
@@ -42,6 +44,7 @@ public class PacketPower implements IMessage {
         y = buf.readInt();
 
 
+
     }
 
     @Override
@@ -50,6 +53,7 @@ public class PacketPower implements IMessage {
         buf.writeInt(x);
         buf.writeInt(z);
         buf.writeInt(y);
+
 
     }
 
@@ -63,17 +67,22 @@ public class PacketPower implements IMessage {
             public IMessage onMessage(PacketPower message, MessageContext ctx) {
                 TileEntity tileEntity = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(new BlockPos(message.x, message.y, message.z));
 
+
+
                 IThreadListener mainThread = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
 
                 mainThread.addScheduledTask(new Runnable() {
                     @Override
                     public void run() {
 
-                        if ( tileEntity instanceof ITeslaConsumer)
-                        {
-                            ((ITeslaConsumer) tileEntity).givePower(message.test,false);
 
-                        }
+                            if (tileEntity instanceof ITeslaConsumer)
+                            {
+
+                                ((ITeslaConsumer) tileEntity).givePower(message.test,false);
+
+
+                            }
 
 
                     }

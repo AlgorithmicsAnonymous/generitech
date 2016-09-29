@@ -78,7 +78,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer,ITeslaHolder {
 
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
+    private BaseTeslaContainer container = new BaseTeslaContainer(200, 50000, 10000, 10000);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;

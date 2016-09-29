@@ -9,6 +9,7 @@ import com.sandvoxel.generitech.common.inventory.InventoryOperation;
 import com.sandvoxel.generitech.common.network.messages.power.PacketPower;
 import com.sandvoxel.generitech.common.tileentities.TileEntityBase;
 import com.sandvoxel.generitech.common.tileentities.TileEntityInventoryBase;
+import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
 import com.sandvoxel.generitech.common.util.LogHelper;
@@ -59,62 +60,120 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
             container.givePower(1000, false);
 
         }
-
         long stored = getStoredPower();
 
-
+        TileEntity te = worldObj.getTileEntity(pos);
 
     if (flag[0])
     {
-        if (getTransfer() != 0 && container.getStoredPower() >= T0transfer)
+        TileEntity te1 = worldObj.getTileEntity(pos.up());
+
+        if (te1 instanceof TileEntityMachineBase && getTransfer(pos.down()) > 100 && container.getStoredPower() !=0)
         {
-            System.out.println(getTransfer());
-            if (getTransfer() >= T0transfer)
+            if (te instanceof ITeslaHolder)
             {
-                if (worldObj.isRemote)
+                if (((ITeslaHolder) te).getStoredPower() > 100)
+                {
+                    if (!worldObj.isRemote)
+                    {
+                        GeneriTech.network.sendToServer(new PacketPower(T0transfer ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                    }
+                    this.container.takePower(T0transfer,false);
+                }else{
+                    if (!worldObj.isRemote)
+                    {
+                        GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower() ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                    }
+                    this.container.takePower(((ITeslaHolder) te).getStoredPower(),false);
+                }
+            }
+        }else {
+            if (te1 instanceof TileEntityMachineBase && container.getStoredPower() != 0){
+                if (!worldObj.isRemote)
+                {
+                    GeneriTech.network.sendToServer(new PacketPower(getTransfer(pos.down()) ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                }
+                this.container.takePower(getTransfer(pos.down()),false);
+            }
+
+        }
+
+
+
+        if (te instanceof ITeslaHolder && te1 instanceof ITeslaHolder && te1 instanceof TileEntityMachineBase == false)
+        {
+            long abbs = ((ITeslaHolder) te).getStoredPower() - ((ITeslaHolder) te1).getStoredPower();
+            System.out.println(abbs);
+            if (abbs > 0)
+            {
+                if (!worldObj.isRemote)
                 {
                     GeneriTech.network.sendToServer(new PacketPower(T0transfer ,pos.getX() ,pos.getZ(),pos.getY()+1));
 
                 }
-                container.takePower(T0transfer,false);
+                this.container.takePower(T0transfer,false);
             }
-            else
-                {
-                if (worldObj.isRemote)
-                {
-                    GeneriTech.network.sendToServer(new PacketPower(getTransfer() ,pos.getX() ,pos.getZ(),pos.getY()+1));
-                }
-                container.takePower(getTransfer(),false);
-                 }
         }}
+
+
+
+
+
 
         if (flag[1])
         {
-            
-            if (getTransfer() != 0 && container.getStoredPower() >= T0transfer)
+            TileEntity te2 = worldObj.getTileEntity(pos.down());
+
+            if (te2 instanceof TileEntityMachineBase && getTransfer(pos.down()) > 100 && container.getStoredPower() !=0)
             {
-                System.out.println(getTransfer());
-                if (getTransfer() >= T0transfer)
+                if (te instanceof ITeslaHolder)
                 {
-                    if (worldObj.isRemote)
+                    if (((ITeslaHolder) te).getStoredPower() > 100)
+                    {
+                        if (!worldObj.isRemote)
+                        {
+                            GeneriTech.network.sendToServer(new PacketPower(T0transfer ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                        }
+                        this.container.takePower(T0transfer,false);
+                    }else{
+                        if (!worldObj.isRemote)
+                        {
+                            GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower() ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                        }
+                        this.container.takePower(((ITeslaHolder) te).getStoredPower(),false);
+                    }
+                }
+            }else {
+                if (te2 instanceof TileEntityMachineBase && container.getStoredPower() != 0){
+                    if (!worldObj.isRemote)
+                    {
+                        GeneriTech.network.sendToServer(new PacketPower(getTransfer(pos.down()) ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                    }
+                    this.container.takePower(getTransfer(pos.down()),false);
+                }
+            }
+
+
+
+            if (te instanceof ITeslaHolder && te2 instanceof ITeslaHolder && te2 instanceof TileEntityMachineBase == false)
+            {
+                long abbs = ((ITeslaHolder) te).getStoredPower() - ((ITeslaHolder) te2).getStoredPower();
+                System.out.println(abbs);
+                if (abbs > 0)
+                {
+                    if (!worldObj.isRemote)
                     {
                         GeneriTech.network.sendToServer(new PacketPower(T0transfer ,pos.getX() ,pos.getZ(),pos.getY()+-1));
 
                     }
-                    container.takePower(T0transfer,false);
-                }
-                else
-                {
-                    if (worldObj.isRemote)
-                    {
-                        GeneriTech.network.sendToServer(new PacketPower(getTransfer() ,pos.getX() ,pos.getZ(),pos.getY()-+1));
-                    }
-                    container.takePower(getTransfer(),false);
+                    this.container.takePower(T0transfer,false);
                 }
             }
 
+        }
 
-}
+
+
 
         flag[0]= this.canConnectTo(worldIn,pos.up());
         flag[1]= this.canConnectTo(worldIn,pos.down());
@@ -134,9 +193,8 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
 
 
-        public long getTransfer(){
-            BlockPos pos = getPos();
-            TileEntity tile = worldObj.getTileEntity(pos.up());
+        public long getTransfer(BlockPos pos){
+            TileEntity tile = worldObj.getTileEntity(pos);
 
             if (tile instanceof ITeslaHolder){
                 return ((ITeslaHolder) tile).getCapacity() - ((ITeslaHolder) tile).getStoredPower();
