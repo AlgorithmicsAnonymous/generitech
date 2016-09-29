@@ -49,6 +49,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.BaseTeslaContainer;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -75,9 +76,9 @@ import java.util.Random;
 * 5-7 Upgrades
 */
 
-public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer {
+public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer,ITeslaHolder {
 
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 50, 50);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
@@ -213,12 +214,13 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         return container.getStoredPower();
     }
 
+
     @Override
     public void update() {
 
         //container.givePower(1000,false);
 
-        Powerin = getPower();
+
 
 
 
@@ -375,6 +377,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public List<String> getWailaBodyToolTip(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        currentTip.add(LanguageHelper.LABEL.translateMessage("Power") + Long.toString(getPower()));
+
+
+
         if (ticksRemaining == 0)
             return currentTip;
 
@@ -386,6 +393,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 DurationFormatUtils.formatDuration(secondsLeft, "mm:ss"),
                 Math.round(timePercent)
         ));
+
+
+
 
         return currentTip;
     }
@@ -430,10 +440,22 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public long givePower(long power, boolean simulated) {
+        //System.out.println(power);
         container.givePower(power,simulated);
         this.markDirty();
         this.markForUpdate();
         return power;
+    }
+
+
+    @Override
+    public long getStoredPower() {
+        return container.getStoredPower();
+    }
+
+    @Override
+    public long getCapacity() {
+        return container.getCapacity();
     }
 }
 

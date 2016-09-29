@@ -3,6 +3,7 @@ package com.sandvoxel.generitech.common.network.messages.power;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import io.netty.buffer.ByteBuf;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
@@ -70,15 +71,9 @@ public class PacketPower implements IMessage {
 
                         if ( tileEntity instanceof ITeslaConsumer)
                         {
-                            if (tileEntity instanceof TileEntityMachineBase)
                             ((ITeslaConsumer) tileEntity).givePower(message.test,false);
 
-
                         }
-
-
-
-
 
 
                     }
