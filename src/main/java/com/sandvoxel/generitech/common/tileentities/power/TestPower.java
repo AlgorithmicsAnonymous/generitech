@@ -64,25 +64,30 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
         TileEntity te = worldObj.getTileEntity(pos);
 
+
+
+
     if (flag[0])
     {
         TileEntity te1 = worldObj.getTileEntity(pos.up());
 
-        if (te1 instanceof TileEntityMachineBase && getTransfer(pos.down()) > 100 && container.getStoredPower() !=0)
+
+        if (te1 instanceof TileEntityMachineBase && getTransfer(pos.up()) > 100 && container.getStoredPower() !=0)
         {
+
             if (te instanceof ITeslaHolder)
             {
                 if (((ITeslaHolder) te).getStoredPower() > 100)
                 {
                     if (!worldObj.isRemote)
                     {
-                        GeneriTech.network.sendToServer(new PacketPower(T0transfer ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                        GeneriTech.network.sendToServer(new PacketPower(T0transfer ,pos.getX() ,pos.getZ(),pos.getY()+1));
                     }
                     this.container.takePower(T0transfer,false);
                 }else{
                     if (!worldObj.isRemote)
                     {
-                        GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower() ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                        GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower() ,pos.getX() ,pos.getZ(),pos.getY()+1));
                     }
                     this.container.takePower(((ITeslaHolder) te).getStoredPower(),false);
                 }
@@ -103,8 +108,8 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
         if (te instanceof ITeslaHolder && te1 instanceof ITeslaHolder && te1 instanceof TileEntityMachineBase == false)
         {
             long abbs = ((ITeslaHolder) te).getStoredPower() - ((ITeslaHolder) te1).getStoredPower();
-            System.out.println(abbs);
-            if (abbs > 0)
+            //System.out.println(abbs);
+            if (abbs > 100)
             {
                 if (!worldObj.isRemote)
                 {
@@ -112,6 +117,23 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
                 }
                 this.container.takePower(T0transfer,false);
+            }else {
+                if (te1 instanceof ITeslaConsumer && abbs != 0 && abbs/2 != 0) {
+                    if (!worldObj.isRemote)
+
+                        GeneriTech.network.sendToServer(new PacketPower(abbs/2 ,pos.getX() ,pos.getZ(),pos.getY()+1));
+                    }
+                    this.container.takePower(abbs/2,false);
+                    if (te1 instanceof ITeslaConsumer && abbs == 1 )
+                    {                    {System.out.println(abbs);
+
+                        if (!worldObj.isRemote)
+                        {
+                            GeneriTech.network.sendToServer(new PacketPower(1 ,pos.getX() ,pos.getZ(),pos.getY()+1));
+                        }
+                        this.container.takePower(1,false);
+                    }
+                }
             }
         }}
 
@@ -158,8 +180,8 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
             if (te instanceof ITeslaHolder && te2 instanceof ITeslaHolder && te2 instanceof TileEntityMachineBase == false)
             {
                 long abbs = ((ITeslaHolder) te).getStoredPower() - ((ITeslaHolder) te2).getStoredPower();
-                System.out.println(abbs);
-                if (abbs > 0)
+                //System.out.println(abbs);
+                if (abbs > 100)
                 {
                     if (!worldObj.isRemote)
                     {
@@ -167,7 +189,24 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
                     }
                     this.container.takePower(T0transfer,false);
+                }else {
+                    if (te2 instanceof ITeslaConsumer && abbs !=0 && abbs/2 != 0) {
+                        if (!worldObj.isRemote )
+                        {
+                            GeneriTech.network.sendToServer(new PacketPower(abbs/2 ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                        }
+                        this.container.takePower(abbs/2,false);
+                        if (te2 instanceof ITeslaConsumer && abbs == 1 )
+                        {
+                            if (!worldObj.isRemote)
+                            {
+                                GeneriTech.network.sendToServer(new PacketPower(1 ,pos.getX() ,pos.getZ(),pos.getY()+-1));
+                            }
+                            this.container.takePower(1,false);
+                        }
+                    }
                 }
+
             }
 
         }
