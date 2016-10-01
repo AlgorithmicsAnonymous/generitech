@@ -90,12 +90,13 @@ public class GuiPulverizer extends GuiBase {
 
             int powerLevel =(int)(tileEntity.getPower() /2000 + 1);
             if (tileEntity.getPower() > 48000) powerLevel=25;
+            if (tileEntity.getPower() == 0) powerLevel=-1;
             int power = powerLevel-25;
 
 
             //System.out.println(power);
             //System.out.println(powerLevel);
-            drawTexturedModalRect(paramInt1 + 18, paramInt2 + 31 - power  , 176 , 70 - powerLevel+1  , 25 , 25 );
+            drawTexturedModalRect(paramInt1 + 18, paramInt2 + 31 - power  , 176 , 70 - powerLevel  , 25 , 25 );
 
         }
 
