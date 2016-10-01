@@ -47,7 +47,7 @@ import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
-import net.darkhax.tesla.api.BaseTeslaContainer;
+import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.capability.TeslaCapabilities;
