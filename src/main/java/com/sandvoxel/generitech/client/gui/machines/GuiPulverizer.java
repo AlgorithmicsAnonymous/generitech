@@ -85,7 +85,19 @@ public class GuiPulverizer extends GuiBase {
         } else {
             bindTexture("gui/machines/pulverizer.png");
             drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-            drawTexturedModalRect(paramInt1 + 25, paramInt2 + 63, 47, 34, 18, 18);
+            drawTexturedModalRect(paramInt1 + 30, paramInt2 + 63, 47, 34, 18, 18);
+
+
+            int powerLevel =(int)(tileEntity.getPower() /2000 + 1);
+            if (tileEntity.getPower() > 48000) powerLevel=25;
+            if (tileEntity.getPower() == 0) powerLevel=-1;
+            int power = powerLevel-25;
+
+
+            //System.out.println(power);
+            //System.out.println(powerLevel);
+            drawTexturedModalRect(paramInt1 + 18, paramInt2 + 31 - power  , 176 , 70 - powerLevel  , 25 , 25 );
+
         }
 
 
@@ -93,18 +105,36 @@ public class GuiPulverizer extends GuiBase {
         {
             int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
             drawTexturedModalRect(paramInt1 + 48, paramInt2 + 41 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
+
+
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38 , 176, 0 , 40-progress , 16 );
+
         }
         else if(machineTier == MachineTier.TIER_1)
         {
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
         }
         else if(machineTier == MachineTier.TIER_2)
         {
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
         }
         else if(machineTier == MachineTier.TIER_3)
         {
+            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
+            if (progress ==0) progress=40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 115, paramInt2 + 63, 47, 34, 18, 18);
@@ -128,27 +158,32 @@ public class GuiPulverizer extends GuiBase {
         else
         {
             long powerCapacity = container.getCapacity();
-            long powerCurrent = container.getStoredPower();
+            long powerCurrent = tileEntity.getPower();
 
-            int powerPercent = powerCurrent > 0 ? (int)(powerCurrent * 100d / powerCapacity) : 0;
+            int powerLevel = powerCurrent > 0 ? (int)(powerCurrent * 100d / powerCapacity) : 0;
 
-            guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
+            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38 , 176, 0 , 40-powerLevel , 16 );
+
+            //guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
         }
 
         if(machineTier == MachineTier.TIER_0) {
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-            guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-            String progressLabel = String.format("%d%%", Math.round(timePercent));
-            guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
+
+            //guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+            //String progressLabel = String.format("%d%%", Math.round(timePercent));
+            //guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
+
         } else{
+
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
-            guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-            String progressLabel = String.format("%d%%", Math.round(timePercent));
-            guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
+           // guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+           // String progressLabel = String.format("%d%%", Math.round(timePercent));
+           // guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
         }
     }
 
@@ -175,7 +210,7 @@ public class GuiPulverizer extends GuiBase {
             if(powerBar.contains(currentMouse))
             {
                 ArrayList<String> powerMessage = new ArrayList<String>();
-                powerMessage.add(TeslaUtils.getDisplayableTeslaCount(container.getStoredPower()));
+                powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.getPower()));
                 renderToolTip(powerMessage, mouse_x, mouse_y);
             }
         }

@@ -36,11 +36,11 @@ package com.sandvoxel.generitech.common.items.ore;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.api.util.EnumOreType;
-import com.sandvoxel.generitech.common.util.EnumOres;
+import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.common.items.ItemBase;
 import com.sandvoxel.generitech.common.items.Items;
+import com.sandvoxel.generitech.common.util.EnumOres;
 import com.sandvoxel.generitech.common.util.IProvideRecipe;
 import com.sandvoxel.generitech.common.util.IProvideSmelting;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

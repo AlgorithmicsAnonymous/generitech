@@ -37,11 +37,15 @@ package com.sandvoxel.generitech.common.blocks;
 
 import com.sandvoxel.generitech.common.blocks.machines.BlockFurnace;
 import com.sandvoxel.generitech.common.blocks.machines.BlockPulverizer;
+import com.sandvoxel.generitech.common.blocks.misc.crafting.BlockMachineMatrics;
 import com.sandvoxel.generitech.common.blocks.ores.BlockOre;
 import com.sandvoxel.generitech.common.blocks.ores.BlockOreBlock;
+import com.sandvoxel.generitech.common.blocks.power.BlockCables;
 import com.sandvoxel.generitech.common.items.machines.ItemFurnace;
 import com.sandvoxel.generitech.common.items.machines.ItemPulverizer;
+import com.sandvoxel.generitech.common.items.misc.crafting.ItemMachineMatrics;
 import com.sandvoxel.generitech.common.items.ore.ItemOre;
+import com.sandvoxel.generitech.common.items.power.ItemCable;
 import com.sandvoxel.generitech.common.util.RegistrationHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -52,7 +56,10 @@ public enum Blocks {
     BLOCK_ORE_BLOCK(BlockOreBlock.class, ItemOre.class),
 
     BLOCK_FURNACE(BlockFurnace.class, ItemFurnace.class),
-    BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class);
+    BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class),
+
+    BLOCK_MACHINEMATRICS(BlockMachineMatrics.class, ItemMachineMatrics.class),
+    BLOCK_CABLES(BlockCables.class, ItemCable.class);
 
     private final Class<? extends BlockBase> blockClass;
     private final Class<? extends ItemBlock> itemBlockClass;
