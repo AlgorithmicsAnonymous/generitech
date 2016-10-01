@@ -33,8 +33,9 @@
  */
 
 package com.sandvoxel.generitech;
-import com.sandvoxel.generitech.common.items.Items;
+
 import com.sandvoxel.generitech.common.blocks.Blocks;
+import com.sandvoxel.generitech.common.items.Items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 

@@ -35,8 +35,8 @@
 package com.sandvoxel.generitech.common.config;
 
 import com.sandvoxel.generitech.api.util.EnumOreType;
-import com.sandvoxel.generitech.common.util.EnumOres;
 import com.sandvoxel.generitech.common.util.ConfigHelper;
+import com.sandvoxel.generitech.common.util.EnumOres;
 import com.sandvoxel.generitech.common.util.LogHelper;
 import com.sandvoxel.generitech.common.world.WorldGen;
 import net.minecraft.world.biome.Biome;

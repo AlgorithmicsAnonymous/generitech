@@ -39,6 +39,8 @@ import com.sandvoxel.generitech.api.exceptions.OutdatedJavaException;
 import com.sandvoxel.generitech.common.command.CommandGeneritech;
 import com.sandvoxel.generitech.common.config.Config;
 import com.sandvoxel.generitech.common.integrations.IntegrationsManager;
+import com.sandvoxel.generitech.common.network.PacketHandler;
+import com.sandvoxel.generitech.common.network.messages.power.PacketPower;
 import com.sandvoxel.generitech.common.util.LogHelper;
 import com.sandvoxel.generitech.common.world.WorldGen;
 import com.sandvoxel.generitech.proxy.IProxy;
@@ -53,7 +55,10 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -69,6 +74,9 @@ public class GeneriTech {
 
     public static Configuration configuration;
 
+    public static SimpleNetworkWrapper network;
+
+
     static {
         FluidRegistry.enableUniversalBucket();
     }
@@ -77,6 +85,11 @@ public class GeneriTech {
     public void preInit(FMLPreInitializationEvent event){
         final Stopwatch watch = Stopwatch.createStarted();
         LogHelper.info( "Pre Initialization ( started )" );
+
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toLowerCase());
+        network.registerMessage(PacketPower.ServerHandler.class,PacketPower.class,0,Side.SERVER);
+        network.registerMessage(PacketPower.ClientHandler.class,PacketPower.class,0,Side.CLIENT);
+
 
         if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7)) {
             throw new OutdatedJavaException(String.format("%s requires Java 7 or newer, Please update your java", Reference.MOD_NAME));
@@ -104,6 +117,10 @@ public class GeneriTech {
         IntegrationsManager.instance().index();
         IntegrationsManager.instance().preInit();
 
+
+
+
+
         LogHelper.info( "Pre Initialization ( ended after " + watch.elapsed( TimeUnit.MILLISECONDS ) + "ms )" );
     }
 
@@ -122,6 +139,8 @@ public class GeneriTech {
         MinecraftForge.EVENT_BUS.register(this);
 
         IntegrationsManager.instance().init();
+
+        PacketHandler.init();
 
         LogHelper.info( "Initialization ( ended after " + watch.elapsed( TimeUnit.MILLISECONDS ) + "ms )" );
     }
