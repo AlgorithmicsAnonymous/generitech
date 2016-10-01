@@ -35,8 +35,8 @@
 package com.sandvoxel.generitech.common.blocks.ores;
 
 import com.sandvoxel.generitech.GeneriTechTabs;
-import com.sandvoxel.generitech.common.blocks.BlockBase;
 import com.sandvoxel.generitech.api.util.EnumOreType;
+import com.sandvoxel.generitech.common.blocks.BlockBase;
 import com.sandvoxel.generitech.common.util.EnumOres;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
