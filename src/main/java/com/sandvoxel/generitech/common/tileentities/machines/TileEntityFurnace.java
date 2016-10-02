@@ -66,7 +66,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
         this.markForLightUpdate();
     }
-
+//next project
     public boolean isSmeltPaused() {
         return isSmeltPaused;
     }
