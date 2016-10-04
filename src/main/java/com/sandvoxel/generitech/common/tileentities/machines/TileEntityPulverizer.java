@@ -34,6 +34,9 @@
 
 package com.sandvoxel.generitech.common.tileentities.machines;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
+import com.sandvoxel.generitech.ForgeToTeslaAdapter;
 import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.api.util.Crushable;
@@ -61,6 +64,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.IEnergyStorage;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import java.util.List;
@@ -78,6 +82,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer,ITeslaHolder {
 
+    private net.minecraftforge.energy.EnergyStorage forge = new net.minecraftforge.energy.EnergyStorage(1000,1000,1000);
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
@@ -95,7 +100,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private float speedMultiplier = 0.0f;
     private float fortuneMultiplier = 0.5f;
     private int currentTotalProcessTime = 0;
-    private boolean test = true;
+    private boolean test = false;
     public long Powerin;
 
 
@@ -218,10 +223,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     @Override
     public void update() {
 
-        //container.givePower(1000,false);
-
-
-
 
 
         if (machineTier == null)
@@ -261,7 +262,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             if (inventory.getStackInSlot(0) != null && inventory.getStackInSlot(1) == null) {
                 ItemStack itemIn = inventory.getStackInSlot(0);
                 ItemStack itemOut;
-
                 if (!PulverizerRegistry.containsInput(itemIn))
                     return;
 
@@ -292,18 +292,17 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
             if (fuelRemaining == 0 && machineActive && machineTier == machineTier.TIER_0){
                 ticksRemaining = 0;
-                test = false;
+                test = true;
 
-            }else {
-                test = false;
+            }else if (ticksRemaining == 0) {
+                test = true;
             }
 
 
 
             if (ticksRemaining <= 0 && machineActive) {
 
-                if (test==false){
-                    System.out.println(test);
+                if (test){
                         ticksRemaining = 0;
 
                     if (worldObj.isRemote)
@@ -457,6 +456,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public long getCapacity() {
         return container.getCapacity();
     }
+
+
+
 }
 
 
