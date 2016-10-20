@@ -23,13 +23,13 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockCables extends BlockMachineBase{
+public class BlockGen extends BlockMachineBase{
 
-    public BlockCables() {
+    public BlockGen() {
         super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
         this.setTileEntity(TestPower.class);
-        this.setCreativeTab(GeneriTechTabs.GENERAL);
+        //this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("power");
     }
 

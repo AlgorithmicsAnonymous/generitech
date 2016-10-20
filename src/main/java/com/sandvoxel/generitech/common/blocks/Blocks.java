@@ -40,7 +40,7 @@ import com.sandvoxel.generitech.common.blocks.machines.BlockPulverizer;
 import com.sandvoxel.generitech.common.blocks.misc.crafting.BlockMachineMatrics;
 import com.sandvoxel.generitech.common.blocks.ores.BlockOre;
 import com.sandvoxel.generitech.common.blocks.ores.BlockOreBlock;
-import com.sandvoxel.generitech.common.blocks.power.BlockCables;
+import com.sandvoxel.generitech.common.blocks.power.BlockGen;
 import com.sandvoxel.generitech.common.items.machines.ItemFurnace;
 import com.sandvoxel.generitech.common.items.machines.ItemPulverizer;
 import com.sandvoxel.generitech.common.items.misc.crafting.ItemMachineMatrics;
@@ -59,7 +59,7 @@ public enum Blocks {
     BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class),
 
     BLOCK_MACHINEMATRICS(BlockMachineMatrics.class, ItemMachineMatrics.class),
-    BLOCK_CABLES(BlockCables.class, ItemCable.class);
+    BLOCK_GEN(BlockGen.class, ItemCable.class);
 
     private final Class<? extends BlockBase> blockClass;
     private final Class<? extends ItemBlock> itemBlockClass;

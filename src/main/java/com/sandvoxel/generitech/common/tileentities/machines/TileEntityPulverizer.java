@@ -34,17 +34,12 @@
 
 package com.sandvoxel.generitech.common.tileentities.machines;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
-import com.sandvoxel.generitech.ForgeToTeslaAdapter;
-import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.api.util.Crushable;
 import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
 import com.sandvoxel.generitech.common.inventory.InventoryOperation;
-import com.sandvoxel.generitech.common.network.messages.power.PacketPower;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
@@ -58,13 +53,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.IEnergyStorage;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import java.util.List;
@@ -82,8 +73,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage,ITeslaConsumer,ITeslaHolder {
 
-    private net.minecraftforge.energy.EnergyStorage forge = new net.minecraftforge.energy.EnergyStorage(1000,1000,1000);
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
+    private BaseTeslaContainer container = new BaseTeslaContainer(1000, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
@@ -222,7 +212,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
-
+        this.markForUpdate();
+        this.markDirty();
 
 
         if (machineTier == null)
@@ -298,6 +289,12 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 test = true;
             }
 
+
+            if(container.getStoredPower() ==0 && ticksRemaining > 0){
+                ticksRemaining--;
+                System.out.println("wasd");
+                this.markForUpdate();
+            }
 
 
             if (ticksRemaining <= 0 && machineActive) {
