@@ -41,10 +41,11 @@ public class TestPower extends TileEntityInventoryBase implements net.minecraft.
     public void update() {
 
         BlockPos pos = getPos();
-
+        World wold = getWorld();
 
         if (worldObj.isBlockPowered(pos));{
             container.givePower(100, false);
+            TeslaUtils.distributePowerToAllFaces(wold,pos,1000,false);
         }
 
 
