@@ -53,12 +53,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GuiPulverizer extends GuiBase {
+    ITeslaHolder container;
+    Rectangle powerBar;
     private TileEntityPulverizer tileEntity;
     private GuiHelper guiHelper = new GuiHelper();
     private MachineTier machineTier;
     private HashMap<Rectangle, List<String>> tooltips = new HashMap<Rectangle, List<String>>();
-    ITeslaHolder container;
-    Rectangle powerBar;
 
     public GuiPulverizer(InventoryPlayer inventoryPlayer, TileEntityPulverizer tileEntity) {
         super(new ContainerPulverizer(inventoryPlayer, tileEntity));
@@ -67,11 +67,8 @@ public class GuiPulverizer extends GuiBase {
         this.tileEntity = tileEntity;
         this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
 
-        if(machineTier == MachineTier.TIER_0)
-        {
-        }
-        else
-        {
+        if (machineTier == MachineTier.TIER_0) {
+        } else {
             this.container = tileEntity.getCapability(TeslaCapabilities.CAPABILITY_HOLDER, EnumFacing.DOWN);
             powerBar = new Rectangle(9, 25, 14, 55);
         }
@@ -79,7 +76,7 @@ public class GuiPulverizer extends GuiBase {
 
     @Override
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        if(machineTier == MachineTier.TIER_0){
+        if (machineTier == MachineTier.TIER_0) {
             bindTexture("gui/machines/pulverizerT0.png");
             drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
         } else {
@@ -88,58 +85,50 @@ public class GuiPulverizer extends GuiBase {
             drawTexturedModalRect(paramInt1 + 30, paramInt2 + 63, 47, 34, 18, 18);
 
 
-            int powerLevel =(int)(tileEntity.getPower() /2000 + 1);
-            if (tileEntity.getPower() > 48000) powerLevel=25;
-            if (tileEntity.getPower() == 0) powerLevel=-1;
-            int power = powerLevel-25;
+            int powerLevel = (int) (tileEntity.getPower() / 2000 + 1);
+            if (tileEntity.getPower() > 48000) powerLevel = 25;
+            if (tileEntity.getPower() == 0) powerLevel = -1;
+            int power = powerLevel - 25;
 
 
             //System.out.println(power);
             //System.out.println(powerLevel);
-            drawTexturedModalRect(paramInt1 + 18, paramInt2 + 31 - power  , 176 , 70 - powerLevel  , 25 , 25 );
+            drawTexturedModalRect(paramInt1 + 18, paramInt2 + 31 - power, 176, 70 - powerLevel, 25, 25);
 
         }
 
 
-        if(machineTier == MachineTier.TIER_0)
-        {
+        if (machineTier == MachineTier.TIER_0) {
             int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
             drawTexturedModalRect(paramInt1 + 48, paramInt2 + 41 + fireOffset, 176, 18 + fireOffset, 14, 14 - fireOffset);
 
 
-            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
-            if (progress ==0) progress=40;
-            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38 , 176, 0 , 40-progress , 16 );
+            int progress = Math.abs(tileEntity.getTicksRemaining() / 5);
+            if (progress == 0) progress = 40;
+            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38, 176, 0, 40 - progress, 16);
 
-        }
-        else if(machineTier == MachineTier.TIER_1)
-        {
-            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
-            if (progress ==0) progress=40;
-            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+        } else if (machineTier == MachineTier.TIER_1) {
+            int progress = Math.abs(tileEntity.getTicksRemaining() / 5);
+            if (progress == 0) progress = 40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35, 176, 0, 40 - progress, 16);
 
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
-        }
-        else if(machineTier == MachineTier.TIER_2)
-        {
-            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
-            if (progress ==0) progress=40;
-            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+        } else if (machineTier == MachineTier.TIER_2) {
+            int progress = Math.abs(tileEntity.getTicksRemaining() / 5);
+            if (progress == 0) progress = 40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35, 176, 0, 40 - progress, 16);
 
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
-        }
-        else if(machineTier == MachineTier.TIER_3)
-        {
-            int progress = Math.abs(tileEntity.getTicksRemaining()/5);
-            if (progress ==0) progress=40;
-            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35 , 176, 0 , 40-progress , 16 );
+        } else if (machineTier == MachineTier.TIER_3) {
+            int progress = Math.abs(tileEntity.getTicksRemaining() / 5);
+            if (progress == 0) progress = 40;
+            drawTexturedModalRect(paramInt1 + 72, paramInt2 + 35, 176, 0, 40 - progress, 16);
 
             drawTexturedModalRect(paramInt1 + 151, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 133, paramInt2 + 63, 47, 34, 18, 18);
             drawTexturedModalRect(paramInt1 + 115, paramInt2 + 63, 47, 34, 18, 18);
         }
-
 
 
     }
@@ -151,23 +140,20 @@ public class GuiPulverizer extends GuiBase {
         int timeCurrent = tileEntity.getTicksRemaining();
         float timePercent = ((((float) timeTotal - (float) timeCurrent) / (float) timeTotal)) * 100;
 
-        if(machineTier == MachineTier.TIER_0)
-        {
+        if (machineTier == MachineTier.TIER_0) {
 
-        }
-        else
-        {
+        } else {
             long powerCapacity = container.getCapacity();
             long powerCurrent = tileEntity.getPower();
 
-            int powerLevel = powerCurrent > 0 ? (int)(powerCurrent * 100d / powerCapacity) : 0;
+            int powerLevel = powerCurrent > 0 ? (int) (powerCurrent * 100d / powerCapacity) : 0;
 
-            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38 , 176, 0 , 40-powerLevel , 16 );
+            drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38, 176, 0, 40 - powerLevel, 16);
 
             //guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
         }
 
-        if(machineTier == MachineTier.TIER_0) {
+        if (machineTier == MachineTier.TIER_0) {
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
@@ -176,14 +162,14 @@ public class GuiPulverizer extends GuiBase {
             //String progressLabel = String.format("%d%%", Math.round(timePercent));
             //guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
 
-        } else{
+        } else {
 
             //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
-           // guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-           // String progressLabel = String.format("%d%%", Math.round(timePercent));
-           // guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
+            // guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
+            // String progressLabel = String.format("%d%%", Math.round(timePercent));
+            // guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
         }
     }
 
@@ -192,7 +178,7 @@ public class GuiPulverizer extends GuiBase {
         super.drawScreen(mouse_x, mouse_y, btn);
 
         Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
-        if(tooltips != null) {
+        if (tooltips != null) {
             for (Rectangle rectangle : tooltips.keySet()) {
                 if (rectangle.contains(currentMouse)) {
                     ArrayList<String> messages = new ArrayList<String>(tooltips.get(rectangle));
@@ -201,14 +187,10 @@ public class GuiPulverizer extends GuiBase {
             }
         }
 
-        if(machineTier == MachineTier.TIER_0)
-        {
+        if (machineTier == MachineTier.TIER_0) {
 
-        }
-        else
-        {
-            if(powerBar.contains(currentMouse))
-            {
+        } else {
+            if (powerBar.contains(currentMouse)) {
                 ArrayList<String> powerMessage = new ArrayList<String>();
                 powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.getPower()));
                 renderToolTip(powerMessage, mouse_x, mouse_y);

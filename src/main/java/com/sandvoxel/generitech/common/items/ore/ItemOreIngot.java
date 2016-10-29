@@ -57,7 +57,7 @@ import java.util.List;
 
 public class ItemOreIngot extends ItemBase implements IProvideRecipe, IProvideSmelting {
 
-    public ItemOreIngot(){
+    public ItemOreIngot() {
         super("ore/ingot");
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
@@ -121,14 +121,14 @@ public class ItemOreIngot extends ItemBase implements IProvideRecipe, IProvideSm
 
     @Override
     public void RegisterSmelting() {
-        for(EnumOres ore : EnumOres.values()) {
+        for (EnumOres ore : EnumOres.values()) {
             // Register Ore -> Ingot
-            if(ore.isTypeSet(EnumOreType.ORE) && ore.isTypeSet(EnumOreType.INGOT)) {
+            if (ore.isTypeSet(EnumOreType.ORE) && ore.isTypeSet(EnumOreType.INGOT)) {
                 GameRegistry.addSmelting(Blocks.BLOCK_ORE.getStack(1, ore.getMeta()), Items.ITEM_ORE_INGOT.getStack(1, ore.getMeta()), 10);
             }
 
             // Register Dust -> Ingot
-            if(ore.isTypeSet(EnumOreType.DUST) && ore.isTypeSet(EnumOreType.INGOT)) {
+            if (ore.isTypeSet(EnumOreType.DUST) && ore.isTypeSet(EnumOreType.INGOT)) {
                 GameRegistry.addSmelting(Items.ITEM_ORE_DUST.getStack(1, ore.getMeta()), Items.ITEM_ORE_INGOT.getStack(1, ore.getMeta()), 10);
             }
         }

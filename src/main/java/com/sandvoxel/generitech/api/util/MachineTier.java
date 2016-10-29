@@ -42,7 +42,7 @@ public enum MachineTier implements IStringSerializable {
     TIER_1("t1"),
     TIER_2("t2"),
     TIER_3("t3");
-      // N/A
+    // N/A
 
     private static final MachineTier[] META_LOOKUP = new MachineTier[values().length];
 

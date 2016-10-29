@@ -2,14 +2,12 @@ package com.sandvoxel.generitech.common.util;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumGears implements IStringSerializable{
+public enum EnumGears implements IStringSerializable {
     COBBLESTONE("Stone"),
     IRON("Iron"),
     COPPER("Copper"),
     TIN("Tin"),
-    GOLD("Gold")
-
-    ;
+    GOLD("Gold");
 
     private final String name;
 

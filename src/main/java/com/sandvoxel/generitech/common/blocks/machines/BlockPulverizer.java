@@ -71,8 +71,7 @@ public class BlockPulverizer extends BlockMachineBase {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
 
-                player.openGui(GeneriTech.instance, GuiHandler.PULVERIZER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
-
+            player.openGui(GeneriTech.instance, GuiHandler.PULVERIZER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
 
         }
@@ -93,7 +92,7 @@ public class BlockPulverizer extends BlockMachineBase {
         IBlockState blockState = getActualState(state, world, pos);
         return (blockState.getValue(ACTIVE) && blockState.getValue(MACHINETIER) == MachineTier.TIER_0) ? 15 : 0;
     }
-    
+
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, MACHINETIER, FACING, ACTIVE);

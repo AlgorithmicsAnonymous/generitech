@@ -66,8 +66,7 @@ public class ItemBaseTool extends ItemBase {
     /*===================================== FORGE START =================================*/
     private String toolClass;
 
-    public ItemBaseTool(float damageVsEntity, float attackSpeed, Item.ToolMaterial toolMaterial, Set<Block> effectiveBlocks, String texture)
-    {
+    public ItemBaseTool(float damageVsEntity, float attackSpeed, Item.ToolMaterial toolMaterial, Set<Block> effectiveBlocks, String texture) {
         super(texture);
         this.efficiencyOnProperMaterial = 4.0F;
         this.toolMaterial = toolMaterial;

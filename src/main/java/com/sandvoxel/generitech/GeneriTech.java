@@ -82,13 +82,13 @@ public class GeneriTech {
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event){
+    public void preInit(FMLPreInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
-        LogHelper.info( "Pre Initialization ( started )" );
+        LogHelper.info("Pre Initialization ( started )");
 
         network = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toLowerCase());
-        network.registerMessage(PacketPower.ServerHandler.class,PacketPower.class,0,Side.SERVER);
-        network.registerMessage(PacketPower.ClientHandler.class,PacketPower.class,0,Side.CLIENT);
+        network.registerMessage(PacketPower.ServerHandler.class, PacketPower.class, 0, Side.SERVER);
+        network.registerMessage(PacketPower.ClientHandler.class, PacketPower.class, 0, Side.CLIENT);
 
 
         if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
@@ -118,16 +118,13 @@ public class GeneriTech {
         IntegrationsManager.instance().preInit();
 
 
-
-
-
-        LogHelper.info( "Pre Initialization ( ended after " + watch.elapsed( TimeUnit.MILLISECONDS ) + "ms )" );
+        LogHelper.info("Pre Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event){
+    public void init(FMLInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
-        LogHelper.info( "Initialization ( started )" );
+        LogHelper.info("Initialization ( started )");
 
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
@@ -142,18 +139,18 @@ public class GeneriTech {
 
         PacketHandler.init();
 
-        LogHelper.info( "Initialization ( ended after " + watch.elapsed( TimeUnit.MILLISECONDS ) + "ms )" );
+        LogHelper.info("Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }
 
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event){
+    public void postInit(FMLPostInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
-        LogHelper.info( "Post Initialization ( started )" );
+        LogHelper.info("Post Initialization ( started )");
 
         IntegrationsManager.instance().postInit();
 
-        LogHelper.info( "Post Initialization ( ended after " + watch.elapsed( TimeUnit.MILLISECONDS ) + "ms )" );
+        LogHelper.info("Post Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }
 
     @Mod.EventHandler

@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public enum EnumOres implements IStringSerializable{
+public enum EnumOres implements IStringSerializable {
 
     // Vanilla stuff
     IRON("Iron", EnumOreType.NUGGET, EnumOreType.DUST, EnumOreType.VANILLA, EnumOreType.FLUID),

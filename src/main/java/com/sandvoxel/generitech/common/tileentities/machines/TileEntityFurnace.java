@@ -113,8 +113,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
         return (int) internalTemp;
     }
 
-    public int getIdleTemp()
-    {
+    public int getIdleTemp() {
         return getMaxTemperature() / 2;
     }
 
@@ -125,8 +124,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
     }
 
     public int getMaxTemperature() {
-        switch (MachineTier.byMeta(getBlockMetadata()))
-        {
+        switch (MachineTier.byMeta(getBlockMetadata())) {
             case TIER_1:
             default:
                 return 750;
@@ -138,8 +136,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
     }
 
     public float getTempRate() {
-        switch (MachineTier.byMeta(getBlockMetadata()))
-        {
+        switch (MachineTier.byMeta(getBlockMetadata())) {
             case TIER_1:
             default:
                 return 0.5f;
@@ -152,26 +149,17 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
     @Override
     public void update() {
-        if(machineActive & !isSmeltPaused)
-        {
+        if (machineActive & !isSmeltPaused) {
             if (internalTemp < this.getMaxTemperature()) {
                 internalTemp += getTempRate();
             }
-        }
-        else
-        {
-            if(canIdle && internalTemp <= getIdleTemp())
-            {
+        } else {
+            if (canIdle && internalTemp <= getIdleTemp()) {
                 internalTemp = getIdleTemp();
-            }
-            else
-            {
-                if(internalTemp <= 0)
-                {
+            } else {
+                if (internalTemp <= 0) {
                     internalTemp = 0;
-                }
-                else
-                {
+                } else {
                     internalTemp -= getTempRate() / 2;
                 }
             }
@@ -223,20 +211,16 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
                 InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                if(!canSmelt(getStackInSlot(0))) machineActive = false;
+                if (!canSmelt(getStackInSlot(0))) machineActive = false;
                 smeltProgress = 0;
                 internalInventory.setInventorySlotContents(1, null);
 
                 this.markForUpdate();
                 this.markDirty();
             }
-        }
-        else
-        {
-            if(processItem != null && isSmeltPaused())
-            {
-                if(smeltProgress > 1000)
-                {
+        } else {
+            if (processItem != null && isSmeltPaused()) {
+                if (smeltProgress > 1000) {
                     smeltProgress = 1000;
                     ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
                     if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {

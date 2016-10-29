@@ -50,93 +50,8 @@ public class ConfigWorldGen {
     private static final Map<EnumOres, OreConfig> OreGenConfigDefaults = new HashMap<>(EnumOres.values().length);
     private static final int[] DEFAULT_DIMENSION_BLACKLIST = {-1, 1};
 
-    public static void init(Configuration config)
-    {
-        config.setCategoryLanguageKey(Config.Category.WORLDGEN, "config.worldgen");
-        config.setCategoryRequiresWorldRestart(Config.Category.WORLDGEN, false);
-
-        final String WORLDGEN_ORE = Config.Category.WORLDGEN + ".ores";
-
-        final String DESC_RETROGEN_ENABLED = "Enable retrogen in world";
-        final String DESC_ENABLED = "Enable %s in world generation";
-        final String DESC_MIN_Y = "Minimum Y level that %s will spawn at";
-        final String DESC_MAX_Y = "Maximum Y level that %s will spawn at";
-        final String DESC_MIN_VEIN_SIZE = "Min. number of %s ore in a vein";
-        final String DESC_MAX_VEIN_SIZE = "Max. number of %s ore in a vein";
-        final String DESC_WEIGHT = "Percent chance that %s will generate for each chunk occurrence";
-        final String DESC_CHUNK_OCCURRENCE = "Number of times that %s will attempt to generate in each chunk";
-        final String DESC_DIM_RESTRICTION_TYPE = "Dimension Restriction Type (Either 'blacklist' or 'whitelist')";
-        final String DESC_DIM_RESTRICTION_LIST = "Dimension IDs to restrict ore spawning in";
-        final String DESC_BIOME_RESTRICTION_TYPE = "Biome Restriction Type (Either 'blacklist' or 'whitelist')";
-        final String DESC_BIOME_RESTRICTION_LIST = "Biome IDs to restrict ore spawning in";
-
-        boolean retrogenEnabled = ConfigHelper.getBoolean(config, "Enable RetroGen", WORLDGEN_ORE, true, DESC_RETROGEN_ENABLED);
-        WorldGen.setRetrogenEnabled(retrogenEnabled);
-
-        for(EnumOres ore : EnumOres.byType(EnumOreType.ORE))
-        {
-            String oreName = ore.getOreName();
-            String oreNameLower = oreName.toLowerCase();
-            String oreCategory = WORLDGEN_ORE + "." + oreName;
-            OreConfig defaultConf = OreGenConfigDefaults.get(ore);
-
-            OreConfig oreConf;
-
-            oreConf = OreGenConfig.containsKey(ore) ? OreGenConfig.get(ore) : new OreConfig();
-
-            oreConf.Enabled = ConfigHelper.getBoolean(config, String.format("Enable %s", oreName), WORLDGEN_ORE, defaultConf.Enabled, String.format(DESC_ENABLED, oreNameLower));
-
-            oreConf.MinY = ConfigHelper.getInteger(config, "Min Y", oreCategory, defaultConf.MinY, String.format(DESC_MIN_Y, oreNameLower));
-            oreConf.MaxY = ConfigHelper.getInteger(config, "Max Y", oreCategory, defaultConf.MaxY, String.format(DESC_MAX_Y, oreNameLower));
-            if(oreConf.MinY >= oreConf.MaxY )
-            {
-                LogHelper.warn(String.format("%s Max Y must be greater than Min Y. Y Levels internally set to default. Please fix your config setting!", oreName));
-                oreConf.MinY = defaultConf.MinY;
-                oreConf.MaxY = defaultConf.MaxY;
-            }
-
-            oreConf.MinVeinSize = ConfigHelper.getInteger(config, "Min Vein Size", oreCategory, defaultConf.MinVeinSize, String.format(DESC_MIN_VEIN_SIZE, oreNameLower));
-            oreConf.MaxVeinSize = ConfigHelper.getInteger(config, "Max Vein Size", oreCategory, defaultConf.MaxVeinSize, String.format(DESC_MAX_VEIN_SIZE, oreNameLower));
-            if(oreConf.MinVeinSize >= oreConf.MaxVeinSize )
-            {
-                LogHelper.warn(String.format("%s Max Vein Size must be greater than Min Vein Size. Vein Sizes internally set to default. Please fix your config setting!", oreName));
-                oreConf.MinVeinSize = defaultConf.MinVeinSize;
-                oreConf.MaxVeinSize = defaultConf.MaxVeinSize;
-            }
-
-            oreConf.Weight = ConfigHelper.getInteger(config, "Weight", oreCategory, defaultConf.Weight, String.format(DESC_WEIGHT, oreNameLower));
-            if(oreConf.Weight < 0 )
-            {
-                LogHelper.warn(String.format("%s Weight must be greater than 0. Weight internally set to default. Please fix your config setting!", oreName));
-                oreConf.Weight = defaultConf.Weight;
-            }
-
-            oreConf.ChunkOccurrence = ConfigHelper.getInteger(config, "ChunkOccurrence", oreCategory, defaultConf.ChunkOccurrence, String.format(DESC_CHUNK_OCCURRENCE, oreNameLower));
-            if(oreConf.ChunkOccurrence < 0 )
-            {
-                LogHelper.warn(String.format("%s ChunkOccurrence must be greater than 0. ChunkOccurrence internally set to default. Please fix your config setting!", oreName));
-                oreConf.ChunkOccurrence = defaultConf.ChunkOccurrence;
-            }
-
-            String defaultDimRestriction = defaultConf.DimensionRestriction.name().toLowerCase();
-            String dimensionRestriction = ConfigHelper.getString(config, "DimRestrictionType", oreCategory, defaultDimRestriction, DESC_DIM_RESTRICTION_TYPE);
-            oreConf.DimensionRestriction = RestrictionType.fromString(dimensionRestriction, defaultConf.DimensionRestriction);
-
-            oreConf.Dimensions = ConfigHelper.getIntegerList(config, "DimensionList", oreCategory, defaultConf.Dimensions, DESC_DIM_RESTRICTION_LIST);
-
-            String defaultBiomeRestriction = defaultConf.BiomeRestriction.name().toLowerCase();
-            String biomeRestriction = ConfigHelper.getString(config, "BiomeRestrictionType", oreCategory, defaultBiomeRestriction, DESC_BIOME_RESTRICTION_TYPE);
-            oreConf.BiomeRestriction = RestrictionType.fromString(biomeRestriction, defaultConf.BiomeRestriction);
-
-            oreConf.Biomes = ConfigHelper.getStringList(config, "BiomeList", oreCategory, defaultConf.Biomes, DESC_BIOME_RESTRICTION_LIST);
-
-            OreGenConfig.put(ore, oreConf);
-        }
-    }
-
     static {
-        for(EnumOres ore: EnumOres.byType(EnumOreType.ORE))
-        {
+        for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
             OreConfig defaultConf = new OreConfig();
             defaultConf.Enabled = true;
             defaultConf.DimensionRestriction = RestrictionType.Blacklist;
@@ -186,6 +101,84 @@ public class ConfigWorldGen {
         }
     }
 
+    public static void init(Configuration config) {
+        config.setCategoryLanguageKey(Config.Category.WORLDGEN, "config.worldgen");
+        config.setCategoryRequiresWorldRestart(Config.Category.WORLDGEN, false);
+
+        final String WORLDGEN_ORE = Config.Category.WORLDGEN + ".ores";
+
+        final String DESC_RETROGEN_ENABLED = "Enable retrogen in world";
+        final String DESC_ENABLED = "Enable %s in world generation";
+        final String DESC_MIN_Y = "Minimum Y level that %s will spawn at";
+        final String DESC_MAX_Y = "Maximum Y level that %s will spawn at";
+        final String DESC_MIN_VEIN_SIZE = "Min. number of %s ore in a vein";
+        final String DESC_MAX_VEIN_SIZE = "Max. number of %s ore in a vein";
+        final String DESC_WEIGHT = "Percent chance that %s will generate for each chunk occurrence";
+        final String DESC_CHUNK_OCCURRENCE = "Number of times that %s will attempt to generate in each chunk";
+        final String DESC_DIM_RESTRICTION_TYPE = "Dimension Restriction Type (Either 'blacklist' or 'whitelist')";
+        final String DESC_DIM_RESTRICTION_LIST = "Dimension IDs to restrict ore spawning in";
+        final String DESC_BIOME_RESTRICTION_TYPE = "Biome Restriction Type (Either 'blacklist' or 'whitelist')";
+        final String DESC_BIOME_RESTRICTION_LIST = "Biome IDs to restrict ore spawning in";
+
+        boolean retrogenEnabled = ConfigHelper.getBoolean(config, "Enable RetroGen", WORLDGEN_ORE, true, DESC_RETROGEN_ENABLED);
+        WorldGen.setRetrogenEnabled(retrogenEnabled);
+
+        for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
+            String oreName = ore.getOreName();
+            String oreNameLower = oreName.toLowerCase();
+            String oreCategory = WORLDGEN_ORE + "." + oreName;
+            OreConfig defaultConf = OreGenConfigDefaults.get(ore);
+
+            OreConfig oreConf;
+
+            oreConf = OreGenConfig.containsKey(ore) ? OreGenConfig.get(ore) : new OreConfig();
+
+            oreConf.Enabled = ConfigHelper.getBoolean(config, String.format("Enable %s", oreName), WORLDGEN_ORE, defaultConf.Enabled, String.format(DESC_ENABLED, oreNameLower));
+
+            oreConf.MinY = ConfigHelper.getInteger(config, "Min Y", oreCategory, defaultConf.MinY, String.format(DESC_MIN_Y, oreNameLower));
+            oreConf.MaxY = ConfigHelper.getInteger(config, "Max Y", oreCategory, defaultConf.MaxY, String.format(DESC_MAX_Y, oreNameLower));
+            if (oreConf.MinY >= oreConf.MaxY) {
+                LogHelper.warn(String.format("%s Max Y must be greater than Min Y. Y Levels internally set to default. Please fix your config setting!", oreName));
+                oreConf.MinY = defaultConf.MinY;
+                oreConf.MaxY = defaultConf.MaxY;
+            }
+
+            oreConf.MinVeinSize = ConfigHelper.getInteger(config, "Min Vein Size", oreCategory, defaultConf.MinVeinSize, String.format(DESC_MIN_VEIN_SIZE, oreNameLower));
+            oreConf.MaxVeinSize = ConfigHelper.getInteger(config, "Max Vein Size", oreCategory, defaultConf.MaxVeinSize, String.format(DESC_MAX_VEIN_SIZE, oreNameLower));
+            if (oreConf.MinVeinSize >= oreConf.MaxVeinSize) {
+                LogHelper.warn(String.format("%s Max Vein Size must be greater than Min Vein Size. Vein Sizes internally set to default. Please fix your config setting!", oreName));
+                oreConf.MinVeinSize = defaultConf.MinVeinSize;
+                oreConf.MaxVeinSize = defaultConf.MaxVeinSize;
+            }
+
+            oreConf.Weight = ConfigHelper.getInteger(config, "Weight", oreCategory, defaultConf.Weight, String.format(DESC_WEIGHT, oreNameLower));
+            if (oreConf.Weight < 0) {
+                LogHelper.warn(String.format("%s Weight must be greater than 0. Weight internally set to default. Please fix your config setting!", oreName));
+                oreConf.Weight = defaultConf.Weight;
+            }
+
+            oreConf.ChunkOccurrence = ConfigHelper.getInteger(config, "ChunkOccurrence", oreCategory, defaultConf.ChunkOccurrence, String.format(DESC_CHUNK_OCCURRENCE, oreNameLower));
+            if (oreConf.ChunkOccurrence < 0) {
+                LogHelper.warn(String.format("%s ChunkOccurrence must be greater than 0. ChunkOccurrence internally set to default. Please fix your config setting!", oreName));
+                oreConf.ChunkOccurrence = defaultConf.ChunkOccurrence;
+            }
+
+            String defaultDimRestriction = defaultConf.DimensionRestriction.name().toLowerCase();
+            String dimensionRestriction = ConfigHelper.getString(config, "DimRestrictionType", oreCategory, defaultDimRestriction, DESC_DIM_RESTRICTION_TYPE);
+            oreConf.DimensionRestriction = RestrictionType.fromString(dimensionRestriction, defaultConf.DimensionRestriction);
+
+            oreConf.Dimensions = ConfigHelper.getIntegerList(config, "DimensionList", oreCategory, defaultConf.Dimensions, DESC_DIM_RESTRICTION_LIST);
+
+            String defaultBiomeRestriction = defaultConf.BiomeRestriction.name().toLowerCase();
+            String biomeRestriction = ConfigHelper.getString(config, "BiomeRestrictionType", oreCategory, defaultBiomeRestriction, DESC_BIOME_RESTRICTION_TYPE);
+            oreConf.BiomeRestriction = RestrictionType.fromString(biomeRestriction, defaultConf.BiomeRestriction);
+
+            oreConf.Biomes = ConfigHelper.getStringList(config, "BiomeList", oreCategory, defaultConf.Biomes, DESC_BIOME_RESTRICTION_LIST);
+
+            OreGenConfig.put(ore, oreConf);
+        }
+    }
+
     public enum RestrictionType {
         Blacklist,
         Whitelist;
@@ -224,12 +217,12 @@ public class ConfigWorldGen {
 
         public boolean isEnabledForBiome(Biome biome) {
 
-            if(Biomes.length < 1)
+            if (Biomes.length < 1)
                 return true;
 
             boolean inList = false;
             for (String listBiome : Biomes) {
-                if(inList) break;
+                if (inList) break;
 
                 inList = listBiome == biome.getRegistryName().toString();
             }

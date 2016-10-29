@@ -57,8 +57,7 @@ public class GuiFurnace extends GuiBase {
         bindTexture("gui/machines/furnace.png");
         drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
 
-        if(tileEntity.getTemperature() > 0)
-        {
+        if (tileEntity.getTemperature() > 0) {
             //float temp = (((float)tileEntity.getTemperature() / (float)tileEntity.getMaxTemperature()) * 100) / 7;
             //LogHelper.info(">>>>> " + (int)temp);
             drawTexturedModalRect(paramInt1 + 57, paramInt2 + 54, 176, 16, 14, 14);
