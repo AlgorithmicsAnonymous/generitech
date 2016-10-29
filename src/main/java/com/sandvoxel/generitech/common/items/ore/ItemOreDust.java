@@ -50,7 +50,7 @@ import java.util.List;
 
 public class ItemOreDust extends ItemBase {
 
-    public ItemOreDust(){
+    public ItemOreDust() {
         super("ore/dust");
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);

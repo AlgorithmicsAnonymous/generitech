@@ -88,8 +88,7 @@ public class GeneriTechTabs {
         }
     };
 
-    private GeneriTechTabs()
-    {
+    private GeneriTechTabs() {
 
     }
 }

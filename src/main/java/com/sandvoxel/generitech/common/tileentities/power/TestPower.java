@@ -1,7 +1,5 @@
 package com.sandvoxel.generitech.common.tileentities.power;
 
-import com.sandvoxel.generitech.api.util.MachineTier;
-import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
 import com.sandvoxel.generitech.common.inventory.InventoryOperation;
@@ -10,19 +8,13 @@ import com.sandvoxel.generitech.common.util.LanguageHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
-import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaHolder;
-import net.darkhax.tesla.api.ITeslaProducer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
-import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -30,11 +22,9 @@ import net.minecraftforge.energy.IEnergyStorage;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TestPower extends TileEntityInventoryBase implements net.minecraft.util.ITickable ,IWailaBodyMessage {
-    private BaseTeslaContainer container = new BaseTeslaContainer(0,10000,1000,1000);
+public class TestPower extends TileEntityInventoryBase implements net.minecraft.util.ITickable, IWailaBodyMessage {
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 10000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 0);
-
-
 
 
     @Override
@@ -43,27 +33,9 @@ public class TestPower extends TileEntityInventoryBase implements net.minecraft.
         BlockPos pos = getPos();
         World wold = getWorld();
 
-        if (worldObj.isBlockPowered(pos));{
-            container.givePower(100, false);
-            TeslaUtils.distributePowerToAllFaces(wold,pos,100,false);
-        }
-
+        TeslaUtils.distributePowerToAllFaces(wold, pos, 100, false);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -95,7 +67,6 @@ public class TestPower extends TileEntityInventoryBase implements net.minecraft.
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
         return super.writeToNBT(nbtTagCompound);
     }
-
 
 
     @Override

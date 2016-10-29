@@ -42,9 +42,9 @@ public class CommandGetBiomeId extends CommandBase {
 
         response += " " + biome.getRegistryName();
 
-        if(args.length == 2) {
+        if (args.length == 2) {
             Boolean copyToClip = parseBoolean(args[1]);
-            if(copyToClip) {
+            if (copyToClip) {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Clipboard clipboard = toolkit.getSystemClipboard();
                 StringSelection strSel = new StringSelection(biome.getRegistryName().toString());

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.client.config.IConfigElement;
 
 import java.util.Arrays;
 
-public class ConfigGui extends GuiConfig{
+public class ConfigGui extends GuiConfig {
     public ConfigGui(GuiScreen parentScreen) {
         super(
                 parentScreen,

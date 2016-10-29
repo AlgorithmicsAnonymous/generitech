@@ -55,8 +55,7 @@ public enum Items {
 
     ITEM_TOOL_WRENCH(ItemToolWrench.class),
 
-    ITEM_DEBUG_WGW(ItemWorldGenWand.class)
-    ;
+    ITEM_DEBUG_WGW(ItemWorldGenWand.class);
 
     private final Class<? extends Item> itemClass;
     private Item item;

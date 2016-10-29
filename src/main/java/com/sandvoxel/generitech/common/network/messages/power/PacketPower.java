@@ -1,22 +1,15 @@
 package com.sandvoxel.generitech.common.network.messages.power;
 
-import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import io.netty.buffer.ByteBuf;
 import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaHolder;
-import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import scala.collection.parallel.ParIterableLike;
-import scala.tools.nsc.doc.model.Public;
 
 public class PacketPower implements IMessage {
 
@@ -26,9 +19,10 @@ public class PacketPower implements IMessage {
     private int y;
 
 
-    public PacketPower(){}
+    public PacketPower() {
+    }
 
-    public PacketPower(long test,int x,int z, int y){
+    public PacketPower(long test, int x, int z, int y) {
         this.test = test;
         this.x = x;
         this.z = z;
@@ -44,7 +38,6 @@ public class PacketPower implements IMessage {
         y = buf.readInt();
 
 
-
     }
 
     @Override
@@ -58,59 +51,54 @@ public class PacketPower implements IMessage {
     }
 
 
+    public static class ServerHandler implements IMessageHandler<PacketPower, IMessage> {
 
 
-        public static class ServerHandler implements IMessageHandler<PacketPower,IMessage> {
+        @Override
+        public IMessage onMessage(PacketPower message, MessageContext ctx) {
+            TileEntity tileEntity = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(new BlockPos(message.x, message.y, message.z));
 
 
-            @Override
-            public IMessage onMessage(PacketPower message, MessageContext ctx) {
-                TileEntity tileEntity = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(new BlockPos(message.x, message.y, message.z));
+            IThreadListener mainThread = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
+
+            mainThread.addScheduledTask(new Runnable() {
+                @Override
+                public void run() {
 
 
+                    if (tileEntity instanceof ITeslaConsumer) {
 
-                IThreadListener mainThread = (WorldServer) ctx.getServerHandler().playerEntity.worldObj;
-
-                mainThread.addScheduledTask(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                            if (tileEntity instanceof ITeslaConsumer)
-                            {
-
-                                ((ITeslaConsumer) tileEntity).givePower(message.test,false);
-
-
-                            }
+                        ((ITeslaConsumer) tileEntity).givePower(message.test, false);
 
 
                     }
-                });
-
-                return null;
-            }
-        }
 
 
-            public static class ClientHandler implements IMessageHandler<PacketPower,IMessage>{
-
-
-                @Override
-                public IMessage onMessage(PacketPower message, MessageContext ctx) {
-
-                    IThreadListener mainThread = Minecraft.getMinecraft();
-                    mainThread.addScheduledTask(new Runnable() {
-                        @Override
-                        public void run() {
-                            System.out.println(String.format("Received %s", message.test));
-                        }
-                    });
-
-                    return null;
                 }
-        }
+            });
 
+            return null;
+        }
+    }
+
+
+    public static class ClientHandler implements IMessageHandler<PacketPower, IMessage> {
+
+
+        @Override
+        public IMessage onMessage(PacketPower message, MessageContext ctx) {
+
+            IThreadListener mainThread = Minecraft.getMinecraft();
+            mainThread.addScheduledTask(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(String.format("Received %s", message.test));
+                }
+            });
+
+            return null;
+        }
+    }
 
 
 }

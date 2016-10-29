@@ -90,9 +90,6 @@ public class PacketButtonClick implements IMessage, IMessageHandler<PacketButton
             return null;
 
 
-
-
-
         if (tileEntity instanceof INetworkButton) {
             ((INetworkButton) tileEntity).actionPerformed(message.buttonID, message.playerUUID);
         }

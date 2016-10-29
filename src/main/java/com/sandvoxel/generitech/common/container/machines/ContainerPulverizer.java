@@ -47,16 +47,14 @@ public class ContainerPulverizer extends ContainerBase {
     IInventory inventory;
     MachineTier machineTier;
 
-    public ContainerPulverizer(InventoryPlayer inventoryPlayer, TileEntity tileEntity)
-    {
+    public ContainerPulverizer(InventoryPlayer inventoryPlayer, TileEntity tileEntity) {
         super(inventoryPlayer, tileEntity);
         this.inventory = (IInventory) tileEntity;
         this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
 
         bindPlayerInventory(inventoryPlayer, 0, 84);
 
-        if(machineTier == MachineTier.TIER_0)
-        {
+        if (machineTier == MachineTier.TIER_0) {
             this.addSlotToContainer(new SlotNormal(inventory, 0, 48, 21));
             this.addSlotToContainer(new SlotOutput(inventory, 2, 123, 39));
             this.addSlotToContainer(new SlotOutput(inventory, 3, 144, 39));

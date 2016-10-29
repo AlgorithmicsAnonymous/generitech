@@ -43,12 +43,12 @@ configurations {
 dependencies {
     //mods "net.darkhax.wawla:Wawla:1.10-2.3.0.193"
     mods "com.fireball1725.devworld:devworld:1.10-b14-client"
-    runtime "mezz.jei:jei_1.10.2:3.7.4.224"
+    runtime "mezz.jei:jei_1.10.2:3.12.8.323"
 
     compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
     compile "org.jgrapht:jgrapht-core:0.9.1"
     compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.49"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.0.12-25"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.2.0-40"
 
-    deobfCompile "mezz.jei:jei_1.10.2:3.13.0.330:api"
+    deobfCompile "mezz.jei:jei_1.10.2:3.12.8.323:api"
 }

@@ -75,7 +75,7 @@ public class ItemMaterialGear extends ItemBase {
 
     @Override
     public void registerItemRenderer() {
-        for(EnumGears gear : EnumGears.values()) {
+        for (EnumGears gear : EnumGears.values()) {
             ModelLoader.setCustomModelResourceLocation(this, gear.getMeta(), new ModelResourceLocation(Reference.MOD_ID + ":" + resourcePath + "/gear-" + gear.getName(), "inventory"));
         }
     }

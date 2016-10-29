@@ -34,7 +34,7 @@ public class ItemWorldGenWand extends ItemBase {
                     BlockPos pos = new BlockPos(x, y, z);
                     Block block = worldIn.getBlockState(pos).getBlock();
 
-                    if(block != Blocks.BLOCK_ORE.getBlock())
+                    if (block != Blocks.BLOCK_ORE.getBlock())
                         worldIn.setBlockToAir(pos);
                 }
             }

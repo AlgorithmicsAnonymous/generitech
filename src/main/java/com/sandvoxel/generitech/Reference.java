@@ -49,13 +49,13 @@ public class Reference {
     public static final String GUI_FACTORY = PACKAGE_NAME + MOD_ID + ".client.gui.config.ConfigGuiFactory";
     public static final String PATH_INTEGRATIONS = PACKAGE_NAME + MOD_ID + ".common.integrations.";
 
+    private Reference() {
+
+    }
+
     public static final class Commands {
         public static final String BASE_COMMAND = "gtech";
 
         public static final String GETBIOMEID = "getBiomeID";
-    }
-
-    private Reference() {
-
     }
 }

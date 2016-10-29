@@ -63,10 +63,10 @@ import java.util.*;
 public class WorldGen implements IWorldGenerator {
     private static List<OreGen> oreSpawnList = new ArrayList<>();
     private static ArrayListMultimap retrogenChunks = ArrayListMultimap.create();
-    private int numChunks = 2;
     private static boolean retrogenEnabled = true;
     private static LinkedList<WorldGen> worlds = new LinkedList<>();
     private static HashMap<String, NBTTagCompound> loadedChunks = new HashMap<>();
+    private int numChunks = 2;
 
 
     public WorldGen() {
@@ -87,6 +87,34 @@ public class WorldGen implements IWorldGenerator {
         return oreGen;
     }
 
+    private static boolean isRetrogenEnabled() {
+        return retrogenEnabled;
+    }
+
+    public static void setRetrogenEnabled(boolean enabled) {
+        retrogenEnabled = enabled;
+    }
+
+    public static boolean isRetroGenRequired(NBTTagCompound tagCompound) {
+        boolean required = false;
+        for (OreGen oreGen : oreSpawnList) {
+            required = (tagCompound.getBoolean(oreGen.name) && (oreGen.oreConfig.Enabled));
+        }
+
+        return required;
+    }
+
+    public static void markChunksForRegen() {
+        for (Object obj : loadedChunks.entrySet()) {
+            Map.Entry pair = (Map.Entry) obj;
+            NBTTagCompound tagCompound = (NBTTagCompound) pair.getValue();
+            if (isRetroGenRequired((NBTTagCompound) pair.getValue())) {
+                LogHelper.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", pair.getKey(), Reference.MOD_NAME));
+                retrogenChunks.put(tagCompound.getInteger("DimID"), pair.getValue());
+            }
+        }
+    }
+
     public void genOres(Random rand, int chunkX, int chunkZ, World world) {
         for (OreGen oreGen : oreSpawnList) {
             oreGen.generate(world, rand, chunkX * 16, chunkZ * 16);
@@ -102,48 +130,14 @@ public class WorldGen implements IWorldGenerator {
         saveOreGenInfo(loadedChunks.get(chunkPos.toString()));
     }
 
-    private static boolean isRetrogenEnabled() {
-        return retrogenEnabled;
-    }
-
-    public static void setRetrogenEnabled(boolean enabled)
-    {
-        retrogenEnabled = enabled;
-    }
-
-    public static boolean isRetroGenRequired(NBTTagCompound tagCompound)
-    {
-        boolean required = false;
-        for (OreGen oreGen : oreSpawnList)
-        {
-            required = (tagCompound.getBoolean(oreGen.name) && (oreGen.oreConfig.Enabled));
-        }
-
-        return required;
-    }
-
-    private void saveOreGenInfo(NBTTagCompound tagCompound)
-    {
-        for (OreGen oreGen : oreSpawnList)
-        {
+    private void saveOreGenInfo(NBTTagCompound tagCompound) {
+        for (OreGen oreGen : oreSpawnList) {
             tagCompound.setBoolean(oreGen.name, oreGen.oreConfig.Enabled);
         }
     }
 
-    public static void markChunksForRegen(){
-        for (Object obj : loadedChunks.entrySet()) {
-            Map.Entry pair = (Map.Entry) obj;
-            NBTTagCompound tagCompound = (NBTTagCompound) pair.getValue();
-            if (isRetroGenRequired((NBTTagCompound) pair.getValue())) {
-                LogHelper.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", pair.getKey(), Reference.MOD_NAME));
-                retrogenChunks.put(tagCompound.getInteger("DimID"), pair.getValue());
-            }
-        }
-    }
-
     @SubscribeEvent
-    public void chunkSave(ChunkDataEvent.Save event)
-    {
+    public void chunkSave(ChunkDataEvent.Save event) {
         ChunkPos chunkPos = event.getChunk().getChunkCoordIntPair();
         NBTTagCompound tagCompound = new NBTTagCompound();
         event.getData().setTag(Reference.MOD_ID, tagCompound);
@@ -152,28 +146,24 @@ public class WorldGen implements IWorldGenerator {
             for (OreGen oreGen : oreSpawnList) {
                 tagCompound.setBoolean(oreGen.name, loadedChunks.get(chunkPos.toString()).getBoolean(oreGen.name));
             }
-        }
-        else
-        {
+        } else {
             LogHelper.debug("Chunk" + chunkPos.toString() + "not loaded?");
         }
     }
 
     @SubscribeEvent
-    public void chunkLoad(ChunkDataEvent.Load event)
-    {
+    public void chunkLoad(ChunkDataEvent.Load event) {
         int dimID = event.getWorld().provider.getDimension();
         NBTTagCompound tag = event.getData().getCompoundTag(Reference.MOD_ID);
         ChunkPos coordIntPair = event.getChunk().getChunkCoordIntPair();
-        loadedChunks.put(coordIntPair.toString(),tag);
-        tag.setInteger("DimID",dimID);
+        loadedChunks.put(coordIntPair.toString(), tag);
+        tag.setInteger("DimID", dimID);
 
-        if(!isRetrogenEnabled())
+        if (!isRetrogenEnabled())
             return;
 
         NBTTagCompound tagCompound = event.getData().getCompoundTag(Reference.MOD_ID);
-        if(isRetroGenRequired(tagCompound))
-        {
+        if (isRetroGenRequired(tagCompound)) {
             LogHelper.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", event.getChunk().getChunkCoordIntPair(), Reference.MOD_NAME));
             retrogenChunks.put(dimID, event.getChunk().getChunkCoordIntPair());
         }
@@ -185,9 +175,8 @@ public class WorldGen implements IWorldGenerator {
     }
 
     @SubscribeEvent
-    public void serverWorldTick(TickEvent.WorldTickEvent event)
-    {
-        if(event.side == Side.CLIENT || event.phase == TickEvent.Phase.START)
+    public void serverWorldTick(TickEvent.WorldTickEvent event) {
+        if (event.side == Side.CLIENT || event.phase == TickEvent.Phase.START)
             return;
 
         int dimID = event.world.provider.getDimension();
@@ -195,21 +184,16 @@ public class WorldGen implements IWorldGenerator {
 
         List<ChunkPos> chunks = retrogenChunks.get(dimID);
 
-        if(chunks != null && !chunks.isEmpty())
-        {
-            if(WorldInfoHelper.getTps() >= 20)
-            {
+        if (chunks != null && !chunks.isEmpty()) {
+            if (WorldInfoHelper.getTps() >= 20) {
                 numChunks++;
-            }
-            else
-            {
+            } else {
                 numChunks = Math.max(2, numChunks - 1);
             }
 
-            for (int i = 1; i < numChunks; i++)
-            {
+            for (int i = 1; i < numChunks; i++) {
                 int index = chunks.size() - i;
-                if(index < 0)
+                if (index < 0)
                     return;
 
                 counter++;
@@ -238,27 +222,21 @@ public class WorldGen implements IWorldGenerator {
     }
 
 
-    public static class OreGen
-    {
+    public static class OreGen {
         String name;
         WorldGenMinableCustom worldGenMinable;
         OreConfig oreConfig;
 
-        public OreGen(String name, IBlockState state, Block replaceTarget, OreConfig config)
-        {
+        public OreGen(String name, IBlockState state, Block replaceTarget, OreConfig config) {
             this.name = name;
             this.worldGenMinable = new WorldGenMinableCustom(state, config.MinVeinSize, config.MaxVeinSize, BlockMatcher.forBlock(replaceTarget));
             this.oreConfig = config;
         }
 
-        public void generate(World world, Random random, int x, int z)
-        {
-            if(oreConfig.Enabled && oreConfig.isEnabledForDim(world.provider.getDimension()) && oreConfig.isEnabledForBiome(world.getBiome(new BlockPos(x, 0, z))))
-            {
-                for(int i = 0; i < oreConfig.ChunkOccurrence; i++)
-                {
-                    if(random.nextInt(100) < oreConfig.Weight)
-                    {
+        public void generate(World world, Random random, int x, int z) {
+            if (oreConfig.Enabled && oreConfig.isEnabledForDim(world.provider.getDimension()) && oreConfig.isEnabledForBiome(world.getBiome(new BlockPos(x, 0, z)))) {
+                for (int i = 0; i < oreConfig.ChunkOccurrence; i++) {
+                    if (random.nextInt(100) < oreConfig.Weight) {
                         BlockPos blockPos = new BlockPos(x + random.nextInt(16), oreConfig.MinY + random.nextInt(oreConfig.MaxY - oreConfig.MinY), z + random.nextInt(16));
                         this.worldGenMinable.generate(world, random, blockPos);
                     }

@@ -44,8 +44,7 @@ import net.minecraft.tileentity.TileEntity;
 public class ContainerFurnace extends ContainerBase {
     IInventory inventory;
 
-    public ContainerFurnace(InventoryPlayer inventoryPlayer, TileEntity tileEntity)
-    {
+    public ContainerFurnace(InventoryPlayer inventoryPlayer, TileEntity tileEntity) {
         super(inventoryPlayer, tileEntity);
         this.inventory = (IInventory) tileEntity;
 

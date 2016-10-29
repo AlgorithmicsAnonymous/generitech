@@ -1,0 +1,3 @@
+[submodule "AALib"]
+	path = AALib
+	url = https://github.com/AlgorithmicsAnonymous/AALib.git

@@ -41,11 +41,6 @@ import java.io.File;
 public class Config {
     public static Configuration configuration;
 
-    public class Category
-    {
-        public static final String WORLDGEN = "worldgen";
-    }
-
     public static Configuration initConfig(File configFile) {
         if (configuration == null) {
             configuration = new Configuration(configFile);
@@ -58,5 +53,9 @@ public class Config {
         ConfigWorldGen.init(configuration);
 
         configuration.save();
+    }
+
+    public class Category {
+        public static final String WORLDGEN = "worldgen";
     }
 }
