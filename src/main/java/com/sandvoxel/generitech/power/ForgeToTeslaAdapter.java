@@ -35,8 +35,8 @@ public class ForgeToTeslaAdapter implements ITeslaConsumer, ITeslaHolder, ITesla
 
     @Override
     public long takePower(long power, boolean simulated) {
-        if(delegate.canExtract()) {
-            return delegate.extractEnergy((int)power, simulated);
+        if (delegate.canExtract()) {
+            return delegate.extractEnergy((int) power, simulated);
         }
         return 0;
     }
@@ -53,21 +53,21 @@ public class ForgeToTeslaAdapter implements ITeslaConsumer, ITeslaHolder, ITesla
 
     @Override
     public long givePower(long power, boolean simulated) {
-        if(delegate.canReceive()) {
-            return delegate.receiveEnergy((int)power, simulated);
+        if (delegate.canReceive()) {
+            return delegate.receiveEnergy((int) power, simulated);
         }
         return 0;
     }
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if(capability == TeslaCapabilities.CAPABILITY_HOLDER) {
+        if (capability == TeslaCapabilities.CAPABILITY_HOLDER) {
             return true;
         }
-        if(capability == TeslaCapabilities.CAPABILITY_CONSUMER && delegate.canReceive()) {
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER && delegate.canReceive()) {
             return true;
         }
-        if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && delegate.canExtract()) {
+        if (capability == TeslaCapabilities.CAPABILITY_PRODUCER && delegate.canExtract()) {
             return true;
         }
         return false;
@@ -76,8 +76,8 @@ public class ForgeToTeslaAdapter implements ITeslaConsumer, ITeslaHolder, ITesla
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if(hasCapability(capability, facing)) {
-            return (T)this;
+        if (hasCapability(capability, facing)) {
+            return (T) this;
         }
         return null;
     }
