@@ -1,4 +1,4 @@
-/*
+package com.sandvoxel.generitech.power;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,38 +17,68 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-repositories {
-    mavenLocal()
-    mavenCentral()
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.darkhax.tesla.api.ITeslaProducer;
+import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.energy.IEnergyStorage;
 
-    maven {
-        name "FireBall API Depot"
-        url "http://dl.tsr.me/artifactory/libs-release/"
+public class ForgeToTeslaAdapter implements ITeslaConsumer, ITeslaHolder, ITeslaProducer, ICapabilityProvider {
+    private IEnergyStorage delegate;
+
+    public ForgeToTeslaAdapter(IEnergyStorage delegate) {
+        this.delegate = delegate;
     }
 
-    maven {
-        name "SilentSean API Depot"
-        url "http://ci.seanlatimer.co.uk/libs-release/"
+    @Override
+    public long takePower(long power, boolean simulated) {
+        if(delegate.canExtract()) {
+            return delegate.extractEnergy((int)power, simulated);
+        }
+        return 0;
     }
 
-    maven { url "http://maven.amadornes.com/" }
-}
+    @Override
+    public long getStoredPower() {
+        return delegate.getEnergyStored();
+    }
 
-configurations {
-    mods
-    shade
-    compile.extendsFrom shade
-}
+    @Override
+    public long getCapacity() {
+        return delegate.getMaxEnergyStored();
+    }
 
-dependencies {
-    //mods "net.darkhax.wawla:Wawla:1.10-2.3.0.193"
-    mods "com.fireball1725.devworld:devworld:1.10-b14-client"
-    runtime "mezz.jei:jei_1.10.2:3.7.4.224"
+    @Override
+    public long givePower(long power, boolean simulated) {
+        if(delegate.canReceive()) {
+            return delegate.receiveEnergy((int)power, simulated);
+        }
+        return 0;
+    }
 
-    compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
-    compile "org.jgrapht:jgrapht-core:0.9.1"
-    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.49"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.0.12-25"
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        if(capability == TeslaCapabilities.CAPABILITY_HOLDER) {
+            return true;
+        }
+        if(capability == TeslaCapabilities.CAPABILITY_CONSUMER && delegate.canReceive()) {
+            return true;
+        }
+        if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && delegate.canExtract()) {
+            return true;
+        }
+        return false;
+    }
 
-    deobfCompile "mezz.jei:jei_1.10.2:3.13.0.330:api"
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if(hasCapability(capability, facing)) {
+            return (T)this;
+        }
+        return null;
+    }
 }
