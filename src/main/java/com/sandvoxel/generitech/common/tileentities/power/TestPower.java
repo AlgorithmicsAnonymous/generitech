@@ -259,7 +259,7 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
     @Override
     public List<String> getWailaBodyToolTip(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
-        currentTip.add(LanguageHelper.LABEL.translateMessage("Power") + Long.toString(container.getStoredPower()));
+        currentTip.add(LanguageHelper.LABEL.translateMessage("Power ") + Long.toString(container.getStoredPower()));
 
         return currentTip;
     }
