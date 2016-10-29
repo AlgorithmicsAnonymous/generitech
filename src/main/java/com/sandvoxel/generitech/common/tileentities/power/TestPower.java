@@ -16,6 +16,7 @@ import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -44,65 +45,8 @@ public class TestPower extends TileEntityInventoryBase implements net.minecraft.
         BlockPos pos = getPos();
         World wold = getWorld();
 
-        if (worldObj.isBlockPowered(pos));{
-            container.givePower(100, false);
             TeslaUtils.distributePowerToAllFaces(wold,pos,100,false);
-        }
 
-
-    }
-
-
-        if (flag[0]) {
-            TileEntity te1 = worldObj.getTileEntity(pos.up());
-
-
-
-                if (te instanceof ITeslaHolder) {
-                    if (((ITeslaHolder) te).getStoredPower() > 100) {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(T0transfer, pos.getX(), pos.getZ(), pos.getY() + 1));
-                        }
-                        this.container.takePower(T0transfer, false);
-                    } else {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower(), pos.getX(), pos.getZ(), pos.getY() + 1));
-                        }
-                        this.container.takePower(((ITeslaHolder) te).getStoredPower(), false);
-                    }
-                }
-            } else {
-                if (te1 instanceof TileEntityMachineBase && container.getStoredPower() != 0) {
-                    if (!worldObj.isRemote) {
-                        GeneriTech.network.sendToServer(new PacketPower(getTransfer(pos.down()), pos.getX(), pos.getZ(), pos.getY() + -1));
-                    }
-                    this.container.takePower(getTransfer(pos.down()), false);
-                }
-
-
-
-
-                    }
-                    this.container.takePower(T0transfer, false);
-                } else {
-                    if (te1 instanceof ITeslaConsumer && abbs != 0 && abbs / 2 != 0) {
-                        if (!worldObj.isRemote)
-
-                            GeneriTech.network.sendToServer(new PacketPower(abbs / 2, pos.getX(), pos.getZ(), pos.getY() + 1));
-                    }
-                    this.container.takePower(abbs / 2, false);
-                    if (te1 instanceof ITeslaConsumer && abbs == 1) {
-                        {
-                            System.out.println(abbs);
-
-                            if (!worldObj.isRemote) {
-                                GeneriTech.network.sendToServer(new PacketPower(1, pos.getX(), pos.getZ(), pos.getY() + 1));
-                            }
-                            this.container.takePower(1, false);
-                        }
-                    }
-                }
-            }
         }
 
 
