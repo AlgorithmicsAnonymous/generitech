@@ -1,4 +1,4 @@
-package com.sandvoxel.generitech;/*
+package com.sandvoxel.generitech.power;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
