@@ -73,8 +73,7 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage, ITeslaConsumer, ITeslaHolder {
 
-    public long Powerin;
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
+    private BaseTeslaContainer container = new BaseTeslaContainer(1000, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
@@ -188,6 +187,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
         return direction == EnumFacing.DOWN && (index == 2 || index == 3);
+
     }
 
     @Override

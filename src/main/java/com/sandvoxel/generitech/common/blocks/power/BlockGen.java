@@ -1,8 +1,11 @@
 package com.sandvoxel.generitech.common.blocks.power;
 
+import com.sandvoxel.generitech.GeneriTech;
 import com.sandvoxel.generitech.GeneriTechTabs;
 import com.sandvoxel.generitech.api.util.MachineTier;
+import com.sandvoxel.generitech.client.gui.GuiHandler;
 import com.sandvoxel.generitech.common.blocks.BlockMachineBase;
+import com.sandvoxel.generitech.common.blocks.BlockTileBase;
 import com.sandvoxel.generitech.common.tileentities.machines.TileEntityPulverizer;
 import com.sandvoxel.generitech.common.tileentities.power.TestPower;
 import com.sandvoxel.generitech.common.util.TileHelper;
@@ -20,13 +23,13 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockCables extends BlockMachineBase {
+public class BlockGen extends BlockMachineBase{
 
-    public BlockCables() {
+    public BlockGen() {
         super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
         this.setTileEntity(TestPower.class);
-        this.setCreativeTab(GeneriTechTabs.GENERAL);
+        //this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("power");
     }
 
