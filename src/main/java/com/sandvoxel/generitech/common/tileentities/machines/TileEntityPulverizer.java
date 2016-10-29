@@ -214,6 +214,30 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
+
+        if (container.getStoredPower() <= 0 && machineTier != MachineTier.TIER_0 && machineActive != false || fuelRemaining == 0 && machineTier == MachineTier.TIER_0 && machineActive != false )
+        {
+                machineActive = false;
+                this.markForUpdate();
+        }
+        if ( fuelRemaining > 0 && machineTier == MachineTier.TIER_0 && machineActive == false)
+        {
+            machineActive =true;
+            this.markForUpdate();
+        }
+        if (container.getStoredPower() > 0 && machineTier != MachineTier.TIER_0 && machineActive == false)
+        {
+            if (inventory.getStackInSlot(1)!=null)
+            {
+                machineActive = true;
+                this.markForUpdate();
+
+            }
+        }
+
+
+
+        //for finding the fuel value
         if (fuelRemaining == 0 && inventory.getStackInSlot(4) != null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0 && machineTier == MachineTier.TIER_0 )
         {
             if (inventory.getStackInSlot(0) != null || inventory.getStackInSlot(1) != null) {
