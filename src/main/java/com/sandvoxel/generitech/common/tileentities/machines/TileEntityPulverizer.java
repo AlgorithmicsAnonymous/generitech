@@ -187,7 +187,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
         return direction == EnumFacing.DOWN && (index == 2 || index == 3);
-
     }
 
     @Override
@@ -206,11 +205,10 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
 
     @Override
-    public void update() {
-        this.markForUpdate();
-        this.markDirty();
+    public void update()
+    {
 
-
+//      checking for the machine type
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
@@ -305,26 +303,10 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             }
 
 
-
-            if (fuelRemaining == 0 && machineActive && machineTier == machineTier.TIER_0){
-                ticksRemaining = 0;
-                test = true;
-
-            }else if (ticksRemaining == 0) {
-                test = true;
-            }
+            if (ticksRemaining <= 0 && machineActive)
+            {
 
 
-            if(container.getStoredPower() ==0 && ticksRemaining > 0){
-                ticksRemaining--;
-                System.out.println("wasd");
-                this.markForUpdate();
-            }
-
-
-            if (ticksRemaining <= 0 && machineActive) {
-
-                if (test){
                         ticksRemaining = 0;
 
                     if (worldObj.isRemote)
@@ -420,7 +402,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
         float timePercent = ((((float) getTotalProcessTime() - (float) ticksRemaining) / (float) getTotalProcessTime())) * 100;
         int secondsLeft = (ticksRemaining / 20) * 1000;
-
+                currentTip.add(String.format("%s: %s (%d%%)",
                 LanguageHelper.LABEL.translateMessage("time_left"),
                 DurationFormatUtils.formatDuration(secondsLeft, "mm:ss"),
                 Math.round(timePercent)));
