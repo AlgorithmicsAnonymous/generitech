@@ -91,8 +91,8 @@ public class GeneriTech {
         network.registerMessage(PacketPower.ClientHandler.class,PacketPower.class,0,Side.CLIENT);
 
 
-        if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_7)) {
-            throw new OutdatedJavaException(String.format("%s requires Java 7 or newer, Please update your java", Reference.MOD_NAME));
+        if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
+            throw new OutdatedJavaException(String.format("%s requires Java 8 or newer, Please update your java", Reference.MOD_NAME));
         }
 
         proxy.registerConfiguration(event.getSuggestedConfigurationFile());
