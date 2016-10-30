@@ -74,7 +74,6 @@ import java.util.Random;
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage, ITeslaConsumer, ITeslaHolder {
 
-    public long Powerin;
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
     private InternalInventory inventory = new InternalInventory(this, 8);
     private int ticksRemaining = 0;
@@ -89,10 +88,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private int fuelTotal = 0;
     private Item lastFuelType;
     private int lastFuelValue;
-    private float speedMultiplier = 0.0f;
     private float fortuneMultiplier = 0.5f;
-    private int currentTotalProcessTime = 0;
-    private boolean test = true;
 
     public boolean isPulverizerPaused() {
         return pulverizerPaused;
@@ -111,9 +107,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             this.markForLightUpdate();
     }
 
-    protected void checkUpgradeSlots() {
-
-    }
 
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
@@ -244,8 +237,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
-        if (canWork()==false){
-            machineActive=false;
+        if (!canWork()) {
+            machineActive = false;
             this.markForUpdate();
         }
 
@@ -385,7 +378,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (ticksRemaining == 0)
             return currentTip;
 
-        float timePercent = ((((float) getTotalProcessTime() - (float) ticksRemaining) / (float) getTotalProcessTime())) * 100;
+        float timePercent = (float) getTotalProcessTime() - (float) ticksRemaining / (float) getTotalProcessTime() * 100;
         int secondsLeft = (ticksRemaining / 20) * 1000;
 
         currentTip.add(String.format("%s: %s (%d%%)",
