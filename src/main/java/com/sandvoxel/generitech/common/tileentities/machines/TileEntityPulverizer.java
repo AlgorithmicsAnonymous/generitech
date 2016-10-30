@@ -319,7 +319,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
                 ItemStack outItem = crushable.output.copy();
                 float itemChance = crushable.chance;
-                boolean itemFortune = Math.abs(crushable.luckMultiplier - 1.0f) < Reference.EPSILON
+                boolean itemFortune = Math.abs(crushable.luckMultiplier - 1.0f) < Reference.EPSILON;
 
                 if (Math.abs(crushRNG - (-1)) < Reference.EPSILON) crushRNG = rnd.nextFloat();
 
