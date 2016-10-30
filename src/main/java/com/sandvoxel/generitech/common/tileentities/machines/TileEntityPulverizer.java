@@ -43,7 +43,6 @@ import com.sandvoxel.generitech.common.inventory.InventoryOperation;
 import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
 import com.sandvoxel.generitech.common.util.InventoryHelper;
 import com.sandvoxel.generitech.common.util.LanguageHelper;
-import com.sandvoxel.generitech.common.util.LogHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -201,28 +200,25 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     }
 
 
-
-    public boolean canWork(){
-        if (machineTier == MachineTier.TIER_0){
+    public boolean canWork() {
+        if (machineTier == MachineTier.TIER_0) {
             return fuelRemaining > 0;
-        }else  {
-         return container.getStoredPower() >= powerUsage;
+        } else {
+            return container.getStoredPower() >= powerUsage;
         }
     }
 
-    public boolean cancrush(ItemStack item){
-            return PulverizerRegistry.containsInput(item);
+    public boolean cancrush(ItemStack item) {
+        return PulverizerRegistry.containsInput(item);
     }
 
-    public void burnTime(int i)
-    {
-        if (fuelRemaining==0){
+    public void burnTime(int i) {
+        if (fuelRemaining == 0) {
             if (inventory.getStackInSlot(4).getItem() == lastFuelType && cancrush(inventory.getStackInSlot(i))) {
                 fuelRemaining = lastFuelValue;
 
 
-            } else if (inventory.getStackInSlot(4).getItem() != lastFuelType && cancrush( inventory.getStackInSlot(i) ) )
-            {
+            } else if (inventory.getStackInSlot(4).getItem() != lastFuelType && cancrush(inventory.getStackInSlot(i))) {
                 fuelRemaining = net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4));
                 lastFuelType = inventory.getStackInSlot(4).getItem();
                 lastFuelValue = fuelRemaining;
@@ -243,62 +239,60 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
-        if (canWork()==false){
-            machineActive=false;
+        if (canWork() == false) {
+            machineActive = false;
             this.markForUpdate();
         }
 
-        if (ticksRemaining == 0 && inventory.getStackInSlot(0)==null && machineTier != MachineTier.TIER_0){
+        if (ticksRemaining == 0 && inventory.getStackInSlot(0) == null && machineTier != MachineTier.TIER_0) {
             machineActive = false;
         }
 
-        if (this.canWork()){
-            if (machineTier == MachineTier.TIER_0){
+        if (this.canWork()) {
+            if (machineTier == MachineTier.TIER_0) {
                 fuelRemaining--;
                 machineActive = fuelRemaining > 0;
-            }else if (ticksRemaining > 0){
-                container.takePower(powerUsage,false);
+            } else if (ticksRemaining > 0) {
+                container.takePower(powerUsage, false);
                 machineActive = true;
             }
-            if (machineActive && ticksRemaining > 0){
+            if (machineActive && ticksRemaining > 0) {
                 ticksRemaining--;
             }
             this.markForUpdate();
             this.markDirty();
         }
 
-        if (fuelRemaining == 0 && machineTier == MachineTier.TIER_0 && inventory.getStackInSlot(4)!=null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0)
-        {
-            if (inventory.getStackInSlot(1)!= null) {
+        if (fuelRemaining == 0 && machineTier == MachineTier.TIER_0 && inventory.getStackInSlot(4) != null && net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(4)) > 0) {
+            if (inventory.getStackInSlot(1) != null) {
                 burnTime(1);
             }
-            if (inventory.getStackInSlot(0)!= null){
+            if (inventory.getStackInSlot(0) != null) {
                 burnTime(0);
             }
         }
 
 
-
-        if (this.canWork() && inventory.getStackInSlot(0)!=null && inventory.getStackInSlot(1)==null){
+        if (this.canWork() && inventory.getStackInSlot(0) != null && inventory.getStackInSlot(1) == null) {
             if (!cancrush(inventory.getStackInSlot(0)))
                 return;
 
             ItemStack itemIn = inventory.getStackInSlot(0);
             ItemStack itemOut;
 
-            if (itemIn.stackSize-1 <= 0){
-                itemOut=itemIn.copy();
-                itemIn=null;
+            if (itemIn.stackSize - 1 <= 0) {
+                itemOut = itemIn.copy();
+                itemIn = null;
             } else {
-                itemOut=itemIn.copy();
+                itemOut = itemIn.copy();
                 itemOut.stackSize = 1;
                 itemIn.stackSize = itemIn.stackSize - 1;
             }
             if (itemIn != null && itemIn.stackSize == 0) itemIn = null;
             if (itemOut.stackSize == 0) itemOut = null;
 
-            inventory.setInventorySlotContents(0,itemIn);
-            inventory.setInventorySlotContents(1,itemOut);
+            inventory.setInventorySlotContents(0, itemIn);
+            inventory.setInventorySlotContents(1, itemOut);
 
             ticksRemaining = 200;
             machineActive = true;
@@ -306,19 +300,18 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             this.markDirty();
         }
 
-        if (inventory.getStackInSlot(1)!= null && ticksRemaining <= 0) {
+        if (inventory.getStackInSlot(1) != null && ticksRemaining <= 0) {
 
             ticksRemaining = 0;
 
             if (worldObj.isRemote) {
                 return;
             }
-            ItemStack processItem = inventory.getStackInSlot(1);
 
-                    ItemStack processItem = inventory.getStackInSlot(1);
-                    if (processItem == null) {
-                        return;
-                    }
+            ItemStack processItem = inventory.getStackInSlot(1);
+            if (processItem == null) {
+                return;
+            }
 
             List<Crushable> outputs = PulverizerRegistry.getOutputs(processItem);
 
@@ -342,11 +335,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 if (outItem.stackSize == 0) outItem.stackSize = 1;
 
 
-                        // Simulate placing into output slot...
-                        if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
-                            this.pulverizerPaused = true;
-                            return;
-                        }
+                // Simulate placing into output slot...
+                if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
+                    this.pulverizerPaused = true;
+                    return;
+                }
 
                 InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
                 this.crushRNG = -1;
@@ -354,7 +347,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             this.crushIndex = 0;
             inventory.setInventorySlotContents(1, null);
 
-            if (inventory.getStackInSlot(0)!= null){
+            if (inventory.getStackInSlot(0) != null) {
                 machineActive = cancrush(inventory.getStackInSlot(0));
             }
             this.markForUpdate();
@@ -453,6 +446,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public long getCapacity() {
         return container.getCapacity();
     }
+
     public long getPower() {
         return container.getStoredPower();
     }
