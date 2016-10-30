@@ -34,6 +34,7 @@
 
 package com.sandvoxel.generitech.common.tileentities.machines;
 
+import com.sandvoxel.generitech.Reference;
 import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
 import com.sandvoxel.generitech.api.util.Crushable;
 import com.sandvoxel.generitech.api.util.MachineTier;
@@ -162,7 +163,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         int[] slots = new int[0];
         float oreAngle = (this.getForward().getHorizontalAngle() + 90) >= 360 ? 0 : (this.getForward().getHorizontalAngle() + 90);
 
-        if (side.getHorizontalAngle() == oreAngle) {
+        if (Math.abs(side.getHorizontalAngle() - oreAngle) < Reference.EPSILON) {
             slots = new int[1];
             slots[0] = 4;
         }
@@ -318,9 +319,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
                 ItemStack outItem = crushable.output.copy();
                 float itemChance = crushable.chance;
-                boolean itemFortune = crushable.luckMultiplier == 1.0f;
+                boolean itemFortune = Math.abs(crushable.luckMultiplier - 1.0f) < Reference.EPSILON
 
-                if (crushRNG == -1) crushRNG = rnd.nextFloat();
+                if (Math.abs(crushRNG - (-1)) < Reference.EPSILON) crushRNG = rnd.nextFloat();
 
                 if (itemFortune)
                     itemChance = itemChance + fortuneMultiplier;
@@ -423,7 +424,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public long givePower(long power, boolean simulated) {
-        //System.out.println(power);
         container.givePower(power, simulated);
         this.markDirty();
         this.markForUpdate();

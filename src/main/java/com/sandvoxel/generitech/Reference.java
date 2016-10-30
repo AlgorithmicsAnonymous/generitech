@@ -48,6 +48,7 @@ public class Reference {
     public static final String FINGERPRINT = "@FINGERPRINT@";
     public static final String GUI_FACTORY = PACKAGE_NAME + MOD_ID + ".client.gui.config.ConfigGuiFactory";
     public static final String PATH_INTEGRATIONS = PACKAGE_NAME + MOD_ID + ".common.integrations.";
+    public static final double EPSILON = 0.00000001;
 
     private Reference() {
 
