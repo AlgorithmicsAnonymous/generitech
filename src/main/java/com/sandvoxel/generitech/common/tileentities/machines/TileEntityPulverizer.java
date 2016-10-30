@@ -315,6 +315,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             }
             ItemStack processItem = inventory.getStackInSlot(1);
 
+                    ItemStack processItem = inventory.getStackInSlot(1);
+                    if (processItem == null) {
+                        return;
+                    }
+
             List<Crushable> outputs = PulverizerRegistry.getOutputs(processItem);
 
             if (outputs.isEmpty())
@@ -337,14 +342,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 if (outItem.stackSize == 0) outItem.stackSize = 1;
 
 
-                // Simulate placing into output slot...
-                if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
-                    this.pulverizerPaused = true;
-                    return;
-                }
-
-                if (pulverizerPaused)
-                    pulverizerPaused = !pulverizerPaused;
+                        // Simulate placing into output slot...
+                        if (InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3, true) != null) {
+                            this.pulverizerPaused = true;
+                            return;
+                        }
 
                 InventoryHelper.addItemStackToInventory(outItem, inventory, 2, 3);
                 this.crushRNG = -1;
