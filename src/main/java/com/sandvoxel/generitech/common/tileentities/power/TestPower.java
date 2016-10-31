@@ -1,6 +1,8 @@
 package com.sandvoxel.generitech.common.tileentities.power;
 
 import com.sandvoxel.generitech.GeneriTech;
+import com.sandvoxel.generitech.Reference;
+import com.sandvoxel.generitech.api.util.MachineTier;
 import com.sandvoxel.generitech.common.blocks.Blocks;
 import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
 import com.sandvoxel.generitech.common.inventory.InternalInventory;
@@ -19,6 +21,7 @@ import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -32,32 +35,55 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class TestPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 10000, 1000, 1000);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
-    private boolean[] flag = {false, false, false, false, false, false};
     private int T0transfer = 100;
-
+    private int fuelRemaining = 0;
+    private Item lastFuelType;
+    private int lastFuelValue;
 
     @Override
     public long takePower(long power, boolean simulated) {
         return power;
     }
 
+
+
     @Override
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
 
-        if (worldIn.isBlockPowered(pos)){
-         container.givePower(50,false);
+        if (fuelRemaining!=0)fuelRemaining--;
+        if (worldIn.isBlockPowered(pos)|| fuelRemaining > 0){
+         container.givePower(60,false);
+        }
+        if (container.getStoredPower() != container.getCapacity()&& inventory.getStackInSlot(0)!=null||container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0)!=null){
+            burnTime();
         }
 
         if (container.getStoredPower()!=0){
             transferPower();
         }
 
+    }
+
+    public void burnTime() {
+        if (fuelRemaining == 0) {
+            if (inventory.getStackInSlot(0).getItem() == lastFuelType ) {
+                fuelRemaining = lastFuelValue;
 
 
+            } else if (inventory.getStackInSlot(0).getItem() != lastFuelType) {
+                fuelRemaining = net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(inventory.getStackInSlot(0));
+                lastFuelType = inventory.getStackInSlot(0).getItem();
+                lastFuelValue = fuelRemaining;
+            }
+            fuelRemaining = fuelRemaining/10;
+            inventory.decrStackSize(0, 1);
+            this.markDirty();
+            this.markForUpdate();
+        }
     }
 
     public void transferPower(){
@@ -67,14 +93,11 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
         long test = inputba / T0transfer;
         if (inputba!=0 && container.getStoredPower() > test){
             long input = inputba/test;
-            System.out.println(input);
-            System.out.println(inputba);
                 if (container.getStoredPower()>=inputba){
                     container.takePower(inputba,false);
                     TeslaUtils.distributePowerToAllFaces(worldIn,pos,input,false);
-                }else {
+                }else if (container.getStoredPower()<inputba){
                     long toMoveUnder = container.getStoredPower()/test;
-                    //System.out.println(toMoveUnder);
                     container.takePower(container.getStoredPower(),false);
                     TeslaUtils.distributePowerToAllFaces(worldIn,pos,toMoveUnder,false);
                 }
@@ -91,6 +114,7 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
+        fuelRemaining = nbtTagCompound.getInteger("fuelRemaining");
         super.readFromNBT(nbtTagCompound);
 
     }
@@ -98,7 +122,7 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-
+        nbtTagCompound.setInteger("fuelRemaining", fuelRemaining);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
         return super.writeToNBT(nbtTagCompound);
     }
@@ -116,7 +140,15 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
 
     @Override
     public int[] getAccessibleSlotsBySide(EnumFacing side) {
-        return new int[0];
+        int[] slots = new int[0];
+        float oreAngle = (this.getForward().getHorizontalAngle() + 90) >= 360 ? 0 : (this.getForward().getHorizontalAngle() + 90);
+
+        if (Math.abs(side.getHorizontalAngle() - oreAngle) < Reference.EPSILON) {
+            slots = new int[1];
+            slots[0] = 0;
+        }
+
+        return slots;
     }
 
     @Nullable

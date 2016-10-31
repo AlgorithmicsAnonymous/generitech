@@ -117,6 +117,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
 
+        fuelRemaining = nbtTagCompound.getInteger("fuelRemaining");
         ticksRemaining = nbtTagCompound.getInteger("ticksRemaining");
         machineActive = nbtTagCompound.getBoolean("machineActive");
         crushIndex = nbtTagCompound.getInteger("crushIndex");
@@ -129,6 +130,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
+        nbtTagCompound.setInteger("fuelRemaining", fuelRemaining);
         nbtTagCompound.setInteger("ticksRemaining", ticksRemaining);
         nbtTagCompound.setBoolean("machineActive", machineActive);
         nbtTagCompound.setInteger("crushIndex", crushIndex);
