@@ -1,16 +1,6 @@
 package com.sandvoxel.generitech.common.tileentities.power;
 
-import com.sandvoxel.generitech.GeneriTech;
-import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.api.util.MachineTier;
-import com.sandvoxel.generitech.common.blocks.Blocks;
-import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
-import com.sandvoxel.generitech.common.inventory.InternalInventory;
-import com.sandvoxel.generitech.common.inventory.InventoryOperation;
-import com.sandvoxel.generitech.common.network.messages.power.PacketPower;
-import com.sandvoxel.generitech.common.tileentities.TileEntityInventoryBase;
-import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
-import com.sandvoxel.generitech.common.util.LanguageHelper;
+
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -30,6 +20,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
+import xyz.aadev.aalib.client.util.LanguageHelper;
+import xyz.aadev.aalib.common.inventory.InternalInventory;
+import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
+import xyz.aadev.generitech.Reference;
 
 import javax.annotation.Nullable;
 import java.util.List;

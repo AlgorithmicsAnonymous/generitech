@@ -35,28 +35,30 @@
 package com.sandvoxel.generitech.common.blocks;
 
 
-import com.sandvoxel.generitech.common.blocks.machines.BlockFurnace;
-import com.sandvoxel.generitech.common.blocks.machines.BlockPulverizer;
-import com.sandvoxel.generitech.common.blocks.misc.crafting.BlockMachineMatrics;
-import com.sandvoxel.generitech.common.blocks.ores.BlockOre;
-import com.sandvoxel.generitech.common.blocks.ores.BlockOreBlock;
+
 import com.sandvoxel.generitech.common.blocks.power.BlockGen;
-import com.sandvoxel.generitech.common.items.machines.ItemFurnace;
-import com.sandvoxel.generitech.common.items.machines.ItemPulverizer;
-import com.sandvoxel.generitech.common.items.misc.crafting.ItemMachineMatrics;
-import com.sandvoxel.generitech.common.items.ore.ItemOre;
-import com.sandvoxel.generitech.common.items.power.ItemCable;
-import com.sandvoxel.generitech.common.util.RegistrationHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import xyz.aadev.aalib.common.blocks.BlockBase;
+import xyz.aadev.aalib.common.blocks.BlockMachineBase;
+import xyz.aadev.aalib.common.util.RegistrationHelper;
+import xyz.aadev.generitech.common.blocks.machines.BlockFurnace;
+import xyz.aadev.generitech.common.blocks.misc.crafting.BlockMachineMatrics;
+import xyz.aadev.generitech.common.blocks.ores.BlockOre;
+import xyz.aadev.generitech.common.blocks.ores.BlockOreBlock;
+import xyz.aadev.generitech.common.items.machines.ItemFurnace;
+import xyz.aadev.generitech.common.items.misc.crafting.ItemMachineMatrics;
+import xyz.aadev.generitech.common.items.ore.ItemOre;
+import xyz.aadev.generitech.common.items.power.ItemCable;
 
 public enum Blocks {
     BLOCK_ORE(BlockOre.class, ItemOre.class),
     BLOCK_ORE_BLOCK(BlockOreBlock.class, ItemOre.class),
 
     BLOCK_FURNACE(BlockFurnace.class, ItemFurnace.class),
-    BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class),
+    BLOCK_PULVERIZER(BlockFurnace.class, ItemFurnace.class),
 
     BLOCK_MACHINEMATRICS(BlockMachineMatrics.class, ItemMachineMatrics.class),
     BLOCK_GEN(BlockGen.class, ItemCable.class);
