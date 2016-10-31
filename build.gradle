@@ -60,7 +60,7 @@ sourceSets.main.resources.srcDirs += 'AALib/src/main/resources'
 
 version = minecraft_version + "-" + majorVersion + "." + minorVersion + "." + patchVersion
 archivesBaseName = cibasename
-group = "com.sandvoxel.generitech"
+group = "xyz.aadev.generitech"
 
 // If TeamCity is running this build, lets set the version info
 if (hasProperty("teamcity")) {
