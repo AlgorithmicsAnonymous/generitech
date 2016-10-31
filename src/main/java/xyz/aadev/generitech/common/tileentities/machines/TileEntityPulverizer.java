@@ -32,18 +32,8 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-package com.sandvoxel.generitech.common.tileentities.machines;
+package xyz.aadev.generitech.common.tileentities.machines;
 
-import com.sandvoxel.generitech.Reference;
-import com.sandvoxel.generitech.api.registries.PulverizerRegistry;
-import com.sandvoxel.generitech.api.util.Crushable;
-import com.sandvoxel.generitech.api.util.MachineTier;
-import com.sandvoxel.generitech.common.integrations.waila.IWailaBodyMessage;
-import com.sandvoxel.generitech.common.inventory.InternalInventory;
-import com.sandvoxel.generitech.common.inventory.InventoryOperation;
-import com.sandvoxel.generitech.common.tileentities.TileEntityMachineBase;
-import com.sandvoxel.generitech.common.util.InventoryHelper;
-import com.sandvoxel.generitech.common.util.LanguageHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.darkhax.tesla.api.ITeslaConsumer;
@@ -58,6 +48,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.time.DurationFormatUtils;
+import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
+import xyz.aadev.aalib.client.util.LanguageHelper;
+import xyz.aadev.aalib.common.inventory.InternalInventory;
+import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.aalib.common.tileentities.TileEntityMachineBase;
+import xyz.aadev.aalib.common.util.InventoryHelper;
+import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.api.registries.PulverizerRegistry;
+import xyz.aadev.generitech.api.util.Crushable;
+import xyz.aadev.generitech.api.util.MachineTier;
 
 import java.util.List;
 import java.util.Random;
