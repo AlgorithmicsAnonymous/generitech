@@ -16,6 +16,7 @@ import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -30,7 +31,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TestPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage, ITeslaConsumer, ITeslaHolder {
+public class TestPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 10000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
     private boolean[] flag = {false, false, false, false, false, false};
@@ -47,175 +48,44 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
         BlockPos pos = getPos();
         World worldIn = getWorld();
 
-
-        if (worldObj.isBlockPowered(pos)) {
-            container.givePower(1000, false);
-
-        }
-        long stored = getStoredPower();
-
-        TileEntity te = worldObj.getTileEntity(pos);
-
-
-        if (flag[0]) {
-            TileEntity te1 = worldObj.getTileEntity(pos.up());
-
-
-            if (te1 instanceof TileEntityMachineBase && getTransfer(pos.up()) > 100 && container.getStoredPower() != 0) {
-
-                if (te instanceof ITeslaHolder) {
-                    if (((ITeslaHolder) te).getStoredPower() > 100) {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(T0transfer, pos.getX(), pos.getZ(), pos.getY() + 1));
-                        }
-                        this.container.takePower(T0transfer, false);
-                    } else {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower(), pos.getX(), pos.getZ(), pos.getY() + 1));
-                        }
-                        this.container.takePower(((ITeslaHolder) te).getStoredPower(), false);
-                    }
-                }
-            } else {
-                if (te1 instanceof TileEntityMachineBase && container.getStoredPower() != 0) {
-                    if (!worldObj.isRemote) {
-                        GeneriTech.network.sendToServer(new PacketPower(getTransfer(pos.down()), pos.getX(), pos.getZ(), pos.getY() + -1));
-                    }
-                    this.container.takePower(getTransfer(pos.down()), false);
-                }
-
-            }
-
-
-            if (te instanceof ITeslaHolder && te1 instanceof ITeslaHolder && te1 instanceof TileEntityMachineBase == false) {
-                long abbs = ((ITeslaHolder) te).getStoredPower() - ((ITeslaHolder) te1).getStoredPower();
-                //System.out.println(abbs);
-                if (abbs > 100) {
-                    if (!worldObj.isRemote) {
-                        GeneriTech.network.sendToServer(new PacketPower(T0transfer, pos.getX(), pos.getZ(), pos.getY() + 1));
-
-                    }
-                    this.container.takePower(T0transfer, false);
-                } else {
-                    if (te1 instanceof ITeslaConsumer && abbs != 0 && abbs / 2 != 0) {
-                        if (!worldObj.isRemote)
-
-                            GeneriTech.network.sendToServer(new PacketPower(abbs / 2, pos.getX(), pos.getZ(), pos.getY() + 1));
-                    }
-                    this.container.takePower(abbs / 2, false);
-                    if (te1 instanceof ITeslaConsumer && abbs == 1) {
-                        {
-                            System.out.println(abbs);
-
-                            if (!worldObj.isRemote) {
-                                GeneriTech.network.sendToServer(new PacketPower(1, pos.getX(), pos.getZ(), pos.getY() + 1));
-                            }
-                            this.container.takePower(1, false);
-                        }
-                    }
-                }
-            }
+        if (worldIn.isBlockPowered(pos)){
+         container.givePower(50,false);
         }
 
-
-        if (flag[1]) {
-            TileEntity te2 = worldObj.getTileEntity(pos.down());
-
-            if (te2 instanceof TileEntityMachineBase && getTransfer(pos.down()) > 100 && container.getStoredPower() != 0) {
-                if (te instanceof ITeslaHolder) {
-                    if (((ITeslaHolder) te).getStoredPower() > 100) {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(T0transfer, pos.getX(), pos.getZ(), pos.getY() + -1));
-                        }
-                        this.container.takePower(T0transfer, false);
-                    } else {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(((ITeslaHolder) te).getStoredPower(), pos.getX(), pos.getZ(), pos.getY() + -1));
-                        }
-                        this.container.takePower(((ITeslaHolder) te).getStoredPower(), false);
-                    }
-                }
-            } else {
-                if (te2 instanceof TileEntityMachineBase && container.getStoredPower() != 0) {
-                    if (!worldObj.isRemote) {
-                        GeneriTech.network.sendToServer(new PacketPower(getTransfer(pos.down()), pos.getX(), pos.getZ(), pos.getY() + -1));
-                    }
-                    this.container.takePower(getTransfer(pos.down()), false);
-                }
-            }
-
-
-            if (te instanceof ITeslaHolder && te2 instanceof ITeslaHolder && te2 instanceof TileEntityMachineBase == false) {
-                long abbs = ((ITeslaHolder) te).getStoredPower() - ((ITeslaHolder) te2).getStoredPower();
-                //System.out.println(abbs);
-                if (abbs > 100) {
-                    if (!worldObj.isRemote) {
-                        GeneriTech.network.sendToServer(new PacketPower(T0transfer, pos.getX(), pos.getZ(), pos.getY() + -1));
-
-                    }
-                    this.container.takePower(T0transfer, false);
-                } else {
-                    if (te2 instanceof ITeslaConsumer && abbs != 0 && abbs / 2 != 0) {
-                        if (!worldObj.isRemote) {
-                            GeneriTech.network.sendToServer(new PacketPower(abbs / 2, pos.getX(), pos.getZ(), pos.getY() + -1));
-                        }
-                        this.container.takePower(abbs / 2, false);
-                        if (te2 instanceof ITeslaConsumer && abbs == 1) {
-                            if (!worldObj.isRemote) {
-                                GeneriTech.network.sendToServer(new PacketPower(1, pos.getX(), pos.getZ(), pos.getY() + -1));
-                            }
-                            this.container.takePower(1, false);
-                        }
-                    }
-                }
-
-            }
-
+        if (container.getStoredPower()!=0){
+            transferPower();
         }
 
-
-        flag[0] = this.canConnectTo(worldIn, pos.up());
-        flag[1] = this.canConnectTo(worldIn, pos.down());
-        flag[2] = this.canConnectTo(worldIn, pos.north());
-        flag[3] = this.canConnectTo(worldIn, pos.south());
-        flag[4] = this.canConnectTo(worldIn, pos.east());
-        flag[5] = this.canConnectTo(worldIn, pos.west());
 
 
     }
 
-
-    public long getTransfer(BlockPos pos) {
-        TileEntity tile = worldObj.getTileEntity(pos);
-
-        if (tile instanceof ITeslaHolder) {
-            return ((ITeslaHolder) tile).getCapacity() - ((ITeslaHolder) tile).getStoredPower();
-        }
-
-        return 0;
-    }
-
-
-    public long getLeft() {
+    public void transferPower(){
         BlockPos pos = getPos();
-        TileEntity tile = worldObj.getTileEntity(pos.up());
+        World worldIn = getWorld();
+        long inputba = TeslaUtils.distributePowerToAllFaces(worldIn,pos,T0transfer,true);
+        long test = inputba / T0transfer;
+        if (inputba!=0 && container.getStoredPower() > test){
+            long input = inputba/test;
+            System.out.println(input);
+            System.out.println(inputba);
+                if (container.getStoredPower()>=inputba){
+                    container.takePower(inputba,false);
+                    TeslaUtils.distributePowerToAllFaces(worldIn,pos,input,false);
+                }else {
+                    long toMoveUnder = container.getStoredPower()/test;
+                    //System.out.println(toMoveUnder);
+                    container.takePower(container.getStoredPower(),false);
+                    TeslaUtils.distributePowerToAllFaces(worldIn,pos,toMoveUnder,false);
+                }
 
-        if (tile instanceof ITeslaHolder) {
-            return ((ITeslaHolder) tile).getStoredPower();
         }
 
-        return 0;
+
+
     }
 
 
-    public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos) {
-        Block block = worldIn.getBlockState(pos).getBlock();
-        if (block == Blocks.BLOCK_FURNACE.getBlock() || block == Blocks.BLOCK_PULVERIZER.getBlock() || block == Blocks.BLOCK_CABLES.getBlock()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
     @Override
@@ -262,25 +132,6 @@ public class TestPower extends TileEntityInventoryBase implements ITeslaProducer
         currentTip.add(LanguageHelper.LABEL.translateMessage("Power") + Long.toString(container.getStoredPower()));
 
         return currentTip;
-    }
-
-    @Override
-    public long givePower(long power, boolean simulated) {
-        System.out.println("packet sent :" + power);
-        this.markForUpdate();
-        this.markDirty();
-        container.givePower(power, simulated);
-        return power;
-    }
-
-    @Override
-    public long getStoredPower() {
-        return container.getStoredPower();
-    }
-
-    @Override
-    public long getCapacity() {
-        return container.getCapacity();
     }
 
 
