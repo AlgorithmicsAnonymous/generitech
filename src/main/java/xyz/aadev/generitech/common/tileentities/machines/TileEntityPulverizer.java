@@ -203,7 +203,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return container.getStoredPower() >= powerUsage;
         }
     }
-
+    //checks if it can crush
     public boolean cancrush(ItemStack item) {
         return PulverizerRegistry.containsInput(item);
     }
