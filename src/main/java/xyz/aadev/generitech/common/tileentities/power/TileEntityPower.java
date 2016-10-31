@@ -55,7 +55,7 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
         World worldIn = getWorld();
 
         if (fuelRemaining!=0)fuelRemaining--;
-        if (worldIn.isBlockPowered(pos)|| fuelRemaining > 0){
+        if ( fuelRemaining > 0){
          container.givePower(60,false);
         }
         if (container.getStoredPower() != container.getCapacity()&& inventory.getStackInSlot(0)!=null||container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0)!=null){

@@ -17,8 +17,11 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
+import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.Rectangle;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.GuiBase;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
@@ -26,9 +29,12 @@ import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
+import java.util.ArrayList;
+
 public class GuiGenerator extends GuiBase {
     private TileEntityPower tileEntity;
     private MachineTier machineTier;
+    Rectangle powerBar;
 
     public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
         super(new ContanierGenerator(inventoryPlayer, tileEntity));
@@ -36,7 +42,7 @@ public class GuiGenerator extends GuiBase {
         this.ySize = 166;
         this.tileEntity = tileEntity;
         this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
-
+        powerBar = new Rectangle(98, 30, 14,28);
     }
 
     @Override
@@ -62,5 +68,17 @@ public class GuiGenerator extends GuiBase {
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 
+}
+
+
+    @Override
+    public void drawScreen(int mouse_x, int mouse_y, float btn){
+        super.drawScreen(mouse_x, mouse_y, btn);
+        Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
+        if (powerBar.contains(currentMouse)) {
+            ArrayList<String> powerMessage = new ArrayList<String>();
+            powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.powerStored()));
+            renderToolTip(powerMessage, mouse_x, mouse_y);
+        }
     }
 }
