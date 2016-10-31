@@ -35,14 +35,6 @@
 package xyz.aadev.generitech.common.world;
 
 import com.google.common.collect.ArrayListMultimap;
-import xyz.aadev.aalib.common.logging.Logger;
-import xyz.aadev.aalib.common.util.WorldInfoHelper;
-import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.api.util.EnumOreType;
-import xyz.aadev.generitech.common.blocks.Blocks;
-import xyz.aadev.generitech.common.config.ConfigWorldGen;
-import xyz.aadev.generitech.common.config.ConfigWorldGen.OreConfig;
-import xyz.aadev.generitech.common.util.EnumOres;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -57,6 +49,14 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import xyz.aadev.aalib.common.logging.Logger;
+import xyz.aadev.aalib.common.util.WorldInfoHelper;
+import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.api.util.EnumOreType;
+import xyz.aadev.generitech.common.blocks.Blocks;
+import xyz.aadev.generitech.common.config.ConfigWorldGen;
+import xyz.aadev.generitech.common.config.ConfigWorldGen.OreConfig;
+import xyz.aadev.generitech.common.util.EnumOres;
 
 import java.util.*;
 

@@ -34,13 +34,13 @@
 
 package xyz.aadev.generitech.common.config;
 
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.config.Configuration;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.ConfigHelper;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.util.EnumOres;
 import xyz.aadev.generitech.common.world.WorldGen;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.config.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;

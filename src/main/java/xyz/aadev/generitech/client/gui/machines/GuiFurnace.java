@@ -34,12 +34,12 @@
 
 package xyz.aadev.generitech.client.gui.machines;
 
+import net.minecraft.entity.player.InventoryPlayer;
 import xyz.aadev.aalib.client.util.LanguageHelper;
 import xyz.aadev.aalib.common.util.GuiHelper;
 import xyz.aadev.generitech.client.gui.GuiBase;
 import xyz.aadev.generitech.common.container.machines.ContainerFurnace;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityFurnace;
-import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFurnace extends GuiBase {
     private TileEntityFurnace tileEntity;

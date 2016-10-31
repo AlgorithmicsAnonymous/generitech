@@ -35,11 +35,6 @@
 package xyz.aadev.generitech.common.items.tools;
 
 import com.google.common.collect.Sets;
-import xyz.aadev.aalib.api.common.util.IProvideRecipe;
-import xyz.aadev.aalib.common.items.ItemBaseTool;
-import xyz.aadev.aalib.common.util.Platform;
-import xyz.aadev.generitech.GeneriTechTabs;
-import xyz.aadev.generitech.common.items.Items;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,6 +48,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import xyz.aadev.aalib.api.common.util.IProvideRecipe;
+import xyz.aadev.aalib.common.items.ItemBaseTool;
+import xyz.aadev.aalib.common.util.Platform;
+import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.common.items.Items;
 
 import java.util.Set;
 

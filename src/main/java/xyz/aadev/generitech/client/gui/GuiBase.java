@@ -34,15 +34,15 @@
 
 package xyz.aadev.generitech.client.gui;
 
-import xyz.aadev.aalib.common.util.GuiHelper;
-import xyz.aadev.aalib.common.util.OpenGLHelper;
-import xyz.aadev.generitech.Reference;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+import xyz.aadev.aalib.common.util.GuiHelper;
+import xyz.aadev.aalib.common.util.OpenGLHelper;
+import xyz.aadev.generitech.Reference;
 
 import java.awt.*;
 import java.util.List;

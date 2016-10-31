@@ -34,17 +34,17 @@
 
 package xyz.aadev.generitech.client.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import xyz.aadev.generitech.client.gui.machines.GuiFurnace;
 import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
 import xyz.aadev.generitech.common.container.machines.ContainerFurnace;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityFurnace;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 

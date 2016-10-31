@@ -34,13 +34,6 @@
 
 package xyz.aadev.generitech.common.tileentities.machines;
 
-import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
-import xyz.aadev.aalib.client.util.LanguageHelper;
-import xyz.aadev.aalib.common.inventory.InternalInventory;
-import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
-import xyz.aadev.aalib.common.util.InventoryHelper;
-import xyz.aadev.generitech.api.util.MachineTier;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.inventory.IInventory;
@@ -48,6 +41,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
+import xyz.aadev.aalib.client.util.LanguageHelper;
+import xyz.aadev.aalib.common.inventory.InternalInventory;
+import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
+import xyz.aadev.aalib.common.util.InventoryHelper;
+import xyz.aadev.generitech.api.util.MachineTier;
 
 import java.util.List;
 

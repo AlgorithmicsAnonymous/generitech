@@ -34,14 +34,14 @@
 
 package xyz.aadev.generitech.common.container.machines;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.tileentity.TileEntity;
 import xyz.aadev.aalib.common.container.ContainerBase;
 import xyz.aadev.aalib.common.container.slot.SlotFuelInput;
 import xyz.aadev.aalib.common.container.slot.SlotNormal;
 import xyz.aadev.aalib.common.container.slot.SlotOutput;
 import xyz.aadev.generitech.api.util.MachineTier;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntity;
 
 public class ContainerPulverizer extends ContainerBase {
     IInventory inventory;

@@ -35,16 +35,6 @@
 package xyz.aadev.generitech;
 
 import com.google.common.base.Stopwatch;
-import net.minecraft.command.server.CommandOp;
-import xyz.aadev.aalib.common.command.CommandWithSubCommands;
-import xyz.aadev.aalib.common.integrations.IntegrationsManager;
-import xyz.aadev.aalib.common.logging.Logger;
-import xyz.aadev.generitech.api.exceptions.OutdatedJavaException;
-import xyz.aadev.generitech.common.config.Config;
-import xyz.aadev.generitech.common.network.PacketHandler;
-import xyz.aadev.generitech.common.network.messages.power.PacketPower;
-import xyz.aadev.generitech.common.world.WorldGen;
-import xyz.aadev.generitech.proxy.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -62,6 +52,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
+import xyz.aadev.aalib.common.command.CommandWithSubCommands;
+import xyz.aadev.aalib.common.integrations.IntegrationsManager;
+import xyz.aadev.aalib.common.logging.Logger;
+import xyz.aadev.generitech.api.exceptions.OutdatedJavaException;
+import xyz.aadev.generitech.common.config.Config;
+import xyz.aadev.generitech.common.network.PacketHandler;
+import xyz.aadev.generitech.common.network.messages.power.PacketPower;
+import xyz.aadev.generitech.common.world.WorldGen;
+import xyz.aadev.generitech.proxy.IProxy;
 
 import java.util.concurrent.TimeUnit;
 

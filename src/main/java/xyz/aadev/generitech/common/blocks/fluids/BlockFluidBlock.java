@@ -34,11 +34,11 @@
 
 package xyz.aadev.generitech.common.blocks.fluids;
 
-import xyz.aadev.generitech.GeneriTechTabs;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import xyz.aadev.generitech.GeneriTechTabs;
 
 public class BlockFluidBlock extends BlockFluidClassic {
     public BlockFluidBlock(Fluid fluid) {

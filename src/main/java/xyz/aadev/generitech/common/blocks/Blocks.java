@@ -35,6 +35,9 @@
 package xyz.aadev.generitech.common.blocks;
 
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import xyz.aadev.aalib.common.blocks.BlockBase;
 import xyz.aadev.aalib.common.util.RegistrationHelper;
 import xyz.aadev.generitech.common.blocks.machines.BlockFurnace;
@@ -48,9 +51,6 @@ import xyz.aadev.generitech.common.items.machines.ItemPulverizer;
 import xyz.aadev.generitech.common.items.misc.crafting.ItemMachineMatrics;
 import xyz.aadev.generitech.common.items.ore.ItemOre;
 import xyz.aadev.generitech.common.items.power.ItemCable;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 
 public enum Blocks {
     BLOCK_ORE(BlockOre.class, ItemOre.class),

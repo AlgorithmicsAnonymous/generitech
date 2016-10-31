@@ -34,10 +34,10 @@
 
 package xyz.aadev.generitech.common.items.ore;
 
-import xyz.aadev.generitech.common.util.EnumOres;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import xyz.aadev.generitech.common.util.EnumOres;
 
 public class ItemOre extends ItemBlock {
     public ItemOre(Block block) {

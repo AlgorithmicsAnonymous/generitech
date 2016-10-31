@@ -34,8 +34,8 @@
 
 package xyz.aadev.generitech.api.util;
 
-import xyz.aadev.generitech.Reference;
 import net.minecraft.util.IStringSerializable;
+import xyz.aadev.generitech.Reference;
 
 public enum MachineTier implements IStringSerializable {
     TIER_0("t0"),

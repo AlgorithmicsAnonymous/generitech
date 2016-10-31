@@ -34,13 +34,6 @@
 
 package xyz.aadev.generitech.common.blocks.machines;
 
-import xyz.aadev.aalib.common.blocks.BlockMachineBase;
-import xyz.aadev.aalib.common.util.TileHelper;
-import xyz.aadev.generitech.GeneriTech;
-import xyz.aadev.generitech.GeneriTechTabs;
-import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.client.gui.GuiHandler;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -53,6 +46,13 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import xyz.aadev.aalib.common.blocks.BlockMachineBase;
+import xyz.aadev.aalib.common.util.TileHelper;
+import xyz.aadev.generitech.GeneriTech;
+import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.api.util.MachineTier;
+import xyz.aadev.generitech.client.gui.GuiHandler;
+import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 
 import java.util.Random;
 

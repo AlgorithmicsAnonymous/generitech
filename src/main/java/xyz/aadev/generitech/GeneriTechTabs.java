@@ -34,10 +34,10 @@
 
 package xyz.aadev.generitech;
 
-import xyz.aadev.generitech.common.blocks.Blocks;
-import xyz.aadev.generitech.common.items.Items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import xyz.aadev.generitech.common.blocks.Blocks;
+import xyz.aadev.generitech.common.items.Items;
 
 public class GeneriTechTabs {
     public static final CreativeTabs GENERAL = new CreativeTabs(Reference.MOD_ID) {

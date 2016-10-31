@@ -34,6 +34,14 @@
 
 package xyz.aadev.generitech.common.items.ore;
 
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideSmelting;
 import xyz.aadev.aalib.common.items.ItemBase;
@@ -43,14 +51,6 @@ import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.util.EnumOres;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.List;
 

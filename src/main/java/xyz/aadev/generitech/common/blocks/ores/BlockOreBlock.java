@@ -34,12 +34,6 @@
 
 package xyz.aadev.generitech.common.blocks.ores;
 
-import xyz.aadev.aalib.api.common.util.IProvideRecipe;
-import xyz.aadev.aalib.common.blocks.BlockBase;
-import xyz.aadev.generitech.GeneriTechTabs;
-import xyz.aadev.generitech.api.util.EnumOreType;
-import xyz.aadev.generitech.common.blocks.Blocks;
-import xyz.aadev.generitech.common.util.EnumOres;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -49,6 +43,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import xyz.aadev.aalib.api.common.util.IProvideRecipe;
+import xyz.aadev.aalib.common.blocks.BlockBase;
+import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.api.util.EnumOreType;
+import xyz.aadev.generitech.common.blocks.Blocks;
+import xyz.aadev.generitech.common.util.EnumOres;
 
 import java.util.List;
 

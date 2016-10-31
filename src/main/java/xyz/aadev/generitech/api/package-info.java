@@ -35,5 +35,5 @@
 @API(apiVersion = ApiInfo.API_VERSION, owner = Reference.MOD_ID, provides = Reference.MOD_ID + "api")
 package xyz.aadev.generitech.api;
 
-import xyz.aadev.generitech.Reference;
 import net.minecraftforge.fml.common.API;
+import xyz.aadev.generitech.Reference;

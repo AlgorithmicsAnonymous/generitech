@@ -34,6 +34,8 @@
 
 package xyz.aadev.generitech.common.items;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import xyz.aadev.aalib.common.util.RegistrationHelper;
 import xyz.aadev.generitech.common.items.debug.ItemWorldGenWand;
 import xyz.aadev.generitech.common.items.materials.ItemMaterialGear;
@@ -41,8 +43,6 @@ import xyz.aadev.generitech.common.items.ore.ItemOreDust;
 import xyz.aadev.generitech.common.items.ore.ItemOreIngot;
 import xyz.aadev.generitech.common.items.ore.ItemOreNugget;
 import xyz.aadev.generitech.common.items.tools.ItemToolWrench;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 
 public enum Items {
@@ -55,7 +55,7 @@ public enum Items {
 
     ITEM_TOOL_WRENCH(ItemToolWrench.class),
 
-    ITEM_DEBUG_WGW(ItemWorldGenWand.class), ;
+    ITEM_DEBUG_WGW(ItemWorldGenWand.class),;
 
     private final Class<? extends Item> itemClass;
     private Item item;

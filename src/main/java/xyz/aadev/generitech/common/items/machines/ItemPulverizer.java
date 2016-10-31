@@ -34,10 +34,10 @@
 
 package xyz.aadev.generitech.common.items.machines;
 
-import xyz.aadev.generitech.api.util.MachineTier;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import xyz.aadev.generitech.api.util.MachineTier;
 
 public class ItemPulverizer extends ItemBlock {
     public ItemPulverizer(Block block) {

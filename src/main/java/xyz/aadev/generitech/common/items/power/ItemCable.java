@@ -1,9 +1,9 @@
 package xyz.aadev.generitech.common.items.power;
 
-import xyz.aadev.generitech.api.util.MachineTier;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import xyz.aadev.generitech.api.util.MachineTier;
 
 public class ItemCable extends ItemBlock {
     public ItemCable(Block block) {

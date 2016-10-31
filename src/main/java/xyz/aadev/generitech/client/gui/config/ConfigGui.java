@@ -1,12 +1,12 @@
 package xyz.aadev.generitech.client.gui.config;
 
-import xyz.aadev.generitech.GeneriTech;
-import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.common.config.Config;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
+import xyz.aadev.generitech.GeneriTech;
+import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.common.config.Config;
 
 import java.util.Arrays;
 

@@ -34,12 +34,6 @@
 
 package xyz.aadev.generitech.client.gui.machines;
 
-import xyz.aadev.aalib.client.util.LanguageHelper;
-import xyz.aadev.aalib.common.util.GuiHelper;
-import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.client.gui.GuiBase;
-import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
@@ -47,6 +41,12 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
+import xyz.aadev.aalib.client.util.LanguageHelper;
+import xyz.aadev.aalib.common.util.GuiHelper;
+import xyz.aadev.generitech.api.util.MachineTier;
+import xyz.aadev.generitech.client.gui.GuiBase;
+import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
+import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

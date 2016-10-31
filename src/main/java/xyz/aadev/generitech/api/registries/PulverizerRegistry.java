@@ -34,9 +34,9 @@
 
 package xyz.aadev.generitech.api.registries;
 
-import xyz.aadev.generitech.api.util.Crushable;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import xyz.aadev.generitech.api.util.Crushable;
 
 import java.util.ArrayList;
 import java.util.List;

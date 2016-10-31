@@ -34,8 +34,8 @@
 
 package xyz.aadev.generitech.common.util;
 
-import xyz.aadev.generitech.api.util.EnumOreType;
 import net.minecraft.util.IStringSerializable;
+import xyz.aadev.generitech.api.util.EnumOreType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
