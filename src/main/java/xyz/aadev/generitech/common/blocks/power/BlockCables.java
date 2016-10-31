@@ -1,5 +1,8 @@
 package xyz.aadev.generitech.common.blocks.power;
 
+
+import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
+import xyz.aadev.generitech.common.tileentities.power.TestPower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -15,8 +18,6 @@ import xyz.aadev.aalib.common.blocks.BlockMachineBase;
 import xyz.aadev.aalib.common.util.TileHelper;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
-import xyz.aadev.generitech.common.tileentities.power.TestPower;
 
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class BlockCables extends BlockMachineBase {
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPulverizer.class);
+        TestPower tileEntity = TileHelper.getTileEntity(worldIn, pos, TestPower.class);
         if (tileEntity != null && tileEntity.canBeRotated()) {
             return state.withProperty(FACING, tileEntity.getForward());
         }
@@ -72,8 +73,8 @@ public class BlockCables extends BlockMachineBase {
             return;
         }
 
-        TileHelper.DropItems(tileEntity, 0, 0);
-        TileHelper.DropItems(tileEntity, 2, 3);
+        TileHelper.DropItems(tileEntity,0,0);
+
     }
 
     @Override

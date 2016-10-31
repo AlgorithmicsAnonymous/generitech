@@ -1,4 +1,4 @@
-package com.sandvoxel.generitech.common.tileentities.power;
+package xyz.aadev.generitech.common.tileentities.machines;
 
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -30,7 +30,7 @@ import xyz.aadev.generitech.Reference;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TestPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
+public class TileEntityPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
     private int T0transfer = 100;
