@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.common.tileentities.machines;
+package xyz.aadev.generitech.common.tileentities.power;
 
 
 import mcp.mobius.waila.api.IWailaConfigHandler;

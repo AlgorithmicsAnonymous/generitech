@@ -1,8 +1,8 @@
 package xyz.aadev.generitech.common.blocks.power;
 
 
+import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
-import xyz.aadev.generitech.common.tileentities.power.TestPower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +26,7 @@ public class BlockCables extends BlockMachineBase {
     public BlockCables() {
         super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
-        this.setTileEntity(TestPower.class);
+        this.setTileEntity(TileEntityPower.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("power");
     }
@@ -42,7 +42,7 @@ public class BlockCables extends BlockMachineBase {
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TestPower tileEntity = TileHelper.getTileEntity(worldIn, pos, TestPower.class);
+        TileEntityPower tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPower.class);
         if (tileEntity != null && tileEntity.canBeRotated()) {
             return state.withProperty(FACING, tileEntity.getForward());
         }
