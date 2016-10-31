@@ -1,4 +1,4 @@
-/*
+package xyz.aadev.generitech.common.items.misc.crafting;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,45 +17,29 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-apply plugin: 'maven'
 
-task createPom << {
-    pom {
-        project {
-            groupId group
-            artifactId cibasename
-            version majorVersion + '.' + minorVersion + '.' + patchVersion + '.' + cibuild
-        }
-    }.writeTo("build/pom/" + cibasename + "-" + minecraft_version + "-" + majorVersion + '.' + minorVersion + '.' + patchVersion + '.' + cibuild + ".pom")
-}
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import xyz.aadev.generitech.api.util.MachineTier;
 
-task apiJar(type: Jar) {
-    from sourceSets.main.allSource
-    from sourceSets.main.output
-    include 'xyz/aadev/generitech/api/**/*'
-    classifier = 'api'
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from javadoc.destinationDir
-    classifier = 'javadoc'
-}
-
-jar {
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
+public class ItemMachineMatrics extends ItemBlock {
+    public ItemMachineMatrics(Block block) {
+        super(block);
+        this.setHasSubtypes(true);
+        this.setMaxDamage(0);
     }
 
-    manifest {
-        attributes 'FMLAT': 'generitech_at.cfg'
+    @Override
+    public int getMetadata(int damage) {
+        return damage;
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        String name = super.getUnlocalizedName();
+        String tierName = MachineTier.byMeta(stack.getItemDamage()).getName();
+
+        return name + "." + tierName;
     }
 }
-
-artifacts {
-    archives javadocJar
-    archives apiJar
-}
-
-tasks.build.dependsOn createPom

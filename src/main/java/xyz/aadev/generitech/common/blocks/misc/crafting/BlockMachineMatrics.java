@@ -1,4 +1,4 @@
-/*
+package xyz.aadev.generitech.common.blocks.misc.crafting;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,45 +17,39 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-apply plugin: 'maven'
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import xyz.aadev.aalib.common.blocks.BlockTierBase;
+import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.api.util.MachineTier;
 
-task createPom << {
-    pom {
-        project {
-            groupId group
-            artifactId cibasename
-            version majorVersion + '.' + minorVersion + '.' + patchVersion + '.' + cibuild
-        }
-    }.writeTo("build/pom/" + cibasename + "-" + minecraft_version + "-" + majorVersion + '.' + minorVersion + '.' + patchVersion + '.' + cibuild + ".pom")
-}
+import javax.annotation.Nullable;
 
-task apiJar(type: Jar) {
-    from sourceSets.main.allSource
-    from sourceSets.main.output
-    include 'xyz/aadev/generitech/api/**/*'
-    classifier = 'api'
-}
+public class BlockMachineMatrics extends BlockTierBase {
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from javadoc.destinationDir
-    classifier = 'javadoc'
-}
-
-jar {
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
+    public BlockMachineMatrics() {
+        super(Material.ROCK, "BadBlock", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1));
+        this.setCreativeTab(GeneriTechTabs.GENERAL);
+        this.setInternalName("machineframe");
     }
 
-    manifest {
-        attributes 'FMLAT': 'generitech_at.cfg'
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, MACHINETIER);
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+
+        return true;
     }
 }
-
-artifacts {
-    archives javadocJar
-    archives apiJar
-}
-
-tasks.build.dependsOn createPom
