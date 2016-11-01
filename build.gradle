@@ -73,7 +73,7 @@ if (hasProperty("teamcity")) {
 }
 
 minecraft {
-    version = "1.10.2-12.18.1.2084"
+    version =  minecraft_version + "-" + forge_version + forge_branch 
 
     replaceIn "Reference.java"
     //replaceIn "ApiInfo.java"
