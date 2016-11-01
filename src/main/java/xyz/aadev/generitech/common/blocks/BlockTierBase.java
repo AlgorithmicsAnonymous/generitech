@@ -1,4 +1,5 @@
-package xyz.aadev.generitech.common.blocks.misc.crafting;/*
+package xyz.aadev.generitech.common.blocks;
+/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,39 +18,92 @@ package xyz.aadev.generitech.common.blocks.misc.crafting;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import xyz.aadev.generitech.common.blocks.BlockTierBase;
-import xyz.aadev.generitech.GeneriTechTabs;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.aadev.aalib.api.client.util.IBlockRenderer;
+import xyz.aadev.aalib.common.blocks.BlockBase;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 
-import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
-public class BlockMachineMatrics extends BlockTierBase {
+public class BlockTierBase extends BlockBase implements IBlockRenderer {
+    protected static final PropertyEnum<MachineTier> MACHINETIER = PropertyEnum.create("machinetier", MachineTier.class);
+    private MachineTier[] machineTiers;
 
-    public BlockMachineMatrics() {
-        super(Material.ROCK, "BadBlock", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1));
-        this.setCreativeTab(GeneriTechTabs.GENERAL);
-        this.setInternalName("machineframe");
+    public BlockTierBase(Material material, String resourcePath, MachineTier... machineTiers) {
+        super(material, resourcePath);
+        this.machineTiers = machineTiers;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockRenderer() {
+        final String resourcePath = String.format("%s:%s-", Reference.MOD_ID, this.resourcePath);
+        final String badPath = String.format("%s:badblock", Reference.MOD_ID);
+
+        ModelLoader.setCustomStateMapper(this, new DefaultStateMapper() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                Map<IProperty<?>, Comparable<?>> blockStates = Maps.newLinkedHashMap(state.getProperties());
+
+                if (!Arrays.asList(machineTiers).contains(blockStates.get(MACHINETIER)))
+                    return new ModelResourceLocation(badPath, "");
+
+                if (blockStates.containsKey(MACHINETIER))
+                    blockStates.remove(MACHINETIER);
+
+                return new ModelResourceLocation(resourcePath + state.getValue(MACHINETIER).getName(), getPropertyString(blockStates));
+            }
+        });
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockItemRenderer() {
+        final String resourcePath = String.format("%s:%s-", Reference.MOD_ID, this.resourcePath);
+        final String badPath = String.format("%s:badblock", Reference.MOD_ID);
+
+        for (MachineTier machineTier : MachineTier.values()) {
+            if (!Arrays.asList(machineTiers).contains(machineTier)) {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), machineTier.getMeta(), new ModelResourceLocation(badPath, "inventory"));
+            } else {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), machineTier.getMeta(), new ModelResourceLocation(resourcePath + machineTier.getName(), "inventory"));
+            }
+        }
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, MACHINETIER);
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+        if (machineTiers.length == 0)
+            super.getSubBlocks(itemIn, tab, list);
+
+        for (MachineTier machineTier : machineTiers) {
+            list.add(new ItemStack(this, 1, machineTier.getMeta()));
+        }
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(MACHINETIER, MachineTier.byMeta(meta));
+    }
 
-
-        return true;
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        MachineTier tier = state.getValue(MACHINETIER);
+        return tier.getMeta();
     }
 }

@@ -32,80 +32,95 @@
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-package xyz.aadev.generitech.common.blocks.machines;
+package xyz.aadev.generitech.common.blocks;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import xyz.aadev.generitech.common.blocks.BlockMachineBase;
-import xyz.aadev.aalib.common.util.TileHelper;
-import xyz.aadev.generitech.GeneriTech;
-import xyz.aadev.generitech.GeneriTechTabs;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.aadev.aalib.common.blocks.BlockTileBase;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.client.gui.GuiHandler;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityFurnace;
 
-public class BlockFurnace extends BlockMachineBase {
-    private static final PropertyBool ACTIVE = PropertyBool.create("active");
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
-    public BlockFurnace() {
-        super(Material.ROCK, "machines/furnace/furnace", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
-        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1).withProperty(FACING, EnumFacing.NORTH));
-        this.setTileEntity(TileEntityFurnace.class);
-        this.setCreativeTab(GeneriTechTabs.GENERAL);
-        this.setInternalName("furnace");
+
+public abstract class BlockMachineBase extends BlockTileBase {
+    protected static final PropertyEnum<MachineTier> MACHINETIER = PropertyEnum.create("machinetier", MachineTier.class);
+    private MachineTier[] machineTiers;
+
+    public BlockMachineBase(Material material, String resourcePath, MachineTier... machineTiers) {
+        super(material, resourcePath);
+        this.machineTiers = machineTiers;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote) {
-            player.openGui(GeneriTech.instance, GuiHandler.FURNACE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+    public void registerBlockRenderer() {
+        final String resourcePath = String.format("%s:%s-", Reference.MOD_ID, this.resourcePath);
+        final String badPath = String.format("%s:badblock", Reference.MOD_ID);
+
+        ModelLoader.setCustomStateMapper(this, new DefaultStateMapper() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                Map<IProperty<?>, Comparable<?>> blockStates = Maps.newLinkedHashMap(state.getProperties());
+
+                if (!Arrays.asList(machineTiers).contains(blockStates.get(MACHINETIER)))
+                    return new ModelResourceLocation(badPath, "");
+
+                if (blockStates.containsKey(MACHINETIER))
+                    blockStates.remove(MACHINETIER);
+
+                return new ModelResourceLocation(resourcePath + state.getValue(MACHINETIER).getName(), getPropertyString(blockStates));
+            }
+        });
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockItemRenderer() {
+        final String resourcePath = String.format("%s:%s-", Reference.MOD_ID, this.resourcePath);
+        final String badPath = String.format("%s:badblock", Reference.MOD_ID);
+
+        for (MachineTier machineTier : MachineTier.values()) {
+            if (!Arrays.asList(machineTiers).contains(machineTier)) {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), machineTier.getMeta(), new ModelResourceLocation(badPath, "inventory"));
+            } else {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), machineTier.getMeta(), new ModelResourceLocation(resourcePath + machineTier.getName(), "inventory"));
+            }
         }
-        return true;
     }
 
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState blockState = getActualState(state, world, pos);
-        return blockState.getValue(ACTIVE) ? 8 : 0;
-    }
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+        if (machineTiers.length == 0)
+            super.getSubBlocks(itemIn, tab, list);
 
-    @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
-        TileEntityFurnace tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityFurnace.class);
-        if (tileEntity != null && !tileEntity.isSmeltPaused()) {
-            super.breakBlock(world, blockPos, blockState);
-            return;
+        for (MachineTier machineTier : machineTiers) {
+            list.add(new ItemStack(this, 1, machineTier.getMeta()));
         }
-
-        TileHelper.DropItems(tileEntity, 0, 0);
-        TileHelper.DropItems(tileEntity, 2, 2);
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntityFurnace tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityFurnace.class);
-        if (tileEntity != null && tileEntity.canBeRotated()) {
-            return state.withProperty(FACING, tileEntity.getForward()).withProperty(ACTIVE, tileEntity.isMachineActive());
-        }
-        return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(MACHINETIER, MachineTier.byMeta(meta));
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, MACHINETIER, FACING, ACTIVE);
+    public int getMetaFromState(IBlockState state) {
+        MachineTier tier = state.getValue(MACHINETIER);
+        return tier.getMeta();
     }
 
-    @Override
-    public int damageDropped(IBlockState state) {
-        return getMetaFromState(state);
-    }
 }
