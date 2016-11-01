@@ -1,0 +1,2 @@
+include 'AALib'
+project(':AALib').projectDir = new File('AALib')

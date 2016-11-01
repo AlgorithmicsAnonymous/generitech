@@ -55,9 +55,6 @@ ext {
     curseReleaseType = "alpha"
 }
 
-sourceSets.main.java.srcDirs += 'AALib/src/main/java'
-sourceSets.main.resources.srcDirs += 'AALib/src/main/resources'
-
 version = minecraft_version + "-" + majorVersion + "." + minorVersion + "." + patchVersion
 archivesBaseName = cibasename
 group = "xyz.aadev.generitech"

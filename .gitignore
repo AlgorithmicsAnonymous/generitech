@@ -10,6 +10,7 @@
 !/LICENSE
 !/build.gradle
 !/build.properties
+!/settings.gradle
 !/build.bat
 !/build.sh
 !/gradle.properties
