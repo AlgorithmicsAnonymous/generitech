@@ -34,9 +34,13 @@
 
 package xyz.aadev.generitech.common.network;
 
+import net.minecraftforge.fml.relauncher.Side;
 import xyz.aadev.aalib.common.network.PacketHandlerBase;
+import xyz.aadev.generitech.common.network.messages.power.PacketPower;
 
 public class PacketHandler extends PacketHandlerBase {
     public static void init() {
+        getNetwork().registerMessage(PacketPower.ServerHandler.class, PacketPower.class, 0, Side.SERVER);
+        getNetwork().registerMessage(PacketPower.ClientHandler.class, PacketPower.class, 0, Side.CLIENT);
     }
 }

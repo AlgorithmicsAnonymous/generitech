@@ -34,28 +34,31 @@
 
 package xyz.aadev.generitech.common.config;
 
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import xyz.aadev.aalib.common.config.ConfigHandlerBase;
+import xyz.aadev.generitech.Reference;
 
-import java.io.File;
+public class Config  extends ConfigHandlerBase {
+    protected ConfigCategory GENERAL;
 
-public class Config {
-    public static Configuration configuration;
-
-    public static Configuration initConfig(File configFile) {
-        if (configuration == null) {
-            configuration = new Configuration(configFile);
-            loadConfiguration();
-        }
-        return configuration;
+    public Config() {
+        super(Reference.MOD_NAME + ".cfg", Reference.MOD_NAME);
     }
 
-    public static void loadConfiguration() {
-        ConfigWorldGen.init(configuration);
+    @Override
+    public void onConfigChanged() {
 
-        configuration.save();
     }
 
-    public class Category {
-        public static final String WORLDGEN = "worldgen";
+    @Override
+    protected void loadConfigurationCategories() {
+        this.GENERAL = this.getCategory("general", "General options");
+    }
+
+    @Override
+    protected void loadConfigurationValues() {
+
+        // WorldGen
     }
 }

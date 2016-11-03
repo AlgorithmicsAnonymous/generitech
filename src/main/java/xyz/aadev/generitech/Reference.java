@@ -50,6 +50,11 @@ public class Reference {
     public static final String PATH_INTEGRATIONS = PACKAGE_NAME + MOD_ID + ".common.integrations.";
     public static final double EPSILON = 0.00000001;
 
+    public static final class GUI_ID {
+        public static final int PULVERIZER = 0;
+        public static final int FURNACE = 1;
+    }
+
     private Reference() {
 
     }

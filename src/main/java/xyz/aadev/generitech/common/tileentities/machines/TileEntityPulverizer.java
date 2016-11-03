@@ -40,6 +40,7 @@ import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -52,12 +53,14 @@ import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.client.util.LanguageHelper;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.aalib.common.tileentities.TileEntityMachineBase;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.aalib.common.util.InventoryHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.Crushable;
 import xyz.aadev.generitech.api.util.MachineTier;
+import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
+import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
 
 import java.util.List;
 import java.util.Random;
@@ -177,6 +180,16 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         }
 
         return slots;
+    }
+
+    @Override
+    public Object getClientGuiElement(int guiId, EntityPlayer player) {
+        return new GuiPulverizer(player.inventory, this);
+    }
+
+    @Override
+    public Object getServerGuiElement(int guiId, EntityPlayer player) {
+        return new ContainerPulverizer(player.inventory, this);
     }
 
     @Override

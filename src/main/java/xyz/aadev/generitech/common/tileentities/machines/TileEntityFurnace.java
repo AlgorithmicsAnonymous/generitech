@@ -36,6 +36,7 @@ package xyz.aadev.generitech.common.tileentities.machines;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -48,6 +49,9 @@ import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 import xyz.aadev.aalib.common.util.InventoryHelper;
 import xyz.aadev.generitech.api.util.MachineTier;
+import xyz.aadev.generitech.client.gui.machines.GuiFurnace;
+import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
+import xyz.aadev.generitech.common.container.machines.ContainerFurnace;
 
 import java.util.List;
 
@@ -87,6 +91,16 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
     @Override
     public void onChangeInventory(IInventory inv, int slot, InventoryOperation operation, ItemStack removed, ItemStack added) {
 
+    }
+
+    @Override
+    public Object getClientGuiElement(int guiId, EntityPlayer player) {
+        return new GuiFurnace(player.inventory, this);
+    }
+
+    @Override
+    public Object getServerGuiElement(int guiId, EntityPlayer player) {
+        return new ContainerFurnace(player.inventory, this);
     }
 
     @Override

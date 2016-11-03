@@ -14,10 +14,8 @@ public class ConfigGui extends GuiConfig {
     public ConfigGui(GuiScreen parentScreen) {
         super(
                 parentScreen,
-                Arrays.asList(new IConfigElement[]{
-                        new ConfigElement(GeneriTech.configuration.getCategory(Config.Category.WORLDGEN))
-                }),
+                GeneriTech.getConfiguration().getConfigElements(),
                 Reference.MOD_ID, false, false, "GeneriTech Configuration");
-        titleLine2 = GeneriTech.configuration.getConfigFile().getAbsolutePath();
+        titleLine2 = GeneriTech.getConfiguration().toString();
     }
 }

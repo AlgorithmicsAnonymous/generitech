@@ -67,17 +67,27 @@ import java.util.concurrent.TimeUnit;
 @Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME, certificateFingerprint = Reference.FINGERPRINT, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUI_FACTORY)
 public class GeneriTech {
     @Mod.Instance(Reference.MOD_ID)
-    public static GeneriTech instance;
+    private static GeneriTech instance;
+
+    public static GeneriTech getInstance() {
+        return instance;
+    }
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    public static IProxy proxy;
+    private static IProxy proxy;
 
-    public static Configuration configuration;
+    public static IProxy getProxy() {
+        return proxy;
+    }
 
-    public static SimpleNetworkWrapper network;
+    private static Config configuration;
 
+    public static Config getConfiguration() {
+        return configuration;
+    }
 
     static {
+        configuration = new Config();
         FluidRegistry.enableUniversalBucket();
     }
 
@@ -86,16 +96,11 @@ public class GeneriTech {
         final Stopwatch watch = Stopwatch.createStarted();
         Logger.info("Pre Initialization ( started )");
 
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toLowerCase());
-        network.registerMessage(PacketPower.ServerHandler.class, PacketPower.class, 0, Side.SERVER);
-        network.registerMessage(PacketPower.ClientHandler.class, PacketPower.class, 0, Side.CLIENT);
-
-
         if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
             throw new OutdatedJavaException(String.format("%s requires Java 8 or newer, Please update your java", Reference.MOD_NAME));
         }
 
-        proxy.registerConfiguration(event.getSuggestedConfigurationFile());
+        configuration.onPreInit(event);
 
         proxy.registerBlocks();
         proxy.registerItems();
@@ -125,13 +130,16 @@ public class GeneriTech {
     public void init(FMLInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
         Logger.info("Initialization ( started )");
-
+        configuration.onInit(event);
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
 
-        WorldGen worldGen = new WorldGen();
-        GameRegistry.registerWorldGenerator(worldGen, 0);
-        MinecraftForge.EVENT_BUS.register(worldGen);
+        // TODO: Rewrite config system for WorldGen
+        // DO NOT ENABLE//
+        //WorldGen worldGen = new WorldGen();
+        //GameRegistry.registerWorldGenerator(worldGen, 0);
+        //MinecraftForge.EVENT_BUS.register(worldGen);
+        //DO NOT ENABLE //
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -147,7 +155,7 @@ public class GeneriTech {
     public void postInit(FMLPostInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
         Logger.info("Post Initialization ( started )");
-
+        configuration.onPostInit(event);
         IntegrationsManager.instance().postInit();
 
         Logger.info("Post Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
@@ -157,13 +165,5 @@ public class GeneriTech {
     public void onServerStarting(FMLServerStartingEvent event) {
         CommandWithSubCommands command = new CommandWithSubCommands("gtech");
         event.registerServerCommand(command);
-    }
-
-    @SubscribeEvent
-    public void onConfigurationChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equals(Reference.MOD_ID)) {
-            Config.loadConfiguration();
-            WorldGen.markChunksForRegen();
-        }
     }
 }

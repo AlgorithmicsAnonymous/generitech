@@ -78,13 +78,6 @@ public interface IProxy {
     void registerOreDict();
 
     /**
-     * Register Configuration
-     *
-     * @param configFile Configuration File
-     */
-    void registerConfiguration(File configFile);
-
-    /**
      * Register Pulverizer Recipes
      */
     void registerPulverizerRecipes();

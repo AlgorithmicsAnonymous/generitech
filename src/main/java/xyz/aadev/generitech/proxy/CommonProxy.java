@@ -40,6 +40,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import xyz.aadev.aalib.AALib;
 import xyz.aadev.aalib.api.common.util.IProvideEvent;
 import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideSmelting;
@@ -47,7 +48,7 @@ import xyz.aadev.aalib.common.util.FluidHelper;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.EnumOreType;
-import xyz.aadev.generitech.client.gui.GuiHandler;
+import xyz.aadev.aalib.common.gui.GuiHandler;
 import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.blocks.fluids.BlockFluidBlock;
 import xyz.aadev.generitech.common.config.Config;
@@ -182,16 +183,11 @@ public abstract class CommonProxy implements IProxy {
 
     @Override
     public void registerGUIs() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(GeneriTech.instance, new GuiHandler());
+        new GuiHandler(GeneriTech.getInstance());
     }
 
     @Override
     public void registerRenderers() {
         /** Client Side Only **/
-    }
-
-    @Override
-    public void registerConfiguration(File configFile) {
-        GeneriTech.configuration = Config.initConfig(configFile);
     }
 }

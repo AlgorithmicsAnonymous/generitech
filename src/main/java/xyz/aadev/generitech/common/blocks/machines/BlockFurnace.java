@@ -45,12 +45,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
 import xyz.aadev.aalib.common.util.TileHelper;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.client.gui.GuiHandler;
+import xyz.aadev.aalib.common.gui.GuiHandler;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityFurnace;
 
 public class BlockFurnace extends BlockMachineBase {
@@ -67,7 +68,7 @@ public class BlockFurnace extends BlockMachineBase {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            player.openGui(GeneriTech.instance, GuiHandler.FURNACE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.FURNACE, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }
