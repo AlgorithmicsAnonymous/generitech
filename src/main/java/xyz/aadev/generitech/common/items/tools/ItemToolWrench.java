@@ -64,7 +64,7 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe {
     private static IBlockState blockHarvest = null;
 
     public ItemToolWrench() {
-        super(3.0F, -2F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench");
+        super(2.0F, -2F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench");
         this.setUnlocalizedName("tool_wrench");
         this.setCreativeTab(GeneriTechTabs.TOOL);
         this.setInternalName("tool_wrench");

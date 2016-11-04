@@ -22,10 +22,15 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.aadev.generitech.common.blocks.BlockTierBase;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.api.util.MachineTier;
@@ -35,10 +40,12 @@ import javax.annotation.Nullable;
 public class BlockMachineMatrics extends BlockTierBase {
 
     public BlockMachineMatrics() {
-        super(Material.ROCK, "BadBlock", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        super(Material.ROCK, "machines/frame/frame", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1));
         this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("machineframe");
+        this.fullBlock = false;
+        this.setLightOpacity(0);
     }
 
     @Override
@@ -52,4 +59,23 @@ public class BlockMachineMatrics extends BlockTierBase {
 
         return true;
     }
+
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
+    {
+        return false;
+    }
+
 }

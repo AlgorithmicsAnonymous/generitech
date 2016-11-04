@@ -1,0 +1,19 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "all": "generitech:blocks/machines/FrameT1",
+			"particle": "generitech:blocks/machines/FrameT1"
+        },
+        "model": "generitech:frame_T1",
+		"transform":"forge:default-block",
+        "uvlock": true
+    },
+    "variants": {
+		"inventory":[{
+		}],
+        "normal": [{
+			"model": "generitech:frame_T1"
+        }]
+    }
+}
