@@ -33,7 +33,7 @@ import java.util.List;
 public class TileEntityPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
-    private int T0transfer = 100;
+    private int T0transfer = 120;
     private int fuelRemaining = 0;
     private Item lastFuelType;
     private int lastFuelValue;
@@ -44,6 +44,9 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
     }
 
 
+    public long powerStored(){
+        return container.getStoredPower();
+    }
 
     @Override
     public void update() {
@@ -87,16 +90,17 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
         World worldIn = getWorld();
         long inputba = TeslaUtils.distributePowerToAllFaces(worldIn,pos,T0transfer,true);
         long test = inputba / T0transfer;
-        if (inputba!=0 && container.getStoredPower() > test){
+        if (test==0)test=1;
+        if (inputba!=0 && test != 0 && container.getStoredPower() > test){
             long input = inputba/test;
-                if (container.getStoredPower()>=inputba){
+            if (container.getStoredPower()>=inputba){
                     container.takePower(inputba,false);
                     TeslaUtils.distributePowerToAllFaces(worldIn,pos,input,false);
-                }else if (container.getStoredPower()<inputba){
+            }else if (container.getStoredPower()<inputba){
                     long toMoveUnder = container.getStoredPower()/test;
                     container.takePower(container.getStoredPower(),false);
                     TeslaUtils.distributePowerToAllFaces(worldIn,pos,toMoveUnder,false);
-                }
+            }
 
         }
 
@@ -157,7 +161,7 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
     @Override
     public List<String> getWailaBodyToolTip(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
-        currentTip.add(LanguageHelper.LABEL.translateMessage("Power") + Long.toString(container.getStoredPower()));
+        currentTip.add(Long.toString(container.getStoredPower()));
 
         return currentTip;
     }
