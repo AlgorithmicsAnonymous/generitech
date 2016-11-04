@@ -36,20 +36,13 @@ package xyz.aadev.generitech;
 
 import com.google.common.base.Stopwatch;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
 import xyz.aadev.aalib.common.command.CommandWithSubCommands;
@@ -57,9 +50,7 @@ import xyz.aadev.aalib.common.integrations.IntegrationsManager;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.generitech.api.exceptions.OutdatedJavaException;
 import xyz.aadev.generitech.common.config.Config;
-import xyz.aadev.generitech.common.network.PacketHandler;
-import xyz.aadev.generitech.common.network.messages.power.PacketPower;
-import xyz.aadev.generitech.common.world.WorldGen;
+import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.proxy.IProxy;
 
 import java.util.concurrent.TimeUnit;
@@ -145,7 +136,7 @@ public class GeneriTech {
 
         IntegrationsManager.instance().init();
 
-        PacketHandler.init();
+        Network.init();
 
         Logger.info("Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }
