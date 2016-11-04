@@ -1,7 +1,9 @@
+# Creative Tabs
 itemGroup.generitech.general=GeneriTech General
 itemGroup.generitech.ore=GeneriTech Ores
 itemGroup.generitech.tools=GeneriTech Gadgets
 
+# Machines
 tile.generitech.pulverizer.t0.name=Pulverizer (T0)
 tile.generitech.pulverizer.t1.name=Pulverizer (T1)
 tile.generitech.pulverizer.t2.name=Pulverizer (T2)
@@ -10,28 +12,38 @@ tile.generitech.furnace.t1.name=Powered Furnace (T1)
 tile.generitech.furnace.t2.name=Powered Furnace (T2)
 tile.generitech.furnace.t3.name=Powered Furnace (T3)
 
+# Metal Blocks
+tile.generitech.oreblock.tin.name=Tin Block
+tile.generitech.oreblock.copper.name=Copper Block
+tile.generitech.oreblock.lead.name=Lead Block
+
+# Ores
 tile.generitech.ore.tin.name=Tin Ore
 tile.generitech.ore.copper.name=Copper Ore
 tile.generitech.ore.lead.name=Lead Ore
 
+# Tools
 item.generitech.tool_wrench.name=Combination Wrench
 
+# Ingots
 item.generitech.oreingot.tin.name=Tin Ingot
 item.generitech.oreingot.copper.name=Copper Ingot
 item.generitech.oreingot.lead.name=Lead Ingot
 
+# Nuggets
 item.generitech.orenugget.tin.name=Tin Nugget
 item.generitech.orenugget.copper.name=Copper Nugget
 item.generitech.orenugget.lead.name=Lead Nugget
 item.generitech.orenugget.iron.name=Iron Nugget
 
+# Dust
 item.generitech.oredust.tin.name=Tin Dust
 item.generitech.oredust.copper.name=Copper Dust
 item.generitech.oredust.lead.name=Lead Dust
 item.generitech.oredust.gold.name=Gold Dust
 item.generitech.oredust.iron.name=Iron Dust
 
-# Tool Tips
+# Tooltips
 tile.generitech.ore.copper.tooltip=It's Copper. What else is there to know?
 tile.generitech.ore.tin.tooltip=Another staple of your average tech mod.
 tile.generitech.ore.lead.tooltip=Life Pro Tip: Do not ingest this stuff.
