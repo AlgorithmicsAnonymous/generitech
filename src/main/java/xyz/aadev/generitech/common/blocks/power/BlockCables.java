@@ -3,9 +3,10 @@ package xyz.aadev.generitech.common.blocks.power;
 
 import ibxm.Player;
 import net.minecraft.tileentity.TileEntity;
+import xyz.aadev.aalib.common.gui.GuiHandler;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.generitech.GeneriTech;
-import xyz.aadev.generitech.client.gui.GuiHandler;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
@@ -49,7 +50,7 @@ public class BlockCables extends BlockMachineBase {
         if (!world.isRemote) {
             Logger.info(Long.toString(((TileEntityPower) tileEntity).powerStored()));
 
-            player.openGui(GeneriTech.instance, GuiHandler.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
 
         }

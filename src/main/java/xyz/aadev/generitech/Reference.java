@@ -53,6 +53,7 @@ public class Reference {
     public static final class GUI_ID {
         public static final int PULVERIZER = 0;
         public static final int FURNACE = 1;
+        public static final int GENERATOR_GUI = 2;
     }
 
     private Reference() {

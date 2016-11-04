@@ -10,6 +10,7 @@ import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,11 +27,16 @@ import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
+import xyz.aadev.generitech.client.gui.power.GuiGenerator;
+import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
+import xyz.aadev.generitech.common.container.power.ContanierGenerator;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityPower extends TileEntityInventoryBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
+public class TileEntityPower extends TileEntityMachineBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
     private int T0transfer = 120;
@@ -38,6 +44,16 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
     private Item lastFuelType;
     private int lastFuelValue;
     private int fuelTotal = 0;
+
+    @Override
+    public Object getClientGuiElement(int guiId, EntityPlayer player) {
+        return new GuiGenerator(player.inventory, this);
+    }
+
+    @Override
+    public Object getServerGuiElement(int guiId, EntityPlayer player) {
+        return new ContanierGenerator(player.inventory, this);
+    }
 
     @Override
     public long takePower(long power, boolean simulated) {
