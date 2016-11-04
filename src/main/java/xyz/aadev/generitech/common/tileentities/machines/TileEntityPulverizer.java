@@ -241,12 +241,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
-
-        if (machineTier == MachineTier.TIER_0 && container.getInputRate()!=0)container.setInputRate(0);
-
         //checking for the machine type
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
+
+        if (machineTier == MachineTier.TIER_0 && container.getInputRate()!=0)container.setInputRate(0);
 
         if (!canWork()) {
             machineActive = false;
