@@ -58,10 +58,8 @@ import java.util.Set;
 
 public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe {
 
-    public static Set blocksEffectiveAgainst = Sets.newHashSet(new Block[]{});
-    public static boolean canHarvest = false;
-    public static ToolMaterial toolMaterial = EnumHelper.addToolMaterial("GENERITECH_WRENCH", 3, 160, 8.0F, 3.0F, 18);
-    private static IBlockState blockHarvest = null;
+    protected static Set blocksEffectiveAgainst = Sets.newHashSet(new Block[]{});
+    protected static ToolMaterial toolMaterial = EnumHelper.addToolMaterial("GENERITECH_WRENCH", 3, 160, 8.0F, 3.0F, 18);
 
     public ItemToolWrench() {
         super(2.0F, -2F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench");
@@ -79,13 +77,13 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe {
     public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         Block block = world.getBlockState(pos).getBlock();
 
-        if (block != null && !player.isSneaking()) {
+        if (block != null && !player.isSneaking() && !world.isRemote) {
             if (Platform.isClient())
-                return !world.isRemote ? EnumActionResult.FAIL : EnumActionResult.PASS;
+                return EnumActionResult.PASS;
 
             if (block.rotateBlock(world, pos, side)) {
                 player.swingArm(hand);
-                return !world.isRemote ? EnumActionResult.FAIL : EnumActionResult.PASS;
+                return EnumActionResult.PASS;
             }
         }
 
