@@ -41,7 +41,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
+import scala.Int;
 import xyz.aadev.aalib.client.util.LanguageHelper;
+import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.GuiHelper;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.GuiBase;
@@ -89,10 +91,6 @@ public class GuiPulverizer extends GuiBase {
             if (tileEntity.getPower() > 48000) powerLevel = 25;
             if (tileEntity.getPower() == 0) powerLevel = -1;
             int power = powerLevel - 25;
-
-
-            //System.out.println(power);
-            //System.out.println(powerLevel);
             drawTexturedModalRect(paramInt1 + 18, paramInt2 + 31 - power, 176, 70 - powerLevel, 25, 25);
 
         }
