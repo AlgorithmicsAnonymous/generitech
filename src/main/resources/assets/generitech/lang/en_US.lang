@@ -1,7 +1,10 @@
+# Creative Tabs
 itemGroup.generitech.general=GeneriTech General
 itemGroup.generitech.ore=GeneriTech Ores
 itemGroup.generitech.tools=GeneriTech Gadgets
+itemGroup.generitech.fluids=GeneriTech Fluids
 
+# Machines
 tile.generitech.pulverizer.t0.name=Pulverizer (T0)
 tile.generitech.pulverizer.t1.name=Pulverizer (T1)
 tile.generitech.pulverizer.t2.name=Pulverizer (T2)
@@ -9,32 +12,64 @@ tile.generitech.pulverizer.t3.name=Pulverizer (T3)
 tile.generitech.furnace.t1.name=Powered Furnace (T1)
 tile.generitech.furnace.t2.name=Powered Furnace (T2)
 tile.generitech.furnace.t3.name=Powered Furnace (T3)
+tile.generitech.machineframe.t1.name=Machine Frame (T1)
+tile.generitech.machineframe.t2.name=Machine Frame (T2)
+tile.generitech.machineframe.t3.name=Machine Frame (T3)
 
+# Metal Blocks
+tile.generitech.oreblock.tin.name=Tin Block
+tile.generitech.oreblock.copper.name=Copper Block
+tile.generitech.oreblock.lead.name=Lead Block
+
+# Ores
 tile.generitech.ore.tin.name=Tin Ore
 tile.generitech.ore.copper.name=Copper Ore
 tile.generitech.ore.lead.name=Lead Ore
 
+# Tools
 item.generitech.tool_wrench.name=Combination Wrench
 
+# Debug
+item.generitech.worldgenwand.name=Orecle
+
+# Ingots
 item.generitech.oreingot.tin.name=Tin Ingot
 item.generitech.oreingot.copper.name=Copper Ingot
 item.generitech.oreingot.lead.name=Lead Ingot
 
+# Nuggets
 item.generitech.orenugget.tin.name=Tin Nugget
 item.generitech.orenugget.copper.name=Copper Nugget
 item.generitech.orenugget.lead.name=Lead Nugget
 item.generitech.orenugget.iron.name=Iron Nugget
 
+# Dust
 item.generitech.oredust.tin.name=Tin Dust
 item.generitech.oredust.copper.name=Copper Dust
 item.generitech.oredust.lead.name=Lead Dust
 item.generitech.oredust.gold.name=Gold Dust
 item.generitech.oredust.iron.name=Iron Dust
 
-# Tool Tips
+# Gears
+item.generitech.materialgear.stone.name=Stone Gear
+item.generitech.materialgear.iron.name=Iron Gear
+item.generitech.materialgear.gold.name=Gold Gear
+item.generitech.materialgear.tin.name=Tin Gear
+item.generitech.materialgear.copper.name=Copper Gear
+
+# Fluids
+fluid.generitech.iron.name=Molten Iron
+fluid.generitech.gold.name=Molten Gold
+fluid.generitech.copper.name=Molten Copper
+fluid.generitech.tin.name=Molten Tin
+fluid.generitech.lead.name=Molten Lead
+
+# Tooltips
 tile.generitech.ore.copper.tooltip=It's Copper. What else is there to know?
 tile.generitech.ore.tin.tooltip=Another staple of your average tech mod.
-tile.generitech.ore.lead.tooltip=Life Pro Tip: Do not ingest this stuff.
+tile.generitech.ore.lead.tooltip=Life Pro Tip: Do not ingest.
+item.generitech.worldgenwand.tooltip=§4WARNING: Destroys blocks! For debug use only!
+item.generitech.worldgenwand.tooltip2=Removes all non-ore blocks in a 30m square radius.
 
 # Label
 label.generitech.time_left=Time Remaining
