@@ -37,6 +37,7 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
     private int fuelRemaining = 0;
     private Item lastFuelType;
     private int lastFuelValue;
+    private int fuelTotal = 0;
 
     @Override
     public long takePower(long power, boolean simulated) {
@@ -79,6 +80,7 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
                 lastFuelValue = fuelRemaining;
             }
             fuelRemaining = fuelRemaining/10;
+            fuelTotal = fuelRemaining;
             inventory.decrStackSize(0, 1);
             this.markDirty();
             this.markForUpdate();
@@ -196,5 +198,11 @@ public class TileEntityPower extends TileEntityInventoryBase implements ITeslaPr
             return true;
 
         return super.hasCapability(capability, facing);
+    }
+    public int getFuelOffset() {
+        if (fuelTotal == 0)
+            return +14;
+
+        return Math.round((((float) fuelTotal - (float) fuelRemaining) / (float) fuelTotal) * 13);
     }
 }
