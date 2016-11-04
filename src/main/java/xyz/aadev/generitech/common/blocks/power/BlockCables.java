@@ -1,6 +1,13 @@
 package xyz.aadev.generitech.common.blocks.power;
 
 
+import ibxm.Player;
+import net.minecraft.tileentity.TileEntity;
+import xyz.aadev.aalib.common.gui.GuiHandler;
+import xyz.aadev.aalib.common.logging.Logger;
+import xyz.aadev.generitech.GeneriTech;
+import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import net.minecraft.block.material.Material;
@@ -23,7 +30,11 @@ import java.util.Random;
 
 public class BlockCables extends BlockMachineBase {
 
+
+
     public BlockCables() {
+
+
         super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
         this.setTileEntity(TileEntityPower.class);
@@ -34,7 +45,13 @@ public class BlockCables extends BlockMachineBase {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity;
+        tileEntity = world.getTileEntity(pos);
         if (!world.isRemote) {
+            Logger.info(Long.toString(((TileEntityPower) tileEntity).powerStored()));
+
+            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+
 
         }
         return true;
