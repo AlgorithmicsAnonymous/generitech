@@ -42,7 +42,7 @@ public class Reference {
     public static final String MOD_NAME = "GeneriTech";
     public static final String VERSION_BUILD = "@VERSION@";
     public static final String MINECRAFT_VERSION = "@MCVERSION@";
-    public static final String DEPENDENCIES = "required-after:tesla@[Tesla-1.10.2-1.2.1.49,)";
+    public static final String DEPENDENCIES = "required-after:aalib;required-after:tesla@[Tesla-1.10.2-1.2.1.49,)";
     public static final String CLIENT_PROXY_CLASS = PACKAGE_NAME + MOD_ID + ".proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = PACKAGE_NAME + MOD_ID + ".proxy.ServerProxy";
     public static final String FINGERPRINT = "@FINGERPRINT@";
@@ -50,14 +50,14 @@ public class Reference {
     public static final String PATH_INTEGRATIONS = PACKAGE_NAME + MOD_ID + ".common.integrations.";
     public static final double EPSILON = 0.00000001;
 
+    private Reference() {
+
+    }
+
     public static final class GUI_ID {
         public static final int PULVERIZER = 0;
         public static final int FURNACE = 1;
         public static final int GENERATOR_GUI = 2;
-    }
-
-    private Reference() {
-
     }
 
     public static final class Commands {

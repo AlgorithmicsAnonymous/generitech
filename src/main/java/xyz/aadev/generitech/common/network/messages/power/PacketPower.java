@@ -6,9 +6,7 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import xyz.aadev.aalib.common.logging.Logger;
-import xyz.aadev.aalib.common.network.PacketBase;
 import xyz.aadev.aalib.common.network.PacketBaseThreadSafe;
 
 public class PacketPower extends PacketBaseThreadSafe {

@@ -50,10 +50,8 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
-import xyz.aadev.aalib.client.util.LanguageHelper;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.aalib.common.util.InventoryHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.registries.PulverizerRegistry;
@@ -61,6 +59,8 @@ import xyz.aadev.generitech.api.util.Crushable;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
+import xyz.aadev.generitech.common.util.LanguageHelper;
 
 import java.util.List;
 import java.util.Random;
@@ -216,6 +216,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return container.getStoredPower() >= powerUsage;
         }
     }
+
     //checks if it can crush
     public boolean cancrush(ItemStack item) {
         return PulverizerRegistry.containsInput(item);
@@ -245,7 +246,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());
 
-        if (machineTier == MachineTier.TIER_0 && container.getInputRate()!=0)container.setInputRate(0);
+        if (machineTier == MachineTier.TIER_0 && container.getInputRate() != 0) container.setInputRate(0);
 
         if (!canWork()) {
             machineActive = false;

@@ -19,22 +19,19 @@ package xyz.aadev.generitech.client.gui.power;/*
 
 import net.darkhax.tesla.lib.TeslaUtils;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
+import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.client.gui.GuiBase;
-import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
 import java.util.ArrayList;
 
 public class GuiGenerator extends GuiBase {
+    Rectangle powerBar;
     private TileEntityPower tileEntity;
     private MachineTier machineTier;
-    Rectangle powerBar;
 
     public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
         super(new ContanierGenerator(inventoryPlayer, tileEntity));
@@ -42,14 +39,13 @@ public class GuiGenerator extends GuiBase {
         this.ySize = 166;
         this.tileEntity = tileEntity;
         this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
-        powerBar = new Rectangle(98, 30, 14,28);
+        powerBar = new Rectangle(98, 30, 14, 28);
     }
 
     @Override
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         bindTexture("gui/power/generator.png");
         drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-
 
 
         int powerLevel = (int) (tileEntity.powerStored() / 2000 + 1);
@@ -62,17 +58,16 @@ public class GuiGenerator extends GuiBase {
         drawTexturedModalRect(paramInt1 + 65, paramInt2 + 53 + fireOffset, 176, 1 + fireOffset, 14, 14 - fireOffset);
 
 
-
     }
 
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 
-}
+    }
 
 
     @Override
-    public void drawScreen(int mouse_x, int mouse_y, float btn){
+    public void drawScreen(int mouse_x, int mouse_y, float btn) {
         super.drawScreen(mouse_x, mouse_y, btn);
         Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
         if (powerBar.contains(currentMouse)) {

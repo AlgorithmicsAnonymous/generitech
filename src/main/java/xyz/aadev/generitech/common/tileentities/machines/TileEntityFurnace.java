@@ -43,15 +43,14 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
-import xyz.aadev.aalib.client.util.LanguageHelper;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 import xyz.aadev.aalib.common.util.InventoryHelper;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.machines.GuiFurnace;
-import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
 import xyz.aadev.generitech.common.container.machines.ContainerFurnace;
+import xyz.aadev.generitech.common.util.LanguageHelper;
 
 import java.util.List;
 

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import xyz.aadev.aalib.common.network.NetworkWrapperBase;
 import xyz.aadev.aalib.common.network.PacketBase;
 import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.common.network.messages.ConfigSyncPacket;
 import xyz.aadev.generitech.common.network.messages.power.PacketPower;
 
 public class Network extends NetworkWrapperBase {
@@ -24,12 +25,13 @@ public class Network extends NetworkWrapperBase {
         return instance;
     }
 
-    public static void init(){
+    public static void init() {
         getInstance().registerPacket(PacketPower.class);
+        getInstance().registerPacketClient(ConfigSyncPacket.class);
     }
 
     public static void sendPacket(Entity player, Packet<?> packet) {
-        if(player instanceof EntityPlayerMP && ((EntityPlayerMP) player).connection != null) {
+        if (player instanceof EntityPlayerMP && ((EntityPlayerMP) player).connection != null) {
             ((EntityPlayerMP) player).connection.sendPacket(packet);
         }
     }
@@ -57,11 +59,11 @@ public class Network extends NetworkWrapperBase {
     public static void sendToClients(WorldServer worldServer, BlockPos blockPos, PacketBase packet) {
         Chunk chunk = worldServer.getChunkFromBlockCoords(blockPos);
         for (EntityPlayer player : worldServer.playerEntities) {
-            if(!(player instanceof EntityPlayerMP))
+            if (!(player instanceof EntityPlayerMP))
                 continue;
 
             EntityPlayerMP playerMP = (EntityPlayerMP) player;
-            if(worldServer.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.xPosition, chunk.zPosition)) {
+            if (worldServer.getPlayerChunkMap().isPlayerWatchingChunk(playerMP, chunk.xPosition, chunk.zPosition)) {
                 Network.sendTo(packet, playerMP);
             }
         }

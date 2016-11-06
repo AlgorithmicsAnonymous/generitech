@@ -25,6 +25,7 @@ import xyz.aadev.aalib.common.container.slot.SlotNormal;
 
 public class ContanierGenerator extends ContainerBase {
     IInventory inventory;
+
     public ContanierGenerator(InventoryPlayer inventoryPlayer, TileEntity tileEntity) {
         super(inventoryPlayer, tileEntity);
         this.inventory = (IInventory) tileEntity;

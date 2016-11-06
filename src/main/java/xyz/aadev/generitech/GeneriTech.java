@@ -43,14 +43,18 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.lang3.JavaVersion;
 import org.apache.commons.lang3.SystemUtils;
 import xyz.aadev.aalib.common.command.CommandWithSubCommands;
 import xyz.aadev.aalib.common.integrations.IntegrationsManager;
+import xyz.aadev.aalib.common.integrations.waila.Waila;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.generitech.api.exceptions.OutdatedJavaException;
 import xyz.aadev.generitech.common.config.Config;
+import xyz.aadev.generitech.common.config.ConfigSync;
 import xyz.aadev.generitech.common.network.Network;
+import xyz.aadev.generitech.common.world.WorldGen;
 import xyz.aadev.generitech.proxy.IProxy;
 
 import java.util.concurrent.TimeUnit;
@@ -59,27 +63,19 @@ import java.util.concurrent.TimeUnit;
 public class GeneriTech {
     @Mod.Instance(Reference.MOD_ID)
     private static GeneriTech instance;
+    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
+    private static IProxy proxy;
+
+    static {
+        FluidRegistry.enableUniversalBucket();
+    }
 
     public static GeneriTech getInstance() {
         return instance;
     }
 
-    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    private static IProxy proxy;
-
     public static IProxy getProxy() {
         return proxy;
-    }
-
-    private static Config configuration;
-
-    public static Config getConfiguration() {
-        return configuration;
-    }
-
-    static {
-        configuration = new Config();
-        FluidRegistry.enableUniversalBucket();
     }
 
     @Mod.EventHandler
@@ -91,7 +87,7 @@ public class GeneriTech {
             throw new OutdatedJavaException(String.format("%s requires Java 8 or newer, Please update your java", Reference.MOD_NAME));
         }
 
-        configuration.onPreInit(event);
+        Config.init(event);
 
         proxy.registerBlocks();
         proxy.registerItems();
@@ -110,9 +106,9 @@ public class GeneriTech {
 
         proxy.registerFluids();
 
+        IntegrationsManager.instance().RegisterIntegration("Waila", Waila.class);
         IntegrationsManager.instance().index();
         IntegrationsManager.instance().preInit();
-
 
         Logger.info("Pre Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }
@@ -121,16 +117,12 @@ public class GeneriTech {
     public void init(FMLInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
         Logger.info("Initialization ( started )");
-        configuration.onInit(event);
         proxy.registerRecipes();
         proxy.registerPulverizerRecipes();
 
-        // TODO: Rewrite config system for WorldGen
-        // DO NOT ENABLE//
-        //WorldGen worldGen = new WorldGen();
-        //GameRegistry.registerWorldGenerator(worldGen, 0);
-        //MinecraftForge.EVENT_BUS.register(worldGen);
-        //DO NOT ENABLE //
+        WorldGen worldGen = new WorldGen();
+        GameRegistry.registerWorldGenerator(worldGen, 0);
+        MinecraftForge.EVENT_BUS.register(worldGen);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -146,8 +138,11 @@ public class GeneriTech {
     public void postInit(FMLPostInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
         Logger.info("Post Initialization ( started )");
-        configuration.onPostInit(event);
         IntegrationsManager.instance().postInit();
+
+        if (event.getSide().isServer()) {
+            MinecraftForge.EVENT_BUS.register(new ConfigSync());
+        }
 
         Logger.info("Post Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }

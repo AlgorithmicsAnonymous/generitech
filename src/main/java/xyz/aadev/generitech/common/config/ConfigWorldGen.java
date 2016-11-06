@@ -34,21 +34,26 @@
 
 package xyz.aadev.generitech.common.config;
 
+import com.google.common.collect.Lists;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import xyz.aadev.aalib.common.logging.Logger;
-import xyz.aadev.aalib.common.util.ConfigHelper;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.util.EnumOres;
 import xyz.aadev.generitech.common.world.WorldGen;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ConfigWorldGenOld {
+public final class ConfigWorldGen {
     public static final Map<EnumOres, OreConfig> OreGenConfig = new HashMap<>(EnumOres.values().length);
     private static final Map<EnumOres, OreConfig> OreGenConfigDefaults = new HashMap<>(EnumOres.values().length);
     private static final int[] DEFAULT_DIMENSION_BLACKLIST = {-1, 1};
+
+    public static ConfigCategory Worldgen;
 
     static {
         for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
@@ -63,11 +68,11 @@ public class ConfigWorldGenOld {
 
             switch (ore) {
                 case COPPER:
-                    defaultConf.MinY = 10;
-                    defaultConf.MaxY = 75;
-                    defaultConf.MinVeinSize = 13;
-                    defaultConf.MaxVeinSize = 19;
-                    defaultConf.Weight = 40;
+                    defaultConf.MinY = 38;
+                    defaultConf.MaxY = 96;
+                    defaultConf.MinVeinSize = 6;
+                    defaultConf.MaxVeinSize = 12;
+                    defaultConf.Weight = 30;
                     break;
 
                 case TIN:
@@ -75,7 +80,7 @@ public class ConfigWorldGenOld {
                     defaultConf.MaxY = 55;
                     defaultConf.MinVeinSize = 7;
                     defaultConf.MaxVeinSize = 13;
-                    defaultConf.Weight = 40;
+                    defaultConf.Weight = 20;
                     break;
 
                 case LEAD:
@@ -101,11 +106,12 @@ public class ConfigWorldGenOld {
         }
     }
 
-    public static void init(Configuration config) {
-        config.setCategoryLanguageKey("", "config.worldgen");
-        config.setCategoryRequiresWorldRestart("", false);
+    public static void syncConfig(Configuration config) {
+        Property prop;
 
-        final String WORLDGEN_ORE = "" + ".ores";
+        final String worldgenCat = "worldgen";
+        List<String> propOrder = Lists.newArrayList();
+        Worldgen = config.getCategory(worldgenCat);
 
         final String DESC_RETROGEN_ENABLED = "Enable retrogen in world";
         final String DESC_ENABLED = "Enable %s in world generation";
@@ -119,63 +125,125 @@ public class ConfigWorldGenOld {
         final String DESC_DIM_RESTRICTION_LIST = "Dimension IDs to restrict ore spawning in";
         final String DESC_BIOME_RESTRICTION_TYPE = "Biome Restriction Type (Either 'blacklist' or 'whitelist')";
         final String DESC_BIOME_RESTRICTION_LIST = "Biome IDs to restrict ore spawning in";
+        {
+            prop = config.get(worldgenCat, "enableRetroGen", true);
+            prop.setComment(DESC_RETROGEN_ENABLED);
+            boolean retrogenEnabled = prop.getBoolean();
+            prop.setRequiresMcRestart(false);
+            propOrder.add(prop.getName());
 
-        boolean retrogenEnabled = ConfigHelper.getBoolean(config, "Enable RetroGen", WORLDGEN_ORE, true, DESC_RETROGEN_ENABLED);
-        WorldGen.setRetrogenEnabled(retrogenEnabled);
+            WorldGen.setRetrogenEnabled(retrogenEnabled);
+        }
+        {
+            for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
+                String oreName = ore.getOreName();
+                String oreNameLower = oreName.toLowerCase();
+                String oreCategory = worldgenCat + "." + oreName;
+                OreConfig defaultConf = OreGenConfigDefaults.get(ore);
+                List<String> propOrderOre = Lists.newArrayList();
 
-        for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
-            String oreName = ore.getOreName();
-            String oreNameLower = oreName.toLowerCase();
-            String oreCategory = WORLDGEN_ORE + "." + oreName;
-            OreConfig defaultConf = OreGenConfigDefaults.get(ore);
+                OreConfig oreConf;
 
-            OreConfig oreConf;
+                oreConf = OreGenConfig.containsKey(ore) ? OreGenConfig.get(ore) : new OreConfig();
 
-            oreConf = OreGenConfig.containsKey(ore) ? OreGenConfig.get(ore) : new OreConfig();
+                prop = config.get(oreCategory, "enabled", defaultConf.Enabled);
+                prop.setComment(String.format(DESC_ENABLED, oreNameLower));
+                oreConf.Enabled = prop.getBoolean();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
 
-            oreConf.Enabled = ConfigHelper.getBoolean(config, String.format("Enable %s", oreName), WORLDGEN_ORE, defaultConf.Enabled, String.format(DESC_ENABLED, oreNameLower));
+                prop = config.get(oreCategory, "minY", defaultConf.MinY);
+                prop.setComment(String.format(DESC_MIN_Y, oreNameLower));
+                oreConf.MinY = prop.getInt();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
 
-            oreConf.MinY = ConfigHelper.getInteger(config, "Min Y", oreCategory, defaultConf.MinY, String.format(DESC_MIN_Y, oreNameLower));
-            oreConf.MaxY = ConfigHelper.getInteger(config, "Max Y", oreCategory, defaultConf.MaxY, String.format(DESC_MAX_Y, oreNameLower));
-            if (oreConf.MinY >= oreConf.MaxY) {
-                Logger.warn(String.format("%s Max Y must be greater than Min Y. Y Levels internally set to default. Please fix your config setting!", oreName));
-                oreConf.MinY = defaultConf.MinY;
-                oreConf.MaxY = defaultConf.MaxY;
+                prop = config.get(oreCategory, "maxY", defaultConf.MaxY);
+                prop.setComment(String.format(DESC_MAX_Y, oreNameLower));
+                oreConf.MaxY = prop.getInt();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                if (oreConf.MinY >= oreConf.MaxY) {
+                    Logger.warn(String.format("%s Max Y must be greater than Min Y. Y Levels internally set to default. Please fix your config setting!", oreName));
+                    oreConf.MinY = defaultConf.MinY;
+                    oreConf.MaxY = defaultConf.MaxY;
+                }
+
+                prop = config.get(oreCategory, "minVeinSize", defaultConf.MinVeinSize);
+                prop.setComment(String.format(DESC_MIN_VEIN_SIZE, oreNameLower));
+                oreConf.MinVeinSize = prop.getInt();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                prop = config.get(oreCategory, "maxVeinSize", defaultConf.MaxVeinSize);
+                prop.setComment(String.format(DESC_MAX_VEIN_SIZE, oreNameLower));
+                oreConf.MaxVeinSize = prop.getInt();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                if (oreConf.MinVeinSize >= oreConf.MaxVeinSize) {
+                    Logger.warn(String.format("%s Max Vein Size must be greater than Min Vein Size. Vein Sizes internally set to default. Please fix your config setting!", oreName));
+                    oreConf.MinVeinSize = defaultConf.MinVeinSize;
+                    oreConf.MaxVeinSize = defaultConf.MaxVeinSize;
+                }
+
+                prop = config.get(oreCategory, "weight", defaultConf.Weight);
+                prop.setComment(String.format(DESC_WEIGHT, oreNameLower));
+                oreConf.Weight = prop.getInt();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                if (oreConf.Weight < 0) {
+                    Logger.warn(String.format("%s Weight must be greater than 0. Weight internally set to default. Please fix your config setting!", oreName));
+                    oreConf.Weight = defaultConf.Weight;
+                }
+
+                prop = config.get(oreCategory, "chunkOccurrence", defaultConf.ChunkOccurrence);
+                prop.setComment(String.format(DESC_CHUNK_OCCURRENCE, oreNameLower));
+                oreConf.ChunkOccurrence = prop.getInt();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                if (oreConf.ChunkOccurrence < 0) {
+                    Logger.warn(String.format("%s ChunkOccurrence must be greater than 0. ChunkOccurrence internally set to default. Please fix your config setting!", oreName));
+                    oreConf.ChunkOccurrence = defaultConf.ChunkOccurrence;
+                }
+
+                String defaultDimRestriction = defaultConf.DimensionRestriction.name().toLowerCase();
+
+                prop = config.get(oreCategory, "dimRestrictionType", defaultDimRestriction);
+                prop.setComment(DESC_DIM_RESTRICTION_TYPE);
+                String dimensionRestriction = prop.getString();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                oreConf.DimensionRestriction = RestrictionType.fromString(dimensionRestriction, defaultConf.DimensionRestriction);
+
+                prop = config.get(oreCategory, "dimensionList", defaultConf.Dimensions);
+                prop.setComment(DESC_DIM_RESTRICTION_LIST);
+                oreConf.Dimensions = prop.getIntList();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                String defaultBiomeRestriction = defaultConf.BiomeRestriction.name().toLowerCase();
+
+                prop = config.get(oreCategory, "biomeRestrictionType", defaultBiomeRestriction);
+                prop.setComment(DESC_BIOME_RESTRICTION_TYPE);
+                String biomeRestriction = prop.getString();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                oreConf.BiomeRestriction = RestrictionType.fromString(biomeRestriction, defaultConf.BiomeRestriction);
+
+                prop = config.get(oreCategory, "biomeList", defaultConf.Biomes);
+                prop.setComment(DESC_BIOME_RESTRICTION_LIST);
+                oreConf.Biomes = prop.getStringList();
+                prop.setRequiresMcRestart(false);
+                propOrder.add(prop.getName());
+
+                OreGenConfig.put(ore, oreConf);
             }
-
-            oreConf.MinVeinSize = ConfigHelper.getInteger(config, "Min Vein Size", oreCategory, defaultConf.MinVeinSize, String.format(DESC_MIN_VEIN_SIZE, oreNameLower));
-            oreConf.MaxVeinSize = ConfigHelper.getInteger(config, "Max Vein Size", oreCategory, defaultConf.MaxVeinSize, String.format(DESC_MAX_VEIN_SIZE, oreNameLower));
-            if (oreConf.MinVeinSize >= oreConf.MaxVeinSize) {
-                Logger.warn(String.format("%s Max Vein Size must be greater than Min Vein Size. Vein Sizes internally set to default. Please fix your config setting!", oreName));
-                oreConf.MinVeinSize = defaultConf.MinVeinSize;
-                oreConf.MaxVeinSize = defaultConf.MaxVeinSize;
-            }
-
-            oreConf.Weight = ConfigHelper.getInteger(config, "Weight", oreCategory, defaultConf.Weight, String.format(DESC_WEIGHT, oreNameLower));
-            if (oreConf.Weight < 0) {
-                Logger.warn(String.format("%s Weight must be greater than 0. Weight internally set to default. Please fix your config setting!", oreName));
-                oreConf.Weight = defaultConf.Weight;
-            }
-
-            oreConf.ChunkOccurrence = ConfigHelper.getInteger(config, "ChunkOccurrence", oreCategory, defaultConf.ChunkOccurrence, String.format(DESC_CHUNK_OCCURRENCE, oreNameLower));
-            if (oreConf.ChunkOccurrence < 0) {
-                Logger.warn(String.format("%s ChunkOccurrence must be greater than 0. ChunkOccurrence internally set to default. Please fix your config setting!", oreName));
-                oreConf.ChunkOccurrence = defaultConf.ChunkOccurrence;
-            }
-
-            String defaultDimRestriction = defaultConf.DimensionRestriction.name().toLowerCase();
-            String dimensionRestriction = ConfigHelper.getString(config, "DimRestrictionType", oreCategory, defaultDimRestriction, DESC_DIM_RESTRICTION_TYPE);
-            oreConf.DimensionRestriction = RestrictionType.fromString(dimensionRestriction, defaultConf.DimensionRestriction);
-
-            oreConf.Dimensions = ConfigHelper.getIntegerList(config, "DimensionList", oreCategory, defaultConf.Dimensions, DESC_DIM_RESTRICTION_LIST);
-
-            String defaultBiomeRestriction = defaultConf.BiomeRestriction.name().toLowerCase();
-            String biomeRestriction = ConfigHelper.getString(config, "BiomeRestrictionType", oreCategory, defaultBiomeRestriction, DESC_BIOME_RESTRICTION_TYPE);
-            oreConf.BiomeRestriction = RestrictionType.fromString(biomeRestriction, defaultConf.BiomeRestriction);
-
-            oreConf.Biomes = ConfigHelper.getStringList(config, "BiomeList", oreCategory, defaultConf.Biomes, DESC_BIOME_RESTRICTION_LIST);
-
-            OreGenConfig.put(ore, oreConf);
         }
     }
 

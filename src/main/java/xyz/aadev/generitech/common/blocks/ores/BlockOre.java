@@ -38,7 +38,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -47,6 +46,7 @@ import xyz.aadev.aalib.common.blocks.BlockBase;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.util.EnumOres;
+import xyz.aadev.generitech.common.util.LanguageHelper;
 
 import java.util.List;
 
@@ -93,8 +93,7 @@ public class BlockOre extends BlockBase {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-        String name = super.getUnlocalizedName();
         String oreName = EnumOres.byMeta(stack.getItemDamage()).getName();
-        tooltip.add(I18n.format(name + "." + oreName + ".tooltip"));
+        tooltip.add(LanguageHelper.TOOLTIP.translateMessage(String.format("%s.ore", oreName)));
     }
 }

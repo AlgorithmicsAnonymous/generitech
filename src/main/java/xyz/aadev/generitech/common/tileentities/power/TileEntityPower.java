@@ -3,33 +3,24 @@ package xyz.aadev.generitech.common.tileentities.power;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
-import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
-import xyz.aadev.aalib.client.util.LanguageHelper;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
 import xyz.aadev.generitech.client.gui.power.GuiGenerator;
-import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
@@ -61,7 +52,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
     }
 
 
-    public long powerStored(){
+    public long powerStored() {
         return container.getStoredPower();
     }
 
@@ -70,15 +61,15 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         BlockPos pos = getPos();
         World worldIn = getWorld();
 
-        if (fuelRemaining!=0)fuelRemaining--;
-        if ( fuelRemaining > 0){
-         container.givePower(60,false);
+        if (fuelRemaining != 0) fuelRemaining--;
+        if (fuelRemaining > 0) {
+            container.givePower(60, false);
         }
-        if (container.getStoredPower() != container.getCapacity()&& inventory.getStackInSlot(0)!=null||container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0)!=null){
+        if (container.getStoredPower() != container.getCapacity() && inventory.getStackInSlot(0) != null || container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0) != null) {
             burnTime();
         }
 
-        if (container.getStoredPower()!=0){
+        if (container.getStoredPower() != 0) {
             transferPower();
         }
 
@@ -86,7 +77,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
 
     public void burnTime() {
         if (fuelRemaining == 0) {
-            if (inventory.getStackInSlot(0).getItem() == lastFuelType ) {
+            if (inventory.getStackInSlot(0).getItem() == lastFuelType) {
                 fuelRemaining = lastFuelValue;
 
 
@@ -95,7 +86,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
                 lastFuelType = inventory.getStackInSlot(0).getItem();
                 lastFuelValue = fuelRemaining;
             }
-            fuelRemaining = fuelRemaining/10;
+            fuelRemaining = fuelRemaining / 10;
             fuelTotal = fuelRemaining;
             inventory.decrStackSize(0, 1);
             this.markDirty();
@@ -103,30 +94,27 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         }
     }
 
-    public void transferPower(){
+    public void transferPower() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
-        long inputba = TeslaUtils.distributePowerToAllFaces(worldIn,pos,T0transfer,true);
+        long inputba = TeslaUtils.distributePowerToAllFaces(worldIn, pos, T0transfer, true);
         long test = inputba / T0transfer;
-        if (test==0)test=1;
-        if (inputba!=0 && test != 0 && container.getStoredPower() > test){
-            long input = inputba/test;
-            if (container.getStoredPower()>=inputba){
-                    container.takePower(inputba,false);
-                    TeslaUtils.distributePowerToAllFaces(worldIn,pos,input,false);
-            }else if (container.getStoredPower()<inputba){
-                    long toMoveUnder = container.getStoredPower()/test;
-                    container.takePower(container.getStoredPower(),false);
-                    TeslaUtils.distributePowerToAllFaces(worldIn,pos,toMoveUnder,false);
+        if (test == 0) test = 1;
+        if (inputba != 0 && test != 0 && container.getStoredPower() > test) {
+            long input = inputba / test;
+            if (container.getStoredPower() >= inputba) {
+                container.takePower(inputba, false);
+                TeslaUtils.distributePowerToAllFaces(worldIn, pos, input, false);
+            } else if (container.getStoredPower() < inputba) {
+                long toMoveUnder = container.getStoredPower() / test;
+                container.takePower(container.getStoredPower(), false);
+                TeslaUtils.distributePowerToAllFaces(worldIn, pos, toMoveUnder, false);
             }
 
         }
 
 
-
     }
-
-
 
 
     @Override
@@ -215,6 +203,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
 
         return super.hasCapability(capability, facing);
     }
+
     public int getFuelOffset() {
         if (fuelTotal == 0)
             return +14;

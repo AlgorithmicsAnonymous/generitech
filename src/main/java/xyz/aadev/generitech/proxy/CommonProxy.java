@@ -38,25 +38,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import xyz.aadev.aalib.AALib;
 import xyz.aadev.aalib.api.common.util.IProvideEvent;
 import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideSmelting;
+import xyz.aadev.aalib.common.gui.GuiHandler;
 import xyz.aadev.aalib.common.util.FluidHelper;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.EnumOreType;
-import xyz.aadev.aalib.common.gui.GuiHandler;
 import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.blocks.fluids.BlockFluidBlock;
-import xyz.aadev.generitech.common.config.Config;
 import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.util.EnumOres;
 import xyz.aadev.generitech.common.world.WorldGen;
-
-import java.io.File;
 
 public abstract class CommonProxy implements IProxy {
 

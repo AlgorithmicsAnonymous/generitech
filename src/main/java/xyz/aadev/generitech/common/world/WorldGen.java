@@ -51,11 +51,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.WorldInfoHelper;
-import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.blocks.Blocks;
-import xyz.aadev.generitech.common.config.ConfigWorldGenOld;
+import xyz.aadev.generitech.common.config.ConfigWorldGen;
 import xyz.aadev.generitech.common.util.EnumOres;
 
 import java.util.*;
@@ -76,12 +75,12 @@ public class WorldGen implements IWorldGenerator {
     public static void init() {
         for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
             // Always add ores, in case they get enabled at runtime
-            //ConfigWorldGen.OreConfig config = GeneriTech.getConfiguration().WORLDGEN.OreGenConfig.get(ore);
-            //WorldGen.addOreGen(ore.getName(), Blocks.BLOCK_ORE.getBlock().getStateFromMeta(ore.getMeta()), config);
+            ConfigWorldGen.OreConfig config = ConfigWorldGen.OreGenConfig.get(ore);
+            WorldGen.addOreGen(ore.getName(), Blocks.BLOCK_ORE.getBlock().getStateFromMeta(ore.getMeta()), config);
         }
     }
 
-    public static OreGen addOreGen(String name, IBlockState block, ConfigWorldGenOld.OreConfig oreConfig) {
+    public static OreGen addOreGen(String name, IBlockState block, ConfigWorldGen.OreConfig oreConfig) {
         OreGen oreGen = new OreGen(name, block, net.minecraft.init.Blocks.STONE, oreConfig);
         oreSpawnList.add(oreGen);
         return oreGen;
@@ -225,9 +224,9 @@ public class WorldGen implements IWorldGenerator {
     public static class OreGen {
         String name;
         WorldGenMinableCustom worldGenMinable;
-        ConfigWorldGenOld.OreConfig oreConfig;
+        ConfigWorldGen.OreConfig oreConfig;
 
-        public OreGen(String name, IBlockState state, Block replaceTarget, ConfigWorldGenOld.OreConfig config) {
+        public OreGen(String name, IBlockState state, Block replaceTarget, ConfigWorldGen.OreConfig config) {
             this.name = name;
             this.worldGenMinable = new WorldGenMinableCustom(state, config.MinVeinSize, config.MaxVeinSize, BlockMatcher.forBlock(replaceTarget));
             this.oreConfig = config;

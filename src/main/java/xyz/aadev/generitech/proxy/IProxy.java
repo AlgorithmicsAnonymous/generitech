@@ -34,8 +34,6 @@
 
 package xyz.aadev.generitech.proxy;
 
-import java.io.File;
-
 public interface IProxy {
     /**
      * Register Blocks

@@ -65,11 +65,11 @@ fluid.generitech.tin.name=Molten Tin
 fluid.generitech.lead.name=Molten Lead
 
 # Tooltips
-tile.generitech.ore.copper.tooltip=It's Copper. What else is there to know?
-tile.generitech.ore.tin.tooltip=Another staple of your average tech mod.
-tile.generitech.ore.lead.tooltip=Life Pro Tip: Do not ingest.
-item.generitech.worldgenwand.tooltip=§4WARNING: Destroys blocks! For debug use only!
-item.generitech.worldgenwand.tooltip2=Removes all non-ore blocks in a 30m square radius.
+tooltip.generitech.ore.copper=It's Copper. What else is there to know?
+tooltip.generitech.ore.tin=Another staple of your average tech mod.
+tooltip.generitech.ore.lead=Life Pro Tip: Do not ingest.
+tooltip.generitech.worldgenwand=§4WARNING: Destroys blocks! For debug use only!
+tooltip.generitech.worldgenwand2=Removes all non-ore blocks in a 30m square radius.
 
 # Label
 label.generitech.time_left=Time Remaining
