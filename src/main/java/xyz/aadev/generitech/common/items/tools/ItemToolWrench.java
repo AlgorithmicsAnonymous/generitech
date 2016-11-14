@@ -51,6 +51,7 @@ import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.common.items.ItemBaseTool;
 import xyz.aadev.aalib.common.util.Platform;
 import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.items.Items;
 
 import java.util.Set;
@@ -61,7 +62,7 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe {
     protected static ToolMaterial toolMaterial = EnumHelper.addToolMaterial("GENERITECH_WRENCH", 3, 160, 8.0F, 3.0F, 18);
 
     public ItemToolWrench() {
-        super(2.0F, -2F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench");
+        super(2.0F, -2F, toolMaterial, blocksEffectiveAgainst, "tools/toolWrench", Reference.MOD_ID);
         this.setUnlocalizedName("tool_wrench");
         this.setCreativeTab(GeneriTechTabs.TOOL);
         this.setInternalName("tool_wrench");

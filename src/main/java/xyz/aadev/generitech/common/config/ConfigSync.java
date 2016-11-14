@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.aadev.aalib.common.logging.Logger;
+import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.common.network.messages.ConfigSyncPacket;
 import xyz.aadev.generitech.common.util.LanguageHelper;
@@ -29,7 +30,7 @@ public class ConfigSync {
     public static void syncConfig(List<ConfigCategory> categoryList) {
         needsRestart = false;
         boolean changed = false;
-        Logger.info("Synchronizing configs with the server.");
+        GeneriTech.Logger.info("Synchronizing configs with the server.");
 
         for (ConfigCategory serverCat : categoryList) {
             ConfigCategory localCat = Config.config.getCategory(serverCat.getName());
@@ -46,7 +47,7 @@ public class ConfigSync {
                         localProp.setValue(serverProp.getString());
                         needsRestart |= localProp.requiresMcRestart();
                         changed = true;
-                        Logger.debug(String.format("Syncing %s - %s: %s", localCat.getName(), localProp.getName(), localProp.getString()));
+                        GeneriTech.Logger.debug(String.format("Syncing %s - %s: %s", localCat.getName(), localProp.getName(), localProp.getString()));
                     }
                 }
             }

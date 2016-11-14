@@ -61,7 +61,7 @@ public abstract class BlockMachineBase extends BlockTileBase {
     private MachineTier[] machineTiers;
 
     public BlockMachineBase(Material material, String resourcePath, MachineTier... machineTiers) {
-        super(material, resourcePath);
+        super(material, resourcePath, Reference.MOD_ID);
         this.machineTiers = machineTiers;
     }
 

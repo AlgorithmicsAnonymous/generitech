@@ -22,6 +22,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
 import xyz.aadev.aalib.client.gui.GuiBase;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
@@ -34,7 +35,7 @@ public class GuiGenerator extends GuiBase {
     private MachineTier machineTier;
 
     public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
-        super(new ContanierGenerator(inventoryPlayer, tileEntity));
+        super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
         this.xSize = 176;
         this.ySize = 166;
         this.tileEntity = tileEntity;

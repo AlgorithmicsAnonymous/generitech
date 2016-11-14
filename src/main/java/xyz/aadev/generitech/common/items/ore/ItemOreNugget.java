@@ -55,7 +55,7 @@ import java.util.List;
 public class ItemOreNugget extends ItemBase implements IProvideRecipe {
 
     public ItemOreNugget() {
-        super("ore/nugget");
+        super("ore/nugget", Reference.MOD_ID);
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("orenugget");

@@ -37,6 +37,7 @@ package xyz.aadev.generitech.client.gui.machines;
 import net.minecraft.entity.player.InventoryPlayer;
 import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.aalib.common.util.GuiHelper;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.container.machines.ContainerFurnace;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityFurnace;
 import xyz.aadev.generitech.common.util.LanguageHelper;
@@ -46,7 +47,7 @@ public class GuiFurnace extends GuiBase {
     private GuiHelper guiHelper = new GuiHelper();
 
     public GuiFurnace(InventoryPlayer inventoryPlayer, TileEntityFurnace tileEntity) {
-        super(new ContainerFurnace(inventoryPlayer, tileEntity));
+        super(Reference.MOD_ID, new ContainerFurnace(inventoryPlayer, tileEntity));
         this.xSize = 176;
         this.ySize = 166;
         this.tileEntity = tileEntity;

@@ -44,6 +44,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import xyz.aadev.aalib.common.blocks.BlockBase;
 import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.util.EnumOres;
 import xyz.aadev.generitech.common.util.LanguageHelper;
@@ -55,7 +56,7 @@ public class BlockOre extends BlockBase {
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
 
     public BlockOre() {
-        super(Material.ROCK, "ore/ore");
+        super(Material.ROCK, "ore/ore", Reference.MOD_ID);
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("ore");

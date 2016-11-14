@@ -66,6 +66,9 @@ public class GeneriTech {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     private static IProxy proxy;
 
+    public static final Logger Logger = new Logger(Reference.MOD_NAME);
+    public static final IntegrationsManager integrationsManager = new IntegrationsManager(Reference.MOD_NAME);
+
     static {
         FluidRegistry.enableUniversalBucket();
     }
@@ -106,9 +109,9 @@ public class GeneriTech {
 
         proxy.registerFluids();
 
-        IntegrationsManager.instance().RegisterIntegration("Waila", Waila.class);
-        IntegrationsManager.instance().index();
-        IntegrationsManager.instance().preInit();
+        integrationsManager.registerIntegration("Waila", Waila.class);
+        integrationsManager.index();
+        integrationsManager.preInit();
 
         Logger.info("Pre Initialization ( ended after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms )");
     }
@@ -126,7 +129,7 @@ public class GeneriTech {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        IntegrationsManager.instance().init();
+        integrationsManager.init();
 
         Network.init();
 
@@ -138,7 +141,7 @@ public class GeneriTech {
     public void postInit(FMLPostInitializationEvent event) {
         final Stopwatch watch = Stopwatch.createStarted();
         Logger.info("Post Initialization ( started )");
-        IntegrationsManager.instance().postInit();
+        integrationsManager.postInit();
 
         if (event.getSide().isServer()) {
             MinecraftForge.EVENT_BUS.register(new ConfigSync());

@@ -58,7 +58,7 @@ import java.util.List;
 public class ItemOreIngot extends ItemBase implements IProvideRecipe, IProvideSmelting {
 
     public ItemOreIngot() {
-        super("ore/ingot");
+        super("ore/ingot", Reference.MOD_ID);
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("oreingot");

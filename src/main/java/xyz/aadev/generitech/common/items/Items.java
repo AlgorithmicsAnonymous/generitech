@@ -37,6 +37,7 @@ package xyz.aadev.generitech.common.items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import xyz.aadev.aalib.common.util.RegistrationHelper;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.items.debug.ItemWorldGenWand;
 import xyz.aadev.generitech.common.items.materials.ItemMaterialGear;
 import xyz.aadev.generitech.common.items.ore.ItemOreDust;
@@ -87,6 +88,6 @@ public enum Items {
     }
 
     private void registerItem() {
-        item = RegistrationHelper.registerItem(itemClass);
+        item = RegistrationHelper.registerItem(Reference.MOD_ID,itemClass);
     }
 }

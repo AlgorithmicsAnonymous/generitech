@@ -43,6 +43,7 @@ import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
 import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.aalib.common.util.GuiHelper;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
@@ -61,7 +62,7 @@ public class GuiPulverizer extends GuiBase {
     private HashMap<Rectangle, List<String>> tooltips = new HashMap<Rectangle, List<String>>();
 
     public GuiPulverizer(InventoryPlayer inventoryPlayer, TileEntityPulverizer tileEntity) {
-        super(new ContainerPulverizer(inventoryPlayer, tileEntity));
+        super(Reference.MOD_ID, new ContainerPulverizer(inventoryPlayer, tileEntity));
         this.xSize = 176;
         this.ySize = 166;
         this.tileEntity = tileEntity;

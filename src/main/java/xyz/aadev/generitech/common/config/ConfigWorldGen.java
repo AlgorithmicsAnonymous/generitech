@@ -40,6 +40,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import xyz.aadev.aalib.common.logging.Logger;
+import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.util.EnumOres;
 import xyz.aadev.generitech.common.world.WorldGen;
@@ -165,7 +166,7 @@ public final class ConfigWorldGen {
                 propOrder.add(prop.getName());
 
                 if (oreConf.MinY >= oreConf.MaxY) {
-                    Logger.warn(String.format("%s Max Y must be greater than Min Y. Y Levels internally set to default. Please fix your config setting!", oreName));
+                    GeneriTech.Logger.warn(String.format("%s Max Y must be greater than Min Y. Y Levels internally set to default. Please fix your config setting!", oreName));
                     oreConf.MinY = defaultConf.MinY;
                     oreConf.MaxY = defaultConf.MaxY;
                 }
@@ -183,7 +184,7 @@ public final class ConfigWorldGen {
                 propOrder.add(prop.getName());
 
                 if (oreConf.MinVeinSize >= oreConf.MaxVeinSize) {
-                    Logger.warn(String.format("%s Max Vein Size must be greater than Min Vein Size. Vein Sizes internally set to default. Please fix your config setting!", oreName));
+                    GeneriTech.Logger.warn(String.format("%s Max Vein Size must be greater than Min Vein Size. Vein Sizes internally set to default. Please fix your config setting!", oreName));
                     oreConf.MinVeinSize = defaultConf.MinVeinSize;
                     oreConf.MaxVeinSize = defaultConf.MaxVeinSize;
                 }
@@ -195,7 +196,7 @@ public final class ConfigWorldGen {
                 propOrder.add(prop.getName());
 
                 if (oreConf.Weight < 0) {
-                    Logger.warn(String.format("%s Weight must be greater than 0. Weight internally set to default. Please fix your config setting!", oreName));
+                    GeneriTech.Logger.warn(String.format("%s Weight must be greater than 0. Weight internally set to default. Please fix your config setting!", oreName));
                     oreConf.Weight = defaultConf.Weight;
                 }
 
@@ -206,7 +207,7 @@ public final class ConfigWorldGen {
                 propOrder.add(prop.getName());
 
                 if (oreConf.ChunkOccurrence < 0) {
-                    Logger.warn(String.format("%s ChunkOccurrence must be greater than 0. ChunkOccurrence internally set to default. Please fix your config setting!", oreName));
+                    GeneriTech.Logger.warn(String.format("%s ChunkOccurrence must be greater than 0. ChunkOccurrence internally set to default. Please fix your config setting!", oreName));
                     oreConf.ChunkOccurrence = defaultConf.ChunkOccurrence;
                 }
 

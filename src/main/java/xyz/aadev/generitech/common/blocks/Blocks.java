@@ -40,6 +40,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import xyz.aadev.aalib.common.blocks.BlockBase;
 import xyz.aadev.aalib.common.util.RegistrationHelper;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.blocks.machines.BlockFurnace;
 import xyz.aadev.generitech.common.blocks.machines.BlockPulverizer;
 import xyz.aadev.generitech.common.blocks.misc.crafting.BlockMachineMatrics;
@@ -98,6 +99,6 @@ public enum Blocks {
     }
 
     private void registerBlock() {
-        block = RegistrationHelper.registerBlock(blockClass, itemBlockClass);
+        block = RegistrationHelper.registerBlock(Reference.MOD_ID, blockClass, itemBlockClass);
     }
 }

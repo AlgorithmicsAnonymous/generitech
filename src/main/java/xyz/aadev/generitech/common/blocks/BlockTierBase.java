@@ -45,7 +45,7 @@ public class BlockTierBase extends BlockBase implements IBlockRenderer {
     private MachineTier[] machineTiers;
 
     public BlockTierBase(Material material, String resourcePath, MachineTier... machineTiers) {
-        super(material, resourcePath);
+        super(material, resourcePath, Reference.MOD_ID);
         this.machineTiers = machineTiers;
     }
 

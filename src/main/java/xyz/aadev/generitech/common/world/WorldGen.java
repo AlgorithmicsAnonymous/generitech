@@ -51,6 +51,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.WorldInfoHelper;
+import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.blocks.Blocks;
@@ -108,7 +109,7 @@ public class WorldGen implements IWorldGenerator {
             Map.Entry pair = (Map.Entry) obj;
             NBTTagCompound tagCompound = (NBTTagCompound) pair.getValue();
             if (isRetroGenRequired((NBTTagCompound) pair.getValue())) {
-                Logger.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", pair.getKey(), Reference.MOD_NAME));
+                GeneriTech.Logger.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", pair.getKey(), Reference.MOD_NAME));
                 retrogenChunks.put(tagCompound.getInteger("DimID"), pair.getValue());
             }
         }
@@ -146,7 +147,7 @@ public class WorldGen implements IWorldGenerator {
                 tagCompound.setBoolean(oreGen.name, loadedChunks.get(chunkPos.toString()).getBoolean(oreGen.name));
             }
         } else {
-            Logger.debug("Chunk" + chunkPos.toString() + "not loaded?");
+            GeneriTech.Logger.debug("Chunk" + chunkPos.toString() + "not loaded?");
         }
     }
 
@@ -163,7 +164,7 @@ public class WorldGen implements IWorldGenerator {
 
         NBTTagCompound tagCompound = event.getData().getCompoundTag(Reference.MOD_ID);
         if (isRetroGenRequired(tagCompound)) {
-            Logger.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", event.getChunk().getChunkCoordIntPair(), Reference.MOD_NAME));
+            GeneriTech.Logger.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", event.getChunk().getChunkCoordIntPair(), Reference.MOD_NAME));
             retrogenChunks.put(dimID, event.getChunk().getChunkCoordIntPair());
         }
     }
@@ -211,7 +212,7 @@ public class WorldGen implements IWorldGenerator {
             }
 
             if (counter > 0)
-                Logger.info(String.format("Retrogen was performed on %s chunks. %s chunks remaining", counter, Math.max(0, chunks.size())));
+                GeneriTech.Logger.info(String.format("Retrogen was performed on %s chunks. %s chunks remaining", counter, Math.max(0, chunks.size())));
         }
     }
 

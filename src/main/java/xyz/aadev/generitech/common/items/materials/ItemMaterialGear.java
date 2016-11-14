@@ -48,7 +48,7 @@ import java.util.List;
 
 public class ItemMaterialGear extends ItemBase {
     public ItemMaterialGear() {
-        super("materials/gear");
+        super("materials/gear", Reference.MOD_ID);
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("materialgear");

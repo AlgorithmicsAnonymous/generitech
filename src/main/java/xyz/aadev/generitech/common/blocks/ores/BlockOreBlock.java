@@ -46,6 +46,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.common.blocks.BlockBase;
 import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.util.EnumOres;
@@ -57,7 +58,7 @@ public class BlockOreBlock extends BlockBase implements IProvideRecipe {
     public static final PropertyEnum ORE = PropertyEnum.create("ore", EnumOres.class);
 
     public BlockOreBlock() {
-        super(Material.ROCK, "ore/oreblock");
+        super(Material.ROCK, "ore/oreblock", Reference.MOD_ID);
         this.setDefaultState(this.blockState.getBaseState().withProperty(ORE, EnumOres.COPPER));
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("oreblock");

@@ -44,7 +44,7 @@ public class BlockCables extends BlockMachineBase {
         TileEntity tileEntity;
         tileEntity = world.getTileEntity(pos);
         if (!world.isRemote) {
-            Logger.info(Long.toString(((TileEntityPower) tileEntity).powerStored()));
+            GeneriTech.Logger.info(Long.toString(((TileEntityPower) tileEntity).powerStored()));
 
             player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 

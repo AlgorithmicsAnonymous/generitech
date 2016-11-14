@@ -51,7 +51,7 @@ import java.util.List;
 public class ItemOreDust extends ItemBase {
 
     public ItemOreDust() {
-        super("ore/dust");
+        super("ore/dust", Reference.MOD_ID);
         this.setHasSubtypes(true);
         this.setCreativeTab(GeneriTechTabs.ORE);
         this.setInternalName("oredust");

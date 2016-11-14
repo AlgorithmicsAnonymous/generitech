@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.network.PacketBaseThreadSafe;
+import xyz.aadev.generitech.GeneriTech;
 
 public class PacketPower extends PacketBaseThreadSafe {
 
@@ -41,7 +42,7 @@ public class PacketPower extends PacketBaseThreadSafe {
 
     @Override
     public void handleClientSafe(NetHandlerPlayClient netHandler) {
-        Logger.debug(String.format("Received %s", test));
+        GeneriTech.Logger.debug(String.format("Received %s", test));
     }
 
     @Override
