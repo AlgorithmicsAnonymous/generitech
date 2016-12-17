@@ -6,7 +6,6 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.network.PacketBaseThreadSafe;
 import xyz.aadev.generitech.GeneriTech;
 

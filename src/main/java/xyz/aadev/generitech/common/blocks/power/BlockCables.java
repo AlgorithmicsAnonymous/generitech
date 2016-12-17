@@ -13,14 +13,12 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.TileHelper;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
 import java.util.Random;
@@ -43,8 +41,9 @@ public class BlockCables extends BlockMachineBase {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity tileEntity;
         tileEntity = world.getTileEntity(pos);
+        GeneriTech.Logger.info(Long.toString(((TileEntityPower) tileEntity).powerStored()));
+
         if (!world.isRemote) {
-            GeneriTech.Logger.info(Long.toString(((TileEntityPower) tileEntity).powerStored()));
 
             player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
 
@@ -80,11 +79,7 @@ public class BlockCables extends BlockMachineBase {
 
     @Override
     public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
-        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityPulverizer.class);
-        if (tileEntity != null && !tileEntity.isPulverizerPaused()) {
-            super.breakBlock(world, blockPos, blockState);
-            return;
-        }
+        TileEntityPower tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityPower.class);
 
         TileHelper.DropItems(tileEntity, 0, 0);
 
@@ -92,12 +87,10 @@ public class BlockCables extends BlockMachineBase {
 
     @Override
     public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand) {
-        TileEntityPulverizer tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPulverizer.class);
+        TileEntityPower tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPower.class);
         if (tileEntity == null)
             return;
 
-        if (!tileEntity.isMachineActive() || tileEntity.isPulverizerPaused())
-            return;
 
         EnumFacing enumfacing = tileEntity.getForward();
         double d0 = (double) pos.getX() + 0.5D;

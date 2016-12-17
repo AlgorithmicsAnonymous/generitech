@@ -49,7 +49,6 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.WorldInfoHelper;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.Reference;
@@ -76,7 +75,7 @@ public class WorldGen implements IWorldGenerator {
     public static void init() {
         for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
             // Always add ores, in case they get enabled at runtime
-            ConfigWorldGen.OreConfig config = ConfigWorldGen.OreGenConfig.get(ore);
+            ConfigWorldGen.OreConfig config = ConfigWorldGen.getOreGenConfig().get(ore);
             WorldGen.addOreGen(ore.getName(), Blocks.BLOCK_ORE.getBlock().getStateFromMeta(ore.getMeta()), config);
         }
     }

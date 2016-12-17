@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.common.network.messages.ConfigSyncPacket;
@@ -42,13 +41,11 @@ public class ConfigSync {
                 Property localProp = localCat.get(propName);
                 if (localProp == null) {
                     localCat.put(propName, serverProp);
-                } else {
-                    if (!localProp.getString().equals(serverProp.getString())) {
+                } else if (!localProp.getString().equals(serverProp.getString())){
                         localProp.setValue(serverProp.getString());
                         needsRestart |= localProp.requiresMcRestart();
                         changed = true;
                         GeneriTech.Logger.debug(String.format("Syncing %s - %s: %s", localCat.getName(), localProp.getName(), localProp.getString()));
-                    }
                 }
             }
         }

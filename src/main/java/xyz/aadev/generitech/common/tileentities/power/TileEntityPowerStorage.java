@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.client.gui.power;/*
+package xyz.aadev.generitech.common.tileentities.power;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,67 +17,161 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-import net.darkhax.tesla.lib.TeslaUtils;
-import net.minecraft.entity.player.InventoryPlayer;
-import org.lwjgl.util.Point;
-import org.lwjgl.util.Rectangle;
-import xyz.aadev.aalib.client.gui.GuiBase;
-import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.common.container.power.ContanierGenerator;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
+import net.darkhax.tesla.capability.TeslaCapabilities;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import xyz.aadev.aalib.common.inventory.InternalInventory;
+import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.generitech.client.gui.power.GuiPowerStorage;
+import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
 
-public class GuiGenerator extends GuiBase {
-    Rectangle powerBar;
-    private TileEntityPower tileEntity;
+public class TileEntityPowerStorage extends TileEntityMachineBase implements ITeslaHolder, ITeslaConsumer, ITickable {
+    private InternalInventory inventory = new InternalInventory(this, 1);
+    private BaseTeslaContainer container = new BaseTeslaContainer(5000, 50000, 1000, 1000);
+    private int[] sides = new int[6];
 
-    public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
-        super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
-        this.xSize = 176;
-        this.ySize = 166;
-        this.tileEntity = tileEntity;
-        powerBar = new Rectangle(98, 30, 14, 28);
-    }
-
-    @Override
-    public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        bindTexture("gui/power/generator.png");
-        drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-
-
-        int powerLevel = (int) (tileEntity.powerStored() / 2000 + 1);
-        if (tileEntity.powerStored() > 48000) powerLevel = 25;
-        if (tileEntity.powerStored() == 0) powerLevel = -1;
-        int power = powerLevel - 25;
-        drawTexturedModalRect(paramInt1 + 100, paramInt2 + 31 - power, 176, 55 - powerLevel, 25, 25);
-
-        int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
-        drawTexturedModalRect(paramInt1 + 65, paramInt2 + 53 + fireOffset, 176, 1 + fireOffset, 14, 14 - fireOffset);
-
-
-    }
 
 
 
 
     @Override
-    public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+    public void update() {
+        BlockPos pos = getPos();
+        World worldIn = getWorld();
+
+    if (worldIn.isBlockPowered(pos)){
+        sides[1]=1;
+    }else {
+        sides[1]=0;
+    }
+        DistributePowerToFace.transferPower(pos,worldIn,120,container,sides);
+
+    }
+
+
+
+
+
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
+        super.readFromNBT(nbtTagCompound);
+
+        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
+        this.sides = nbtTagCompound.getIntArray("sides");
+
 
     }
 
 
     @Override
-    public void drawScreen(int mouse_x, int mouse_y, float btn) {
-        super.drawScreen(mouse_x, mouse_y, btn);
-        Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
-        if (powerBar.contains(currentMouse)) {
-            ArrayList<String> powerMessage = new ArrayList<>();
-            powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.powerStored()));
-            renderToolTip(powerMessage, mouse_x, mouse_y);
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
+        super.writeToNBT(nbtTagCompound);
+        nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
+        nbtTagCompound.setIntArray("sides",sides);
+
+
+        return nbtTagCompound;
+    }
+
+
+
+    @Override
+    public IInventory getInternalInventory() {
+        return inventory;
+    }
+
+    @Override
+    public void onChangeInventory(IInventory inv, int slot, InventoryOperation operation, ItemStack removed, ItemStack added) {
+//because its unless
+    }
+
+    @Override
+    public int[] getAccessibleSlotsBySide(EnumFacing side) {
+        return new int[0];
+    }
+
+    @Nullable
+
+    @Override
+    public ItemStack removeStackFromSlot(int index) {
+        return null;
+    }
+
+
+    @Override
+    public Object getClientGuiElement(int guiId, EntityPlayer player) {
+        return new GuiPowerStorage(player.inventory, this);
+    }
+
+    @Override
+    public Object getServerGuiElement(int guiId, EntityPlayer player) {
+        return new ContanierPowerStorage(player.inventory, this);
+    }
+
+    @Override
+    public long getStoredPower() {
+        return container.getStoredPower();
+    }
+
+    @Override
+    public long getCapacity() {
+        return 0;
+    }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+
+        // This method is where other things will try to access your TileEntity's Tesla
+        // capability. In the case of the analyzer, is a consumer, producer and holder so we
+        // can allow requests that are looking for any of those things. This example also does
+        // not care about which side is being accessed, however if you wanted to restrict which
+        // side can be used, for example only allow power input through the back, that could be
+        // done here.
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+            return (T) this.container;
+
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        int i =0;
+        // This method replaces the instanceof checks that would be used in an interface based
+        // system. It can be used by other things to see if the TileEntity uses a capability or
+        // not. This example is a Consumer, Producer and Holder, so we return true for all
+        // three. This can also be used to restrict access on certain sides, for example if you
+        // only accept power input from the bottom of the block, you would only return true for
+        // Consumer if the facing parameter was down.
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER){
+            for (final EnumFacing side : EnumFacing.VALUES){
+                if (facing==side&&sides[i]==1){
+                    return true;
+                }
+                i++;
+            }
         }
 
-
+        return super.hasCapability(capability, facing);
     }
+
+    @Override
+    public long givePower(long power, boolean simulated) {
+        return 0;
+    }
+
+
 }
