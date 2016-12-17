@@ -2,18 +2,22 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "all": "generitech:blocks/machines/FrameT2",
 			"particle": "generitech:blocks/machines/FrameT2"
         },
-        "model": "generitech:frame_T2",
+        "model": "generitech:frame",
 		"transform":"forge:default-block",
         "uvlock": true
     },
     "variants": {
 		"inventory":[{
+			"textures": {
+				"0": "generitech:blocks/machines/FrameT2"
+			}
 		}],
         "normal": [{
-			"model": "generitech:frame_T2"
+			"textures": {
+				"0": "generitech:blocks/machines/FrameT2"
+			}
         }]
     }
 }
