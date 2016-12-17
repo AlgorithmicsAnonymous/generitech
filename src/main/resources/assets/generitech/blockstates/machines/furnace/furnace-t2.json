@@ -10,7 +10,7 @@
       "south": "generitech:blocks/machines/BasicSide",
       "particle": "generitech:blocks/machines/FurnaceFront"
     },
-    "model":"minecraft:cube_all",
+    "model":"generitech:furnace",
     "transform":"forge:default-block"
   },
   "variants":{
