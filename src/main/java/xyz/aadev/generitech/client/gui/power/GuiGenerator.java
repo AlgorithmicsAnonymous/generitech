@@ -73,7 +73,7 @@ public class GuiGenerator extends GuiBase {
         super.drawScreen(mouse_x, mouse_y, btn);
         Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
         if (powerBar.contains(currentMouse)) {
-            ArrayList<String> powerMessage = new ArrayList<String>();
+            ArrayList<String> powerMessage = new ArrayList<>();
             powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.powerStored()));
             renderToolTip(powerMessage, mouse_x, mouse_y);
         }

@@ -49,7 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class ConfigWorldGen {
-    public static final Map<EnumOres, OreConfig> OreGenConfig = new HashMap<>(EnumOres.values().length);
+    protected static final Map<EnumOres, OreConfig> OreGenConfig = new HashMap<>(EnumOres.values().length);
     private static final Map<EnumOres, OreConfig> OreGenConfigDefaults = new HashMap<>(EnumOres.values().length);
     private static final int[] DEFAULT_DIMENSION_BLACKLIST = {-1, 1};
 
