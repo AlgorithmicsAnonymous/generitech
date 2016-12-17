@@ -156,18 +156,21 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         // three. This can also be used to restrict access on certain sides, for example if you
         // only accept power input from the bottom of the block, you would only return true for
         // Consumer if the facing parameter was down.
-        if (facing==EnumFacing.UP && sides[0]==1 && capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
-        if (facing==EnumFacing.DOWN && sides[1]==1 && capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
-        if (facing==EnumFacing.NORTH && sides[2]==1 && capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
-        if (facing==EnumFacing.SOUTH && sides[3]==1 && capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
-        if (facing==EnumFacing.EAST && sides[4]==1 && capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
-        if (facing==EnumFacing.WEST && sides[5]==1 && capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
-            return true;
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER){
+            if (facing==EnumFacing.UP && sides[0]==1)
+                return true;
+            if (facing==EnumFacing.DOWN && sides[1]==1)
+                return true;
+            if (facing==EnumFacing.NORTH && sides[2]==1)
+                return true;
+            if (facing==EnumFacing.SOUTH && sides[3]==1)
+                return true;
+            if (facing==EnumFacing.EAST && sides[4]==1)
+                return true;
+            if (facing==EnumFacing.WEST && sides[5]==1)
+                return true;
+        }
+
 
 
 
