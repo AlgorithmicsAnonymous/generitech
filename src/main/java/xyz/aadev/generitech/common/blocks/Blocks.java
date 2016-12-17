@@ -73,7 +73,6 @@ public enum Blocks {
     private final Class<? extends ItemBlock> itemBlockClass;
     private Block block;
 
-    
 
     Blocks(Class<? extends BlockBase> blockClass, Class<? extends ItemBlock> itemBlockClass) {
         this.blockClass = blockClass;

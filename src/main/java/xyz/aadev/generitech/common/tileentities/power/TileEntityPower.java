@@ -91,7 +91,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         }
 
         if (container.getStoredPower() != 0) {
-            distributepowertoface.transferPower(pos,worldIn,T0transfer,container,sides);
+            DistributePowerToFace.transferPower(pos,worldIn,T0transfer,container,sides);
         }
 
 

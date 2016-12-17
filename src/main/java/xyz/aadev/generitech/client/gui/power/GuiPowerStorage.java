@@ -31,11 +31,11 @@ public class GuiPowerStorage extends GuiBase {
 
     @Override
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-
+// Do nothing because of not implemented
     }
 
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-
+// Do nothing because of not implemented
     }
 }

@@ -171,15 +171,13 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
     @Override
     public void update() {
-        if (container.getStoredPower()>=powerUsage && machineActive & !isSmeltPaused) {
+        if (container.getStoredPower()>=powerUsage && machineActive && !isSmeltPaused) {
             if (internalTemp < this.getMaxTemperature()) {
-                System.out.println("MaxTemperature");
                 internalTemp += getTempRate();
                 container.takePower(powerUsage,false);
             }
         }else if (container.getStoredPower()>=powerUsage&&canIdle && internalTemp <= getIdleTemp())
         {
-            System.out.println("getIdleTemp");
             internalTemp += getTempRate();
             container.takePower(powerUsage,false);
         }else {

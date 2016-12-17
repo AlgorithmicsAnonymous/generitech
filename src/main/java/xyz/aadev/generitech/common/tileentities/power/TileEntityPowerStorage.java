@@ -57,7 +57,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     }else {
         sides[1]=0;
     }
-        distributepowertoface.transferPower(pos,worldIn,120,container,sides);
+        DistributePowerToFace.transferPower(pos,worldIn,120,container,sides);
 
     }
 
@@ -96,7 +96,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public void onChangeInventory(IInventory inv, int slot, InventoryOperation operation, ItemStack removed, ItemStack added) {
-
+//because its unless
     }
 
     @Override

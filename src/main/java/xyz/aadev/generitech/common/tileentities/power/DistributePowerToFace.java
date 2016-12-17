@@ -38,9 +38,10 @@ import java.util.List;
 * 4 = West
 * 5 = East
  */
-public class distributepowertoface {
+public class DistributePowerToFace {
 
-
+    private DistributePowerToFace() {
+    }
 
     public static void transferPower(BlockPos pos, World worldIn, long ratetranfer, BaseTeslaContainer container, int[] faces) {
 
@@ -67,7 +68,7 @@ public class distributepowertoface {
 
     public static <T> List<T> getConnectedCapabilitiesSide (Capability<T> capability, World world, BlockPos pos,int[] faces) {
         int i = 0;
-        final List<T> capabilities = new ArrayList<T>();
+        final List<T> capabilities = new ArrayList<>();
         final List<EnumFacing> sides = new ArrayList<EnumFacing>();
 
         for (final EnumFacing side : EnumFacing.VALUES){
