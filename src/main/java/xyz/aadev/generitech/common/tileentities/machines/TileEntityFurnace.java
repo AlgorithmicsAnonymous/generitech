@@ -36,12 +36,17 @@ package xyz.aadev.generitech.common.tileentities.machines;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
+import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
@@ -57,11 +62,13 @@ import java.util.List;
 public class TileEntityFurnace extends TileEntityInventoryBase implements ITickable, IWailaBodyMessage {
 
     private InternalInventory internalInventory = new InternalInventory(this, 4);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private boolean machineActive = false;
     private int smeltProgress = 0;
     private float internalTemp = 0f;
     private boolean canIdle = false;
     private boolean isSmeltPaused = false;
+    private long powerUsage = 50;
 
     @Override
     public void markForUpdate() {
@@ -162,21 +169,34 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
     @Override
     public void update() {
-        if (machineActive & !isSmeltPaused) {
+        if (container.getStoredPower()>=powerUsage && machineActive & !isSmeltPaused) {
             if (internalTemp < this.getMaxTemperature()) {
+                System.out.println("MaxTemperature");
                 internalTemp += getTempRate();
+                container.takePower(powerUsage,false);
             }
-        } else {
-            if (canIdle && internalTemp <= getIdleTemp()) {
-                internalTemp = getIdleTemp();
+        }else if (container.getStoredPower()>=powerUsage&&canIdle && internalTemp <= getIdleTemp())
+        {
+            System.out.println("getIdleTemp");
+            internalTemp += getTempRate();
+            container.takePower(powerUsage,false);
+        }else {
+            if (internalTemp <= 0) {
+                internalTemp = 0;
             } else {
-                if (internalTemp <= 0) {
-                    internalTemp = 0;
-                } else {
-                    internalTemp -= getTempRate() / 2;
-                }
+                internalTemp -= getTempRate() / 2;
             }
         }
+
+        BlockPos pos = getPos();
+        World worldIn = getWorld();
+        if (worldIn.isBlockPowered(pos)&&canIdle!=true){
+            canIdle = true;
+        }
+        if (!worldIn.isBlockPowered(pos)&&canIdle!=false){
+            canIdle = false;
+        }
+
 
         if (internalInventory.getStackInSlot(0) != null && internalInventory.getStackInSlot(1) == null) {
             ItemStack itemIn = internalInventory.getStackInSlot(0);
@@ -224,7 +244,7 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
                 InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                if (!canSmelt(getStackInSlot(0))) machineActive = false;
+                if (getStackInSlot(0)== null || !canSmelt(getStackInSlot(0))) machineActive = false;
                 smeltProgress = 0;
                 internalInventory.setInventorySlotContents(1, null);
 
@@ -270,5 +290,35 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
         ));
 
         return currentTip;
+    }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+
+        // This method is where other things will try to access your TileEntity's Tesla
+        // capability. In the case of the analyzer, is a consumer, producer and holder so we
+        // can allow requests that are looking for any of those things. This example also does
+        // not care about which side is being accessed, however if you wanted to restrict which
+        // side can be used, for example only allow power input through the back, that could be
+        // done here.
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+            return (T) this.container;
+
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+
+        // This method replaces the instanceof checks that would be used in an interface based
+        // system. It can be used by other things to see if the TileEntity uses a capability or
+        // not. This example is a Consumer, Producer and Holder, so we return true for all
+        // three. This can also be used to restrict access on certain sides, for example if you
+        // only accept power input from the bottom of the block, you would only return true for
+        // Consumer if the facing parameter was down.
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+            return true;
+
+        return super.hasCapability(capability, facing);
     }
 }

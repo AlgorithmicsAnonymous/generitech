@@ -16,25 +16,53 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import org.apache.commons.lang3.ArrayUtils;
+import scala.Int;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.power.GuiGenerator;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
+import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 public class TileEntityPower extends TileEntityMachineBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
+    private int[] sides = new int[6];
     private int T0transfer = 120;
     private int fuelRemaining = 0;
     private Item lastFuelType;
     private int lastFuelValue;
     private int fuelTotal = 0;
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
+        super.readFromNBT(nbtTagCompound);
+
+        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
+        fuelRemaining = nbtTagCompound.getInteger("fuelRemaining");
+
+
+    }
+
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
+        super.writeToNBT(nbtTagCompound);
+
+        nbtTagCompound.setInteger("fuelRemaining", fuelRemaining);
+        nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
+
+        return nbtTagCompound;
+    }
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
@@ -70,8 +98,11 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         }
 
         if (container.getStoredPower() != 0) {
-            transferPower();
+            distributepowertoface.transferPower(pos,worldIn,T0transfer,container,sides);
         }
+
+
+
 
     }
 
@@ -94,44 +125,8 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         }
     }
 
-    public void transferPower() {
-        BlockPos pos = getPos();
-        World worldIn = getWorld();
-        long inputba = TeslaUtils.distributePowerToAllFaces(worldIn, pos, T0transfer, true);
-        long test = inputba / T0transfer;
-        if (test == 0) test = 1;
-        if (inputba != 0 && test != 0 && container.getStoredPower() > test) {
-            long input = inputba / test;
-            if (container.getStoredPower() >= inputba) {
-                container.takePower(inputba, false);
-                TeslaUtils.distributePowerToAllFaces(worldIn, pos, input, false);
-            } else if (container.getStoredPower() < inputba) {
-                long toMoveUnder = container.getStoredPower() / test;
-                container.takePower(container.getStoredPower(), false);
-                TeslaUtils.distributePowerToAllFaces(worldIn, pos, toMoveUnder, false);
-            }
-
-        }
 
 
-    }
-
-
-    @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound) {
-        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
-        fuelRemaining = nbtTagCompound.getInteger("fuelRemaining");
-        super.readFromNBT(nbtTagCompound);
-
-    }
-
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        nbtTagCompound.setInteger("fuelRemaining", fuelRemaining);
-        nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
-        return super.writeToNBT(nbtTagCompound);
-    }
 
 
     @Override
@@ -198,7 +193,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         // three. This can also be used to restrict access on certain sides, for example if you
         // only accept power input from the bottom of the block, you would only return true for
         // Consumer if the facing parameter was down.
-        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
+        if (capability == TeslaCapabilities.CAPABILITY_PRODUCER || capability == TeslaCapabilities.CAPABILITY_HOLDER)
             return true;
 
         return super.hasCapability(capability, facing);

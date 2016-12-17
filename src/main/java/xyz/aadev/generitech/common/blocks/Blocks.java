@@ -47,11 +47,13 @@ import xyz.aadev.generitech.common.blocks.misc.crafting.BlockMachineMatrics;
 import xyz.aadev.generitech.common.blocks.ores.BlockOre;
 import xyz.aadev.generitech.common.blocks.ores.BlockOreBlock;
 import xyz.aadev.generitech.common.blocks.power.BlockCables;
+import xyz.aadev.generitech.common.blocks.power.BlockPowerStorage;
 import xyz.aadev.generitech.common.items.machines.ItemFurnace;
 import xyz.aadev.generitech.common.items.machines.ItemPulverizer;
 import xyz.aadev.generitech.common.items.misc.crafting.ItemMachineMatrics;
 import xyz.aadev.generitech.common.items.ore.ItemOre;
 import xyz.aadev.generitech.common.items.power.ItemCable;
+import xyz.aadev.generitech.common.items.power.ItemPowerStorage;
 
 public enum Blocks {
     BLOCK_ORE(BlockOre.class, ItemOre.class),
@@ -61,7 +63,11 @@ public enum Blocks {
     BLOCK_PULVERIZER(BlockPulverizer.class, ItemPulverizer.class),
 
     BLOCK_MACHINEMATRICS(BlockMachineMatrics.class, ItemMachineMatrics.class),
-    BLOCK_CABLES(BlockCables.class, ItemCable.class);
+    BLOCK_CABLES(BlockCables.class, ItemCable.class),
+
+    BLOCK_POWERSTORAGE(BlockPowerStorage.class, ItemPowerStorage.class);
+
+
 
     private final Class<? extends BlockBase> blockClass;
     private final Class<? extends ItemBlock> itemBlockClass;

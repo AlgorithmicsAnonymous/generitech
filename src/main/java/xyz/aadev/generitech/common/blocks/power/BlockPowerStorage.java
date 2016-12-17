@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.client.gui.power;/*
+package xyz.aadev.generitech.common.blocks.power;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,70 +17,126 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-import net.darkhax.tesla.lib.TeslaUtils;
-import net.minecraft.entity.player.InventoryPlayer;
-import org.lwjgl.util.Point;
-import org.lwjgl.util.Rectangle;
-import xyz.aadev.aalib.client.gui.GuiBase;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import xyz.aadev.aalib.common.util.TileHelper;
+import xyz.aadev.generitech.GeneriTech;
+import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.common.container.power.ContanierGenerator;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
+import xyz.aadev.generitech.common.blocks.BlockMachineBase;
+import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Random;
 
-public class GuiGenerator extends GuiBase {
-    Rectangle powerBar;
-    private TileEntityPower tileEntity;
-    private MachineTier machineTier;
+public class BlockPowerStorage extends BlockMachineBase {
 
-    public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
-        super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
-        this.xSize = 176;
-        this.ySize = 166;
-        this.tileEntity = tileEntity;
-        this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
-        powerBar = new Rectangle(98, 30, 14, 28);
-    }
-
-    @Override
-    public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        bindTexture("gui/power/generator.png");
-        drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-
-
-        int powerLevel = (int) (tileEntity.powerStored() / 2000 + 1);
-        if (tileEntity.powerStored() > 48000) powerLevel = 25;
-        if (tileEntity.powerStored() == 0) powerLevel = -1;
-        int power = powerLevel - 25;
-        drawTexturedModalRect(paramInt1 + 100, paramInt2 + 31 - power, 176, 55 - powerLevel, 25, 25);
-
-        int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
-        drawTexturedModalRect(paramInt1 + 65, paramInt2 + 53 + fireOffset, 176, 1 + fireOffset, 14, 14 - fireOffset);
-
-
-    }
-
-
-
-
-    @Override
-    public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-
+    public BlockPowerStorage() {
+        super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
+        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
+        this.setTileEntity(TileEntityPowerStorage.class);
+        this.setCreativeTab(GeneriTechTabs.GENERAL);
+        this.setInternalName("powerstorage");
     }
 
 
     @Override
-    public void drawScreen(int mouse_x, int mouse_y, float btn) {
-        super.drawScreen(mouse_x, mouse_y, btn);
-        Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
-        if (powerBar.contains(currentMouse)) {
-            ArrayList<String> powerMessage = new ArrayList<String>();
-            powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.powerStored()));
-            renderToolTip(powerMessage, mouse_x, mouse_y);
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity;
+        tileEntity = world.getTileEntity(pos);
+        GeneriTech.Logger.info(Long.toString(((TileEntityPowerStorage) tileEntity).getStoredPower()));
+
+        if (!world.isRemote) {
+
+            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+
+
+        }
+        return true;
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        TileEntityPowerStorage tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPowerStorage.class);
+        if (tileEntity != null && tileEntity.canBeRotated()) {
+            return state.withProperty(FACING, tileEntity.getForward());
+        }
+        return state.withProperty(FACING, EnumFacing.NORTH);
+    }
+
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        IBlockState blockState = getActualState(state, world, pos);
+        return (blockState.getValue(MACHINETIER) == MachineTier.TIER_0) ? 15 : 0;
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, MACHINETIER, FACING);
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+        TileEntityPowerStorage tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityPowerStorage.class);
+
+        TileHelper.DropItems(tileEntity, 0, 0);
+
+    }
+
+    @Override
+    public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand) {
+        TileEntityPowerStorage tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPowerStorage.class);
+        if (tileEntity == null)
+            return;
+
+        EnumFacing enumfacing = tileEntity.getForward();
+        double d0 = (double) pos.getX() + 0.5D;
+        double d1 = (double) pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
+        double d2 = (double) pos.getZ() + 0.5D;
+        double d3 = 0.52D;
+        double d4 = rand.nextDouble() * 0.6D - 0.3D;
+
+        EnumParticleTypes particleTypes = null;
+        switch (tileEntity.getBlockMetadata()) {
+            case 0: // Stone
+                particleTypes = EnumParticleTypes.SMOKE_NORMAL;
+                break;
+            default:
+                break;
         }
 
-
+        if (particleTypes != null) {
+            switch (enumfacing) {
+                case WEST:
+                    worldIn.spawnParticle(particleTypes, d0 - d3, d1 + 0.7f, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    break;
+                case EAST:
+                    worldIn.spawnParticle(particleTypes, d0 + d3, d1 + 0.7f, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    break;
+                case NORTH:
+                    worldIn.spawnParticle(particleTypes, d0 + d4, d1 + 0.7f, d2 - d3, 0.0D, 0.0D, 0.0D);
+                    break;
+                case SOUTH:
+                    worldIn.spawnParticle(particleTypes, d0 + d4, d1 + 0.7f, d2 + d3, 0.0D, 0.0D, 0.0D);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

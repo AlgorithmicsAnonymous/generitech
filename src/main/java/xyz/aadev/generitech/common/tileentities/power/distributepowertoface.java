@@ -1,4 +1,5 @@
-package xyz.aadev.generitech.client.gui.power;/*
+package xyz.aadev.generitech.common.tileentities.power;
+/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,70 +18,105 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
+import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.darkhax.tesla.lib.TeslaUtils;
-import net.minecraft.entity.player.InventoryPlayer;
-import org.lwjgl.util.Point;
-import org.lwjgl.util.Rectangle;
-import xyz.aadev.aalib.client.gui.GuiBase;
-import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.common.container.power.ContanierGenerator;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class GuiGenerator extends GuiBase {
-    Rectangle powerBar;
-    private TileEntityPower tileEntity;
-    private MachineTier machineTier;
-
-    public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
-        super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
-        this.xSize = 176;
-        this.ySize = 166;
-        this.tileEntity = tileEntity;
-        this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
-        powerBar = new Rectangle(98, 30, 14, 28);
-    }
-
-    @Override
-    public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-        bindTexture("gui/power/generator.png");
-        drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-
-
-        int powerLevel = (int) (tileEntity.powerStored() / 2000 + 1);
-        if (tileEntity.powerStored() > 48000) powerLevel = 25;
-        if (tileEntity.powerStored() == 0) powerLevel = -1;
-        int power = powerLevel - 25;
-        drawTexturedModalRect(paramInt1 + 100, paramInt2 + 31 - power, 176, 55 - powerLevel, 25, 25);
-
-        int fireOffset = tileEntity.getFuelOffset() + 1; // (x + 1) 1 and 11
-        drawTexturedModalRect(paramInt1 + 65, paramInt2 + 53 + fireOffset, 176, 1 + fireOffset, 14, 14 - fireOffset);
-
-
-    }
+/*
+* 0 = UP
+* 1 = Down
+* 2 = North
+* 3 = South
+* 4 = East
+* 5 = West
+ */
+public class distributepowertoface {
 
 
 
+    public static void transferPower(BlockPos pos, World worldIn, long ratetranfer, BaseTeslaContainer container, int[] faces) {
 
-    @Override
-    public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
+        long inputba = distributePowerToAllFaces(worldIn, pos, ratetranfer, true,faces);
+        long test = inputba / ratetranfer;
+        if (test == 0) test = 1;
+        if (inputba != 0 && test != 0 && container.getStoredPower() > test) {
+            long input = inputba / test;
+            if (container.getStoredPower() >= inputba) {
+                container.takePower(inputba, false);
+                distributePowerToAllFaces(worldIn, pos, input, false,faces);
+            } else if (container.getStoredPower() < inputba) {
+                long toMoveUnder = container.getStoredPower() / test;
+                container.takePower(container.getStoredPower(), false);
+                distributePowerToAllFaces(worldIn, pos, toMoveUnder, false,faces);
+            }
 
-    }
-
-
-    @Override
-    public void drawScreen(int mouse_x, int mouse_y, float btn) {
-        super.drawScreen(mouse_x, mouse_y, btn);
-        Point currentMouse = new Point(mouse_x - guiLeft, mouse_y - guiTop);
-        if (powerBar.contains(currentMouse)) {
-            ArrayList<String> powerMessage = new ArrayList<String>();
-            powerMessage.add(TeslaUtils.getDisplayableTeslaCount(tileEntity.powerStored()));
-            renderToolTip(powerMessage, mouse_x, mouse_y);
         }
 
 
     }
+
+
+
+    public static <T> List<T> getConnectedCapabilitiesSide (Capability<T> capability, World world, BlockPos pos,int[] faces) {
+
+        final List<T> capabilities = new ArrayList<T>();
+        final List<EnumFacing> sides = new ArrayList<EnumFacing>();
+
+        if (faces[0]==0){
+            sides.add(EnumFacing.UP);
+        }
+        if (faces[1]==0){
+            sides.add(EnumFacing.DOWN);
+        }
+        if (faces[2]==0){
+            sides.add(EnumFacing.NORTH);
+        }
+        if (faces[3]==0){
+            sides.add(EnumFacing.SOUTH);
+        }
+        if (faces[4]==0){
+            sides.add(EnumFacing.EAST);
+        }
+        if (faces[5]==0){
+            sides.add(EnumFacing.WEST);
+        }
+        for (final EnumFacing side : sides) {
+
+            final TileEntity tile = world.getTileEntity(pos.offset(side));
+
+            if (tile != null && !tile.isInvalid() && tile.hasCapability(capability, side.getOpposite()))
+                capabilities.add(tile.getCapability(capability, side.getOpposite()));
+        }
+
+        return capabilities;
+    }
+
+    public static long distributePowerToAllFaces (World world, BlockPos pos, long amount, boolean simulated,int[] faces) {
+
+        long consumedPower = 0L;
+
+        for (final ITeslaConsumer consumer : getConnectedCapabilitiesSide(TeslaCapabilities.CAPABILITY_CONSUMER, world, pos,faces))
+            consumedPower += consumer.givePower(amount, simulated);
+
+        return consumedPower;
+    }
+
+
+
+
+
+
+
+
+
+
 }

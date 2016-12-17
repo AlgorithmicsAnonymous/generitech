@@ -121,6 +121,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         pulverizerPaused = nbtTagCompound.getBoolean("pulverizerPaused");
         crushRNG = nbtTagCompound.getFloat("crushRNG");
         this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
+
     }
 
     @Override
