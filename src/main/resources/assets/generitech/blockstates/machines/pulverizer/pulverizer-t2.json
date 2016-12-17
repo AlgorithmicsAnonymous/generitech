@@ -2,15 +2,9 @@
   "forge_marker":1,
   "defaults":{
     "textures": {
-      "up": "generitech:blocks/machines/BasicSide",
-      "down": "generitech:blocks/machines/BasicSide",
-      "north": "generitech:blocks/machines/PulverizerFront",
-      "east": "generitech:blocks/machines/BasicSide",
-      "west": "generitech:blocks/machines/BasicSide",
-      "south": "generitech:blocks/machines/BasicSide",
       "particle": "generitech:blocks/machines/PulverizerFront"
     },
-    "model":"minecraft:cube_all",
+    "model":"generitech:pulverizer",
     "transform":"forge:default-block"
   },
   "variants":{
@@ -36,7 +30,7 @@
     "active": {
       "true": {
         "textures": {
-          "north": "generitech:blocks/machines/PulverizerAnimated"
+          "0": "generitech:blocks/machines/PulverizerAnimated"
         }
       },
       "false": {

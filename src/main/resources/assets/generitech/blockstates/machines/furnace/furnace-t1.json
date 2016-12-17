@@ -35,9 +35,9 @@
     },
     "active": {
       "true": {
-        "textures": {
-          "north": "generitech:blocks/machines/FurnaceFrontActive"
-        }
+		"textures": {
+			"0": "generitech:blocks/machines/FurnaceFrontActive"
+		}
       },
       "false": {
       }
