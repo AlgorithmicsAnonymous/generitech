@@ -192,10 +192,10 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
         BlockPos pos = getPos();
         World worldIn = getWorld();
-        if (worldIn.isBlockPowered(pos)&&canIdle!=true){
+        if (worldIn.isBlockPowered(pos)&&!canIdle){
             canIdle = true;
         }
-        if (!worldIn.isBlockPowered(pos)&&canIdle!=false){
+        if (!worldIn.isBlockPowered(pos)&&canIdle){
             canIdle = false;
         }
 

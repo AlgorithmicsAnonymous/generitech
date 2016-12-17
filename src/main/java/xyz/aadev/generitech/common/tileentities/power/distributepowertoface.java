@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-* 0 = UP
-* 1 = Down
+* 0 = Down
+* 1 = UP
 * 2 = North
 * 3 = South
-* 4 = East
-* 5 = West
+* 4 = West
+* 5 = East
  */
 public class distributepowertoface {
 
@@ -66,28 +66,17 @@ public class distributepowertoface {
 
 
     public static <T> List<T> getConnectedCapabilitiesSide (Capability<T> capability, World world, BlockPos pos,int[] faces) {
-
+        int i = 0;
         final List<T> capabilities = new ArrayList<T>();
         final List<EnumFacing> sides = new ArrayList<EnumFacing>();
 
-        if (faces[0]==0){
-            sides.add(EnumFacing.UP);
+        for (final EnumFacing side : EnumFacing.VALUES){
+            if (faces[i]==0){
+                sides.add(side);
+            }
+            i++;
         }
-        if (faces[1]==0){
-            sides.add(EnumFacing.DOWN);
-        }
-        if (faces[2]==0){
-            sides.add(EnumFacing.NORTH);
-        }
-        if (faces[3]==0){
-            sides.add(EnumFacing.SOUTH);
-        }
-        if (faces[4]==0){
-            sides.add(EnumFacing.EAST);
-        }
-        if (faces[5]==0){
-            sides.add(EnumFacing.WEST);
-        }
+
         for (final EnumFacing side : sides) {
 
             final TileEntity tile = world.getTileEntity(pos.offset(side));

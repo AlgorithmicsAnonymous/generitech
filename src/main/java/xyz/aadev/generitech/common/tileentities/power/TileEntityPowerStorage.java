@@ -53,9 +53,9 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         World worldIn = getWorld();
 
     if (worldIn.isBlockPowered(pos)){
-        sides[0]=2;
+        sides[1]=1;
     }else {
-        sides[0]=0;
+        sides[1]=0;
     }
         distributepowertoface.transferPower(pos,worldIn,120,container,sides);
 
@@ -149,7 +149,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-
+        int i =0;
         // This method replaces the instanceof checks that would be used in an interface based
         // system. It can be used by other things to see if the TileEntity uses a capability or
         // not. This example is a Consumer, Producer and Holder, so we return true for all
@@ -157,25 +157,13 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         // only accept power input from the bottom of the block, you would only return true for
         // Consumer if the facing parameter was down.
         if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER){
-            if (facing==EnumFacing.UP && sides[0]==1)
-                return true;
-            if (facing==EnumFacing.DOWN && sides[1]==1)
-                return true;
-            if (facing==EnumFacing.NORTH && sides[2]==1)
-                return true;
-            if (facing==EnumFacing.SOUTH && sides[3]==1)
-                return true;
-            if (facing==EnumFacing.EAST && sides[4]==1)
-                return true;
-            if (facing==EnumFacing.WEST && sides[5]==1)
-                return true;
+            for (final EnumFacing side : EnumFacing.VALUES){
+                if (facing==side&&sides[i]==1){
+                    return true;
+                }
+                i++;
+            }
         }
-
-
-
-
-
-
 
         return super.hasCapability(capability, facing);
     }
