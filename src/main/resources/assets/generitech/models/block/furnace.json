@@ -1,0 +1,87 @@
+{
+    "textures": {
+        "0": "generitech:blocks/machines/FurnaceFront",
+        "1": "generitech:blocks/machines/BasicSide"
+    },
+    "elements": [
+        {
+            "name": "Bottom",
+            "from": [ 0.0, 0.0, 0.0 ], 
+            "to": [ 16.0, 9.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 7.0, 16.0, 16.0 ], "cullface": "north" },
+                "east": { "texture": "#1", "uv": [ 15.0, 7.0, 16.0, 16.0 ], "cullface": "east" },
+                "west": { "texture": "#1", "uv": [ 0.0, 7.0, 1.0, 16.0 ], "cullface": "west" },
+                "up": { "texture": "#0", "uv": [ 16.0, 7.0, 0.0, 8.0 ] },
+                "down": { "texture": "#1", "uv": [ 0.0, 15.0, 16.0, 16.0 ], "cullface": "down" }
+            }
+        },
+		{
+            "name": "Back",
+            "from": [ 0.0, 0.0, 1.0 ], 
+            "to": [ 16.0, 16.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "north" },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 15.0, 16.0 ], "cullface": "east" },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 16.0 ], "cullface": "south" },
+                "west": { "texture": "#1", "uv": [ 1.0, 0.0, 16.0, 16.0 ], "cullface": "west" },
+                "up": { "texture": "#1", "uv": [ 0.0, 1.0, 16.0, 16.0 ], "cullface": "up" },
+                "down": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 15.0 ], "cullface": "down" }
+            }
+        },
+		{
+            "name": "Left",
+            "from": [ 12.0, 9.0, 0.0 ], 
+            "to": [ 16.0, 11.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 5.0, 4.0, 7.0 ], "cullface": "north"  },
+                "east": { "texture": "#1", "uv": [ 15.0, 5.0, 16.0, 7.0 ], "cullface": "east"  },
+                "west": { "texture": "#0", "uv": [ 3.0, 5.0, 4.0, 7.0 ] }
+            }
+        },
+		{
+            "name": "UpperL",
+            "from": [ 11.0, 11.0, 0.0 ], 
+            "to": [ 16.0, 16.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 5.0, 5.0 ], "cullface": "north" },
+                "east": { "texture": "#1", "uv": [ 15.0, 0.0, 16.0, 5.0 ], "cullface": "east" },
+                "west": { "texture": "#0", "uv": [ 4.0, 0.0, 5.0, 5.0 ] },
+                "up": { "texture": "#1", "uv": [ 11.0, 0.0, 16.0, 1.0 ], "cullface": "up" },
+                "down": { "texture": "#0", "uv": [ 5.0, 4.0, 0.0, 5.0 ] }
+            }
+        },
+		{
+            "name": "Right",
+            "from": [ 0.0, 9.0, 0.0 ], 
+            "to": [ 4.0, 11.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 12.0, 5.0, 16.0, 7.0 ], "cullface": "north"  },
+                "east": { "texture": "#0", "uv": [ 12.0, 5.0, 13.0, 7.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 5.0, 1.0, 7.0 ], "cullface": "west"  }
+            }
+        },
+        {
+            "name": "UpperR",
+            "from": [ 0.0, 11.0, 0.0 ], 
+            "to": [ 5.0, 16.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 11.0, 0.0, 16.0, 5.0 ], "cullface": "north" },
+                "east": { "texture": "#0", "uv": [ 11.0, 0.0, 12.0, 5.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 1.0, 5.0 ], "cullface": "west" },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 5.0, 1.0 ], "cullface": "up" },
+                "down": { "texture": "#0", "uv": [ 16.0, 4.0, 11.0, 5.0 ] }
+            }
+        },
+        {
+            "name": "MiddleTop",
+            "from": [ 5.0, 12.0, 0.0 ], 
+            "to": [ 11.0, 16.0, 1.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 5.0, 0.0, 11.0, 4.0 ], "cullface": "north" },
+                "up": { "texture": "#1", "uv": [ 5.0, 0.0, 11.0, 1.0 ], "cullface": "up" },
+                "down": { "texture": "#0", "uv": [ 11.0, 3.0, 5.0, 4.0 ] }
+            }
+        }
+    ]
+}
