@@ -49,54 +49,34 @@ import java.util.List;
 import java.util.Map;
 
 public final class ConfigWorldGen {
-    public static final Map<EnumOres, OreConfig> OreGenConfig = new HashMap<>(EnumOres.values().length);
+    protected static final Map<EnumOres, OreConfig> OreGenConfig = new HashMap<>(EnumOres.values().length);
     private static final Map<EnumOres, OreConfig> OreGenConfigDefaults = new HashMap<>(EnumOres.values().length);
     private static final int[] DEFAULT_DIMENSION_BLACKLIST = {-1, 1};
+
+    public static Map<EnumOres, OreConfig> getOreGenConfig() {
+        return OreGenConfig;
+    }
 
     public static ConfigCategory Worldgen;
 
     static {
         for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
-            OreConfig defaultConf = new OreConfig();
-            defaultConf.Enabled = true;
-            defaultConf.DimensionRestriction = RestrictionType.Blacklist;
-            defaultConf.Dimensions = DEFAULT_DIMENSION_BLACKLIST;
-            defaultConf.BiomeRestriction = RestrictionType.Blacklist;
-            defaultConf.Biomes = new String[]{};
-
-            defaultConf.ChunkOccurrence = 20;
-
+            OreConfig defaultConf;
             switch (ore) {
                 case COPPER:
-                    defaultConf.MinY = 38;
-                    defaultConf.MaxY = 96;
-                    defaultConf.MinVeinSize = 6;
-                    defaultConf.MaxVeinSize = 12;
-                    defaultConf.Weight = 30;
+                    defaultConf = oreGenSet(38,96,6,12,30,20);
                     break;
 
                 case TIN:
-                    defaultConf.MinY = 20;
-                    defaultConf.MaxY = 55;
-                    defaultConf.MinVeinSize = 7;
-                    defaultConf.MaxVeinSize = 13;
-                    defaultConf.Weight = 20;
+                    defaultConf = oreGenSet(20,55,7,13,20,20);
                     break;
 
                 case LEAD:
-                    defaultConf.MinY = 10;
-                    defaultConf.MaxY = 35;
-                    defaultConf.MinVeinSize = 5;
-                    defaultConf.MaxVeinSize = 11;
-                    defaultConf.Weight = 20;
+                    defaultConf = oreGenSet(10,35,5,11,20,20);
                     break;
 
                 default:
-                    defaultConf.MaxY = 65;
-                    defaultConf.MinY = 5;
-                    defaultConf.MinVeinSize = 3;
-                    defaultConf.MaxVeinSize = 10;
-                    defaultConf.Weight = 20;
+                    defaultConf = oreGenSet(65,5,3,10,20,20);
                     break;
 
             }
@@ -105,6 +85,25 @@ public final class ConfigWorldGen {
 
         }
     }
+
+    private static OreConfig oreGenSet (int maxY, int minY, int minVeinSize, int maxVeinSize, int weight,int chunkOccurrence){
+        OreConfig defaultConf = new OreConfig();
+        defaultConf.Enabled = true;
+        defaultConf.DimensionRestriction = RestrictionType.Blacklist;
+        defaultConf.Dimensions = DEFAULT_DIMENSION_BLACKLIST;
+        defaultConf.BiomeRestriction = RestrictionType.Blacklist;
+        defaultConf.Biomes = new String[]{};
+
+        defaultConf.ChunkOccurrence = chunkOccurrence;
+        defaultConf.MaxY = maxY;
+        defaultConf.MinY = minY;
+        defaultConf.MinVeinSize = minVeinSize;
+        defaultConf.MaxVeinSize = maxVeinSize;
+        defaultConf.Weight = weight;
+        return defaultConf;
+    }
+
+
 
     public static void syncConfig(Configuration config) {
         Property prop;
@@ -125,7 +124,7 @@ public final class ConfigWorldGen {
         final String DESC_DIM_RESTRICTION_LIST = "Dimension IDs to restrict ore spawning in";
         final String DESC_BIOME_RESTRICTION_TYPE = "Biome Restriction Type (Either 'blacklist' or 'whitelist')";
         final String DESC_BIOME_RESTRICTION_LIST = "Biome IDs to restrict ore spawning in";
-        {
+
             prop = config.get(worldgenCat, "enableRetroGen", true);
             prop.setComment(DESC_RETROGEN_ENABLED);
             boolean retrogenEnabled = prop.getBoolean();
@@ -133,8 +132,7 @@ public final class ConfigWorldGen {
             propOrder.add(prop.getName());
 
             WorldGen.setRetrogenEnabled(retrogenEnabled);
-        }
-        {
+
             for (EnumOres ore : EnumOres.byType(EnumOreType.ORE)) {
                 String oreName = ore.getOreName();
                 String oreNameLower = oreName.toLowerCase();
@@ -244,7 +242,6 @@ public final class ConfigWorldGen {
 
                 OreGenConfig.put(ore, oreConf);
             }
-        }
     }
 
     public enum RestrictionType {
