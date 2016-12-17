@@ -32,9 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.generitech.client.gui.power.GuiGenerator;
 import xyz.aadev.generitech.client.gui.power.GuiPowerStorage;
-import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 

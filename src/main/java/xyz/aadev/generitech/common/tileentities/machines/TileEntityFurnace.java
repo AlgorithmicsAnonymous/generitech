@@ -146,24 +146,26 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
     public int getMaxTemperature() {
         switch (MachineTier.byMeta(getBlockMetadata())) {
             case TIER_1:
-            default:
-                return 750;
+
             case TIER_2:
                 return 1000;
             case TIER_3:
                 return 1250;
+            default:
+                return 750;
         }
     }
 
     public float getTempRate() {
         switch (MachineTier.byMeta(getBlockMetadata())) {
             case TIER_1:
-            default:
-                return 0.5f;
+
             case TIER_2:
                 return 0.7f;
             case TIER_3:
                 return 0.9f;
+            default:
+                return 0.5f;
         }
     }
 
@@ -252,8 +254,7 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
                 this.markDirty();
             }
         } else {
-            if (processItem != null && isSmeltPaused()) {
-                if (smeltProgress > 1000) {
+            if (processItem != null && isSmeltPaused()&& smeltProgress > 1000) {
                     smeltProgress = 1000;
                     ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
                     if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
@@ -269,7 +270,6 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
                     this.markForUpdate();
                     this.markDirty();
-                }
             }
         }
 

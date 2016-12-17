@@ -13,14 +13,12 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.aalib.common.util.TileHelper;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
-import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
 import java.util.Random;

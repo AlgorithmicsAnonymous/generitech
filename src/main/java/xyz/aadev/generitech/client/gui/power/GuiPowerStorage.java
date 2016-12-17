@@ -21,11 +21,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
 public class GuiPowerStorage extends GuiBase {
-    private static int aaa = 100;
 
     public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityPowerStorage tileEntity) {
         super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
@@ -39,8 +37,5 @@ public class GuiPowerStorage extends GuiBase {
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 
-    }
-    public static int wadw(){
-        return aaa;
     }
 }

@@ -39,7 +39,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import xyz.aadev.aalib.common.logging.Logger;
 import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.api.util.EnumOreType;
 import xyz.aadev.generitech.common.util.EnumOres;

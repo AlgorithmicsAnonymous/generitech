@@ -27,20 +27,17 @@ import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GuiGenerator extends GuiBase {
     Rectangle powerBar;
     private TileEntityPower tileEntity;
-    private MachineTier machineTier;
 
     public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityPower tileEntity) {
         super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
         this.xSize = 176;
         this.ySize = 166;
         this.tileEntity = tileEntity;
-        this.machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata());
         powerBar = new Rectangle(98, 30, 14, 28);
     }
 
