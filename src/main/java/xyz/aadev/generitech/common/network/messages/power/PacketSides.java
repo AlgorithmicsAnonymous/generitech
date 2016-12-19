@@ -1,21 +1,11 @@
 package xyz.aadev.generitech.common.network.messages.power;
 
 import io.netty.buffer.ByteBuf;
-import net.darkhax.tesla.api.ITeslaConsumer;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.network.PacketBaseThreadSafe;
 import xyz.aadev.generitech.GeneriTech;
-import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
-
-import javax.annotation.Nullable;
 
 public class PacketSides extends PacketBaseThreadSafe {
 
@@ -27,7 +17,7 @@ public class PacketSides extends PacketBaseThreadSafe {
     private int side5;
 
 
-    public PacketSides(){
+    public PacketSides() {
 
     }
 
@@ -51,7 +41,6 @@ public class PacketSides extends PacketBaseThreadSafe {
         this.side5 = buf.readInt();
 
 
-
     }
 
     @Override
@@ -68,12 +57,12 @@ public class PacketSides extends PacketBaseThreadSafe {
 
     @Override
     public void handleClientSafe(NetHandlerPlayClient netHandler) {
-        GeneriTech.Logger.debug(String.format("Received %s", new int[]{side0,side1,side2,side3,side4,side5}));
+        GeneriTech.Logger.debug(String.format("Received %s", new int[]{side0, side1, side2, side3, side4, side5}));
     }
 
     @Override
     public void handleServerSafe(NetHandlerPlayServer netHandler) {
         TileEntityPowerStorage tile = new TileEntityPowerStorage();
-        tile.setSides(new int[]{side0,side1,side2,side3,side4,side5});
+        tile.setSides(new int[]{side0, side1, side2, side3, side4, side5});
     }
 }

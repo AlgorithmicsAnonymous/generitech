@@ -41,11 +41,11 @@ public class ConfigSync {
                 Property localProp = localCat.get(propName);
                 if (localProp == null) {
                     localCat.put(propName, serverProp);
-                } else if (!localProp.getString().equals(serverProp.getString())){
-                        localProp.setValue(serverProp.getString());
-                        needsRestart |= localProp.requiresMcRestart();
-                        changed = true;
-                        GeneriTech.Logger.debug(String.format("Syncing %s - %s: %s", localCat.getName(), localProp.getName(), localProp.getString()));
+                } else if (!localProp.getString().equals(serverProp.getString())) {
+                    localProp.setValue(serverProp.getString());
+                    needsRestart |= localProp.requiresMcRestart();
+                    changed = true;
+                    GeneriTech.Logger.debug(String.format("Syncing %s - %s: %s", localCat.getName(), localProp.getName(), localProp.getString()));
                 }
             }
         }

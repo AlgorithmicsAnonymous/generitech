@@ -61,13 +61,12 @@ import java.util.concurrent.TimeUnit;
 
 @Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME, certificateFingerprint = Reference.FINGERPRINT, dependencies = Reference.DEPENDENCIES, guiFactory = Reference.GUI_FACTORY)
 public class GeneriTech {
+    public static final Logger Logger = new Logger(Reference.MOD_NAME);
+    public static final IntegrationsManager integrationsManager = new IntegrationsManager(Reference.MOD_NAME);
     @Mod.Instance(Reference.MOD_ID)
     private static GeneriTech instance;
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     private static IProxy proxy;
-
-    public static final Logger Logger = new Logger(Reference.MOD_NAME);
-    public static final IntegrationsManager integrationsManager = new IntegrationsManager(Reference.MOD_NAME);
 
     static {
         FluidRegistry.enableUniversalBucket();

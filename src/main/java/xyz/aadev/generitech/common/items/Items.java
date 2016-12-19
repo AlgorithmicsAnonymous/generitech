@@ -88,6 +88,6 @@ public enum Items {
     }
 
     private void registerItem() {
-        item = RegistrationHelper.registerItem(Reference.MOD_ID,itemClass);
+        item = RegistrationHelper.registerItem(Reference.MOD_ID, itemClass);
     }
 }

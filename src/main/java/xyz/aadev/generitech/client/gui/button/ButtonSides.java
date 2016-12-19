@@ -18,12 +18,7 @@ package xyz.aadev.generitech.client.gui.button;/*
  */
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import xyz.aadev.generitech.Reference;
 
 public class ButtonSides extends GuiButton {
 
@@ -40,22 +35,22 @@ public class ButtonSides extends GuiButton {
         this.sides = sides;
         this.xIn = xIn;
         this.yIn = yIn;
-        this.i=buttonId;
+        this.i = buttonId;
 
     }
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         super.drawButton(mc, mouseX, mouseY);
-            if (sides[i]==0){
-                drawTexturedModalRect(xIn, yIn, 177, 19, 10, 10);
-            }
-            if (sides[i]==1){
-                drawTexturedModalRect(xIn, yIn, 186, 19, 10, 10);
-            }
-            if (sides[i]==2){
-                drawTexturedModalRect(xIn, yIn, 195, 19, 10, 10);
-            }
+        if (sides[i] == 0) {
+            drawTexturedModalRect(xIn, yIn, 177, 19, 10, 10);
+        }
+        if (sides[i] == 1) {
+            drawTexturedModalRect(xIn, yIn, 186, 19, 10, 10);
+        }
+        if (sides[i] == 2) {
+            drawTexturedModalRect(xIn, yIn, 195, 19, 10, 10);
+        }
 
     }
 

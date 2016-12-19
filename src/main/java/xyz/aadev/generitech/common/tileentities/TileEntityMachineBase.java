@@ -35,13 +35,6 @@
 package xyz.aadev.generitech.common.tileentities;
 
 
-import net.darkhax.tesla.api.ITeslaHolder;
-import net.darkhax.tesla.api.ITeslaProducer;
-import net.darkhax.tesla.api.implementation.BaseTeslaContainer;
-import net.darkhax.tesla.capability.TeslaCapabilities;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {

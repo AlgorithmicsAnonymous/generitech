@@ -19,28 +19,20 @@ package xyz.aadev.generitech.client.gui.power;/*
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import xyz.aadev.aalib.client.gui.GuiBase;
-import xyz.aadev.aalib.common.network.NetworkExample;
-import xyz.aadev.aalib.common.network.NetworkWrapperBase;
-import xyz.aadev.aalib.common.network.PacketBase;
-import xyz.aadev.aalib.common.util.TileHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.button.ButtonSides;
-import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
 import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.common.network.messages.power.PacketSides;
-import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
 import java.io.IOException;
 
 public class GuiPowerStorage extends GuiBase {
 
-    private int[] sides;
     TileEntityPowerStorage tileEntity;
+    private int[] sides;
 
 
     public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityPowerStorage tileEntity, int[] sides) {
@@ -63,33 +55,32 @@ public class GuiPowerStorage extends GuiBase {
     }
 
     @Override
-    public void initGui()
-    {
+    public void initGui() {
         int Forward = tileEntity.getForward().getIndex();
         int Back = tileEntity.getForward().getOpposite().getIndex();
         int Left = 4;
         int Right = 5;
-        if (Forward==3){
+        if (Forward == 3) {
             Left = 5;
             Right = 4;
         }
-        if (Forward==4){
+        if (Forward == 4) {
             Left = 3;
             Right = 2;
         }
-        if (Forward==5){
+        if (Forward == 5) {
             Left = 2;
             Right = 3;
         }
         this.mc.thePlayer.openContainer = this.inventorySlots;
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
-        this.addButton(new ButtonSides(0, guiLeft+123, guiTop+44, sides, guiLeft+124, guiTop+45));
-        this.addButton(new ButtonSides(1, guiLeft+123, guiTop+20, sides, guiLeft+124, guiTop+21));
-        this.addButton(new ButtonSides(Forward, guiLeft+123, guiTop+32, sides, guiLeft+124, guiTop+33));
-        this.addButton(new ButtonSides(Left, guiLeft+135, guiTop+32, sides, guiLeft+136, guiTop+33));
-        this.addButton(new ButtonSides(Right, guiLeft+111, guiTop+32, sides, guiLeft+112, guiTop+33));
-        this.addButton(new ButtonSides(Back, guiLeft+123, guiTop+56, sides, guiLeft+124, guiTop+57));
+        this.addButton(new ButtonSides(0, guiLeft + 123, guiTop + 44, sides, guiLeft + 124, guiTop + 45));
+        this.addButton(new ButtonSides(1, guiLeft + 123, guiTop + 20, sides, guiLeft + 124, guiTop + 21));
+        this.addButton(new ButtonSides(Forward, guiLeft + 123, guiTop + 32, sides, guiLeft + 124, guiTop + 33));
+        this.addButton(new ButtonSides(Left, guiLeft + 135, guiTop + 32, sides, guiLeft + 136, guiTop + 33));
+        this.addButton(new ButtonSides(Right, guiLeft + 111, guiTop + 32, sides, guiLeft + 112, guiTop + 33));
+        this.addButton(new ButtonSides(Back, guiLeft + 123, guiTop + 56, sides, guiLeft + 124, guiTop + 57));
 
     }
 
@@ -99,14 +90,13 @@ public class GuiPowerStorage extends GuiBase {
         task(button.id);
     }
 
-    private void task(int i)throws IOException{
+    private void task(int i) throws IOException {
         sides[i]++;
-        if (sides[i]==3){
-            sides[i]=0;
+        if (sides[i] == 3) {
+            sides[i] = 0;
         }
         Network.sendToServer(new PacketSides(sides));
     }
-
 
 
 }

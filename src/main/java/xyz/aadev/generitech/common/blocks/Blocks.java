@@ -68,7 +68,6 @@ public enum Blocks {
     BLOCK_POWERSTORAGE(BlockPowerStorage.class, ItemPowerStorage.class);
 
 
-
     private final Class<? extends BlockBase> blockClass;
     private final Class<? extends ItemBlock> itemBlockClass;
     private Block block;

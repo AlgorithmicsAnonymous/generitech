@@ -30,7 +30,7 @@ public class ItemWorldGenWand extends ItemBase {
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
-        if(!worldIn.isRemote) {
+        if (!worldIn.isRemote) {
             int semiDiameter = 30;
             AxisAlignedBB area = new AxisAlignedBB(playerIn.posX - semiDiameter, 0, playerIn.posZ - semiDiameter,
                     playerIn.posX + semiDiameter, 255, playerIn.posZ + semiDiameter);

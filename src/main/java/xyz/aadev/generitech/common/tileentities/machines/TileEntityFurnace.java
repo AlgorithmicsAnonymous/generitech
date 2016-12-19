@@ -171,16 +171,15 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
     @Override
     public void update() {
-        if (container.getStoredPower()>=powerUsage && machineActive && !isSmeltPaused) {
+        if (container.getStoredPower() >= powerUsage && machineActive && !isSmeltPaused) {
             if (internalTemp < this.getMaxTemperature()) {
                 internalTemp += getTempRate();
-                container.takePower(powerUsage,false);
+                container.takePower(powerUsage, false);
             }
-        }else if (container.getStoredPower()>=powerUsage&&canIdle && internalTemp <= getIdleTemp())
-        {
+        } else if (container.getStoredPower() >= powerUsage && canIdle && internalTemp <= getIdleTemp()) {
             internalTemp += getTempRate();
-            container.takePower(powerUsage,false);
-        }else {
+            container.takePower(powerUsage, false);
+        } else {
             if (internalTemp <= 0) {
                 internalTemp = 0;
             } else {
@@ -190,10 +189,10 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
         BlockPos pos = getPos();
         World worldIn = getWorld();
-        if (worldIn.isBlockPowered(pos)&&!canIdle){
+        if (worldIn.isBlockPowered(pos) && !canIdle) {
             canIdle = true;
         }
-        if (!worldIn.isBlockPowered(pos)&&canIdle){
+        if (!worldIn.isBlockPowered(pos) && canIdle) {
             canIdle = false;
         }
 
@@ -244,7 +243,7 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
                 InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                if (getStackInSlot(0)== null || !canSmelt(getStackInSlot(0))) machineActive = false;
+                if (getStackInSlot(0) == null || !canSmelt(getStackInSlot(0))) machineActive = false;
                 smeltProgress = 0;
                 internalInventory.setInventorySlotContents(1, null);
 
@@ -252,22 +251,22 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
                 this.markDirty();
             }
         } else {
-            if (processItem != null && isSmeltPaused()&& smeltProgress > 1000) {
-                    smeltProgress = 1000;
-                    ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
-                    if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
-                        isSmeltPaused = true;
-                        return;
-                    }
+            if (processItem != null && isSmeltPaused() && smeltProgress > 1000) {
+                smeltProgress = 1000;
+                ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
+                if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
+                    isSmeltPaused = true;
+                    return;
+                }
 
-                    InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
+                InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                    machineActive = false;
-                    smeltProgress = 0;
-                    internalInventory.setInventorySlotContents(1, null);
+                machineActive = false;
+                smeltProgress = 0;
+                internalInventory.setInventorySlotContents(1, null);
 
-                    this.markForUpdate();
-                    this.markDirty();
+                this.markForUpdate();
+                this.markDirty();
             }
         }
 
@@ -289,6 +288,7 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
         return currentTip;
     }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {

@@ -52,15 +52,12 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     }
 
 
-
-
     @Override
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
-        DistributePowerToFace.transferPower(pos,worldIn,120,container,sides);
+        DistributePowerToFace.transferPower(pos, worldIn, 120, container, sides);
     }
-
 
 
     @Override
@@ -78,12 +75,11 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
-        nbtTagCompound.setIntArray("sides",sides);
+        nbtTagCompound.setIntArray("sides", sides);
 
 
         return nbtTagCompound;
     }
-
 
 
     @Override
@@ -133,6 +129,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     public long getCapacity() {
         return 0;
     }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
@@ -151,16 +148,16 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        int i =0;
+        int i = 0;
         // This method replaces the instanceof checks that would be used in an interface based
         // system. It can be used by other things to see if the TileEntity uses a capability or
         // not. This example is a Consumer, Producer and Holder, so we return true for all
         // three. This can also be used to restrict access on certain sides, for example if you
         // only accept power input from the bottom of the block, you would only return true for
         // Consumer if the facing parameter was down.
-        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER){
-            for (final EnumFacing side : EnumFacing.VALUES){
-                if (facing==side&&sides[i]==1){
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER) {
+            for (final EnumFacing side : EnumFacing.VALUES) {
+                if (facing == side && sides[i] == 1) {
                     return true;
                 }
                 i++;

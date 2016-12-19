@@ -112,7 +112,7 @@ public class BlockPowerStorage extends BlockMachineBase {
         double d4 = rand.nextDouble() * 0.6D - 0.3D;
 
         EnumParticleTypes particleTypes = null;
-        if (tileEntity.getBlockMetadata()==0){
+        if (tileEntity.getBlockMetadata() == 0) {
             particleTypes = EnumParticleTypes.SMOKE_NORMAL;
         }
 
