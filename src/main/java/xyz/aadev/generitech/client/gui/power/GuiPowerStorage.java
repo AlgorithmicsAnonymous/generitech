@@ -95,6 +95,7 @@ public class GuiPowerStorage extends GuiBase {
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
+        //adds side
         task(button.id);
     }
 
