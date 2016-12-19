@@ -39,10 +39,17 @@ import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import javax.annotation.Nullable;
 
 public class TileEntityPowerStorage extends TileEntityMachineBase implements ITeslaHolder, ITeslaConsumer, ITickable {
-    private InternalInventory inventory = new InternalInventory(this, 1);
+    private InternalInventory inventory = new InternalInventory(this, 4);
     private BaseTeslaContainer container = new BaseTeslaContainer(5000, 50000, 1000, 1000);
     private int[] sides = new int[6];
 
+    public int[] getSides() {
+        return sides;
+    }
+
+    public void setSides(int[] sidese) {
+        sides = sidese;
+    }
 
 
 
@@ -51,18 +58,8 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
-
-    if (worldIn.isBlockPowered(pos)){
-        sides[1]=1;
-    }else {
-        sides[1]=0;
-    }
         DistributePowerToFace.transferPower(pos,worldIn,120,container,sides);
-
     }
-
-
-
 
 
 
@@ -100,6 +97,11 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     }
 
     @Override
+    public boolean canBeRotated() {
+        return true;
+    }
+
+    @Override
     public int[] getAccessibleSlotsBySide(EnumFacing side) {
         return new int[0];
     }
@@ -114,7 +116,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiPowerStorage(player.inventory, this);
+        return new GuiPowerStorage(player.inventory, this, sides);
     }
 
     @Override

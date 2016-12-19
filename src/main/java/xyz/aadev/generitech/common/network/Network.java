@@ -12,7 +12,7 @@ import xyz.aadev.aalib.common.network.NetworkWrapperBase;
 import xyz.aadev.aalib.common.network.PacketBase;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.network.messages.ConfigSyncPacket;
-import xyz.aadev.generitech.common.network.messages.power.PacketPower;
+import xyz.aadev.generitech.common.network.messages.power.PacketSides;
 
 public class Network extends NetworkWrapperBase {
     private static Network instance = new Network();
@@ -26,7 +26,7 @@ public class Network extends NetworkWrapperBase {
     }
 
     public static void init() {
-        getInstance().registerPacket(PacketPower.class);
+        getInstance().registerPacket(PacketSides.class);
         getInstance().registerPacketClient(ConfigSyncPacket.class);
     }
 

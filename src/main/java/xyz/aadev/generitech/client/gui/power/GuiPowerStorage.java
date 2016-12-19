@@ -17,25 +17,95 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import xyz.aadev.aalib.client.gui.GuiBase;
+import xyz.aadev.aalib.common.network.NetworkExample;
+import xyz.aadev.aalib.common.network.NetworkWrapperBase;
+import xyz.aadev.aalib.common.network.PacketBase;
+import xyz.aadev.aalib.common.util.TileHelper;
 import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.client.gui.button.ButtonSides;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
+import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.common.network.Network;
+import xyz.aadev.generitech.common.network.messages.power.PacketSides;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
+
+import java.io.IOException;
 
 public class GuiPowerStorage extends GuiBase {
 
-    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityPowerStorage tileEntity) {
-        super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
+    private int[] sides;
+    TileEntityPowerStorage tileEntity;
+
+
+    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityPowerStorage tileEntity, int[] sides) {
+        super(Reference.MOD_ID, new ContanierPowerStorage(inventoryPlayer, tileEntity));
+        this.sides = sides;
+        this.xSize = 176;
+        this.ySize = 166;
+        this.tileEntity = tileEntity;
     }
 
     @Override
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-// Do nothing because of not implemented
+        bindTexture("gui/upgrade/upgrade.png");
+        drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
     }
 
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 // Do nothing because of not implemented
     }
+
+    @Override
+    public void initGui()
+    {
+        int Forward = tileEntity.getForward().getIndex();
+        int Back = tileEntity.getForward().getOpposite().getIndex();
+        int Left = 4;
+        int Right = 5;
+        if (Forward==3){
+            Left = 5;
+            Right = 4;
+        }
+        if (Forward==4){
+            Left = 3;
+            Right = 2;
+        }
+        if (Forward==5){
+            Left = 2;
+            Right = 3;
+        }
+        this.mc.thePlayer.openContainer = this.inventorySlots;
+        this.guiLeft = (this.width - this.xSize) / 2;
+        this.guiTop = (this.height - this.ySize) / 2;
+        this.addButton(new ButtonSides(0, guiLeft+123, guiTop+44, sides, guiLeft+124, guiTop+45));
+        this.addButton(new ButtonSides(1, guiLeft+123, guiTop+20, sides, guiLeft+124, guiTop+21));
+        this.addButton(new ButtonSides(Forward, guiLeft+123, guiTop+32, sides, guiLeft+124, guiTop+33));
+        this.addButton(new ButtonSides(Left, guiLeft+135, guiTop+32, sides, guiLeft+136, guiTop+33));
+        this.addButton(new ButtonSides(Right, guiLeft+111, guiTop+32, sides, guiLeft+112, guiTop+33));
+        this.addButton(new ButtonSides(Back, guiLeft+123, guiTop+56, sides, guiLeft+124, guiTop+57));
+
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException {
+        task(button.id);
+    }
+
+    private void task(int i)throws IOException{
+        sides[i]++;
+        if (sides[i]==3){
+            sides[i]=0;
+        }
+        Network.sendToServer(new PacketSides(sides));
+    }
+
+
+
 }
