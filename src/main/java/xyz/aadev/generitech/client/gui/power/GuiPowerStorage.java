@@ -19,27 +19,33 @@ package xyz.aadev.generitech.client.gui.power;/*
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import xyz.aadev.aalib.client.gui.GuiBase;
+import xyz.aadev.aalib.common.util.GuiHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.button.ButtonSides;
+import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.common.network.messages.power.PacketSides;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
 import java.io.IOException;
 
 public class GuiPowerStorage extends GuiBase {
 
-    TileEntityPowerStorage tileEntity;
+    TileEntityMachineBase tileEntity;
     private int[] sides;
+    GuiHelper guiHelper = new GuiHelper();
 
-
-    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityPowerStorage tileEntity, int[] sides) {
-        super(Reference.MOD_ID, new ContanierPowerStorage(inventoryPlayer, tileEntity));
+    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityMachineBase tileEntity, int[] sides, int start) {
+        super(Reference.MOD_ID, new ContanierPowerStorage(inventoryPlayer, tileEntity,start));
         this.sides = sides;
         this.xSize = 176;
         this.ySize = 166;
+
         this.tileEntity = tileEntity;
     }
 
@@ -51,11 +57,14 @@ public class GuiPowerStorage extends GuiBase {
 
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-// Do nothing because of not implemented
+        // Do nothing because of not implemented
     }
 
     @Override
     public void initGui() {
+        this.mc.thePlayer.openContainer = this.inventorySlots;
+        this.guiLeft = (this.width - this.xSize) / 2;
+        this.guiTop = (this.height - this.ySize) / 2;
         int Forward = tileEntity.getForward().getIndex();
         int Back = tileEntity.getForward().getOpposite().getIndex();
         int Left = 4;
@@ -72,9 +81,7 @@ public class GuiPowerStorage extends GuiBase {
             Left = 2;
             Right = 3;
         }
-        this.mc.thePlayer.openContainer = this.inventorySlots;
-        this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
+
         this.addButton(new ButtonSides(0, guiLeft + 123, guiTop + 44, sides, guiLeft + 124, guiTop + 45));
         this.addButton(new ButtonSides(1, guiLeft + 123, guiTop + 20, sides, guiLeft + 124, guiTop + 21));
         this.addButton(new ButtonSides(Forward, guiLeft + 123, guiTop + 32, sides, guiLeft + 124, guiTop + 33));

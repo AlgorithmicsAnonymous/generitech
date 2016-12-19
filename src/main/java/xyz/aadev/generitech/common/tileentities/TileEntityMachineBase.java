@@ -38,5 +38,16 @@ package xyz.aadev.generitech.common.tileentities;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
+    protected int[] sides = new int[6];
+
+    public int[] getSides() {
+        return sides;
+    }
+
+    public void setSides(int[] sidese) {
+        sides = sidese;
+    }
+
+
 
 }

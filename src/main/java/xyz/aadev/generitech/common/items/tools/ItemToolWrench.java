@@ -73,22 +73,6 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe {
         return true;
     }
 
-    @Override
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-        Block block = world.getBlockState(pos).getBlock();
-
-        if (block != null && !player.isSneaking() && !world.isRemote) {
-            if (Platform.isClient())
-                return EnumActionResult.PASS;
-
-            if (block.rotateBlock(world, pos, side)) {
-                player.swingArm(hand);
-                return EnumActionResult.PASS;
-            }
-        }
-
-        return EnumActionResult.FAIL;
-    }
 
     @Override
     public void RegisterRecipes() {

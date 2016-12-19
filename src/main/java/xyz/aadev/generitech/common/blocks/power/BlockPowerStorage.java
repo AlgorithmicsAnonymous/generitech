@@ -35,6 +35,8 @@ import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
+import xyz.aadev.generitech.common.blocks.Blocks;
+import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
 import java.util.Random;
@@ -55,10 +57,14 @@ public class BlockPowerStorage extends BlockMachineBase {
         TileEntity tileEntity;
         tileEntity = world.getTileEntity(pos);
         GeneriTech.Logger.info(Long.toString(((TileEntityPowerStorage) tileEntity).getStoredPower()));
+        int[] test = ((TileEntityPowerStorage) tileEntity).getSides();
+        System.out.println(test[0]);
+
 
         if (!world.isRemote) {
 
-            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
+
 
 
         }

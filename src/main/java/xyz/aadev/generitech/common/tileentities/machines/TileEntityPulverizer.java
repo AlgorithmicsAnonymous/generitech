@@ -47,6 +47,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
@@ -58,7 +60,9 @@ import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.Crushable;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
+import xyz.aadev.generitech.client.gui.power.GuiPowerStorage;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
+import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.util.LanguageHelper;
 
@@ -72,13 +76,13 @@ import java.util.Random;
 * 1 Processing
 * 2-3 Output
 * 4 Fuel
-* 5-7 Upgrades
+* 5-9 Upgrades
 */
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage, ITeslaConsumer, ITeslaHolder {
 
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
-    private InternalInventory inventory = new InternalInventory(this, 8);
+    private InternalInventory inventory = new InternalInventory(this, 10);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;
@@ -92,6 +96,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private Item lastFuelType;
     private int lastFuelValue;
     private float fortuneMultiplier = 0.5f;
+    private int[] sides = new int[6];
+
 
     public boolean isPulverizerPaused() {
         return pulverizerPaused;
@@ -183,9 +189,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         return slots;
     }
 
+
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiPulverizer(player.inventory, this);
+        return new GuiPulverizer(player.inventory, this, player);
+
     }
 
     @Override

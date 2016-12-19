@@ -52,6 +52,7 @@ import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
+import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.tileentities.machines.TileEntityPulverizer;
 
 import java.util.Random;
@@ -70,10 +71,19 @@ public class BlockPulverizer extends BlockMachineBase {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.PULVERIZER, world, pos.getX(), pos.getY(), pos.getZ());
+            if (heldItem== Items.ITEM_TOOL_WRENCH.getStack(1,0)){
+                System.out.println("wawdawd");
+            }else {
+                player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.PULVERIZER, world, pos.getX(), pos.getY(), pos.getZ());
+
+            }
+
+
         }
         return true;
     }
+
+
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
