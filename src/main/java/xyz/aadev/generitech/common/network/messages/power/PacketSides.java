@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.EnumFacing;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
@@ -64,11 +65,7 @@ public class PacketSides extends PacketBaseThreadSafe {
 
     @Override
     public void handleClientSafe(NetHandlerPlayClient netHandler) {
-        GeneriTech.Logger.debug(String.format("Received %s", new int[]{side0, side1, side2, side3, side4, side5}));
-    }
-
-    @Override
-    public void handleServerSafe(NetHandlerPlayServer netHandler) {
+        System.out.println("Client");
         TileEntityMachineBase tile = new TileEntityMachineBase() {
             @Nullable
             @Override
@@ -92,5 +89,36 @@ public class PacketSides extends PacketBaseThreadSafe {
             }
         };
         tile.setSides(new int[]{side0, side1, side2, side3, side4, side5});
+    }
+
+    @Override
+    public void handleServerSafe(NetHandlerPlayServer netHandler) {
+
+        TileEntityMachineBase tile = new TileEntityMachineBase() {
+            @Nullable
+            @Override
+            public ItemStack removeStackFromSlot(int index) {
+                return null;
+            }
+
+            @Override
+            public IInventory getInternalInventory() {
+                return null;
+            }
+
+            @Override
+            public void onChangeInventory(IInventory inv, int slot, InventoryOperation operation, ItemStack removed, ItemStack added) {
+
+            }
+
+            @Override
+            public int[] getAccessibleSlotsBySide(EnumFacing side) {
+                return new int[0];
+            }
+        };
+        tile.setSides(new int[]{side0, side1, side2, side3, side4, side5});
+
+
+
     }
 }

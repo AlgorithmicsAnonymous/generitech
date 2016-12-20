@@ -18,9 +18,19 @@ package xyz.aadev.generitech.client.gui.power;/*
  */
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.INetHandler;
+import net.minecraft.network.Packet;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import xyz.aadev.aalib.client.gui.GuiBase;
+import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.util.GuiHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.button.ButtonSides;
@@ -32,6 +42,7 @@ import xyz.aadev.generitech.common.network.messages.power.PacketSides;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 
 public class GuiPowerStorage extends GuiBase {
@@ -39,13 +50,14 @@ public class GuiPowerStorage extends GuiBase {
     TileEntityMachineBase tileEntity;
     private int[] sides;
     GuiHelper guiHelper = new GuiHelper();
+    EntityPlayer player;
 
-    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityMachineBase tileEntity, int[] sides, int start) {
+    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityMachineBase tileEntity, int[] sides, int start, EntityPlayer player) {
         super(Reference.MOD_ID, new ContanierPowerStorage(inventoryPlayer, tileEntity,start));
         this.sides = sides;
         this.xSize = 176;
         this.ySize = 166;
-
+        this.player = player;
         this.tileEntity = tileEntity;
     }
 
@@ -102,6 +114,7 @@ public class GuiPowerStorage extends GuiBase {
         if (sides[i] == 3) {
             sides[i] = 0;
         }
+
         Network.sendToServer(new PacketSides(sides));
     }
 

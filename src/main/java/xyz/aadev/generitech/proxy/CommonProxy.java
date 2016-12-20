@@ -181,6 +181,8 @@ public abstract class CommonProxy implements IProxy {
         new GuiHandler(GeneriTech.getInstance());
     }
 
+
+
     @Override
     public void registerRenderers() {
         /** Client Side Only **/

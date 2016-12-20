@@ -35,7 +35,18 @@
 package xyz.aadev.generitech.common.tileentities;
 
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import xyz.aadev.aalib.common.network.NetworkExample;
+import xyz.aadev.aalib.common.tileentities.TileEntityBase;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
+import xyz.aadev.generitech.common.network.Network;
+import xyz.aadev.generitech.common.network.messages.power.PacketSides;
 
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
     protected int[] sides = new int[6];
@@ -46,8 +57,23 @@ public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
 
     public void setSides(int[] sidese) {
         sides = sidese;
+        markForUpdate();
+
     }
 
 
+    @Override
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
+        sides = nbtTagCompound.getIntArray("sides");
+    }
+
+    @Override
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
+
+        nbtTagCompound.setIntArray("sides", sides);
+
+    }
 
 }

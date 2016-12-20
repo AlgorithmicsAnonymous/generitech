@@ -19,8 +19,10 @@ package xyz.aadev.generitech.common.container.power;/*
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.tileentity.TileEntity;
 import xyz.aadev.aalib.common.container.ContainerBase;
+import xyz.aadev.aalib.common.container.slot.SlotFuelInput;
 import xyz.aadev.aalib.common.container.slot.SlotNormal;
 
 public class ContanierGenerator extends ContainerBase {
@@ -32,6 +34,6 @@ public class ContanierGenerator extends ContainerBase {
 
         bindPlayerInventory(inventoryPlayer, 0, 84);
 
-        this.addSlotToContainer(new SlotNormal(inventory, 0, 63, 35));
+        this.addSlotToContainer(new SlotFuelInput(inventory, 0, 63, 35,null));
     }
 }

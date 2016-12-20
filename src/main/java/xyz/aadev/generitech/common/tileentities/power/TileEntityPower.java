@@ -11,6 +11,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,6 +20,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.aalib.common.tileentities.TileEntityBase;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.power.GuiGenerator;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
@@ -37,25 +40,19 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
     private int fuelTotal = 0;
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound) {
-        super.readFromNBT(nbtTagCompound);
-
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
         this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
         fuelRemaining = nbtTagCompound.getInteger("fuelRemaining");
-
-
     }
-
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        super.writeToNBT(nbtTagCompound);
-
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
         nbtTagCompound.setInteger("fuelRemaining", fuelRemaining);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
-
-        return nbtTagCompound;
     }
+
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
@@ -86,7 +83,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         if (fuelRemaining > 0) {
             container.givePower(60, false);
         }
-        if (container.getStoredPower() != container.getCapacity() && inventory.getStackInSlot(0) != null || container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0) != null) {
+        if (container.getStoredPower() != container.getCapacity() && inventory.getStackInSlot(0) != null || container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0) != null ) {
             burnTime();
         }
 
@@ -98,7 +95,7 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
     }
 
     public void burnTime() {
-        if (fuelRemaining == 0) {
+        if (fuelRemaining == 0 && TileEntityFurnace.isItemFuel(inventory.getStackInSlot(0))) {
             if (inventory.getStackInSlot(0).getItem() == lastFuelType) {
                 fuelRemaining = lastFuelValue;
 

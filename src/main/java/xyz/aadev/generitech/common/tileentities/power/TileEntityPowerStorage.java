@@ -58,8 +58,6 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         super.readFromNBT(nbtTagCompound);
 
         this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
-        this.sides = nbtTagCompound.getIntArray("sides");
-
 
     }
 
@@ -68,8 +66,6 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
-        nbtTagCompound.setIntArray("sides", sides);
-
 
         return nbtTagCompound;
     }
@@ -105,7 +101,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiPowerStorage(player.inventory, this, sides,0);
+        return new GuiPowerStorage(player.inventory, this, sides,0,player);
     }
 
     @Override
