@@ -35,8 +35,6 @@ import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
-import xyz.aadev.generitech.common.blocks.Blocks;
-import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
 import java.util.Random;

@@ -19,11 +19,9 @@ package xyz.aadev.generitech.common.container.power;/*
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.tileentity.TileEntity;
 import xyz.aadev.aalib.common.container.ContainerBase;
 import xyz.aadev.aalib.common.container.slot.SlotFuelInput;
-import xyz.aadev.aalib.common.container.slot.SlotNormal;
 
 public class ContanierGenerator extends ContainerBase {
     IInventory inventory;

@@ -19,30 +19,16 @@ package xyz.aadev.generitech.client.gui.power;/*
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 import xyz.aadev.aalib.client.gui.GuiBase;
-import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.util.GuiHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.button.ButtonSides;
-import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
-import xyz.aadev.generitech.common.items.Items;
 import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.common.network.messages.power.PacketSides;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 
 public class GuiPowerStorage extends GuiBase {

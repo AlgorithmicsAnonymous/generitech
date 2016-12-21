@@ -35,18 +35,8 @@
 package xyz.aadev.generitech.common.tileentities;
 
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import xyz.aadev.aalib.common.network.NetworkExample;
-import xyz.aadev.aalib.common.tileentities.TileEntityBase;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
-import xyz.aadev.generitech.common.network.Network;
-import xyz.aadev.generitech.common.network.messages.power.PacketSides;
 
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
     protected int[] sides = new int[6];
