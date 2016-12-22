@@ -42,7 +42,6 @@ import java.util.ArrayList;
 public class GuiUpgradeScreen extends GuiBase {
 
     TileEntity tileEntity;
-    GuiHelper guiHelper = new GuiHelper();
     EntityPlayer player;
     Rectangle slot;
     private int[] sides;

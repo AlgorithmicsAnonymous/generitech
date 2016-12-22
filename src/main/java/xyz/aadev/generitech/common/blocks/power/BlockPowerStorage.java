@@ -60,7 +60,7 @@ public class BlockPowerStorage extends BlockMachineBase {
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         TileEntity tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntity.class);
         if (tileEntity instanceof TileEntityPowerStorage) {
-            if (tileEntity != null && ((TileEntityPowerStorage) tileEntity).canBeRotated()) {
+            if (((TileEntityPowerStorage) tileEntity).canBeRotated()) {
                 return state.withProperty(FACING, EnumFacing.NORTH);
             }
         }

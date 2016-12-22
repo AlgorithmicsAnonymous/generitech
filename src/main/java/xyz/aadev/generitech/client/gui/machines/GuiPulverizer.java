@@ -57,7 +57,6 @@ public class GuiPulverizer extends GuiBase {
     ITeslaHolder container;
     Rectangle powerBar;
     private TileEntityPulverizer tileEntity;
-    private GuiHelper guiHelper = new GuiHelper();
     private MachineTier machineTier;
     private HashMap<Rectangle, List<String>> tooltips = new HashMap<Rectangle, List<String>>();
 
@@ -134,12 +133,8 @@ public class GuiPulverizer extends GuiBase {
     @Override
     public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
 
-        int timeTotal = tileEntity.getTotalProcessTime();
-        int timeCurrent = tileEntity.getTicksRemaining();
-        float timePercent = ((((float) timeTotal - (float) timeCurrent) / (float) timeTotal)) * 100;
-
         if (machineTier == MachineTier.TIER_0) {
-
+//mabey one day
         } else {
             long powerCapacity = container.getCapacity();
             long powerCurrent = tileEntity.getPower();
@@ -147,27 +142,16 @@ public class GuiPulverizer extends GuiBase {
             int powerLevel = powerCurrent > 0 ? (int) (powerCurrent * 100d / powerCapacity) : 0;
 
             drawTexturedModalRect(paramInt1 + 74, paramInt2 + 38, 176, 0, 40 - powerLevel, 16);
-
-            //guiHelper.drawVerticalProgressBar(12, 28, 8, 50, powerPercent, colorBackground, colorBorder, colorProgressBackground);
         }
 
         if (machineTier == MachineTier.TIER_0) {
-            //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
 
-            //guiHelper.drawHorizontalProgressBar(72, 43, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-            //String progressLabel = String.format("%d%%", Math.round(timePercent));
-            //guiHelper.drawCenteredStringWithShadow(30, 43, 126, progressLabel, colorFont);
 
         } else {
-
-            //String s = tileEntity.hasCustomName() ? tileEntity.getCustomName() : LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             String s = LanguageHelper.NONE.translateMessage(tileEntity.getUnlocalizedName());
             this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 0xE4E4E4);
-            // guiHelper.drawHorizontalProgressBar(72, 39, 40, 8, Math.round(timePercent), colorBackground, colorBorder, colorProgressBackground);
-            // String progressLabel = String.format("%d%%", Math.round(timePercent));
-            // guiHelper.drawCenteredStringWithShadow(30, 39, 126, progressLabel, colorFont);
         }
     }
 
