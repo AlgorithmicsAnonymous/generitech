@@ -20,8 +20,10 @@ package xyz.aadev.generitech.client.gui.power;/*
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.tileentity.TileEntity;
 import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.aalib.common.util.GuiHelper;
+import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.client.gui.button.ButtonSides;
 import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
@@ -33,12 +35,12 @@ import java.io.IOException;
 
 public class GuiPowerStorage extends GuiBase {
 
-    TileEntityMachineBase tileEntity;
+    TileEntity tileEntity;
     private int[] sides;
     GuiHelper guiHelper = new GuiHelper();
     EntityPlayer player;
 
-    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityMachineBase tileEntity, int[] sides, int start, EntityPlayer player) {
+    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntity tileEntity, int[] sides, int start, EntityPlayer player) {
         super(Reference.MOD_ID, new ContanierPowerStorage(inventoryPlayer, tileEntity,start));
         this.sides = sides;
         this.xSize = 176;
@@ -51,6 +53,9 @@ public class GuiPowerStorage extends GuiBase {
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         bindTexture("gui/upgrade/upgrade.png");
         drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
+        if (tileEntity instanceof TileEntityMachineBase){
+            sides=((TileEntityMachineBase) tileEntity).getSides();
+        }
     }
 
     @Override
@@ -58,34 +63,38 @@ public class GuiPowerStorage extends GuiBase {
         // Do nothing because of not implemented
     }
 
+
     @Override
     public void initGui() {
-        this.mc.thePlayer.openContainer = this.inventorySlots;
-        this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
-        int Forward = tileEntity.getForward().getIndex();
-        int Back = tileEntity.getForward().getOpposite().getIndex();
-        int Left = 4;
-        int Right = 5;
-        if (Forward == 3) {
-            Left = 5;
-            Right = 4;
-        }
-        if (Forward == 4) {
-            Left = 3;
-            Right = 2;
-        }
-        if (Forward == 5) {
-            Left = 2;
-            Right = 3;
-        }
+        if (tileEntity instanceof TileEntityMachineBase){
+            this.mc.thePlayer.openContainer = this.inventorySlots;
+            this.guiLeft = (this.width - this.xSize) / 2;
+            this.guiTop = (this.height - this.ySize) / 2;
+            int Forward = ((TileEntityMachineBase) tileEntity).getForward().getIndex();
+            int Back = ((TileEntityMachineBase) tileEntity).getForward().getOpposite().getIndex();
+            int Left = 4;
+            int Right = 5;
+            if (Forward == 3) {
+                Left = 5;
+                Right = 4;
+            }
+            if (Forward == 4) {
+                Left = 3;
+                Right = 2;
+            }
+            if (Forward == 5) {
+                Left = 2;
+                Right = 3;
+            }
 
-        this.addButton(new ButtonSides(0, guiLeft + 123, guiTop + 44, sides, guiLeft + 124, guiTop + 45));
-        this.addButton(new ButtonSides(1, guiLeft + 123, guiTop + 20, sides, guiLeft + 124, guiTop + 21));
-        this.addButton(new ButtonSides(Forward, guiLeft + 123, guiTop + 32, sides, guiLeft + 124, guiTop + 33));
-        this.addButton(new ButtonSides(Left, guiLeft + 135, guiTop + 32, sides, guiLeft + 136, guiTop + 33));
-        this.addButton(new ButtonSides(Right, guiLeft + 111, guiTop + 32, sides, guiLeft + 112, guiTop + 33));
-        this.addButton(new ButtonSides(Back, guiLeft + 123, guiTop + 56, sides, guiLeft + 124, guiTop + 57));
+            this.addButton(new ButtonSides(0, guiLeft + 123, guiTop + 44, sides, guiLeft + 124, guiTop + 45,tileEntity));
+            this.addButton(new ButtonSides(1, guiLeft + 123, guiTop + 20, sides, guiLeft + 124, guiTop + 21,tileEntity));
+            this.addButton(new ButtonSides(Forward, guiLeft + 123, guiTop + 32, sides, guiLeft + 124, guiTop + 33,tileEntity));
+            this.addButton(new ButtonSides(Left, guiLeft + 135, guiTop + 32, sides, guiLeft + 136, guiTop + 33,tileEntity));
+            this.addButton(new ButtonSides(Right, guiLeft + 111, guiTop + 32, sides, guiLeft + 112, guiTop + 33,tileEntity));
+            this.addButton(new ButtonSides(Back, guiLeft + 123, guiTop + 56, sides, guiLeft + 124, guiTop + 57,tileEntity));
+
+        }
 
     }
 
@@ -96,12 +105,7 @@ public class GuiPowerStorage extends GuiBase {
     }
 
     private void task(int i) throws IOException {
-        sides[i]++;
-        if (sides[i] == 3) {
-            sides[i] = 0;
-        }
-
-        Network.sendToServer(new PacketSides(sides));
+        Network.sendToServer(new PacketSides(sides,i,tileEntity.getPos()));
     }
 
 
