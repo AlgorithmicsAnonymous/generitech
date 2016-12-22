@@ -28,7 +28,7 @@ public class PacketSides extends PacketBaseThreadSafe {
     private int z;
 
     public PacketSides() {
-
+        //needed constructor
     }
 
     public PacketSides(int[] sides , int side, BlockPos pos) {
@@ -77,7 +77,7 @@ public class PacketSides extends PacketBaseThreadSafe {
 
     @Override
     public void handleClientSafe(NetHandlerPlayClient netHandler) {
-
+//unused
     }
 
     @Override

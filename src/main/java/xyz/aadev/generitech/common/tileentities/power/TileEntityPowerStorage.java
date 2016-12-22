@@ -32,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.aalib.common.tileentities.TileEntityBase;
 import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
 import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
@@ -40,7 +41,7 @@ import javax.annotation.Nullable;
 
 public class TileEntityPowerStorage extends TileEntityMachineBase implements ITeslaHolder, ITeslaConsumer, ITickable {
     private InternalInventory inventory = new InternalInventory(this, 4);
-    private BaseTeslaContainer container = new BaseTeslaContainer(5000, 50000, 1000, 1000);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
 
 
 
@@ -52,24 +53,19 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         this.markForUpdate();
     }
 
-
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound) {
-        super.readFromNBT(nbtTagCompound);
-
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
         this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
 
     }
 
-
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        super.writeToNBT(nbtTagCompound);
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
 
-        return nbtTagCompound;
     }
-
 
     @Override
     public IInventory getInternalInventory() {
