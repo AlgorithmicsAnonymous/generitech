@@ -1,6 +1,6 @@
 # Creative Tabs
 itemGroup.generitech.general=GeneriTech General
-itemGroup.generitech.ore=GeneriTech Ores
+itemGroup.generitech.ore=GeneriTech Materials
 itemGroup.generitech.tools=GeneriTech Gadgets
 itemGroup.generitech.fluids=GeneriTech Fluids
 
@@ -47,21 +47,22 @@ item.generitech.orenugget.iron.name=Iron Nugget
 item.generitech.oredust.tin.name=Tin Dust
 item.generitech.oredust.copper.name=Copper Dust
 item.generitech.oredust.lead.name=Lead Dust
-item.generitech.oredust.gold.name=Gold Dust
 item.generitech.oredust.iron.name=Iron Dust
+item.generitech.oredust.gold.name=Gold Dust
 
 # Gears
 item.generitech.materialgear.stone.name=Stone Gear
-item.generitech.materialgear.iron.name=Iron Gear
-item.generitech.materialgear.gold.name=Gold Gear
 item.generitech.materialgear.tin.name=Tin Gear
 item.generitech.materialgear.copper.name=Copper Gear
+item.generitech.materialgear.iron.name=Iron Gear
+item.generitech.materialgear.gold.name=Gold Gear
 
 # Fluids
+fluid.generitech.tin.name=Molten Tin
+fluid.generitech.copper.name=Molten Copper
 fluid.generitech.iron.name=Molten Iron
 fluid.generitech.gold.name=Molten Gold
-fluid.generitech.copper.name=Molten Copper
-fluid.generitech.tin.name=Molten Tin
+
 fluid.generitech.lead.name=Molten Lead
 
 # Tooltips
@@ -69,7 +70,7 @@ tooltip.generitech.ore.copper=It's Copper. What else is there to know?
 tooltip.generitech.ore.tin=Another staple of your average tech mod.
 tooltip.generitech.ore.lead=Life Pro Tip: Do not ingest.
 tooltip.generitech.worldgenwand=§4WARNING: Destroys blocks! For debug use only!
-tooltip.generitech.worldgenwand2=Removes all non-ore blocks in a 30m square radius.
+tooltip.generitech.worldgenwand2=Removes all non-ore blocks in a 30m square radius from Y-0 to Y-255.
 
 # Label
 label.generitech.time_left=Time Remaining
