@@ -25,7 +25,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -37,12 +36,10 @@ import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
 
-import java.util.Random;
-
 public class BlockPowerStorage extends BlockMachineBase {
 
     public BlockPowerStorage() {
-        super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.all());
+        super(Material.ROCK, "machines/pulverizer/pulverizer", MachineTier.allexeptTier_0());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
         this.setTileEntity(TileEntityPowerStorage.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
@@ -52,31 +49,26 @@ public class BlockPowerStorage extends BlockMachineBase {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        TileEntity tileEntity;
-        tileEntity = world.getTileEntity(pos);
-        GeneriTech.Logger.info(Long.toString(((TileEntityPowerStorage) tileEntity).getStoredPower()));
-        int[] test = ((TileEntityPowerStorage) tileEntity).getSides();
-        System.out.println(test[0]);
-
 
         if (!world.isRemote) {
-
-                player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
-
-
-
+            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntityPowerStorage tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPowerStorage.class);
-        if (tileEntity != null && tileEntity.canBeRotated()) {
-            return state.withProperty(FACING, tileEntity.getForward());
+        TileEntity tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntity.class);
+        if (tileEntity instanceof TileEntityPowerStorage) {
+            if (tileEntity != null && ((TileEntityPowerStorage) tileEntity).canBeRotated()) {
+                return state.withProperty(FACING, EnumFacing.NORTH);
+            }
         }
+
+
         return state.withProperty(FACING, EnumFacing.NORTH);
     }
+
 
     @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
@@ -102,41 +94,4 @@ public class BlockPowerStorage extends BlockMachineBase {
 
     }
 
-    @Override
-    public void randomDisplayTick(IBlockState state, World worldIn, BlockPos pos, Random rand) {
-        TileEntityPowerStorage tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntityPowerStorage.class);
-        if (tileEntity == null)
-            return;
-
-        EnumFacing enumfacing = tileEntity.getForward();
-        double d0 = (double) pos.getX() + 0.5D;
-        double d1 = (double) pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
-        double d2 = (double) pos.getZ() + 0.5D;
-        double d3 = 0.52D;
-        double d4 = rand.nextDouble() * 0.6D - 0.3D;
-
-        EnumParticleTypes particleTypes = null;
-        if (tileEntity.getBlockMetadata() == 0) {
-            particleTypes = EnumParticleTypes.SMOKE_NORMAL;
-        }
-
-        if (particleTypes != null) {
-            switch (enumfacing) {
-                case WEST:
-                    worldIn.spawnParticle(particleTypes, d0 - d3, d1 + 0.7f, d2 + d4, 0.0D, 0.0D, 0.0D);
-                    break;
-                case EAST:
-                    worldIn.spawnParticle(particleTypes, d0 + d3, d1 + 0.7f, d2 + d4, 0.0D, 0.0D, 0.0D);
-                    break;
-                case NORTH:
-                    worldIn.spawnParticle(particleTypes, d0 + d4, d1 + 0.7f, d2 - d3, 0.0D, 0.0D, 0.0D);
-                    break;
-                case SOUTH:
-                    worldIn.spawnParticle(particleTypes, d0 + d4, d1 + 0.7f, d2 + d3, 0.0D, 0.0D, 0.0D);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 }

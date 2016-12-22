@@ -2,17 +2,11 @@ package xyz.aadev.generitech.common.network.messages.power;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.aalib.common.network.PacketBaseThreadSafe;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
-
-import javax.annotation.Nullable;
 
 public class PacketSides extends PacketBaseThreadSafe {
 
@@ -31,7 +25,7 @@ public class PacketSides extends PacketBaseThreadSafe {
         //needed constructor
     }
 
-    public PacketSides(int[] sides , int side, BlockPos pos) {
+    public PacketSides(int[] sides, int side, BlockPos pos) {
         this.side = side;
         this.side0 = sides[0];
         this.side1 = sides[1];
@@ -40,8 +34,8 @@ public class PacketSides extends PacketBaseThreadSafe {
         this.side4 = sides[4];
         this.side5 = sides[5];
         this.x = pos.getX();
-        this.y= pos.getY();
-        this.z =pos.getZ();
+        this.y = pos.getY();
+        this.z = pos.getZ();
     }
 
     @Override
@@ -83,18 +77,16 @@ public class PacketSides extends PacketBaseThreadSafe {
     @Override
     public void handleServerSafe(NetHandlerPlayServer netHandler) {
 
-        int[] sides =new int[]{side0, side1, side2, side3, side4, side5};
-        TileEntity tile = netHandler.playerEntity.getEntityWorld().getTileEntity(new BlockPos(x,y,z));
+        int[] sides = new int[]{side0, side1, side2, side3, side4, side5};
+        TileEntity tile = netHandler.playerEntity.getEntityWorld().getTileEntity(new BlockPos(x, y, z));
 
-        if (tile instanceof TileEntityMachineBase){
+        if (tile instanceof TileEntityMachineBase) {
             sides[side]++;
-            if (sides[side]>=3){
-                sides[side]=0;
+            if (sides[side] >= 3) {
+                sides[side] = 0;
             }
             ((TileEntityMachineBase) tile).setSides(sides);
         }
-
-
 
 
     }

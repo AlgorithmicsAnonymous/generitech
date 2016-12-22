@@ -61,7 +61,7 @@ public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
     @Override
     protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
         super.syncDataTo(nbtTagCompound, syncReason);
-            nbtTagCompound.setIntArray("sides", sides);
+        nbtTagCompound.setIntArray("sides", sides);
 
 
     }

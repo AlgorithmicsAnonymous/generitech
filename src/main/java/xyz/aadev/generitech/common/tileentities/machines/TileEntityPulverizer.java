@@ -109,7 +109,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         super.markForUpdate();
 
 
-
         if (machineTier == MachineTier.TIER_0)
             this.markForLightUpdate();
     }
@@ -153,7 +152,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
         if (slot == 1 || slot == 2 || slot == 3)
             return false;
-        if (slot==0 && PulverizerRegistry.containsInput(itemStack)){
+        if (slot == 0 && PulverizerRegistry.containsInput(itemStack)) {
             return true;
         }
 
@@ -176,7 +175,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         }
         int i = 0;
         for (final EnumFacing sidea : EnumFacing.VALUES) {
-            if (sidea == side && (getSides()[i]==1 || getSides()[i]==0)) {
+            if (sidea == side && (getSides()[i] == 1 || getSides()[i] == 0)) {
                 slots = new int[2];
                 slots[0] = 2;
                 slots[1] = 3;
@@ -190,34 +189,34 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        if (guiId==0){
+        if (guiId == 0) {
             return new GuiPulverizer(player.inventory, this);
         }
-        if (guiId==3){
-            return new GuiUpgradeScreen(player.inventory, this,getSides(),5,player);
+        if (guiId == 3) {
+            return new GuiUpgradeScreen(player.inventory, this, getSides(), 5, player);
         }
         return null;
     }
 
     @Override
     public Object getServerGuiElement(int guiId, EntityPlayer player) {
-        if (guiId==0){
+        if (guiId == 0) {
             return new ContainerPulverizer(player.inventory, this);
         }
-        if (guiId==3){
-            return new ContanierUpgradeStorage(player.inventory,this,5);
+        if (guiId == 3) {
+            return new ContanierUpgradeStorage(player.inventory, this, 5);
         }
         return null;
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        if (machineTier==MachineTier.TIER_0){
+        if (machineTier == MachineTier.TIER_0) {
             return direction == EnumFacing.DOWN && (index == 2 || index == 3);
         }
         int i = 0;
         for (final EnumFacing side : EnumFacing.VALUES) {
-            if (direction == side && getSides()[i] == 0&& (index == 2 || index == 3)) {
+            if (direction == side && getSides()[i] == 0 && (index == 2 || index == 3)) {
                 return true;
             }
             i++;

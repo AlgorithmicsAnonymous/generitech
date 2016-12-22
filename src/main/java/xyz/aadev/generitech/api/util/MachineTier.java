@@ -45,11 +45,16 @@ public enum MachineTier implements IStringSerializable {
     // N/A
 
     private static final MachineTier[] META_LOOKUP = new MachineTier[values().length];
+    private static MachineTier[] value;
 
     static {
         for (MachineTier tier : values()) {
             META_LOOKUP[tier.getMeta()] = tier;
         }
+    }
+
+    static {
+
     }
 
     private final String name;
@@ -71,6 +76,11 @@ public enum MachineTier implements IStringSerializable {
     public static MachineTier[] all() {
         return MachineTier.values();
     }
+
+    public static MachineTier[] allexeptTier_0() {
+        return new MachineTier[]{MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3};
+    }
+
 
     public int getTier() {
 

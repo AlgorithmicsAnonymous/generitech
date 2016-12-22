@@ -71,9 +71,9 @@ public class BlockPulverizer extends BlockMachineBase {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            if (heldItem!=null && heldItem.getItem() == Items.ITEM_TOOL_WRENCH.getItem()){
+            if (heldItem != null && heldItem.getItem() == Items.ITEM_TOOL_WRENCH.getItem()) {
                 player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
-            }else {
+            } else {
                 player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.PULVERIZER, world, pos.getX(), pos.getY(), pos.getZ());
 
             }
@@ -82,7 +82,6 @@ public class BlockPulverizer extends BlockMachineBase {
         }
         return true;
     }
-
 
 
     @Override

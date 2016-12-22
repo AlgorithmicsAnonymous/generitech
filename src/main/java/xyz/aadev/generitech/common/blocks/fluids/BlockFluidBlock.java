@@ -38,12 +38,10 @@ import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import xyz.aadev.generitech.GeneriTechTabs;
 
 public class BlockFluidBlock extends BlockFluidClassic {
     public BlockFluidBlock(Fluid fluid) {
         super(fluid, Material.LAVA);
-        setCreativeTab(GeneriTechTabs.FLUID);
         setQuantaPerBlock(4);
         setTickRate(20);
         setHardness(2000F);

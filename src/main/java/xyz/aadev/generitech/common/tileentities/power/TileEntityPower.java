@@ -20,6 +20,7 @@ import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.power.GuiGenerator;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
@@ -28,6 +29,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class TileEntityPower extends TileEntityMachineBase implements ITeslaProducer, net.minecraft.util.ITickable, IWailaBodyMessage {
+    MachineTier machineTier;
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
     private InternalInventory inventory = new InternalInventory(this, 1);
     private int[] sides = new int[6];
@@ -76,12 +78,15 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
-
-        if (fuelRemaining != 0) fuelRemaining--;
-        if (fuelRemaining > 0) {
-            container.givePower(60, false);
+        if (machineTier == null) {
+            machineTier = MachineTier.byMeta(getBlockMetadata());
         }
-        if (container.getStoredPower() != container.getCapacity() && inventory.getStackInSlot(0) != null || container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0) != null ) {
+        if (fuelRemaining != 0) fuelRemaining--;
+
+        if (fuelRemaining > 0 && machineTier == MachineTier.TIER_1) {
+            container.givePower(10, false);
+        }
+        if (container.getStoredPower() != container.getCapacity() && inventory.getStackInSlot(0) != null || container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0) != null) {
             burnTime();
         }
 

@@ -51,8 +51,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.aalib.common.tileentities.TileEntityBase;
-import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 import xyz.aadev.aalib.common.util.InventoryHelper;
 import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.MachineTier;
@@ -85,8 +83,8 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
     @Override
     protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
         super.syncDataTo(nbtTagCompound, syncReason);
-        nbtTagCompound.setFloat("internalTemp",internalTemp);
-        nbtTagCompound.setInteger("smeltProgress",smeltProgress);
+        nbtTagCompound.setFloat("internalTemp", internalTemp);
+        nbtTagCompound.setInteger("smeltProgress", smeltProgress);
     }
 
     @Override
@@ -98,12 +96,12 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        if (machineTier==MachineTier.TIER_0){
+        if (machineTier == MachineTier.TIER_0) {
             return direction == EnumFacing.DOWN && (index == 2 || index == 3);
         }
         int i = 0;
         for (final EnumFacing side : EnumFacing.VALUES) {
-            if (direction == side && getSides()[i] == 0&& (index == 2 || index == 3)) {
+            if (direction == side && getSides()[i] == 0 && (index == 2 || index == 3)) {
                 return true;
             }
             i++;
@@ -220,7 +218,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
     @Override
     public void update() {
-        if (machineTier==null){
+        if (machineTier == null) {
             machineTier = MachineTier.byMeta(this.getBlockMetadata());
         }
 

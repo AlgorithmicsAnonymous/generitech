@@ -23,13 +23,13 @@ import net.minecraft.client.gui.GuiButton;
 public class ButtonUpgrade extends GuiButton {
     public ButtonUpgrade(int buttonId, int x, int y) {
         super(buttonId, x, y, "");
-        this.visible=true;
+        this.visible = true;
         this.width = 20;
         this.height = 20;
 
 
-
     }
+
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         super.drawButton(mc, mouseX, mouseY);

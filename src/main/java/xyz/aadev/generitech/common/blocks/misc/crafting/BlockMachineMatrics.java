@@ -33,13 +33,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.blocks.BlockTierBase;
+import xyz.aadev.generitech.common.blocks.Blocks;
 
 import javax.annotation.Nullable;
 
 public class BlockMachineMatrics extends BlockTierBase {
 
     public BlockMachineMatrics() {
-        super(Material.ROCK, "machines/frame/frame", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        super(Material.ROCK, "machines/frame/frame", MachineTier.allexeptTier_0());
         this.setDefaultState(this.blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1));
         this.setCreativeTab(GeneriTechTabs.GENERAL);
         this.setInternalName("machineframe");
@@ -59,6 +60,11 @@ public class BlockMachineMatrics extends BlockTierBase {
         return true;
     }
 
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        return Blocks.BLOCK_MACHINEMATRICS.getStack(1, getMetaFromState(state));
+    }
+
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
@@ -68,6 +74,7 @@ public class BlockMachineMatrics extends BlockTierBase {
     public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
         return false;
     }
+
 
     @Override
     public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {

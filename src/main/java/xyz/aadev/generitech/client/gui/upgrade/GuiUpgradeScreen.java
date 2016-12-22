@@ -17,7 +17,6 @@ package xyz.aadev.generitech.client.gui.upgrade;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
@@ -43,15 +42,15 @@ import java.util.ArrayList;
 public class GuiUpgradeScreen extends GuiBase {
 
     TileEntity tileEntity;
-    private int[] sides;
     GuiHelper guiHelper = new GuiHelper();
     EntityPlayer player;
     Rectangle slot;
+    private int[] sides;
     private int machineTier;
 
 
     public GuiUpgradeScreen(InventoryPlayer inventoryPlayer, TileEntity tileEntity, int[] sides, int start, EntityPlayer player) {
-        super(Reference.MOD_ID, new ContanierUpgradeStorage(inventoryPlayer, tileEntity,start));
+        super(Reference.MOD_ID, new ContanierUpgradeStorage(inventoryPlayer, tileEntity, start));
         this.sides = sides;
         this.xSize = 176;
         this.ySize = 166;
@@ -59,7 +58,7 @@ public class GuiUpgradeScreen extends GuiBase {
         this.tileEntity = tileEntity;
 
         machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata()).getTier();
-        slot = new Rectangle(48,31, 25 ,24);
+        slot = new Rectangle(48, 31, 25, 24);
 
     }
 
@@ -67,8 +66,8 @@ public class GuiUpgradeScreen extends GuiBase {
     public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
         bindTexture("gui/upgrade/upgrade.png");
         drawTexturedModalRect(paramInt1, paramInt2, 0, 0, this.xSize, this.ySize);
-        if (tileEntity instanceof TileEntityMachineBase){
-            sides=((TileEntityMachineBase) tileEntity).getSides();
+        if (tileEntity instanceof TileEntityMachineBase) {
+            sides = ((TileEntityMachineBase) tileEntity).getSides();
         }
     }
 
@@ -80,7 +79,7 @@ public class GuiUpgradeScreen extends GuiBase {
 
     @Override
     public void initGui() {
-        if (tileEntity instanceof TileEntityMachineBase){
+        if (tileEntity instanceof TileEntityMachineBase) {
             this.mc.thePlayer.openContainer = this.inventorySlots;
             this.guiLeft = (this.width - this.xSize) / 2;
             this.guiTop = (this.height - this.ySize) / 2;
@@ -101,12 +100,12 @@ public class GuiUpgradeScreen extends GuiBase {
                 Right = 3;
             }
 
-            this.addButton(new ButtonSides(0, guiLeft + 123, guiTop + 44, sides, guiLeft + 124, guiTop + 45,tileEntity));
-            this.addButton(new ButtonSides(1, guiLeft + 123, guiTop + 20, sides, guiLeft + 124, guiTop + 21,tileEntity));
-            this.addButton(new ButtonSides(Forward, guiLeft + 123, guiTop + 32, sides, guiLeft + 124, guiTop + 33,tileEntity));
-            this.addButton(new ButtonSides(Left, guiLeft + 135, guiTop + 32, sides, guiLeft + 136, guiTop + 33,tileEntity));
-            this.addButton(new ButtonSides(Right, guiLeft + 111, guiTop + 32, sides, guiLeft + 112, guiTop + 33,tileEntity));
-            this.addButton(new ButtonSides(Back, guiLeft + 123, guiTop + 56, sides, guiLeft + 124, guiTop + 57,tileEntity));
+            this.addButton(new ButtonSides(0, guiLeft + 123, guiTop + 44, sides, guiLeft + 124, guiTop + 45, tileEntity));
+            this.addButton(new ButtonSides(1, guiLeft + 123, guiTop + 20, sides, guiLeft + 124, guiTop + 21, tileEntity));
+            this.addButton(new ButtonSides(Forward, guiLeft + 123, guiTop + 32, sides, guiLeft + 124, guiTop + 33, tileEntity));
+            this.addButton(new ButtonSides(Left, guiLeft + 135, guiTop + 32, sides, guiLeft + 136, guiTop + 33, tileEntity));
+            this.addButton(new ButtonSides(Right, guiLeft + 111, guiTop + 32, sides, guiLeft + 112, guiTop + 33, tileEntity));
+            this.addButton(new ButtonSides(Back, guiLeft + 123, guiTop + 56, sides, guiLeft + 124, guiTop + 57, tileEntity));
 
         }
 
@@ -119,32 +118,29 @@ public class GuiUpgradeScreen extends GuiBase {
     }
 
     private void task(int i) throws IOException {
-        Network.sendToServer(new PacketSides(sides,i,tileEntity.getPos()));
+        Network.sendToServer(new PacketSides(sides, i, tileEntity.getPos()));
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         RenderItem renderItem = mc.getRenderItem();
-        Block block = tileEntity.getBlockType();
 
-        if (!slot.contains(mouseX - guiLeft,mouseY - guiTop)){
+        if (!slot.contains(mouseX - guiLeft, mouseY - guiTop)) {
             RenderHelper.enableGUIStandardItemLighting();
-            renderItem.renderItemIntoGUI(new ItemStack(tileEntity.getBlockType(),1,machineTier),guiLeft+52,guiTop+35);
-
+            renderItem.renderItemIntoGUI(new ItemStack(tileEntity.getBlockType(), 1, machineTier), guiLeft + 52, guiTop + 35);
         }
 
-        if (slot.contains(mouseX - guiLeft,mouseY - guiTop)){
+        if (slot.contains(mouseX - guiLeft, mouseY - guiTop)) {
             RenderHelper.enableGUIStandardItemLighting();
-            renderItem.renderItemIntoGUI(new ItemStack(Blocks.BLOCK_MACHINEMATRICS.getBlock(),1,machineTier),guiLeft+52,guiTop+35);
+            renderItem.renderItemIntoGUI(new ItemStack(Blocks.BLOCK_MACHINEMATRICS.getBlock(), 1, machineTier), guiLeft + 52, guiTop + 35);
             ArrayList<String> powerMessage = new ArrayList<>();
-            powerMessage.add("MachineTier (T"+machineTier+")");
+            powerMessage.add("MachineTier (T" + machineTier + ")");
             renderToolTip(powerMessage, mouseX, mouseY);
         }
 
 
     }
-
 
 
 }

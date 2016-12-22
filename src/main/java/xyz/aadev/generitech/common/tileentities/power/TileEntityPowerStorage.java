@@ -32,7 +32,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.aalib.common.tileentities.TileEntityBase;
 import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
 import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
@@ -42,7 +41,6 @@ import javax.annotation.Nullable;
 public class TileEntityPowerStorage extends TileEntityMachineBase implements ITeslaHolder, ITeslaConsumer, ITickable {
     private InternalInventory inventory = new InternalInventory(this, 4);
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
-
 
 
     @Override
@@ -97,12 +95,12 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiUpgradeScreen(player.inventory, this, getSides(),0,player);
+        return new GuiUpgradeScreen(player.inventory, this, getSides(), 0, player);
     }
 
     @Override
     public Object getServerGuiElement(int guiId, EntityPlayer player) {
-        return new ContanierUpgradeStorage(player.inventory, this,0);
+        return new ContanierUpgradeStorage(player.inventory, this, 0);
     }
 
     @Override

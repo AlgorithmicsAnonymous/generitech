@@ -57,7 +57,7 @@ public class BlockFurnace extends BlockMachineBase {
     private static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockFurnace() {
-        super(Material.ROCK, "machines/furnace/furnace", MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3);
+        super(Material.ROCK, "machines/furnace/furnace", MachineTier.allexeptTier_0());
         this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1).withProperty(FACING, EnumFacing.NORTH));
         this.setTileEntity(TileEntityFurnace.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);

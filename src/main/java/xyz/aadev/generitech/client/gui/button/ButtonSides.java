@@ -47,7 +47,7 @@ public class ButtonSides extends GuiButton {
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         super.drawButton(mc, mouseX, mouseY);
 
-        if (tileEntity instanceof TileEntityMachineBase){
+        if (tileEntity instanceof TileEntityMachineBase) {
             sides = ((TileEntityMachineBase) tileEntity).getSides();
         }
 

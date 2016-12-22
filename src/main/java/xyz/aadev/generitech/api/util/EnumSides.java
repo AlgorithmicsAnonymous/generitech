@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.common.container.power;/*
+package xyz.aadev.generitech.api.util;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,21 +17,19 @@ package xyz.aadev.generitech.common.container.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntity;
-import xyz.aadev.aalib.common.container.ContainerBase;
-import xyz.aadev.aalib.common.container.slot.SlotFuelInput;
+import net.minecraft.util.IStringSerializable;
 
-public class ContanierGenerator extends ContainerBase {
-    IInventory inventory;
+public enum EnumSides implements IStringSerializable {
+    IN("in"),
+    OUT("out"),
+    DISABLED("disabled");
 
-    public ContanierGenerator(InventoryPlayer inventoryPlayer, TileEntity tileEntity) {
-        super(inventoryPlayer, tileEntity);
-        this.inventory = (IInventory) tileEntity;
+    EnumSides(String s) {
 
-        bindPlayerInventory(inventoryPlayer, 0, 84);
+    }
 
-        this.addSlotToContainer(new SlotFuelInput(inventory, 0, 63, 35, null));
+    @Override
+    public String getName() {
+        return null;
     }
 }
