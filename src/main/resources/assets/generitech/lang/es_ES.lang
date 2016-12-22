@@ -1,0 +1,82 @@
+# Creative Tabs
+itemGroup.generitech.general=GeneriTech： General
+itemGroup.generitech.ore=GeneriTech： Materias
+itemGroup.generitech.tools=GT： Herramientas
+itemGroup.generitech.fluids=GeneriTech： Fluidos
+
+# Machines
+tile.generitech.pulverizer.t0.name=Pulverizador (N0)
+tile.generitech.pulverizer.t1.name=Pulverizador (N1)
+tile.generitech.pulverizer.t2.name=Pulverizador (N2)
+tile.generitech.pulverizer.t3.name=Pulverizador (N3)
+tile.generitech.furnace.t1.name=Horno Eléctrico (N1)
+tile.generitech.furnace.t2.name=Horno Eléctrico (N2)
+tile.generitech.furnace.t3.name=Horno Eléctrico (N3)
+tile.generitech.machineframe.t1.name=Marco de Máquina (N1)
+tile.generitech.machineframe.t2.name=Marco de Máquina (N2)
+tile.generitech.machineframe.t3.name=Marco de Máquina (N3)
+
+# Bloques metalicas
+tile.generitech.oreblock.tin.name=Bloque de Estaño
+tile.generitech.oreblock.copper.name=Bloque de Cobre
+tile.generitech.oreblock.lead.name=Bloque de Plomo
+
+# Menas
+tile.generitech.ore.tin.name=Mena de Estaño
+tile.generitech.ore.copper.name=Mena de Cobre
+tile.generitech.ore.lead.name=Mena de Plomo
+
+# Herramientas
+item.generitech.tool_wrench.name=Llave Inglesa
+
+# Debug
+item.generitech.worldgenwand.name=Mineráculo
+
+# Lingotes
+item.generitech.oreingot.tin.name=Lingote de Estaño
+item.generitech.oreingot.copper.name=Lingote de Cobre
+item.generitech.oreingot.lead.name=Lingote de Plomo
+
+# Nuggets
+item.generitech.orenugget.tin.name=Pepita de Estaño
+item.generitech.orenugget.copper.name=Pepita de Cobre
+item.generitech.orenugget.lead.name=Pepita de Plomo
+item.generitech.orenugget.iron.name=Pepita de Hierro
+
+# Dust
+item.generitech.oredust.tin.name=Polvo de Estaño
+item.generitech.oredust.copper.name=Polvo de Cobre
+item.generitech.oredust.lead.name=Polvo de Plomo
+item.generitech.oredust.iron.name=Polvo de Hierro
+item.generitech.oredust.gold.name=Polvo de Oro
+
+# Gears
+item.generitech.materialgear.stone.name=Engranaje de Piedra
+item.generitech.materialgear.tin.name=Engranaje de Estaño
+item.generitech.materialgear.copper.name=Engranaje de Cobre
+item.generitech.materialgear.iron.name=Engranaje de Hierro
+item.generitech.materialgear.gold.name=Engranaje de Oro
+
+
+# Fluids
+fluid.generitech.iron.name=Hierro Líquido
+fluid.generitech.gold.name=Oro Líquido
+fluid.generitech.copper.name=Cobre Líquido
+fluid.generitech.tin.name=Estaño Líquido
+fluid.generitech.lead.name=Plomo Líquido
+
+# Tooltips
+tooltip.generitech.ore.copper=Es Cobre. ¿Que más esta que saber?
+tooltip.generitech.ore.tin=Un otra materia prima de tu promedio mod de tecnología.
+tooltip.generitech.ore.lead=Consejo Para Vida: No lo ingiere.
+tooltip.generitech.worldgenwand=§4AVISO: ¡Esta Destruiré Bloques! ¡Solo por usos de debug!
+tooltip.generitech.worldgenwand2=Quita todos de los bloques que no son mena en un radio cuadrado de 30m de Y-0 a Y-255.
+
+# Label
+label.generitech.time_left=Tiempo Restante
+label.generitech.max_temperature=Temp Máxima
+label.generitech.current_temperature=Temperatura
+
+# Commands
+command.generitech.usage=/gtech
+command.generitech.getbiomeid.success=Biome ID es:
