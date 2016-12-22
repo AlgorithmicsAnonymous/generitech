@@ -1,0 +1,6 @@
+{
+  "comment": "weapon.null is a weapon only very rarely found in strongholds. It has only 1 use, but does enough damage (3712552) to effectively insta-kill anything.",
+  "animation": {
+  "frametime": 1
+  }
+}
