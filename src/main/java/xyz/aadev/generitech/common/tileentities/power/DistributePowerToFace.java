@@ -44,18 +44,18 @@ public class DistributePowerToFace {
 
     public static void transferPower(BlockPos pos, World worldIn, long ratetranfer, BaseTeslaContainer container, int[] faces) {
 
-        long inputba = distributePowerToAllFaces(worldIn, pos, ratetranfer, true,faces);
+        long inputba = distributePowerToAllFaces(worldIn, pos, ratetranfer, true, faces);
         long test = inputba / ratetranfer;
         if (test == 0) test = 1;
         if (inputba != 0 && test != 0 && container.getStoredPower() > test) {
             long input = inputba / test;
             if (container.getStoredPower() >= inputba) {
                 container.takePower(inputba, false);
-                distributePowerToAllFaces(worldIn, pos, input, false,faces);
+                distributePowerToAllFaces(worldIn, pos, input, false, faces);
             } else if (container.getStoredPower() < inputba) {
                 long toMoveUnder = container.getStoredPower() / test;
                 container.takePower(container.getStoredPower(), false);
-                distributePowerToAllFaces(worldIn, pos, toMoveUnder, false,faces);
+                distributePowerToAllFaces(worldIn, pos, toMoveUnder, false, faces);
             }
 
         }
@@ -64,14 +64,13 @@ public class DistributePowerToFace {
     }
 
 
-
-    public static <T> List<T> getConnectedCapabilitiesSide (Capability<T> capability, World world, BlockPos pos,int[] faces) {
+    public static <T> List<T> getConnectedCapabilitiesSide(Capability<T> capability, World world, BlockPos pos, int[] faces) {
         int i = 0;
         final List<T> capabilities = new ArrayList<>();
         final List<EnumFacing> sides = new ArrayList<>();
 
-        for (final EnumFacing side : EnumFacing.VALUES){
-            if (faces[i]==0){
+        for (final EnumFacing side : EnumFacing.VALUES) {
+            if (faces[i] == 0) {
                 sides.add(side);
             }
             i++;
@@ -88,23 +87,15 @@ public class DistributePowerToFace {
         return capabilities;
     }
 
-    public static long distributePowerToAllFaces (World world, BlockPos pos, long amount, boolean simulated,int[] faces) {
+    public static long distributePowerToAllFaces(World world, BlockPos pos, long amount, boolean simulated, int[] faces) {
 
         long consumedPower = 0L;
 
-        for (final ITeslaConsumer consumer : getConnectedCapabilitiesSide(TeslaCapabilities.CAPABILITY_CONSUMER, world, pos,faces))
+        for (final ITeslaConsumer consumer : getConnectedCapabilitiesSide(TeslaCapabilities.CAPABILITY_CONSUMER, world, pos, faces))
             consumedPower += consumer.givePower(amount, simulated);
 
         return consumedPower;
     }
-
-
-
-
-
-
-
-
 
 
 }

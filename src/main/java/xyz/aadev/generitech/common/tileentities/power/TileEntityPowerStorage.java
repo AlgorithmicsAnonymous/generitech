@@ -32,62 +32,38 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.generitech.client.gui.power.GuiPowerStorage;
-import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
+import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
 import javax.annotation.Nullable;
 
 public class TileEntityPowerStorage extends TileEntityMachineBase implements ITeslaHolder, ITeslaConsumer, ITickable {
-    private InternalInventory inventory = new InternalInventory(this, 1);
-    private BaseTeslaContainer container = new BaseTeslaContainer(5000, 50000, 1000, 1000);
-    private int[] sides = new int[6];
-
-
-
+    private InternalInventory inventory = new InternalInventory(this, 4);
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
 
 
     @Override
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
-
-    if (worldIn.isBlockPowered(pos)){
-        sides[1]=1;
-    }else {
-        sides[1]=0;
+        DistributePowerToFace.transferPower(pos, worldIn, 120, container, getSides());
+        this.markForUpdate();
     }
-        DistributePowerToFace.transferPower(pos,worldIn,120,container,sides);
-
-    }
-
-
-
-
-
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound) {
-        super.readFromNBT(nbtTagCompound);
-
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
         this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
-        this.sides = nbtTagCompound.getIntArray("sides");
-
 
     }
-
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        super.writeToNBT(nbtTagCompound);
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
-        nbtTagCompound.setIntArray("sides",sides);
 
-
-        return nbtTagCompound;
     }
-
-
 
     @Override
     public IInventory getInternalInventory() {
@@ -97,6 +73,11 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     @Override
     public void onChangeInventory(IInventory inv, int slot, InventoryOperation operation, ItemStack removed, ItemStack added) {
 //because its unless
+    }
+
+    @Override
+    public boolean canBeRotated() {
+        return true;
     }
 
     @Override
@@ -114,12 +95,12 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiPowerStorage(player.inventory, this);
+        return new GuiUpgradeScreen(player.inventory, this, getSides(), 0, player);
     }
 
     @Override
     public Object getServerGuiElement(int guiId, EntityPlayer player) {
-        return new ContanierPowerStorage(player.inventory, this);
+        return new ContanierUpgradeStorage(player.inventory, this, 0);
     }
 
     @Override
@@ -131,6 +112,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     public long getCapacity() {
         return 0;
     }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
@@ -149,16 +131,16 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        int i =0;
+        int i = 0;
         // This method replaces the instanceof checks that would be used in an interface based
         // system. It can be used by other things to see if the TileEntity uses a capability or
         // not. This example is a Consumer, Producer and Holder, so we return true for all
         // three. This can also be used to restrict access on certain sides, for example if you
         // only accept power input from the bottom of the block, you would only return true for
         // Consumer if the facing parameter was down.
-        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER){
-            for (final EnumFacing side : EnumFacing.VALUES){
-                if (facing==side&&sides[i]==1){
+        if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER) {
+            for (final EnumFacing side : EnumFacing.VALUES) {
+                if (facing == side && getSides()[i] == 1) {
                     return true;
                 }
                 i++;

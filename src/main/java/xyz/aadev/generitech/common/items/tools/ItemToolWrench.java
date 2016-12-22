@@ -38,18 +38,13 @@ import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.common.items.ItemBaseTool;
-import xyz.aadev.aalib.common.util.Platform;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.items.Items;
@@ -73,22 +68,6 @@ public class ItemToolWrench extends ItemBaseTool implements IProvideRecipe {
         return true;
     }
 
-    @Override
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-        Block block = world.getBlockState(pos).getBlock();
-
-        if (block != null && !player.isSneaking() && !world.isRemote) {
-            if (Platform.isClient())
-                return EnumActionResult.PASS;
-
-            if (block.rotateBlock(world, pos, side)) {
-                player.swingArm(hand);
-                return EnumActionResult.PASS;
-            }
-        }
-
-        return EnumActionResult.FAIL;
-    }
 
     @Override
     public void RegisterRecipes() {

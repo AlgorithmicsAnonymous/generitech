@@ -23,7 +23,6 @@ import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
 import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.common.container.power.ContanierGenerator;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
@@ -58,8 +57,6 @@ public class GuiGenerator extends GuiBase {
 
 
     }
-
-
 
 
     @Override

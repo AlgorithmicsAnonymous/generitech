@@ -38,13 +38,14 @@ import net.minecraft.util.IStringSerializable;
 import xyz.aadev.generitech.Reference;
 
 public enum MachineTier implements IStringSerializable {
-    TIER_0("t0"),
-    TIER_1("t1"),
-    TIER_2("t2"),
-    TIER_3("t3");
+    TIER_0("t0", 0),
+    TIER_1("t1", 1),
+    TIER_2("t2", 2),
+    TIER_3("t3", 3);
     // N/A
 
     private static final MachineTier[] META_LOOKUP = new MachineTier[values().length];
+    private static MachineTier[] value;
 
     static {
         for (MachineTier tier : values()) {
@@ -52,9 +53,15 @@ public enum MachineTier implements IStringSerializable {
         }
     }
 
-    private final String name;
+    static {
 
-    MachineTier(String name) {
+    }
+
+    private final String name;
+    private final int tier;
+
+    MachineTier(String name, int i) {
+        this.tier = i;
         this.name = name;
     }
 
@@ -68,6 +75,16 @@ public enum MachineTier implements IStringSerializable {
 
     public static MachineTier[] all() {
         return MachineTier.values();
+    }
+
+    public static MachineTier[] allexeptTier_0() {
+        return new MachineTier[]{MachineTier.TIER_1, MachineTier.TIER_2, MachineTier.TIER_3};
+    }
+
+
+    public int getTier() {
+
+        return tier;
     }
 
     public int getMeta() {

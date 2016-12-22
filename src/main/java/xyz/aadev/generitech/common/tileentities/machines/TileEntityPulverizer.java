@@ -58,7 +58,9 @@ import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.Crushable;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
+import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
+import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.util.LanguageHelper;
 
@@ -72,13 +74,13 @@ import java.util.Random;
 * 1 Processing
 * 2-3 Output
 * 4 Fuel
-* 5-7 Upgrades
+* 5-9 Upgrades
 */
 
 public class TileEntityPulverizer extends TileEntityMachineBase implements ITickable, IWailaBodyMessage, ITeslaConsumer, ITeslaHolder {
 
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 10000, 10000);
-    private InternalInventory inventory = new InternalInventory(this, 8);
+    private InternalInventory inventory = new InternalInventory(this, 10);
     private int ticksRemaining = 0;
     private boolean machineActive = false;
     private int crushIndex = 0;
@@ -106,28 +108,15 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public void markForUpdate() {
         super.markForUpdate();
 
+
         if (machineTier == MachineTier.TIER_0)
             this.markForLightUpdate();
     }
 
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound) {
-        super.readFromNBT(nbtTagCompound);
-
-        ticksRemaining = nbtTagCompound.getInteger("ticksRemaining");
-        machineActive = nbtTagCompound.getBoolean("machineActive");
-        crushIndex = nbtTagCompound.getInteger("crushIndex");
-        pulverizerPaused = nbtTagCompound.getBoolean("pulverizerPaused");
-        crushRNG = nbtTagCompound.getFloat("crushRNG");
-        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
-
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        super.writeToNBT(nbtTagCompound);
-
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
         nbtTagCompound.setInteger("ticksRemaining", ticksRemaining);
         nbtTagCompound.setBoolean("machineActive", machineActive);
         nbtTagCompound.setInteger("crushIndex", crushIndex);
@@ -135,8 +124,19 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         nbtTagCompound.setFloat("crushRNG", crushRNG);
         nbtTagCompound.setTag("TeslaContainer", this.container.serializeNBT());
 
-        return nbtTagCompound;
     }
+
+    @Override
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
+        ticksRemaining = nbtTagCompound.getInteger("ticksRemaining");
+        machineActive = nbtTagCompound.getBoolean("machineActive");
+        crushIndex = nbtTagCompound.getInteger("crushIndex");
+        pulverizerPaused = nbtTagCompound.getBoolean("pulverizerPaused");
+        crushRNG = nbtTagCompound.getFloat("crushRNG");
+        this.container = new BaseTeslaContainer(nbtTagCompound.getCompoundTag("TeslaContainer"));
+    }
+
 
     @Override
     public IInventory getInternalInventory() {
@@ -152,10 +152,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
         if (slot == 1 || slot == 2 || slot == 3)
             return false;
-
-
-        if (slot == 1 || slot == 2 || slot == 3)
-            return false;
+        if (slot == 0 && PulverizerRegistry.containsInput(itemStack)) {
+            return true;
+        }
 
         return !(slot == 4 && !(net.minecraft.tileentity.TileEntityFurnace.getItemBurnTime(itemStack) > 0));
 
@@ -174,29 +173,69 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (side == EnumFacing.UP && machineTier == MachineTier.TIER_0) {
             slots = new int[1];
         }
-        if (side == EnumFacing.DOWN) {
-            slots = new int[2];
-            slots[0] = 2;
-            slots[1] = 3;
+        int i = 0;
+        for (final EnumFacing sidea : EnumFacing.VALUES) {
+            if (sidea == side && (getSides()[i] == 1 || getSides()[i] == 0)) {
+                slots = new int[2];
+                slots[0] = 2;
+                slots[1] = 3;
+            }
+            i++;
         }
 
         return slots;
     }
 
+
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiPulverizer(player.inventory, this);
+        if (guiId == 0) {
+            return new GuiPulverizer(player.inventory, this);
+        }
+        if (guiId == 3) {
+            return new GuiUpgradeScreen(player.inventory, this, getSides(), 5, player);
+        }
+        return null;
     }
 
     @Override
     public Object getServerGuiElement(int guiId, EntityPlayer player) {
-        return new ContainerPulverizer(player.inventory, this);
+        if (guiId == 0) {
+            return new ContainerPulverizer(player.inventory, this);
+        }
+        if (guiId == 3) {
+            return new ContanierUpgradeStorage(player.inventory, this, 5);
+        }
+        return null;
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        return direction == EnumFacing.DOWN && (index == 2 || index == 3);
+        if (machineTier == MachineTier.TIER_0) {
+            return direction == EnumFacing.DOWN && (index == 2 || index == 3);
+        }
+        int i = 0;
+        for (final EnumFacing side : EnumFacing.VALUES) {
+            if (direction == side && getSides()[i] == 0 && (index == 2 || index == 3)) {
+                return true;
+            }
+            i++;
+        }
 
+        return false;
+    }
+
+    @Override
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        int i = 0;
+
+        for (final EnumFacing side : EnumFacing.VALUES) {
+            if (direction == side && getSides()[i] == 1 && index == 0 && PulverizerRegistry.containsInput(itemStackIn)) {
+                return true;
+            }
+            i++;
+        }
+        return false;
     }
 
     @Override
@@ -241,8 +280,12 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         }
     }
 
+
     @Override
     public void update() {
+
+        //System.out.println(sides[0]+" "+worldObj.isRemote);
+
         //checking for the machine type
         if (machineTier == null)
             machineTier = MachineTier.byMeta(getBlockMetadata());

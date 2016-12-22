@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.common.container.power;/*
+package xyz.aadev.generitech.common.container.upgrade;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -21,17 +21,20 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import xyz.aadev.aalib.common.container.ContainerBase;
-import xyz.aadev.aalib.common.container.slot.SlotFuelInput;
+import xyz.aadev.aalib.common.container.slot.SlotNormal;
 
-public class ContanierGenerator extends ContainerBase {
+public class ContanierUpgradeStorage extends ContainerBase {
     IInventory inventory;
 
-    public ContanierGenerator(InventoryPlayer inventoryPlayer, TileEntity tileEntity) {
+    public ContanierUpgradeStorage(InventoryPlayer inventoryPlayer, TileEntity tileEntity, int Start) {
         super(inventoryPlayer, tileEntity);
         this.inventory = (IInventory) tileEntity;
 
-        bindPlayerInventory(inventoryPlayer, 0, 84);
+        this.addSlotToContainer(new SlotNormal(inventory, Start + 0, 34, 17));
+        this.addSlotToContainer(new SlotNormal(inventory, Start + 1, 70, 17));
+        this.addSlotToContainer(new SlotNormal(inventory, Start + 2, 34, 53));
+        this.addSlotToContainer(new SlotNormal(inventory, Start + 3, 70, 53));
 
-        this.addSlotToContainer(new SlotFuelInput(inventory, 0, 63, 35, null));
+        bindPlayerInventory(inventoryPlayer, 0, 84);
     }
 }

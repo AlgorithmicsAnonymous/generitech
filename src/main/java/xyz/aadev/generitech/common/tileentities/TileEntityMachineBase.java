@@ -35,8 +35,35 @@
 package xyz.aadev.generitech.common.tileentities;
 
 
+import net.minecraft.nbt.NBTTagCompound;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
+    private int[] sides = new int[6];
+
+    public int[] getSides() {
+        return sides;
+    }
+
+    public void setSides(int[] sidese) {
+        sides = sidese;
+        markForUpdate();
+
+    }
+
+
+    @Override
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
+        sides = nbtTagCompound.getIntArray("sides");
+    }
+
+    @Override
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
+        nbtTagCompound.setIntArray("sides", sides);
+
+
+    }
 
 }

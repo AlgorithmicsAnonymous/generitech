@@ -58,6 +58,8 @@ import java.util.Map;
 
 public abstract class BlockMachineBase extends BlockTileBase {
     protected static final PropertyEnum<MachineTier> MACHINETIER = PropertyEnum.create("machinetier", MachineTier.class);
+
+
     private MachineTier[] machineTiers;
 
     public BlockMachineBase(Material material, String resourcePath, MachineTier... machineTiers) {

@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.client.gui.power;/*
+package xyz.aadev.generitech.client.gui.button;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,25 +17,55 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
-import net.minecraft.entity.player.InventoryPlayer;
-import xyz.aadev.aalib.client.gui.GuiBase;
-import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.common.container.power.ContanierGenerator;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.tileentity.TileEntity;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
-public class GuiPowerStorage extends GuiBase {
+public class ButtonSides extends GuiButton {
 
-    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntityPowerStorage tileEntity) {
-        super(Reference.MOD_ID, new ContanierGenerator(inventoryPlayer, tileEntity));
+    private int[] sides;
+    private int xIn;
+    private int yIn;
+    private int i;
+    private TileEntity tileEntity;
+
+    public ButtonSides(int buttonId, int x, int y, int[] sides, int xIn, int yIn, TileEntity tile) {
+        super(buttonId, x, y, "");
+        this.width = 10;
+        this.height = 10;
+        this.visible = false;
+        this.sides = sides;
+        this.xIn = xIn;
+        this.yIn = yIn;
+        this.i = buttonId;
+        this.tileEntity = tile;
+
     }
 
     @Override
-    public void drawBG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-// Do nothing because of not implemented
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        super.drawButton(mc, mouseX, mouseY);
+
+        if (tileEntity instanceof TileEntityMachineBase) {
+            sides = ((TileEntityMachineBase) tileEntity).getSides();
+        }
+
+        if (sides[i] == 0) {
+            drawTexturedModalRect(xIn, yIn, 177, 19, 10, 10);
+        }
+        if (sides[i] == 1) {
+            drawTexturedModalRect(xIn, yIn, 186, 19, 10, 10);
+        }
+        if (sides[i] == 2) {
+            drawTexturedModalRect(xIn, yIn, 195, 19, 10, 10);
+        }
+
     }
 
     @Override
-    public void drawFG(int paramInt1, int paramInt2, int paramInt3, int paramInt4) {
-// Do nothing because of not implemented
+    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+        super.mousePressed(mc, mouseX, mouseY);
+        return mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
     }
 }

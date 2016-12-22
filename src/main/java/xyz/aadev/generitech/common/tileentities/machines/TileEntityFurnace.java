@@ -42,6 +42,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -50,16 +51,17 @@ import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 import xyz.aadev.aalib.common.util.InventoryHelper;
+import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.machines.GuiFurnace;
 import xyz.aadev.generitech.common.container.machines.ContainerFurnace;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.util.LanguageHelper;
 
 import java.util.List;
 
-public class TileEntityFurnace extends TileEntityInventoryBase implements ITickable, IWailaBodyMessage {
+public class TileEntityFurnace extends TileEntityMachineBase implements ITickable, IWailaBodyMessage {
 
     private InternalInventory internalInventory = new InternalInventory(this, 4);
     private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
@@ -69,13 +71,58 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
     private boolean canIdle = false;
     private boolean isSmeltPaused = false;
     private long powerUsage = 50;
+    private MachineTier machineTier;
+
 
     @Override
     public void markForUpdate() {
         super.markForUpdate();
-
         this.markForLightUpdate();
     }
+
+    @Override
+    protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataTo(nbtTagCompound, syncReason);
+        nbtTagCompound.setFloat("internalTemp", internalTemp);
+        nbtTagCompound.setInteger("smeltProgress", smeltProgress);
+    }
+
+    @Override
+    protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
+        super.syncDataFrom(nbtTagCompound, syncReason);
+        internalTemp = nbtTagCompound.getFloat("internalTemp");
+        smeltProgress = nbtTagCompound.getInteger("smeltProgress");
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+        if (machineTier == MachineTier.TIER_0) {
+            return direction == EnumFacing.DOWN && (index == 2 || index == 3);
+        }
+        int i = 0;
+        for (final EnumFacing side : EnumFacing.VALUES) {
+            if (direction == side && getSides()[i] == 0 && (index == 2 || index == 3)) {
+                return true;
+            }
+            i++;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        int i = 0;
+
+        for (final EnumFacing side : EnumFacing.VALUES) {
+            if (direction == side && getSides()[i] == 1 && index == 0 && PulverizerRegistry.containsInput(itemStackIn)) {
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+
 
     public boolean isSmeltPaused() {
         return isSmeltPaused;
@@ -171,16 +218,19 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
     @Override
     public void update() {
-        if (container.getStoredPower()>=powerUsage && machineActive && !isSmeltPaused) {
+        if (machineTier == null) {
+            machineTier = MachineTier.byMeta(this.getBlockMetadata());
+        }
+
+        if (container.getStoredPower() >= powerUsage && machineActive && !isSmeltPaused) {
             if (internalTemp < this.getMaxTemperature()) {
                 internalTemp += getTempRate();
-                container.takePower(powerUsage,false);
+                container.takePower(powerUsage, false);
             }
-        }else if (container.getStoredPower()>=powerUsage&&canIdle && internalTemp <= getIdleTemp())
-        {
+        } else if (container.getStoredPower() >= powerUsage && canIdle && internalTemp <= getIdleTemp()) {
             internalTemp += getTempRate();
-            container.takePower(powerUsage,false);
-        }else {
+            container.takePower(powerUsage, false);
+        } else {
             if (internalTemp <= 0) {
                 internalTemp = 0;
             } else {
@@ -190,10 +240,10 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
         BlockPos pos = getPos();
         World worldIn = getWorld();
-        if (worldIn.isBlockPowered(pos)&&!canIdle){
+        if (worldIn.isBlockPowered(pos) && !canIdle) {
             canIdle = true;
         }
-        if (!worldIn.isBlockPowered(pos)&&canIdle){
+        if (!worldIn.isBlockPowered(pos) && canIdle) {
             canIdle = false;
         }
 
@@ -244,7 +294,7 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
                 InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                if (getStackInSlot(0)== null || !canSmelt(getStackInSlot(0))) machineActive = false;
+                if (getStackInSlot(0) == null || !canSmelt(getStackInSlot(0))) machineActive = false;
                 smeltProgress = 0;
                 internalInventory.setInventorySlotContents(1, null);
 
@@ -252,22 +302,22 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
                 this.markDirty();
             }
         } else {
-            if (processItem != null && isSmeltPaused()&& smeltProgress > 1000) {
-                    smeltProgress = 1000;
-                    ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
-                    if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
-                        isSmeltPaused = true;
-                        return;
-                    }
+            if (processItem != null && isSmeltPaused() && smeltProgress > 1000) {
+                smeltProgress = 1000;
+                ItemStack outputStack = FurnaceRecipes.instance().getSmeltingResult(processItem.copy()).copy();
+                if (InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2, true) != null) {
+                    isSmeltPaused = true;
+                    return;
+                }
 
-                    InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
+                InventoryHelper.addItemStackToInventory(outputStack, internalInventory, 2, 2);
 
-                    machineActive = false;
-                    smeltProgress = 0;
-                    internalInventory.setInventorySlotContents(1, null);
+                machineActive = false;
+                smeltProgress = 0;
+                internalInventory.setInventorySlotContents(1, null);
 
-                    this.markForUpdate();
-                    this.markDirty();
+                this.markForUpdate();
+                this.markDirty();
             }
         }
 
@@ -289,6 +339,7 @@ public class TileEntityFurnace extends TileEntityInventoryBase implements ITicka
 
         return currentTip;
     }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {

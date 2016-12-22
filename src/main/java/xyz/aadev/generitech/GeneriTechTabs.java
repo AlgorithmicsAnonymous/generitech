@@ -76,7 +76,7 @@ public class GeneriTechTabs {
         }
     };
 
-    public static final CreativeTabs FLUID = new CreativeTabs(Reference.MOD_ID) {
+    /*public static final CreativeTabs FLUID = new CreativeTabs(Reference.MOD_ID) {
         @Override
         public Item getTabIconItem() {
             return net.minecraft.init.Items.BUCKET;
@@ -86,7 +86,7 @@ public class GeneriTechTabs {
         public String getTabLabel() {
             return Reference.MOD_ID + ".fluids";
         }
-    };
+    };*/
 
     private GeneriTechTabs() {
 

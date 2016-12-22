@@ -35,4 +35,6 @@
 package xyz.aadev.generitech.proxy;
 
 public class ClientProxy extends CommonProxy {
+
+
 }
