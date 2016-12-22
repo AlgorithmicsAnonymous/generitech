@@ -1,4 +1,4 @@
-package xyz.aadev.generitech.client.gui.power;/*
+package xyz.aadev.generitech.client.gui.upgrade;/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -17,36 +17,50 @@ package xyz.aadev.generitech.client.gui.power;/*
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
 
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import xyz.aadev.aalib.client.gui.GuiBase;
 import xyz.aadev.aalib.common.util.GuiHelper;
-import xyz.aadev.generitech.GeneriTech;
 import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.button.ButtonSides;
-import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.common.blocks.Blocks;
+import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.network.Network;
 import xyz.aadev.generitech.common.network.messages.power.PacketSides;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class GuiPowerStorage extends GuiBase {
+public class GuiUpgradeScreen extends GuiBase {
 
     TileEntity tileEntity;
     private int[] sides;
     GuiHelper guiHelper = new GuiHelper();
     EntityPlayer player;
+    Rectangle slot;
+    private int machineTier;
 
-    public GuiPowerStorage(InventoryPlayer inventoryPlayer, TileEntity tileEntity, int[] sides, int start, EntityPlayer player) {
-        super(Reference.MOD_ID, new ContanierPowerStorage(inventoryPlayer, tileEntity,start));
+
+    public GuiUpgradeScreen(InventoryPlayer inventoryPlayer, TileEntity tileEntity, int[] sides, int start, EntityPlayer player) {
+        super(Reference.MOD_ID, new ContanierUpgradeStorage(inventoryPlayer, tileEntity,start));
         this.sides = sides;
         this.xSize = 176;
         this.ySize = 166;
         this.player = player;
         this.tileEntity = tileEntity;
+
+        machineTier = MachineTier.byMeta(tileEntity.getBlockMetadata()).getTier();
+        slot = new Rectangle(48,31, 25 ,24);
+
     }
 
     @Override
@@ -107,6 +121,30 @@ public class GuiPowerStorage extends GuiBase {
     private void task(int i) throws IOException {
         Network.sendToServer(new PacketSides(sides,i,tileEntity.getPos()));
     }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        RenderItem renderItem = mc.getRenderItem();
+        Block block = tileEntity.getBlockType();
+
+        if (!slot.contains(mouseX - guiLeft,mouseY - guiTop)){
+            RenderHelper.enableGUIStandardItemLighting();
+            renderItem.renderItemIntoGUI(new ItemStack(tileEntity.getBlockType(),1,machineTier),guiLeft+52,guiTop+35);
+
+        }
+
+        if (slot.contains(mouseX - guiLeft,mouseY - guiTop)){
+            RenderHelper.enableGUIStandardItemLighting();
+            renderItem.renderItemIntoGUI(new ItemStack(Blocks.BLOCK_MACHINEMATRICS.getBlock(),1,machineTier),guiLeft+52,guiTop+35);
+            ArrayList<String> powerMessage = new ArrayList<>();
+            powerMessage.add("MachineTier (T"+machineTier+")");
+            renderToolTip(powerMessage, mouseX, mouseY);
+        }
+
+
+    }
+
 
 
 }

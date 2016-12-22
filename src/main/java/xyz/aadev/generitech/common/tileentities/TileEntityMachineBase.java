@@ -39,7 +39,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import xyz.aadev.aalib.common.tileentities.TileEntityInventoryBase;
 
 public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
-    protected int[] sides = new int[6];
+    private int[] sides = new int[6];
 
     public int[] getSides() {
         return sides;
@@ -61,8 +61,8 @@ public abstract class TileEntityMachineBase extends TileEntityInventoryBase {
     @Override
     protected void syncDataTo(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
         super.syncDataTo(nbtTagCompound, syncReason);
+            nbtTagCompound.setIntArray("sides", sides);
 
-        nbtTagCompound.setIntArray("sides", sides);
 
     }
 

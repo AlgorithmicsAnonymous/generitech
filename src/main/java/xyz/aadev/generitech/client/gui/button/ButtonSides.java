@@ -19,6 +19,8 @@ package xyz.aadev.generitech.client.gui.button;/*
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.tileentity.TileEntity;
+import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
 public class ButtonSides extends GuiButton {
 
@@ -26,8 +28,9 @@ public class ButtonSides extends GuiButton {
     private int xIn;
     private int yIn;
     private int i;
+    private TileEntity tileEntity;
 
-    public ButtonSides(int buttonId, int x, int y, int[] sides, int xIn, int yIn) {
+    public ButtonSides(int buttonId, int x, int y, int[] sides, int xIn, int yIn, TileEntity tile) {
         super(buttonId, x, y, "");
         this.width = 10;
         this.height = 10;
@@ -36,12 +39,18 @@ public class ButtonSides extends GuiButton {
         this.xIn = xIn;
         this.yIn = yIn;
         this.i = buttonId;
+        this.tileEntity = tile;
 
     }
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         super.drawButton(mc, mouseX, mouseY);
+
+        if (tileEntity instanceof TileEntityMachineBase){
+            sides = ((TileEntityMachineBase) tileEntity).getSides();
+        }
+
         if (sides[i] == 0) {
             drawTexturedModalRect(xIn, yIn, 177, 19, 10, 10);
         }

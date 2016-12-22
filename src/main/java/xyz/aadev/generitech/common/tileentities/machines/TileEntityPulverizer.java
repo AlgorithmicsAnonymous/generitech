@@ -58,9 +58,9 @@ import xyz.aadev.generitech.api.registries.PulverizerRegistry;
 import xyz.aadev.generitech.api.util.Crushable;
 import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.machines.GuiPulverizer;
-import xyz.aadev.generitech.client.gui.power.GuiPowerStorage;
+import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
 import xyz.aadev.generitech.common.container.machines.ContainerPulverizer;
-import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 import xyz.aadev.generitech.common.util.LanguageHelper;
 
@@ -176,7 +176,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         }
         int i = 0;
         for (final EnumFacing sidea : EnumFacing.VALUES) {
-            if (sidea == side && (sides[i]==1 || sides[i]==0)) {
+            if (sidea == side && (getSides()[i]==1 || getSides()[i]==0)) {
                 slots = new int[2];
                 slots[0] = 2;
                 slots[1] = 3;
@@ -194,7 +194,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return new GuiPulverizer(player.inventory, this);
         }
         if (guiId==3){
-            return new GuiPowerStorage(player.inventory, this,sides,5,player);
+            return new GuiUpgradeScreen(player.inventory, this,getSides(),5,player);
         }
         return null;
     }
@@ -205,7 +205,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             return new ContainerPulverizer(player.inventory, this);
         }
         if (guiId==3){
-            return new ContanierPowerStorage(player.inventory,this,5);
+            return new ContanierUpgradeStorage(player.inventory,this,5);
         }
         return null;
     }
@@ -217,7 +217,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         }
         int i = 0;
         for (final EnumFacing side : EnumFacing.VALUES) {
-            if (direction == side && sides[i] == 0&& (index == 2 || index == 3)) {
+            if (direction == side && getSides()[i] == 0&& (index == 2 || index == 3)) {
                 return true;
             }
             i++;
@@ -231,7 +231,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         int i = 0;
 
         for (final EnumFacing side : EnumFacing.VALUES) {
-            if (direction == side && sides[i] == 1 && index == 0 && PulverizerRegistry.containsInput(itemStackIn)) {
+            if (direction == side && getSides()[i] == 1 && index == 0 && PulverizerRegistry.containsInput(itemStackIn)) {
                 return true;
             }
             i++;

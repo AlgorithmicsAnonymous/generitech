@@ -32,8 +32,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
-import xyz.aadev.generitech.client.gui.power.GuiPowerStorage;
-import xyz.aadev.generitech.common.container.power.ContanierPowerStorage;
+import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
+import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
 
 import javax.annotation.Nullable;
@@ -48,7 +48,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
-        DistributePowerToFace.transferPower(pos, worldIn, 120, container, sides);
+        DistributePowerToFace.transferPower(pos, worldIn, 120, container, getSides());
         this.markForUpdate();
     }
 
@@ -101,12 +101,12 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
 
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
-        return new GuiPowerStorage(player.inventory, this, sides,0,player);
+        return new GuiUpgradeScreen(player.inventory, this, getSides(),0,player);
     }
 
     @Override
     public Object getServerGuiElement(int guiId, EntityPlayer player) {
-        return new ContanierPowerStorage(player.inventory, this,0);
+        return new ContanierUpgradeStorage(player.inventory, this,0);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         // Consumer if the facing parameter was down.
         if (capability == TeslaCapabilities.CAPABILITY_CONSUMER || capability == TeslaCapabilities.CAPABILITY_HOLDER) {
             for (final EnumFacing side : EnumFacing.VALUES) {
-                if (facing == side && sides[i] == 1) {
+                if (facing == side && getSides()[i] == 1) {
                     return true;
                 }
                 i++;
