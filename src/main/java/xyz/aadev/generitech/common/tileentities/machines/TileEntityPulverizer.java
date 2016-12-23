@@ -87,7 +87,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     private float crushRNG = 0;
     private boolean pulverizerPaused = false;
     private Random rnd = new Random();
-    private long powerUsage = 50;
+    private long powerUsage = 20;
     private MachineTier machineTier;
     private int fuelRemaining = 0;
     private int fuelTotal = 0;
@@ -280,10 +280,6 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
     @Override
     public void update() {
-
-/*
-        System.out.println(getSides()[1]);
-*/
 
         //checking for the machine type
         if (machineTier == null)

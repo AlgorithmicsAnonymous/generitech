@@ -70,7 +70,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
     private float internalTemp = 0f;
     private boolean canIdle = false;
     private boolean isSmeltPaused = false;
-    private long powerUsage = 50;
+    private long powerUsage = 20;
     private MachineTier machineTier;
 
 

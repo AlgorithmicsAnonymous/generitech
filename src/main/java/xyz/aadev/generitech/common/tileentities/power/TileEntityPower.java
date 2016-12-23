@@ -101,7 +101,12 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
         if (fuelRemaining != 0) fuelRemaining--;
 
         if (fuelRemaining > 0 && machineTier == MachineTier.TIER_1) {
-            container.givePower(10, false);
+            container.givePower(20, false);
+        }
+        if (fuelRemaining > 0 && machineTier == MachineTier.TIER_2){
+            container.givePower(40, false);
+        }if (fuelRemaining > 0 && machineTier == MachineTier.TIER_3){
+            container.givePower(60, false);
         }
         if (container.getStoredPower() != container.getCapacity() && inventory.getStackInSlot(0) != null || container.getStoredPower() < container.getCapacity() && inventory.getStackInSlot(0) != null) {
             burnTime();

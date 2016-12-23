@@ -53,6 +53,15 @@ public class BlockGenerator extends BlockMachineBase {
     }
 
     @Override
+    public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+        return false;
+    }
+    
+    @Override
+    public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return false;
+    }
+    @Override
     public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         IBlockState blockState = getActualState(state, world, pos);
         return (blockState.getValue(MACHINETIER) == MachineTier.TIER_0) ? 15 : 0;

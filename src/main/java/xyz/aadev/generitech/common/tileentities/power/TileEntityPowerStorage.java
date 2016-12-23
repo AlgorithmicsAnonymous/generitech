@@ -32,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
+import xyz.aadev.generitech.api.util.MachineTier;
 import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
 import xyz.aadev.generitech.common.container.upgrade.ContanierUpgradeStorage;
 import xyz.aadev.generitech.common.tileentities.TileEntityMachineBase;
@@ -40,15 +41,34 @@ import javax.annotation.Nullable;
 
 public class TileEntityPowerStorage extends TileEntityMachineBase implements ITeslaHolder, ITeslaConsumer, ITickable {
     private InternalInventory inventory = new InternalInventory(this, 4);
-    private BaseTeslaContainer container = new BaseTeslaContainer(0, 50000, 1000, 1000);
-
+    private BaseTeslaContainer container = new BaseTeslaContainer(0, 5000000, 1000, 1000);
+    private MachineTier machineTier;
 
     @Override
     public void update() {
         BlockPos pos = getPos();
         World worldIn = getWorld();
+        if (machineTier == null)
+            machineTier = MachineTier.byMeta(getBlockMetadata());
         DistributePowerToFace.transferPower(pos, worldIn, 120, container, getSides());
         this.markForUpdate();
+
+        switch (machineTier){
+            case TIER_0:
+                break;
+            case TIER_1:
+                break;
+            case TIER_2:
+                if (container.getCapacity() != 10000000)
+                    container.setCapacity(10000000);
+                break;
+            case TIER_3:
+                if (container.getCapacity() != 25000000)
+                    container.setCapacity(20000000);
+
+        }
+
+
     }
 
     @Override

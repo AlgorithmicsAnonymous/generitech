@@ -55,8 +55,6 @@ public class BlockMachineMatrics extends BlockTierBase {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-
-
         return true;
     }
 
@@ -65,7 +63,6 @@ public class BlockMachineMatrics extends BlockTierBase {
         return Blocks.BLOCK_MACHINEMATRICS.getStack(1, getMetaFromState(state));
     }
 
-    @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
