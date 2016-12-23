@@ -80,7 +80,7 @@ public abstract class CommonProxy implements IProxy {
                 Fluid fluid = FluidHelper.createFluid(oreName, "generitech:fluids." + oreName, false);
                 FluidRegistry.addBucketForFluid(fluid);
 
-                FluidHelper.registerFluidBlock(new BlockFluidBlock(fluid));
+                //FluidHelper.registerFluidBlock(new BlockFluidBlock(fluid));
             }
         }
     }

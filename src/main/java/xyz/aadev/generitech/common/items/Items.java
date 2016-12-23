@@ -40,6 +40,7 @@ import xyz.aadev.aalib.common.util.RegistrationHelper;
 import xyz.aadev.generitech.Reference;
 import xyz.aadev.generitech.common.items.debug.ItemWorldGenWand;
 import xyz.aadev.generitech.common.items.materials.ItemMaterialGear;
+import xyz.aadev.generitech.common.items.materials.ItemPowerStorageComponent;
 import xyz.aadev.generitech.common.items.ore.ItemOreDust;
 import xyz.aadev.generitech.common.items.ore.ItemOreIngot;
 import xyz.aadev.generitech.common.items.ore.ItemOreNugget;
@@ -53,6 +54,7 @@ public enum Items {
     ITEM_ORE_NUGGET(ItemOreNugget.class),
 
     ITEM_MATERIAL_GEAR(ItemMaterialGear.class),
+    ITEM_ENERGY_AMALGAM(ItemPowerStorageComponent.class),
 
     ITEM_TOOL_WRENCH(ItemToolWrench.class),
 

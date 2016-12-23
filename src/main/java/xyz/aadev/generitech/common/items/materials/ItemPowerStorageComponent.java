@@ -1,4 +1,15 @@
-package xyz.aadev.generitech.common.blocks.power;/*
+package xyz.aadev.generitech.common.items.materials;
+
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import xyz.aadev.aalib.api.common.util.IProvideRecipe;
+import xyz.aadev.aalib.common.items.ItemBase;
+import xyz.aadev.generitech.GeneriTechTabs;
+import xyz.aadev.generitech.Reference;
+import xyz.aadev.generitech.common.items.Items;
+/*
  * LIMITED USE SOFTWARE LICENSE AGREEMENT
  * This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and the AlgorithmicsAnonymous Team ("AlgorithmicsAnonymous"). By downloading or purchasing the software materials, which includes source code (the "Source Code"), artwork data, music and software tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, promptly destroy the Software you may have downloaded or copied.
  * AlgorithmicsAnonymous SOFTWARE LICENSE
@@ -16,82 +27,22 @@ package xyz.aadev.generitech.common.blocks.power;/*
  * 5. NO WARRANTIES. AlgorithmicsAnonymous DISCLAIMS ALL WARRANTIES, BOTH EXPRESS IMPLIED, INCLUDING BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE WITH RESPECT TO THE SOFTWARE. THIS LIMITED WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS. YOU MAY HAVE OTHER RIGHTS WHICH VARY FROM JURISDICTION TO JURISDICTION. AlgorithmicsAnonymous DOES NOT WARRANT THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED, ERROR FREE OR MEET YOUR SPECIFIC REQUIREMENTS. THE WARRANTY SET FORTH ABOVE IS IN LIEU OF ALL OTHER EXPRESS WARRANTIES WHETHER ORAL OR WRITTEN. THE AGENTS, EMPLOYEES, DISTRIBUTORS, AND DEALERS OF AlgorithmicsAnonymous ARE NOT AUTHORIZED TO MAKE MODIFICATIONS TO THIS WARRANTY, OR ADDITIONAL WARRANTIES ON BEHALF OF AlgorithmicsAnonymous.
  * Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against AlgorithmicsAnonymous, its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. Copyright and other proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, AlgorithmicsAnonymous SHALL NOT BE LIABLE FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF AlgorithmicsAnonymous OR ITS AGENT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.
  */
+public class ItemPowerStorageComponent extends ItemBase implements IProvideRecipe {
 
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import xyz.aadev.aalib.common.util.TileHelper;
-import xyz.aadev.generitech.GeneriTech;
-import xyz.aadev.generitech.GeneriTechTabs;
-import xyz.aadev.generitech.Reference;
-import xyz.aadev.generitech.api.util.MachineTier;
-import xyz.aadev.generitech.common.blocks.BlockMachineBase;
-import xyz.aadev.generitech.common.tileentities.power.TileEntityPowerStorage;
-
-public class BlockPowerStorage extends BlockMachineBase {
-
-    public BlockPowerStorage() {
-        super(Material.ROCK, "machines/energyReservoir/energyReservoir", MachineTier.allexeptTier_0());
-        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
-        this.setTileEntity(TileEntityPowerStorage.class);
+    public ItemPowerStorageComponent() {
+        super("materials/energyAmalgam", Reference.MOD_ID);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
-        this.setInternalName("powerstorage");
-    }
-
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-
-        if (!world.isRemote) {
-            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.POWERSTORAGE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
-        }
-        return true;
+        this.setInternalName("energy_amalgam");
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntity tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntity.class);
-        if (tileEntity instanceof TileEntityPowerStorage) {
-            if (((TileEntityPowerStorage) tileEntity).canBeRotated()) {
-                return state.withProperty(FACING, EnumFacing.NORTH);
-            }
-        }
-
-
-        return state.withProperty(FACING, EnumFacing.NORTH);
-    }
-
-
-    @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        IBlockState blockState = getActualState(state, world, pos);
-        return (blockState.getValue(MACHINETIER) == MachineTier.TIER_0) ? 15 : 0;
+    public int getMetadata(int damage) {
+        return damage;
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, MACHINETIER, FACING);
+    public void RegisterRecipes() {
+        GameRegistry.addRecipe(new ShapelessOreRecipe(Items.ITEM_ENERGY_AMALGAM.getStack(), net.minecraft.init.Items.REDSTONE, "dustLead", net.minecraft.init.Items.DIAMOND)
+        );
     }
-
-    @Override
-    public int damageDropped(IBlockState state) {
-        return getMetaFromState(state);
-    }
-
-    @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
-        TileEntityPowerStorage tileEntity = TileHelper.getTileEntity(world, blockPos, TileEntityPowerStorage.class);
-
-        TileHelper.DropItems(tileEntity, 0, 0);
-
-    }
-
 }

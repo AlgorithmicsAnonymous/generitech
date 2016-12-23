@@ -1,0 +1,40 @@
+{
+  "forge_marker":1,
+  "defaults":{
+    "textures": {
+      "particle": "generitech:blocks/machines/StorageFrame"
+    },
+    "model":"generitech:energyReservoir",
+    "transform":"forge:default-block"
+  },
+  "variants":{
+    "inventory":[
+      {
+
+      }
+    ],
+    "facing":{
+      "north":{
+
+      },
+      "east":{
+        "y": 90
+      },
+      "south":{
+        "y": 180
+      },
+      "west":{
+        "y": 270
+      }
+    },
+    "active": {
+      "true": {
+		"textures": {
+		
+        }
+      },
+      "false": {
+      }
+    }
+  }
+}
