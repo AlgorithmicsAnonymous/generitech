@@ -173,12 +173,18 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (side == EnumFacing.UP && machineTier == MachineTier.TIER_0) {
             slots = new int[1];
         }
+        if (side == EnumFacing.DOWN && machineTier == MachineTier.TIER_0) {
+            slots = new int[2];
+            slots[0] = 2;
+            slots[1] = 3;
+        }
         int i = 0;
         for (final EnumFacing sidea : EnumFacing.VALUES) {
-            if (sidea == side && (getSides()[i] == 1 || getSides()[i] == 0)) {
-                slots = new int[2];
+            if (sidea == side && (getSides()[i] == 1 || getSides()[i] == 0) && machineTier != MachineTier.TIER_0) {
+                slots = new int[3];
                 slots[0] = 2;
                 slots[1] = 3;
+                slots[2] = 0;
             }
             i++;
         }
@@ -214,28 +220,19 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
         if (machineTier == MachineTier.TIER_0) {
             return direction == EnumFacing.DOWN && (index == 2 || index == 3);
         }
-        int i = 0;
-        for (final EnumFacing side : EnumFacing.VALUES) {
-            if (direction == side && getSides()[i] == 0 && (index == 2 || index == 3)) {
+        if (getSides()[direction.getIndex()] == 0 && (index == 2 || index == 3)) {
                 return true;
             }
-            i++;
-        }
-
         return false;
     }
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        int i = 0;
 
-        for (final EnumFacing side : EnumFacing.VALUES) {
-            if (direction == side && getSides()[i] == 1 && index == 0 && PulverizerRegistry.containsInput(itemStackIn)) {
+        if (getSides()[direction.getIndex()] == 1 && index == 0 && PulverizerRegistry.containsInput(itemStackIn)) {
                 return true;
             }
-            i++;
-        }
-        return false;
+        return true;
     }
 
     @Override
@@ -284,7 +281,9 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     @Override
     public void update() {
 
-        //System.out.println(sides[0]+" "+worldObj.isRemote);
+/*
+        System.out.println(getSides()[1]);
+*/
 
         //checking for the machine type
         if (machineTier == null)
