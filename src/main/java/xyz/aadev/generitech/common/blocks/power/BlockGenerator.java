@@ -2,6 +2,7 @@ package xyz.aadev.generitech.common.blocks.power;
 
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,14 +22,15 @@ import xyz.aadev.generitech.common.blocks.BlockMachineBase;
 import xyz.aadev.generitech.common.tileentities.power.TileEntityPower;
 
 public class BlockGenerator extends BlockMachineBase {
+    private static final PropertyBool ACTIVE = PropertyBool.create("active");
 
 
     public BlockGenerator() {
         super(Material.ROCK, "machines/generator/generator", MachineTier.allexeptTier_0());
-        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_0));
+        this.setDefaultState(blockState.getBaseState().withProperty(MACHINETIER, MachineTier.TIER_1));
         this.setTileEntity(TileEntityPower.class);
         this.setCreativeTab(GeneriTechTabs.GENERAL);
-        this.setInternalName("power");
+        this.setInternalName("generator");
     }
 
 
@@ -45,11 +47,9 @@ public class BlockGenerator extends BlockMachineBase {
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         TileEntity tileEntity = TileHelper.getTileEntity(worldIn, pos, TileEntity.class);
         if (tileEntity instanceof TileEntityPower && ((TileEntityPower) tileEntity).canBeRotated()) {
-            return state.withProperty(FACING, ((TileEntityPower) tileEntity).getForward());
+            return state.withProperty(FACING, ((TileEntityPower) tileEntity).getForward()).withProperty(ACTIVE, ((TileEntityPower) tileEntity).isMachineActive());
         }
-
-
-        return state.withProperty(FACING, EnumFacing.NORTH);
+        return state.withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BlockGenerator extends BlockMachineBase {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, MACHINETIER, FACING);
+        return new BlockStateContainer(this, MACHINETIER, FACING, ACTIVE);
     }
 
     @Override

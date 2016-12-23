@@ -38,6 +38,17 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
     private Item lastFuelType;
     private int lastFuelValue;
     private int fuelTotal = 0;
+    private boolean machineActive = false;
+
+
+    public boolean isMachineActive() {
+        return machineActive;
+    }
+
+    @Override
+    public boolean canBeRotated() {
+        return true;
+    }
 
     @Override
     protected void syncDataFrom(NBTTagCompound nbtTagCompound, SyncReason syncReason) {
@@ -76,6 +87,12 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
 
     @Override
     public void update() {
+        if (fuelRemaining == 0 && machineActive){
+            machineActive=false;
+        }else if (!machineActive && fuelRemaining > 0){
+            machineActive=true;
+        }
+
         BlockPos pos = getPos();
         World worldIn = getWorld();
         if (machineTier == null) {
