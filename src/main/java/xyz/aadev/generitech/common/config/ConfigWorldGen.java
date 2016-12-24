@@ -85,7 +85,7 @@ public final class ConfigWorldGen {
         return OreGenConfig;
     }
 
-    private static OreConfig oreGenSet(int maxY, int minY, int minVeinSize, int maxVeinSize, int weight, int chunkOccurrence) {
+    private static OreConfig oreGenSet(int minY, int maxY, int minVeinSize, int maxVeinSize, int weight, int chunkOccurrence) {
         OreConfig defaultConf = new OreConfig();
         defaultConf.Enabled = true;
         defaultConf.DimensionRestriction = RestrictionType.Blacklist;
