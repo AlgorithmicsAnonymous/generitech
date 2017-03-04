@@ -28,6 +28,7 @@ import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -86,8 +87,9 @@ public class BlockTierBase extends BlockBase implements IBlockRenderer {
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
         if (machineTiers.length == 0)
             super.getSubBlocks(itemIn, tab, list);
 

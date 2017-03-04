@@ -37,6 +37,12 @@ public class TileEntityPower extends TileEntityMachineBase implements ITeslaProd
     private int fuelRemaining = 0;
     private Item lastFuelType;
     private int lastFuelValue;
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
     private int fuelTotal = 0;
 
     @Override

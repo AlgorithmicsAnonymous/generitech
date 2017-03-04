@@ -84,7 +84,7 @@ public class PacketButtonClick implements IMessage, IMessageHandler<PacketButton
 
     @Override
     public IMessage onMessage(PacketButtonClick message, MessageContext ctx) {
-        TileEntity tileEntity = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(new BlockPos(message.blockX, message.blockY, message.blockZ));
+        TileEntity tileEntity = ctx.getServerHandler().playerEntity.world.getTileEntity(new BlockPos(message.blockX, message.blockY, message.blockZ));
 
         if (tileEntity == null)
             return null;

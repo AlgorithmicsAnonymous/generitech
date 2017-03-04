@@ -48,6 +48,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
@@ -187,6 +189,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
     }
 
 
+    @SideOnly(Side.CLIENT)
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
         if (guiId == 0) {
@@ -235,6 +238,11 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             }
             i++;
         }
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
         return false;
     }
 
@@ -333,16 +341,16 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
             ItemStack itemIn = inventory.getStackInSlot(0);
             ItemStack itemOut;
 
-            if (itemIn.stackSize - 1 <= 0) {
+            if (itemIn.getCount() - 1 <= 0) {
                 itemOut = itemIn.copy();
-                itemIn = null;
+                itemIn = ItemStack.EMPTY;
             } else {
                 itemOut = itemIn.copy();
-                itemOut.stackSize = 1;
-                itemIn.stackSize = itemIn.stackSize - 1;
+                itemOut.setCount(1);
+                itemIn.shrink(1);
             }
-            if (itemIn != null && itemIn.stackSize == 0) itemIn = null;
-            if (itemOut.stackSize == 0) itemOut = null;
+            if (itemIn != null && itemIn.getCount() == 0) itemIn = ItemStack.EMPTY;
+            if (itemOut.getCount() == 0) itemOut = ItemStack.EMPTY;
 
             inventory.setInventorySlotContents(0, itemIn);
             inventory.setInventorySlotContents(1, itemOut);
@@ -357,7 +365,7 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
 
             ticksRemaining = 0;
 
-            if (worldObj.isRemote) {
+            if (getWorld().isRemote) {
                 return;
             }
 
@@ -384,8 +392,8 @@ public class TileEntityPulverizer extends TileEntityMachineBase implements ITick
                 if (itemFortune)
                     itemChance = itemChance + fortuneMultiplier;
 
-                outItem.stackSize = (int) Math.round(Math.floor(itemChance) + crushRNG * itemChance % 1);
-                if (outItem.stackSize == 0) outItem.stackSize = 1;
+                outItem.setCount((int) Math.round(Math.floor(itemChance) + crushRNG * itemChance % 1));
+                if (outItem.getCount() == 0) outItem.setCount(1);
 
 
                 // Simulate placing into output slot...

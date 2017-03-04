@@ -38,7 +38,10 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.aadev.aalib.common.items.ItemBase;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
@@ -58,7 +61,7 @@ public class ItemOreDust extends ItemBase {
     }
 
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
         for (int i = 0; i < EnumOres.values().length; i++) {
             if (EnumOres.byMeta(i).isTypeSet(EnumOreType.DUST)) {
                 subItems.add(new ItemStack(this, 1, i));
@@ -73,6 +76,7 @@ public class ItemOreDust extends ItemBase {
         return name + "." + oreName;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerItemRenderer() {
         for (int i = 0; i < EnumOres.values().length; i++) {

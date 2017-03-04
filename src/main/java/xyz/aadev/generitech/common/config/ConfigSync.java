@@ -26,6 +26,7 @@ public class ConfigSync {
     @SideOnly(Side.CLIENT)
     private static boolean needsRestart;
 
+    @SideOnly(Side.CLIENT)
     public static void syncConfig(List<ConfigCategory> categoryList) {
         needsRestart = false;
         boolean changed = false;
@@ -75,11 +76,11 @@ public class ConfigSync {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onPlayerJoinedWorld(TickEvent.ClientTickEvent event) {
-        EntityPlayerSP entityPlayer = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP entityPlayer = Minecraft.getMinecraft().player;
         if (needsRestart) {
-            entityPlayer.addChatMessage(new TextComponentString("[GeneriTech] " + LanguageHelper.MESSAGE.translateMessage("configsync.restart")));
+            entityPlayer.sendMessage(new TextComponentString("[GeneriTech] " + LanguageHelper.MESSAGE.translateMessage("configsync.restart")));
         } else {
-            entityPlayer.addChatMessage(new TextComponentString("[GeneriTech] " + LanguageHelper.MESSAGE.translateMessage("configsync.ok")));
+            entityPlayer.sendMessage(new TextComponentString("[GeneriTech] " + LanguageHelper.MESSAGE.translateMessage("configsync.ok")));
         }
 
         MinecraftForge.EVENT_BUS.unregister(this);

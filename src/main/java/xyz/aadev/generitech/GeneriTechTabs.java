@@ -36,14 +36,15 @@ package xyz.aadev.generitech;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import xyz.aadev.generitech.common.blocks.Blocks;
 import xyz.aadev.generitech.common.items.Items;
 
 public class GeneriTechTabs {
     public static final CreativeTabs GENERAL = new CreativeTabs(Reference.MOD_ID) {
         @Override
-        public Item getTabIconItem() {
-            return Item.getItemFromBlock(Blocks.BLOCK_PULVERIZER.getBlock());
+        public ItemStack getTabIconItem() {
+            return Blocks.BLOCK_PULVERIZER.getStack();
         }
 
         @Override
@@ -54,8 +55,8 @@ public class GeneriTechTabs {
 
     public static final CreativeTabs ORE = new CreativeTabs(Reference.MOD_ID) {
         @Override
-        public Item getTabIconItem() {
-            return Items.ITEM_ORE_DUST.getItem();
+        public ItemStack getTabIconItem() {
+            return Items.ITEM_ORE_DUST.getStack();
         }
 
         @Override
@@ -66,8 +67,8 @@ public class GeneriTechTabs {
 
     public static final CreativeTabs TOOL = new CreativeTabs(Reference.MOD_ID) {
         @Override
-        public Item getTabIconItem() {
-            return Items.ITEM_TOOL_WRENCH.getItem();
+        public ItemStack getTabIconItem() {
+            return Items.ITEM_TOOL_WRENCH.getStack();
         }
 
         @Override

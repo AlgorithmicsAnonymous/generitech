@@ -38,8 +38,11 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import xyz.aadev.aalib.api.common.util.IProvideRecipe;
 import xyz.aadev.aalib.common.items.ItemBase;
@@ -62,7 +65,7 @@ public class ItemOreNugget extends ItemBase implements IProvideRecipe {
     }
 
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
         for (int i = 0; i < EnumOres.values().length; i++) {
             if (EnumOres.byMeta(i).isTypeSet(EnumOreType.NUGGET)) {
                 subItems.add(new ItemStack(this, 1, i));
@@ -77,6 +80,7 @@ public class ItemOreNugget extends ItemBase implements IProvideRecipe {
         return name + "." + oreName;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerItemRenderer() {
         for (int i = 0; i < EnumOres.values().length; i++) {

@@ -65,11 +65,11 @@ public class BlockFurnace extends BlockMachineBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote) {
-            player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.FURNACE, world, pos.getX(), pos.getY(), pos.getZ());
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!worldIn.isRemote) {
+            playerIn.openGui(GeneriTech.getInstance(), Reference.GUI_ID.FURNACE, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
-        return true;
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override

@@ -137,7 +137,7 @@ public class WorldGen implements IWorldGenerator {
 
     @SubscribeEvent
     public void chunkSave(ChunkDataEvent.Save event) {
-        ChunkPos chunkPos = event.getChunk().getChunkCoordIntPair();
+        ChunkPos chunkPos = event.getChunk().getPos();
         NBTTagCompound tagCompound = new NBTTagCompound();
         event.getData().setTag(Reference.MOD_ID, tagCompound);
 
@@ -154,7 +154,7 @@ public class WorldGen implements IWorldGenerator {
     public void chunkLoad(ChunkDataEvent.Load event) {
         int dimID = event.getWorld().provider.getDimension();
         NBTTagCompound tag = event.getData().getCompoundTag(Reference.MOD_ID);
-        ChunkPos coordIntPair = event.getChunk().getChunkCoordIntPair();
+        ChunkPos coordIntPair = event.getChunk().getPos();
         loadedChunks.put(coordIntPair.toString(), tag);
         tag.setInteger("DimID", dimID);
 
@@ -163,14 +163,14 @@ public class WorldGen implements IWorldGenerator {
 
         NBTTagCompound tagCompound = event.getData().getCompoundTag(Reference.MOD_ID);
         if (isRetroGenRequired(tagCompound)) {
-            GeneriTech.Logger.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", event.getChunk().getChunkCoordIntPair(), Reference.MOD_NAME));
-            retrogenChunks.put(dimID, event.getChunk().getChunkCoordIntPair());
+            GeneriTech.Logger.info(String.format("Chunk %s has been flagged for Ore RetroGen by %s", event.getChunk().getPos(), Reference.MOD_NAME));
+            retrogenChunks.put(dimID, event.getChunk().getPos());
         }
     }
 
     @SubscribeEvent
     public void chunkUnload(ChunkDataEvent.Unload event) {
-        loadedChunks.remove(event.getChunk().getChunkCoordIntPair().toString());
+        loadedChunks.remove(event.getChunk().getPos().toString());
     }
 
     @SubscribeEvent

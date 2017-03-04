@@ -30,6 +30,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
 import xyz.aadev.generitech.client.gui.upgrade.GuiUpgradeScreen;
@@ -85,6 +87,11 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         return new int[0];
     }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
     @Nullable
 
     @Override
@@ -92,7 +99,7 @@ public class TileEntityPowerStorage extends TileEntityMachineBase implements ITe
         return null;
     }
 
-
+    @SideOnly(Side.CLIENT)
     @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
         return new GuiUpgradeScreen(player.inventory, this, getSides(), 0, player);

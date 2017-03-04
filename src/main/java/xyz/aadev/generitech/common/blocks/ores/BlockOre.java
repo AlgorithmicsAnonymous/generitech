@@ -42,6 +42,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import xyz.aadev.aalib.common.blocks.BlockBase;
 import xyz.aadev.generitech.GeneriTechTabs;
 import xyz.aadev.generitech.Reference;
@@ -84,7 +85,7 @@ public class BlockOre extends BlockBase {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
         for (int i = 0; i < EnumOres.values().length; i++) {
             if (EnumOres.byMeta(i).isTypeSet(EnumOreType.ORE)) {
                 list.add(new ItemStack(this, 1, i));

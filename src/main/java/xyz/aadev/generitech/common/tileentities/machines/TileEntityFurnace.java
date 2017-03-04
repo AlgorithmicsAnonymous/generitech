@@ -48,6 +48,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.aadev.aalib.api.common.integrations.waila.IWailaBodyMessage;
 import xyz.aadev.aalib.common.inventory.InternalInventory;
 import xyz.aadev.aalib.common.inventory.InventoryOperation;
@@ -147,6 +149,12 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
     public Object getClientGuiElement(int guiId, EntityPlayer player) {
         return new GuiFurnace(player.inventory, this);
     }
@@ -173,7 +181,7 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
 
     private boolean canSmelt(ItemStack stack) {
         ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(stack);
-        return itemstack != null;
+        return itemstack != ItemStack.EMPTY;
     }
 
     public int getTemperature() {
@@ -255,18 +263,18 @@ public class TileEntityFurnace extends TileEntityMachineBase implements ITickabl
             if (!canSmelt(itemIn))
                 return;
 
-            if (itemIn.stackSize - 1 <= 0) {
+            if (itemIn.getCount() - 1 <= 0) {
                 itemOut = itemIn.copy();
-                itemIn = null;
+                itemIn = ItemStack.EMPTY;
             } else {
                 itemOut = itemIn.copy();
 
-                itemOut.stackSize = 1;
-                itemIn.stackSize = itemIn.stackSize - 1;
+                itemOut.setCount(1);
+                itemIn.shrink(1);
             }
 
-            if (itemIn != null && itemIn.stackSize == 0) itemIn = null;
-            if (itemOut.stackSize == 0) itemOut = null;
+            if (itemIn != null && itemIn.getCount() == 0) itemIn = ItemStack.EMPTY;
+            if (itemOut.getCount() == 0) itemOut = ItemStack.EMPTY;
 
             internalInventory.setInventorySlotContents(0, itemIn);
             internalInventory.setInventorySlotContents(1, itemOut);

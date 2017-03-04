@@ -79,7 +79,7 @@ public class GuiUpgradeScreen extends GuiBase {
     @Override
     public void initGui() {
         if (tileEntity instanceof TileEntityMachineBase) {
-            this.mc.thePlayer.openContainer = this.inventorySlots;
+            this.mc.player.openContainer = this.inventorySlots;
             this.guiLeft = (this.width - this.xSize) / 2;
             this.guiTop = (this.height - this.ySize) / 2;
             int Forward = ((TileEntityMachineBase) tileEntity).getForward().getIndex();

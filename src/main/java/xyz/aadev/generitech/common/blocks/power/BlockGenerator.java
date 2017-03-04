@@ -33,7 +33,7 @@ public class BlockGenerator extends BlockMachineBase {
 
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
         if (!world.isRemote) {
             player.openGui(GeneriTech.getInstance(), Reference.GUI_ID.GENERATOR_GUI, world, pos.getX(), pos.getY(), pos.getZ());
